@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Odysseus
+Comment=Browse knowledge and entertainment on the Web
+Exec=odysseus
+Icon=internet-web-browser
+Terminal=false
+Categories=Network;WebBrowser;GTK;GNOME;
+Keywords=WWW;Web;Internet;Browser;
+StartupNotify=true
