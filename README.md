@@ -4,6 +4,7 @@ Odysseus Web Browser
 **Designed for elementary OS**
 
 The goals (beyond following the elementary OS HIG) for Odysseus are:
+
 1. Make the chrome look like nothing more than standard elementary OS window dressing
 2. Provide tools to help users find where they want to go on the web
 3. Support restricting how webpages can invade user privacy, catering to all skill levels
