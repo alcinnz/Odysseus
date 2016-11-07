@@ -41,6 +41,9 @@ include(ValaPrecompile)
 vala_precompile(VALA_C ${EXEC_NAME}
     src/Odysseus.vala
     src/BrowserWindow.vala
+    src/Widgets/AddressBar.vala
+    src/Widgets/WebTab.vala
+    src/Widgets/ButtonWithMenu.vala
 
 # tell what libraries to use when compiling
 PACKAGES
