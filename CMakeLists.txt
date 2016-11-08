@@ -44,6 +44,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Widgets/AddressBar.vala
     src/Widgets/WebTab.vala
     src/Widgets/ButtonWithMenu.vala
+    src/Widgets/FindToolbar.vala
 
 # tell what libraries to use when compiling
 PACKAGES

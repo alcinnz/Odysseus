@@ -2,6 +2,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
     private weak Odysseus.Application app;
 
     private WebKit.WebView web;
+    private WebKit.WebContext web_context;
     private Granite.Widgets.DynamicNotebook tabs;
 
     private ButtonWithMenu back;
@@ -22,6 +23,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
 
         init_layout();
         register_events();
+        create_accelerators();
     }
 
     private void init_layout() {
@@ -37,6 +39,13 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
         addressbar = new Odysseus.AddressBar();
+        
+        var appmenu_menu = new Gtk.Menu();
+        // TODO translate
+        var find_in_page = new Gtk.MenuItem.with_label("Find in page...");
+        find_in_page.activate.connect(find_in_page_cb);
+        appmenu_menu.add(find_in_page);
+        var appmenu = new Granite.Widgets.AppMenu(appmenu_menu);
 
         Gtk.HeaderBar header = new Gtk.HeaderBar();
         header.show_close_button = true;
@@ -44,6 +53,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         header.pack_start(forward);
         header.pack_start(reload_stop);
         header.set_custom_title(addressbar);
+        header.pack_end(appmenu);
         header.set_has_subtitle(false);
         set_titlebar(header);
 
@@ -94,6 +104,17 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         tabs.show.connect(() => {
             if (tabs.n_tabs == 0) tabs.new_tab_requested();
         });
+    }
+    
+    private void create_accelerators() {
+        var accel = new Gtk.AccelGroup();
+        accel.connect(Gdk.Key.F, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            find_in_page_cb();
+            return true;
+        });
+        add_accel_group(accel);
     }
 
     private void connect_webview() {
@@ -148,6 +169,11 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         }
         web_event_handlers.clear();
     }
+    
+    private void find_in_page_cb() {
+        var current_tab = (WebTab) tabs.current;
+        current_tab.find_in_page();
+    }
 
     private Gtk.Menu build_history_menu(
                 List<weak WebKit.BackForwardListItem> items) {
@@ -158,7 +184,6 @@ public class Odysseus.BrowserWindow : Gtk.Window {
             menuItem.activate.connect(() => {
                 web.go_to_back_forward_list_item(item);
             });
-            var favicon_db = web.web_context.get_favicon_database();
             favicon_for_menuitem.begin(menuItem, item);
             menuItem.always_show_image = true;
 
@@ -178,7 +203,6 @@ public class Odysseus.BrowserWindow : Gtk.Window {
             menuitem.image = new Gtk.Image.from_gicon(icon, Gtk.IconSize.MENU);
         } catch (Error e) {
             error("Failed to load favicon for '%s':", item.get_uri());
-            error(e.message);
         }
     }
 
