@@ -2,8 +2,8 @@ public class Odysseus.BrowserWindow : Gtk.Window {
     private weak Odysseus.Application app;
 
     private WebKit.WebView web;
-    private WebKit.WebContext web_context;
     private Granite.Widgets.DynamicNotebook tabs;
+    private DownloadsBar downloads;
 
     private ButtonWithMenu back;
     private ButtonWithMenu forward;
@@ -21,9 +21,18 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         this.title = "(Loading)";
         this.icon_name = "internet-web-browser";
 
+        setup_webcontext();
         init_layout();
         register_events();
         create_accelerators();
+    }
+
+    private void setup_webcontext() {
+        var ctx = WebKit.WebContext.get_default();
+        ctx.set_favicon_database_directory(null); // to fix favicon loading
+        ctx.download_started.connect((download) => {
+            downloads.add_entry(new DownloadButton(download));
+        });
     }
 
     private void init_layout() {
@@ -57,8 +66,15 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         header.set_has_subtitle(false);
         set_titlebar(header);
 
+        var container = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+        this.add(container);
+
         tabs = new Granite.Widgets.DynamicNotebook();
-        this.add(tabs);
+        container.pack_start(tabs);
+        
+        downloads = new DownloadsBar();
+        downloads.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
+        container.pack_end(downloads, false);
     }
 
     private void register_events() {
@@ -90,7 +106,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         tabs.tab_switched.connect((old_tab, new_tab) => {
             if (web != null) disconnect_webview();
             web = ((WebTab) new_tab).web;
-            connect_webview();
+            connect_webview((WebTab) new_tab);
         });
         tabs.new_tab_requested.connect(() => {
             var tab = new WebTab(tabs);
@@ -117,13 +133,14 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         add_accel_group(accel);
     }
 
-    private void connect_webview() {
+    private void connect_webview(WebTab tab) {
         var hs = web_event_handlers;
 
         hs.add(web.load_changed.connect ((load_event) => {
-            if (load_event == WebKit.LoadEvent.FINISHED) {
+            if (load_event == WebKit.LoadEvent.COMMITTED) {
                 back.sensitive = web.can_go_back();
                 forward.sensitive = web.can_go_forward();
+            } else if (load_event == WebKit.LoadEvent.FINISHED) {
                 reload_stop.set_visible_child(reload);
                 addressbar.progress_fraction = 0.0;
             } else {
@@ -202,7 +219,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
             var icon = surface_to_pixbuf(favicon);
             menuitem.image = new Gtk.Image.from_gicon(icon, Gtk.IconSize.MENU);
         } catch (Error e) {
-            error("Failed to load favicon for '%s':", item.get_uri());
+            warning("Failed to load favicon for '%s':", item.get_uri());
         }
     }
 

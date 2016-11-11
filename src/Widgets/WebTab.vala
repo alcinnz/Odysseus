@@ -8,7 +8,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         if (related != null) {
             this.web = (WebKit.WebView) related.new_with_related_view();
         } else {
-            this.web = new WebKit.WebView.with_context(ctx);
+            this.web = new WebKit.WebView();
+            web.web_context.set_favicon_database_directory(null);
         }
         var container = new Gtk.Overlay();
         container.add(this.web);
@@ -44,6 +45,18 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         });
         web.grab_focus.connect(() => {
             find.set_reveal_child(false);
+        });
+        web.load_failed.connect((load_event, uri, error) => {
+            if (error.domain == WebKit.PolicyError.quark()) {
+                web.download_uri(uri);
+                web.stop_loading();
+                return true;
+            } else {
+                GLib.warning("'%s' failed to load:\n", uri);
+                GLib.warning("[%s: %i] %s\n", error.domain.to_string(),
+                        error.code, error.message);
+            }
+            return false;
         });
         
         web.load_uri(uri);

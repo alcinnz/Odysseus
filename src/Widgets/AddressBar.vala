@@ -1,7 +1,7 @@
 public class Odysseus.AddressBar : Gtk.Entry {
     public AddressBar() {
-        this.margin_start = 10;
-        this.margin_end = 10;
+        this.margin_start = 20;
+        this.margin_end = 20;
     }
 
     /* While there's more planned here,
