@@ -28,6 +28,21 @@ public class Odysseus.Application : Granite.Application {
         app_years = "2016";
 
         /* TODO specify more metadata */
+        app_icon = "internet-web-browser";
+        app_launcher = "odysseus.desktop";
+        main_url = "https://github.com/alcinnz/Odysseus";
+        bug_url = "https://github.com/alcinnz/Odysseus/issues";
+        about_authors = { "Adrian Cochrane <alcinnz@eml.cc>", null };
+        about_license_type = Gtk.License.GPL_3_0;
+    }
+    
+    private static Odysseus.Application _instance = null;
+    public static Odysseus.Application instance {
+        get {
+            if (_instance == null)
+                _instance = new Odysseus.Application();
+            return _instance;
+        }
     }
 
     public override void activate () {
@@ -36,11 +51,98 @@ public class Odysseus.Application : Granite.Application {
         }
         mainWindow.show_all();
     }
+    
+    public override int command_line(ApplicationCommandLine cmdline) {
+        var context = new OptionContext("File");
+        context.add_main_entries(entries, null);
+        context.add_group(Gtk.get_option_group(true));
+        
+        string[] args = cmdline.get_arguments();
+        int unclaimed_args;
+        
+        try {
+            unowned string[] tmp = args;
+            context.parse(ref tmp);
+            unclaimed_args = tmp.length - 1;
+        } catch(Error e) {
+            print(e.message + "\n");
+            
+            return Posix.EXIT_FAILURE;
+        }
+        
+        if (print_version) {
+            stdout.printf("Odysseus Web Browser version 0.1\n");
+            stdout.printf("Copyright 2016 Adrian Cochrane\n");
+            return Posix.EXIT_SUCCESS;
+        }
+        
+        // Create (or show) the first window
+        activate();
+        
+        // Create a next window if requested and it's not the app launch
+        bool is_app_launch = (get_last_window() == null);
+        if (create_new_window && !is_app_launch) {
+            create_new_window = false;
+            var window = new BrowserWindow(this);
+            window.show_all();
+        }
+        
+        // Create new tab if requested
+        // TODO Check if we're on a new tab
+        if (create_new_tab) {
+            create_new_tab = false;
+            var window = get_last_window();
+            window.new_tab();
+        }
+        
+        // Open all URLs given as arguments
+        if (unclaimed_args > 0) {
+            // TODO Open given URLs
+            File[] files = new File[unclaimed_args];
+            files.length = 0;
+            
+            foreach (string arg in args[1:unclaimed_args + 1]) {
+                try {
+                    files += File.new_for_uri(arg);
+                } catch (Error e) {
+                    warning(e.message);
+                }
+            }
+            open(files, "");
+        }
+        
+        return Posix.EXIT_SUCCESS;
+    }
 
-    /* TODO Handle HTTP(S) URLs */
+    protected override void open(File[] files, string hint) {
+        var window = get_last_window();
+        if (window == null) return;
+
+        foreach (var file in files) {
+            window.new_tab(file.get_uri());
+        }
+    }
+
+    public BrowserWindow? get_last_window() {
+        unowned List<weak Gtk.Window> windows = get_windows();
+        return windows.length() > 0 ?
+                windows.last().data as BrowserWindow : null;
+    }
+
+    private static bool create_new_tab = false;
+    private static bool create_new_window = false;
+    private static bool print_version = false;
+    const OptionEntry[] entries = {
+        { "new-tab", 't', 0, OptionArg.NONE, out create_new_tab,
+                "New Tab", null},
+        { "new-window", 'n', 0, OptionArg.NONE, out create_new_window,
+                "New Window", null},
+        { "version", 'v', 0, OptionArg.NONE, out print_version,
+                "Print version info and exit", null},
+        { null }
+    };
 }
 
 public static int main(string[] args) {
-    var application = new Odysseus.Application();
-    return application.run(args);
+    return Odysseus.Application.instance.run(args);
 }

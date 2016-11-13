@@ -64,13 +64,8 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
         addressbar = new Odysseus.AddressBar();
-        
-        var appmenu_menu = new Gtk.Menu();
-        // TODO translate
-        var find_in_page = new Gtk.MenuItem.with_label("Find in page...");
-        find_in_page.activate.connect(find_in_page_cb);
-        appmenu_menu.add(find_in_page);
-        var appmenu = new Granite.Widgets.AppMenu(appmenu_menu);
+
+        var appmenu = new Granite.Widgets.AppMenu(create_appmenu());
 
         Gtk.HeaderBar header = new Gtk.HeaderBar();
         header.show_close_button = true;
@@ -86,11 +81,108 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         this.add(container);
 
         tabs = new Granite.Widgets.DynamicNotebook();
+        tabs.allow_drag = true;
+        //tabs.allow_duplication = true; // TODO implement
+        tabs.allow_new_window = true;
+        tabs.allow_pinning = true;
+        //tabs.allow_restoring = true; // TODO implement
+        tabs.group_name = "odysseus-web-browser";
         container.pack_start(tabs);
         
         downloads = new DownloadsBar();
         downloads.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
         container.pack_end(downloads, false);
+    }
+
+    private Gtk.MenuItem open_item;
+    private Gtk.MenuItem save_item;
+    
+    private Gtk.Menu create_appmenu() {
+        var menu = new Gtk.Menu();
+
+        // TODO translate
+        var new_window = new Gtk.MenuItem.with_label("New Window");
+        new_window.activate.connect(() => {
+            var window = new BrowserWindow(Odysseus.Application.instance);
+            window.show_all();
+        });
+        menu.add(new_window);
+
+        // TODO translate
+        var open = new Gtk.MenuItem.with_label("Open...");
+        open.activate.connect(() => {
+            var chooser = new Gtk.FileChooserDialog(
+                                "Open Local Webpage", // TODO translate
+                                this,
+                                Gtk.FileChooserAction.OPEN,
+                                Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
+                                Gtk.Stock.OPEN, Gtk.ResponseType.OK);
+            chooser.filter.add_mime_type("text/html");
+            chooser.filter.add_mime_type("application/xhtml+xml");
+            chooser.filter.add_pattern("*.html");
+            chooser.filter.add_pattern("*.htm");
+            chooser.filter.add_pattern("*.xhtml");
+
+            if (chooser.run() == Gtk.ResponseType.OK) {
+                foreach (string uri in chooser.get_uris()) {
+                    new_tab(uri);
+                }
+            }
+            chooser.destroy();
+        });
+        menu.add(open);
+        open_item = open;
+
+        // TODO translate
+        var save = new Gtk.MenuItem.with_label("Save...");
+        save.activate.connect(() => {
+            var chooser = new Gtk.FileChooserDialog(
+                                "Save Page as", // TODO translate
+                                this,
+                                Gtk.FileChooserAction.SAVE,
+                                Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
+                                Gtk.Stock.SAVE_AS, Gtk.ResponseType.OK);
+
+            if (chooser.run() == Gtk.ResponseType.OK) {
+                web.save_to_file(File.new_for_uri(chooser.get_uri()),
+                                                    WebKit.SaveMode.MHTML, null);
+            }
+            chooser.destroy();
+        });
+        menu.add(save);
+        save_item = save;
+
+        menu.add(new Gtk.SeparatorMenuItem());
+
+        // TODO translate
+        var zoomin = new Gtk.MenuItem.with_label("Zoom in");
+        zoomin.activate.connect(() => {
+            web.zoom_level += 0.1;
+        });
+        menu.add(zoomin);
+
+        var zoomout = new Gtk.MenuItem.with_label("Zoom out");
+        zoomout.activate.connect(() => {
+            web.zoom_level -= 0.1;
+        });
+        menu.add(zoomout);
+
+        menu.add(new Gtk.SeparatorMenuItem());
+
+        // TODO translate
+        var find_in_page = new Gtk.MenuItem.with_label("Find In Page...");
+        find_in_page.activate.connect(find_in_page_cb);
+        menu.add(find_in_page);
+
+        var print = new Gtk.MenuItem.with_label("Print...");
+        print.activate.connect(() => {
+            var printer = new WebKit.PrintOperation(web);
+            printer.run_dialog(this);
+        });
+        menu.add(print);
+        
+        menu.show_all();
+        return menu;
     }
 
     private void register_events() {
@@ -140,12 +232,72 @@ public class Odysseus.BrowserWindow : Gtk.Window {
     
     private void create_accelerators() {
         var accel = new Gtk.AccelGroup();
+
         accel.connect(Gdk.Key.F, Gdk.ModifierType.CONTROL_MASK,
                         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
                         (group, acceleratable, key, modifier) => {
             find_in_page_cb();
             return true;
         });
+        accel.connect(Gdk.Key.T, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            new_tab();
+            return true;
+        });
+        accel.connect(Gdk.Key.N, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            new BrowserWindow(Odysseus.Application.instance);
+            return true;
+        });
+        accel.connect(Gdk.Key.P, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            var printer = new WebKit.PrintOperation(web);
+            printer.run_dialog(this);
+            return true;
+        });
+
+        accel.connect(Gdk.Key.O, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            open_item.activate();
+            return true;
+        });
+        accel.connect(Gdk.Key.S, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            save_item.activate();
+            return true;
+        });
+
+        accel.connect(Gdk.Key.minus, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            web.zoom_level -= 0.1;
+            return true;
+        });
+        accel.connect(Gdk.Key.plus, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            web.zoom_level += 0.1;
+            return true;
+        });
+        accel.connect(Gdk.Key.equal, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            // So users can press ctrl-= instead of ctrl-shift-=
+            web.zoom_level += 0.1;
+            return true;
+        });
+        accel.connect(Gdk.Key.@0, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            web.zoom_level = 1.0;
+            return true;
+        });
+
         add_accel_group(accel);
     }
 
@@ -237,6 +389,12 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         } catch (Error e) {
             warning("Failed to load favicon for '%s':", item.get_uri());
         }
+    }
+    
+    public void new_tab(string url = "https://ddg.gg/") {
+        var tab = new WebTab(tabs, null, url);
+        tabs.insert_tab(tab, -1);
+        tabs.current = tab;
     }
 
     // GDK does provide a utility for this,

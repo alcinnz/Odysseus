@@ -23,7 +23,7 @@ set (VERSION_INFO "development")
 find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite webkit2gtk-4.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite webkit2gtk-4.0 posix)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -54,6 +54,7 @@ PACKAGES
     gtk+-3.0
     granite
     webkit2gtk-4.0
+    posix
 )
 
 # tell cmake what to call the executable we just made

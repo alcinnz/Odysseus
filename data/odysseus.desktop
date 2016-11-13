@@ -3,8 +3,22 @@ Type=Application
 Name=Odysseus
 Comment=Browse knowledge and entertainment on the Web
 Exec=odysseus
-Icon=internet-web-browser
+Icon=internet-web-browser %U
 Terminal=false
 Categories=Network;WebBrowser;GTK;GNOME;
 Keywords=WWW;Web;Internet;Browser;
 StartupNotify=true
+Actions=NewWindow;NewTab;AboutDialog;
+MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtml+xml;
+
+[Desktop Action NewWindow]
+Name=New Window
+Exec=odysseus --new-window
+
+[Desktop Action NewTab]
+Name=New Tab
+Exec=odysseus --new-tab
+
+[Desktop Action AboutDialog]
+Name=About Odysseus
+Exec=odysseus --about
