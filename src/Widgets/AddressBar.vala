@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016).
+* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016).
 *
 * Oddysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 * You should have received a copy of the GNU General Public License
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-public class Odysseus.AddressBar : Gtk.Entry {
+public class Oddysseus.AddressBar : Gtk.Entry {
     public AddressBar() {
         this.margin_start = 20;
         this.margin_end = 20;

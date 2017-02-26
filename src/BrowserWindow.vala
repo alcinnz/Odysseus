@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016).
+* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016).
 *
 * Oddysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@
 * You should have received a copy of the GNU General Public License
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-public class Odysseus.BrowserWindow : Gtk.Window {
-    private weak Odysseus.Application app;
+public class Oddysseus.BrowserWindow : Gtk.Window {
+    private weak Oddysseus.Application app;
 
     private WebKit.WebView web;
     private Granite.Widgets.DynamicNotebook tabs;
@@ -31,7 +31,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
     private Gee.List<ulong> web_event_handlers;
     private Gee.List<Binding> bindings;
 
-    public BrowserWindow(Odysseus.Application ody_app) {
+    public BrowserWindow(Oddysseus.Application ody_app) {
         this.app = ody_app;
         set_application(this.app);
         this.title = "(Loading)";
@@ -41,6 +41,11 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         init_layout();
         register_events();
         create_accelerators();
+    }
+    
+    public BrowserWindow.with_urls(Oddysseus.Application ody_app, string[] urls) {
+        this(ody_app);
+        foreach (var url in urls) new_tab(url);
     }
 
     private void setup_webcontext() {
@@ -63,7 +68,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         reload_stop = new Gtk.Stack();
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
-        addressbar = new Odysseus.AddressBar();
+        addressbar = new Oddysseus.AddressBar();
 
         var appmenu = new Granite.Widgets.AppMenu(create_appmenu());
 
@@ -103,7 +108,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         // TODO translate
         var new_window = new Gtk.MenuItem.with_label("New Window");
         new_window.activate.connect(() => {
-            var window = new BrowserWindow(Odysseus.Application.instance);
+            var window = new BrowserWindow(Oddysseus.Application.instance);
             window.show_all();
         });
         menu.add(new_window);
@@ -248,7 +253,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
         accel.connect(Gdk.Key.N, Gdk.ModifierType.CONTROL_MASK,
                         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
                         (group, acceleratable, key, modifier) => {
-            new BrowserWindow(Odysseus.Application.instance);
+            new BrowserWindow(Oddysseus.Application.instance);
             return true;
         });
         accel.connect(Gdk.Key.P, Gdk.ModifierType.CONTROL_MASK,
@@ -311,6 +316,7 @@ public class Odysseus.BrowserWindow : Gtk.Window {
             } else if (load_event == WebKit.LoadEvent.FINISHED) {
                 reload_stop.set_visible_child(reload);
                 addressbar.progress_fraction = 0.0;
+                app.persist.begin();
             } else {
                 reload_stop.set_visible_child(stop);
             }
@@ -415,6 +421,29 @@ public class Odysseus.BrowserWindow : Gtk.Window {
             return pixbuf;
         } catch (Error e) {
             return null;
+        }
+    }
+    
+    // Called by application to persist open tabs
+    public async void persist(OutputStream persistFile) {
+        var first = true;
+        foreach (var tab in tabs.tabs) {
+            try {
+                if (!first) yield persistFile.write_async("\t".data);
+                first = false;
+
+                size_t bytes_written;
+                var url = ((WebTab) tab).url;
+                yield persistFile.write_all_async(url.data,
+                                                Priority.DEFAULT,
+                                                null, out bytes_written);
+            } catch (IOError e) {
+                // The file should still work reasonably well. 
+                // The separator must be successful written before the url is,
+                // and if that isn't fully written things should still work.
+                var url = ((WebTab) tab).url;
+                warning("Failed to write tab for %s: %s", url, e.message);
+            }
         }
     }
 }

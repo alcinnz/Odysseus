@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016).
+* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016).
 *
 * Oddysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -14,9 +14,12 @@
 * You should have received a copy of the GNU General Public License
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-public class Odysseus.WebTab : Granite.Widgets.Tab {
+public class Oddysseus.WebTab : Granite.Widgets.Tab {
     public WebKit.WebView web; // To allow it to be wrapped in layout views. 
     private Gtk.Revealer find;
+    public string url {
+        get {return web.uri;}
+    }
     
     public WebTab(Granite.Widgets.DynamicNotebook parent,
                   WebKit.WebView? related = null,

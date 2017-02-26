@@ -12,9 +12,9 @@ list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/src)
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 
 # what to call that directory where we install data too
-set (PKGDATADIR "${DATADIR}/odysseus")
+set (PKGDATADIR "${DATADIR}/oddysseus")
 
-set (EXEC_NAME "odysseus")
+set (EXEC_NAME "oddysseus")
 set (RELEASE_NAME "A web browser for elementary OS")
 set (VERSION "0.1")
 set (VERSION_INFO "development")
@@ -23,7 +23,7 @@ set (VERSION_INFO "development")
 find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite webkit2gtk-4.0 posix)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite webkit2gtk-4.0)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -39,7 +39,7 @@ ensure_vala_version("0.16" MINIMUM)
 # files we want to compile
 include(ValaPrecompile)
 vala_precompile(VALA_C ${EXEC_NAME}
-    src/Odysseus.vala
+    src/Oddysseus.vala
     src/BrowserWindow.vala
     src/Widgets/AddressBar.vala
     src/Widgets/WebTab.vala
@@ -65,4 +65,4 @@ target_link_libraries(${EXEC_NAME} ${DEPS_LIBRARIES})
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
 
 # install our .desktop file so the Applications menu will see it
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/odysseus.desktop DESTINATION ${DATADIR}/applications/)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/oddysseus.desktop DESTINATION ${DATADIR}/applications/)
