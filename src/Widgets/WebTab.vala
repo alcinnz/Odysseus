@@ -40,7 +40,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         find = new Gtk.Revealer();
         find.add(find_toolbar);
         find.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
-        find.halign = Gtk.Align.START;
+        find.halign = Gtk.Align.END;
         find.valign = Gtk.Align.START;
         container.add_overlay(find);
         find.show_all();

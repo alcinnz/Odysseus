@@ -16,12 +16,11 @@
 */
 public class Oddysseus.FindToolbar : Gtk.Toolbar {
     private WebKit.FindController controller;
-    private bool smartcase = true;
+    private bool smartcase;
     private WebKit.FindOptions options;
 
     private Gtk.Entry search;
     private Gdk.RGBA normal_color;
-    private Gtk.Label match_count;
     private Gtk.ToolButton menu_button;
 
     public FindToolbar(WebKit.FindController controller) {
@@ -43,7 +42,6 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
             if (which == Gtk.EntryIconPosition.SECONDARY) {
                 search.text = "";
                 search.secondary_icon_name = null;
-                match_count.label = "";
                 controller.search_finish();
             }
         });
@@ -94,9 +92,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
         });
         menu_button = options;
         add_widget(options);
-
-        match_count = new Gtk.Label("");
-        add_widget(match_count);
+        smartcase = true;
 
         controller.found_text.connect(found_text_cb);
         controller.failed_to_find_text.connect(failed_to_find_text_cb);
@@ -107,7 +103,6 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
         controller.found_text.disconnect(found_text_cb);
         controller.failed_to_find_text.disconnect(failed_to_find_text_cb);
         controller.counted_matches.disconnect(counted_matches_cb);
-        controller.search_finish();
     }
 
     private void add_widget(Gtk.Widget widget) {
@@ -198,8 +193,6 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
     }
 
     private void find_in_page() {
-        if (search.text_length <= 3) return; // Matches too much
-
         var flags = options;
         var max_count = 500; // something suitably large
         if (smartcase) {
@@ -243,7 +236,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
 
     /* Without this event handler, pressing next & prev gives counts of 1 */
     private void counted_matches_cb(uint match_count) {
-        this.match_count.label = "%u matches".printf(match_count);
+        // TODO output somewhere
     }
 
     public override void grab_focus() {

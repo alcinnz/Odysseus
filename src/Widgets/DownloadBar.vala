@@ -19,10 +19,10 @@ public class Oddysseus.DownloadsBar : Gtk.Revealer {
 
     public DownloadsBar() {
         var box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 5);
-        this.margin = 5;
         this.add(box);
         
         mainbox = new Gtk.FlowBox();
+        mainbox.margin = 5;
         mainbox.column_spacing = 10;
         mainbox.row_spacing = 10;
         box.pack_start(mainbox);

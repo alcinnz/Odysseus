@@ -14,7 +14,7 @@
 * You should have received a copy of the GNU General Public License
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-public class Oddysseus.BrowserWindow : Gtk.Window {
+public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
     private weak Oddysseus.Application app;
 
     private WebKit.WebView web;
@@ -41,6 +41,7 @@ public class Oddysseus.BrowserWindow : Gtk.Window {
         init_layout();
         register_events();
         create_accelerators();
+        set_default_size(1200, 800);
     }
     
     public BrowserWindow.with_urls(Oddysseus.Application ody_app, string[] urls) {
