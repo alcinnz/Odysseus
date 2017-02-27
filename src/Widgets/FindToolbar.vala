@@ -22,6 +22,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
     private Gtk.Entry search;
     private Gdk.RGBA normal_color;
     private Gtk.ToolButton menu_button;
+    public signal void counted_matches(string search, uint matche_count);
 
     public FindToolbar(WebKit.FindController controller) {
         set_style (Gtk.ToolbarStyle.ICONS);
@@ -231,12 +232,13 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
     }
 
     private void failed_to_find_text_cb() {
-        search.override_color(Gtk.StateFlags.NORMAL, {1.0, 0.0, 0.0, 1.0});
+        if (search.text != "")
+            search.override_color(Gtk.StateFlags.NORMAL, {1.0, 0.0, 0.0, 1.0});
     }
 
     /* Without this event handler, pressing next & prev gives counts of 1 */
     private void counted_matches_cb(uint match_count) {
-        // TODO output somewhere
+        counted_matches(search.text, match_count);
     }
 
     public override void grab_focus() {

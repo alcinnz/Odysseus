@@ -47,6 +47,14 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
     public string url {
         get {return web.uri;}
     }
+    private Granite.Widgets.OverlayBar status_bar;
+    public string status {
+        get {return status_bar.status;}
+        set {
+            status_bar.status = value;
+            status_bar.visible = value != "";
+        }
+    }
 
     public WebTab(Granite.Widgets.DynamicNotebook parent,
                   WebKit.WebView? related = null,
@@ -61,17 +69,29 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         var container = new Gtk.Overlay();
         container.add(this.web);
         this.page = container;
-        
+
         // Avoid taking too much screen realestate away from the page.
         // That's why we're using an overlay
         var find_toolbar = new FindToolbar(web.get_find_controller());
+        find_toolbar.counted_matches.connect((search, count) => {
+            if (find.child_revealed && search != "")
+                this.status = "%u matches of \"%s\" found".printf(count, search);
+            else this.status = "";
+        });
         find = new Gtk.Revealer();
+        find.notify["reveal-child"].connect((pspec) => {
+            if (!find.reveal_child) this.status = "";
+        });
         find.add(find_toolbar);
         find.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
         find.halign = Gtk.Align.END;
         find.valign = Gtk.Align.START;
         container.add_overlay(find);
         find.show_all();
+
+        status_bar = new Granite.Widgets.OverlayBar(container);
+        status_bar.visible = false;
+        status_bar.no_show_all = true;
         
         web.bind_property("title", this, "label");
         web.notify["favicon"].connect((sender, property) => {
@@ -105,9 +125,26 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
             }
             return false;
         });
+        setup_statusbar(web.user_content_manager);
 
         configure();
         web.load_uri(uri);
+    }
+
+    private void setup_statusbar(WebKit.UserContentManager ucm) {
+        ucm.register_script_message_handler("status");
+        ucm.script_message_received["status"].connect((json) => {
+            // status = /* TODO Get value via C++ */
+        });
+        var script = "document.body.addEventListener('mousemove', (evt) => {"
+                + "var el = evt.target;"
+                + "if (el.nodeName.toLowerCase() == 'a' && 'href' in el)"
+                + "window.webkit.messageHandlers.status.postMessage(el.href);"
+                + "});";
+        ucm.add_script(new WebKit.UserScript(script,
+                WebKit.UserContentInjectedFrames.TOP_FRAME,
+                WebKit.UserScriptInjectionTime.START,
+                new string[] {"*"}, new string[0]));
     }
     
     public void find_in_page() {
