@@ -86,7 +86,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
             if (!find.reveal_child) {
                 this.status = "";
                 web.get_find_controller().search_finish();
-            } else find_toolbar.find_in_page();
+            } else find_toolbar.grab_focus();
         });
         find.add(find_toolbar);
         find.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;

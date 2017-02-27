@@ -49,9 +49,8 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
             }
         });
         search.key_press_event.connect((evt) => {
-            if (search.text == "") {
-                return false;
-            }
+            if (search.text == "") return false;
+            if (controller.text != search.text) find_in_page();
 
             string key = Gdk.keyval_name(evt.keyval);
             if (evt.state == Gdk.ModifierType.SHIFT_MASK) {
@@ -199,8 +198,9 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
     }
 
     public void find_in_page() {
+        if (search.text == "") return;
+
         var flags = options;
-        var max_count = 500; // something suitably large
         if (smartcase) {
             // AKA match case if it's mixed.
             if (search.text.down() == search.text
@@ -209,8 +209,8 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
             }
         }
 
-        controller.search(search.text, flags, max_count);
-        controller.count_matches(search.text, flags, max_count);
+        controller.search(search.text, flags, uint.MAX);
+        controller.count_matches(search.text, flags, uint.MAX);
     }
 
     private void toggle_option(WebKit.FindOptions opt, bool active) {
@@ -243,7 +243,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
 
     /* Without this event handler, pressing next & prev gives counts of 1 */
     private void counted_matches_cb(uint match_count) {
-        counted_matches(search.text, match_count);
+        counted_matches(controller.text, match_count);
     }
 
     public override void grab_focus() {
