@@ -22,7 +22,9 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
     private Gtk.Entry search;
     private Gdk.RGBA normal_color;
     private Gtk.ToolButton menu_button;
+
     public signal void counted_matches(string search, uint matche_count);
+    public signal void escape_pressed();
 
     public FindToolbar(WebKit.FindController controller) {
         set_style (Gtk.ToolbarStyle.ICONS);
@@ -64,6 +66,9 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
             case "Return":
             case "Down":
                 controller.search_next();
+                return true;
+            case "Escape":
+                escape_pressed();
                 return true;
             }
 
@@ -193,7 +198,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
         push_in = true;
     }
 
-    private void find_in_page() {
+    public void find_in_page() {
         var flags = options;
         var max_count = 500; // something suitably large
         if (smartcase) {

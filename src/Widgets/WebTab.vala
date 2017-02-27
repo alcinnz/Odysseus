@@ -78,9 +78,15 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
                 this.status = "%u matches of \"%s\" found".printf(count, search);
             else this.status = "";
         });
+        find_toolbar.escape_pressed.connect(() => {
+            find.reveal_child = false;
+        });
         find = new Gtk.Revealer();
         find.notify["reveal-child"].connect((pspec) => {
-            if (!find.reveal_child) this.status = "";
+            if (!find.reveal_child) {
+                this.status = "";
+                web.get_find_controller().search_finish();
+            } else find_toolbar.find_in_page();
         });
         find.add(find_toolbar);
         find.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
