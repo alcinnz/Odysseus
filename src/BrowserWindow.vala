@@ -324,6 +324,11 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         }));
 
         bindings.add(web.bind_property("uri", addressbar, "text"));
+        hs.add(web.notify["uri"].connect((pspec) => {
+            // This works better with history.push/pop_state().
+            back.sensitive = web.can_go_back();
+            forward.sensitive = web.can_go_forward();
+        });
         bindings.add(web.bind_property("title", this, "title"));
         bindings.add(web.bind_property("estimated-load-progress", addressbar,
                             "progress-fraction"));
