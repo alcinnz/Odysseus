@@ -15,20 +15,48 @@
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 public class Oddysseus.WebTab : Granite.Widgets.Tab {
+    public static WebKit.WebContext? global_context;
+
+    private static string build_config_path(string subdir) {
+        return Path.build_path(Path.DIR_SEPARATOR_S,
+                Environment.get_user_config_dir(), "oddysseus", subdir);
+    }
+
+    public static void init_global_context() {
+        var data_manager = Object.@new(typeof(WebKit.WebsiteDataManager),
+                "base_cache_directory", build_config_path("site-cache"),
+                "base_data_directory", build_config_path("site-data"),
+                "disk_cache_directory", build_config_path("http-cache"),
+                "indexeddb_directory", build_config_path("indexeddb"),
+                "local_storage_directory", build_config_path("localstorage"),
+                "offline_application_cache_directory",
+                    build_config_path("offline-cache"),
+                "websql_directory", build_config_path("websql")
+                ) as WebKit.WebsiteDataManager;
+        global_context = new WebKit.WebContext.with_website_data_manager(
+                data_manager);
+        global_context.get_cookie_manager().set_persistent_storage(
+                build_config_path("cookies.sqlite"),
+                WebKit.CookiePersistentStorage.SQLITE);
+        global_context.set_favicon_database_directory(
+                build_config_path("favicons"));
+    }
+
     public WebKit.WebView web; // To allow it to be wrapped in layout views. 
     private Gtk.Revealer find;
     public string url {
         get {return web.uri;}
     }
-    
+
     public WebTab(Granite.Widgets.DynamicNotebook parent,
                   WebKit.WebView? related = null,
                   string uri = "https://ddg.gg/") {
+        if (global_context == null) init_global_context();
+
         if (related != null) {
             this.web = (WebKit.WebView) related.new_with_related_view();
         } else {
-            this.web = new WebKit.WebView();
-            web.web_context.set_favicon_database_directory(null);
+            this.web = new WebKit.WebView.with_context(global_context);
         }
         var container = new Gtk.Overlay();
         container.add(this.web);
@@ -77,7 +105,8 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
             }
             return false;
         });
-        
+
+        configure();
         web.load_uri(uri);
     }
     
@@ -88,7 +117,44 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         } else {
             find.set_reveal_child(false);
             web.grab_focus();
-        }
-            
+        }   
+    }
+
+    private void configure() {
+        var settings = new WebKit.Settings();
+        settings.allow_file_access_from_file_urls = true;
+        settings.allow_modal_dialogs = true;
+        settings.allow_universal_access_from_file_urls = false;
+        settings.auto_load_images = true;
+        settings.default_font_family = Gtk.Settings.get_default().gtk_font_name;
+        settings.enable_caret_browsing = false;
+        settings.enable_developer_extras = true;
+        settings.enable_dns_prefetching = true;
+        settings.enable_frame_flattening = false;
+        settings.enable_fullscreen = true;
+        settings.enable_html5_database = true;
+        settings.enable_html5_local_storage = true;
+        settings.enable_java = false;
+        settings.enable_javascript = true;
+        settings.enable_offline_web_application_cache = true;
+        settings.enable_page_cache = true;
+        settings.enable_plugins = false;
+        settings.enable_resizable_text_areas = true;
+        settings.enable_site_specific_quirks = true;
+        settings.enable_smooth_scrolling = true;
+        settings.enable_spatial_navigation = false;
+        settings.enable_tabs_to_links = true;
+        settings.enable_xss_auditor = true;
+        settings.javascript_can_access_clipboard = true;
+        settings.javascript_can_open_windows_automatically = false;
+        settings.load_icons_ignoring_image_load_setting = true;
+        settings.media_playback_allows_inline = true;
+        settings.media_playback_requires_user_gesture = true;
+        settings.print_backgrounds = true;
+        // Use Safari's user agent so as to avoid standing out to trackers
+        //      and having sites warn that we're using a unpopular browser.
+        settings.user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9) AppleWebKit/537.71 (KHTML, like Gecko) Version/7.0 Safari/537.71";
+        settings.zoom_text_only = false;
+        web.settings = settings;
     }
 }

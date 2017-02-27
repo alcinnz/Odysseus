@@ -15,7 +15,6 @@
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 public class Oddysseus.Application : Granite.Application {
-
     construct {
         application_id = "com.github.alcinnz.oddysseus";
         flags = ApplicationFlags.FLAGS_NONE;
@@ -44,7 +43,10 @@ public class Oddysseus.Application : Granite.Application {
     }
 
     public override void activate () {
-        // TODO restore state from file
+        /* Configure save directories */
+        var web_ctx = WebKit.WebContext.get_default();
+        
+        /* Restore tabs */
         try {
             var file = File.new_for_commandline_arg_and_cwd(".oddysseus",
                                 Environment.get_home_dir());
