@@ -142,7 +142,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         ucm.script_message_received["status"].connect((json) => {
             // status = /* TODO Get value via C++ */
         });
-        var script = "document.body.addEventListener('mousemove', (evt) => {"
+        var script = "document.addEventListener('mousemove', (evt) => {"
                 + "var el = evt.target;"
                 + "if (el.nodeName.toLowerCase() == 'a' && 'href' in el)"
                 + "window.webkit.messageHandlers.status.postMessage(el.href);"
