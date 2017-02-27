@@ -137,10 +137,15 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         web.load_uri(uri);
     }
 
-    private void setup_statusbar(WebKit.UserContentManager ucm) {
+    private void setup_statusbar(WebKit.UserContentManager? ucm) {
+        // NOTE: Two WebKit problems stopping me:
+        // 1. I cannot both specify a custom WebContext & a UserContentManager
+        // 2. I need to go through C++ to get the text from a JS value.
+        if (ucm == null) return;
+
         ucm.register_script_message_handler("status");
-        ucm.script_message_received["status"].connect((json) => {
-            // status = /* TODO Get value via C++ */
+        ucm.script_message_received.connect((json) => {
+            status = "LINK HOVERED";
         });
         var script = "document.addEventListener('mousemove', (evt) => {"
                 + "var el = evt.target;"
@@ -150,7 +155,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         ucm.add_script(new WebKit.UserScript(script,
                 WebKit.UserContentInjectedFrames.TOP_FRAME,
                 WebKit.UserScriptInjectionTime.START,
-                new string[] {"*"}, new string[0]));
+                new string[] {"*"}, null));
     }
     
     public void find_in_page() {
