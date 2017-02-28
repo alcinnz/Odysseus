@@ -70,7 +70,7 @@ namespace Oddysseus.Templating {
                 // Adjust the priority to keep only a few steps ahead of
                 //      read_async().
                 Idle.add(write.callback, data.length() > 4 ?
-                        Priority.LOW : Priority.HIGH_IDLE);
+                        Priority.LOW : Priority.DEFAULT_IDLE);
                 yield;
             }
             else error("Wrote to closed InputStreamWriter");
@@ -111,6 +111,10 @@ namespace Oddysseus.Templating {
             while (bytes_read < buffer.length) {
                 // Ensures we have a buffer, and handle close_write() correctly.
                 while (data.length() == 0 && !closed) {
+                    // Has to be lower than Priority.DEFAULT_IDLE
+                    //      as that will block the initial run of write().
+                    // But it also has to be higher than Priority.LOW
+                    //      to let it encourage us to go first. 
                     Idle.add(read_async.callback, Priority.LOW+1);
                     yield;
                 }

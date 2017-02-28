@@ -67,7 +67,11 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         if (related != null) {
             this.web = (WebKit.WebView) related.new_with_related_view();
         } else {
-            this.web = new WebKit.WebView.with_context(global_context);
+            var user_content = new WebKit.UserContentManager();
+            setup_statusbar(user_content);
+            this.web = (WebKit.WebView) Object.@new(typeof(WebKit.WebView),
+                    "web-context", global_context,
+                    "user-content-manager", user_content);
         }
         var container = new Gtk.Overlay();
         container.add(this.web);
@@ -140,25 +144,25 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         web.load_uri(uri);
     }
 
-    private void setup_statusbar(WebKit.UserContentManager? ucm) {
+    private void setup_statusbar(WebKit.UserContentManager ucm) {
         // NOTE: Two WebKit problems stopping me:
         // 1. I cannot both specify a custom WebContext & a UserContentManager
+        //      (THIS IS SOLVED using GObject construction)
         // 2. I need to go through C++ to get the text from a JS value.
-        if (ucm == null) return;
-
         ucm.register_script_message_handler("status");
-        ucm.script_message_received.connect((json) => {
-            status = "LINK HOVERED";
+        ucm.script_message_received["status"].connect((json) => {
+            // status = // TODO get the text out of json.
         });
         var script = "document.addEventListener('mousemove', (evt) => {"
                 + "var el = evt.target;"
-                + "if (el.nodeName.toLowerCase() == 'a' && 'href' in el)"
+                + "if (el.nodeName.toLowerCase() == 'a' && 'href' in el) {"
                 + "window.webkit.messageHandlers.status.postMessage(el.href);"
+                + "}"
                 + "});";
         ucm.add_script(new WebKit.UserScript(script,
                 WebKit.UserContentInjectedFrames.TOP_FRAME,
                 WebKit.UserScriptInjectionTime.START,
-                new string[] {"*"}, null));
+                null, null));
     }
     
     public void find_in_page() {
