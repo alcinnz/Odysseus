@@ -1,0 +1,22 @@
+<? xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <!-- NOTE The `compress="true"` option is not used as the Prosody parser
+            likes to keep Bytes around pointing to slices of the resource.
+        The `preprocess="xml-stripblanks" option is not used as lacking
+            runtime latency concerns I prefer to keep my "view source" readable.
+    -->
+    <gresource prefix="/io/github/alcinnz/Oddysseus/oddysseus:/">
+        <file>NOT-FOUND</file>
+        <file>SERVER-ERROR</file>
+        <file>BAD-REQUEST</file>
+
+        <file>debugging/failed.ico</file>
+        <file>debugging/failed.ico.mime</file>
+        <file>debugging/passed.ico</file>
+        <file>debugging/passed.ico.mime</file>
+        <file>debugging/spinner.ico</file>
+        <file>debugging/spinner.ico.mime</file>
+        <file>debugging/test</file>
+        <file>debugging/index</file>
+    </gresource>
+</gresources>

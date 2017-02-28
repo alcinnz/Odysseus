@@ -23,7 +23,8 @@ set (VERSION_INFO "development")
 find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite webkit2gtk-4.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite webkit2gtk-4.0 json-glib-1.0
+        gee-0.8)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -49,16 +50,32 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Widgets/DownloadBar.vala
     src/Widgets/ProgressBin.vala
 
+    src/Services/pages.vala
+    src/Services/Prosody/byteutils.vala
+    src/Services/Prosody/data.vala
+    src/Services/Prosody/diff.vala
+    src/Services/Prosody/expression.vala
+    src/Services/Prosody/lib.vala
+    src/Services/Prosody/parser.vala
+    src/Services/Prosody/writers.vala
+    src/Services/Prosody/loader.vala
+
 # tell what libraries to use when compiling
 PACKAGES
     gtk+-3.0
     granite
     webkit2gtk-4.0
+    json-glib-1.0
+    gee-0.8
     posix
 )
 
+# Bundle in about: page templates
+include(GResource)
+glib_compile_resources(GLIB_RESOURCES_PAGES SOURCE data/pages/about-pages.gresource.xml)
+
 # tell cmake what to call the executable we just made
-add_executable(${EXEC_NAME} ${VALA_C})
+add_executable(${EXEC_NAME} ${VALA_C} ${GLIB_RESOURCES_PAGES})
 target_link_libraries(${EXEC_NAME} ${DEPS_LIBRARIES})
 
 # install the binaries we just made

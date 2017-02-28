@@ -1,0 +1,392 @@
+/**
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
+*
+* Oddysseus is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Oddysseus is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+
+* You should have received a copy of the GNU General Public License
+* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* Data model for the templating language,
+		predominantly accessed via Oddysseus.Templating.Variable.
+
+	Can currently work with JSON, and Vala literals. */
+namespace Oddysseus.Templating.Data {
+	private void indent(string text, StringBuilder builder) {
+		var lines = text.split("\n");
+		builder.append(lines[0]);
+		foreach (var line in lines[1:lines.length]) {
+			builder.append("\n\t");
+			builder.append(line);
+		}
+	}
+	public abstract class Data : Object {
+		/* These methods are used in core language syntax */
+		public virtual new Data get(Bytes property) {
+			Data ret = new Empty();
+			foreach_map((key, val) => {
+				if (key.compare(property) == 0) {
+					ret = val;
+					return true;
+				}
+				return false;
+			});
+			return ret;
+		}
+
+		public virtual string to_string() {
+			var builder = new StringBuilder();
+			builder.append("{");
+			@foreach_map((key, val) => {
+				builder.append("\n\t");
+				builder.append_len((string) key.get_data(), key.length);
+				builder.append(" => ");
+				indent(val.to_string(), builder);
+				return false;
+			});
+			builder.append("}");
+			return builder.str;
+		}
+		public virtual Bytes to_bytes() {
+			return ByteUtils.from_string(this.to_string());
+		}
+
+		/* These methods/properties are used by important tags,
+		    as well as filters. */
+		public virtual bool exists {
+			get {return to_int() != 0;}
+		}
+
+		public delegate bool ForeachMap(Bytes key, Data val);
+		public virtual void foreach_map(ForeachMap cb) {
+			@foreach((key) => cb(key, this[key]));
+		}
+		// Possibly easier way to implement foreach_map
+		public delegate bool Foreach(Bytes key);
+		protected virtual void @foreach(Foreach cb) {}
+
+		/* These methods are used by a variety of filters */
+		public virtual double to_double() {return (double) to_int(); }
+		public virtual int to_int(out bool is_length = null) {
+			is_length = false;
+			return (int) to_double();
+		}
+		// Exposes (through a filter) traversal-based query languages
+		//		for the particular data format.
+		// Defaults to using our Variable syntax.
+		public virtual Data lookup(string query) {
+			try {
+				return new Variable(ByteUtils.from_string(query)).eval(this);
+			} catch (SyntaxError e) {
+				warning("Invalid syntax expression: %s", e.message);
+				return new Empty();
+			}
+		}
+	}
+
+	// Utility callback-iterator for numeric ranges
+	private bool range(Data.Foreach cb, uint end, uint start = 0) {
+		for (var index = start; index < end; index++) {
+		    var key = "$%u".printf(index);
+			if (cb(ByteUtils.from_string(key))) return true;
+        }
+		return false;
+	}
+
+	public class JSON : Data {
+		private Json.Node data;
+
+		public JSON(Json.Node node) {
+		    this.data = node;
+		}
+
+		public override Data get(Bytes property_bytes) {
+		    var property = ByteUtils.to_string(property_bytes);
+		    switch (data.get_node_type()) {
+		    case Json.NodeType.OBJECT:
+		        Json.Node? ret = data.get_object().get_member(property);
+		        if (ret != null) return new JSON(ret);
+		        else return new Empty();
+		    case Json.NodeType.ARRAY:
+		        uint64 index = 0;
+		        if (uint64.try_parse(property[1:property.length], out index) &&
+		        	index < data.get_array().get_length()) {
+		            return new JSON(data.get_array().get_element((uint) index));
+		        }
+		        break;
+		    case Json.NodeType.VALUE:
+		        return new Literal(data.get_value())[property_bytes];
+		    }
+		    return new Empty();
+		}
+
+		public override void @foreach(Data.Foreach cb) {
+			switch (data.get_node_type()) {
+			case Json.NodeType.OBJECT:
+				foreach (var key in data.get_object().get_members())
+					if (cb(ByteUtils.from_string(key))) break;
+				break;
+			case Json.NodeType.ARRAY:
+				range(cb, data.get_array().get_length());
+				break;
+			}
+		}
+
+		public override void foreach_map(Data.ForeachMap cb) {
+		    if (data.get_node_type() == Json.NodeType.VALUE)
+                new Literal(data.get_value()).@foreach_map(cb);
+            else
+		        @foreach((key) => cb(key, this[key]));
+	    }
+		
+		public override string to_string() {
+		    if (data.get_node_type() == Json.NodeType.VALUE) {
+		        var target = Value(typeof(string));
+		        if (data.get_value().transform(ref target))
+		        	return target.dup_string();
+		    }
+		    return "";
+		}
+
+		public override int to_int(out bool is_length = null) {
+		    is_length = true;
+			switch (data.get_node_type()) {
+			case Json.NodeType.OBJECT:
+				return (int) data.get_object().get_size();
+			case Json.NodeType.ARRAY:
+				return (int) data.get_array().get_length();
+			case Json.NodeType.VALUE:
+				is_length = false;
+				return new Literal(data.get_value()).to_int();
+			case Json.NodeType.NULL:
+			default:
+				return 0;
+			}
+		}
+
+		public override double to_double() {
+			if (data.get_node_type() == Json.NodeType.VALUE) {
+				var target = Value(typeof(string));
+				if (data.get_value().transform(ref target))
+					return target.get_double();
+				else
+					return 0.0;
+			} else return (double) to_int();
+		}
+	}
+
+	public class Empty : Data {
+		public override Data get(Bytes _) {return this;}
+		public override string to_string() {return "";}
+		public override void foreach_map(Data.ForeachMap cb) {}
+		public override int to_int(out bool is_length = null) {
+			is_length = false; return 0;
+		}
+	}
+
+	public class Literal : Data {
+		public Value data;
+		public Literal(Value v) {
+		    this.data = v;
+		}
+
+        public override void foreach_map(Data.ForeachMap cb) {
+            var text = to_string();
+
+            int index = 0;
+            uint unichar_count = 0;
+            unichar c;
+            while (text.get_next_char(ref index, out c)) {
+                var key = "$%u".printf(unichar_count++);
+                cb(ByteUtils.from_string(key), new Literal(c));
+            }
+        }
+
+		public override string to_string() {
+		    if (data.holds(typeof(double))) {
+		        // Obtain better formatter
+		        char[] buf = new char[double.DTOSTR_BUF_SIZE];
+		        return ((double) data).to_str(buf);
+	        } else if (data.holds(typeof(unichar))) {
+	            return ((unichar) data).to_string();
+            } else if (data.holds(typeof(char))) {
+	            return ((char) data).to_string();
+            }
+
+		    Value ret = Value(typeof(string));
+		    if (data.transform(ref ret)) return ret.dup_string();
+		    else return "";
+		}
+
+		public override int to_int(out bool is_length = null) {
+			is_length = false;
+			Value ret = Value(typeof(int));
+			if (data.transform(ref ret)) return ret.get_int();
+			else return 0;
+		}
+
+		public override double to_double() {
+			Value ret = Value(typeof(double));
+			if (data.transform(ref ret)) return (double) ret;
+			else return 0.0;
+		}
+
+		public override bool exists {
+			get {
+				if (data.holds(typeof(string))) {
+					return ((string) data).length > 0;
+				} if (data.holds(typeof(double)) || data.holds(typeof(int))) {
+				    return to_double() > 0;
+				} else {
+					Value ret = Value(typeof(bool));
+					if (data.transform(ref ret)) return (bool) ret;
+					else return true; // Exists simply by being there
+				}
+			}
+		}
+	}
+
+	public class Substr : Data {
+		Bytes data;
+		public Substr(Bytes b) {
+			this.data = b;
+		}
+
+        public override void foreach_map(Data.ForeachMap cb) {
+            var text = (string) data.get_data();
+
+            int index = 0;
+            uint char_count = 0;
+            unichar c;
+            while (text.get_next_char(ref index, out c)) {
+                if (index > data.length) {
+                    // TODO Log unicode validation error
+                    return;
+                }
+                var key = "$%u".printf(char_count++);
+                cb(ByteUtils.from_string(key), new Literal(c));
+            }
+        }
+
+		public override string to_string() {
+			return ByteUtils.to_string(data);
+		}
+
+		public override Bytes to_bytes() {
+			return data;
+		}
+
+		public override bool exists {
+			get {
+				return data.length > 0;
+			}
+		}
+
+		public override int to_int(out bool is_length = null) {
+			is_length = false;
+			return int.parse(to_string());
+		}
+
+		public override double to_double() {
+			return double.parse(to_string());
+		}
+	}
+
+	public class Mapping : Data {
+		public Gee.Map<Bytes, Data> data;
+		public Mapping(Gee.Map<Bytes, Data> m) {
+			this.data = m;
+		}
+
+		public override Data get(Bytes property) {
+			if (data.has_key(property)) return data[property];
+			else return new Empty();
+		}
+		public override void foreach_map(Data.ForeachMap cb) {
+			data.map_iterator().@foreach((k, v) => cb(k, v));
+		}
+
+		public override string to_string() {return "";}
+		public override int to_int(out bool is_length = null) {
+			is_length = true; return data.size;
+		}
+	}
+
+	public class Stack : Data {
+		Data first;
+		Data last;
+		public Stack(Data first, Data last) {
+			this.first = first; this.last = last;
+		}
+
+		public Stack.with_map(Data fallback, Gee.Map<Bytes, Data> top) {
+			this(new Mapping(top), fallback);
+		}
+
+		public override Data get(Bytes property) {
+			var val = first[property];
+			if (val is Empty) return last[property];
+			else return val;
+		}
+
+		public override string to_string() {
+			return "";
+		}
+
+		public override bool exists {
+			get {
+				return first.exists || last.exists;
+			}
+		}
+
+		public override void foreach_map(Data.ForeachMap cb) {
+			warning("Trying to iterate over a stack. " +
+					"This may not give the results you expect.");
+			// This is probably fine as Stacks should be used as a root context,
+			//		where it's inaccessible by tags and filters.
+			first.foreach_map(cb);
+		}
+
+		public override int to_int(out bool is_length = null) {
+			warning("Trying to convert a stack to an int. " +
+					"This may not give the results you expect.");
+			is_length = true; // Won't get a better answer...
+			return 0;
+		}
+	}
+
+	public class Lazy : Data {
+		Data ctx;
+		Gee.Map<Bytes,Variable> vars;
+		Gee.Map<Bytes,Data> evaluated;
+		public Lazy(Gee.Map<Bytes,Variable> variables, Data context) {
+			this.ctx = context;
+			this.vars = variables;
+			this.evaluated = ByteUtils.create_map<Data>();
+		}
+
+		public override Data get(Bytes property) {
+			if (evaluated.has_key(property)) return evaluated[property];
+			if (vars.has_key(property)) {
+				evaluated[property] = vars[property].eval(ctx);
+				return evaluated[property];
+			}
+			return ctx[property];
+		}
+
+		public override string to_string() {return "";}
+		public override bool exists {get {return true;}}
+		public override int to_int(out bool is_length = null) {
+			is_length = true; // Won't get a better answer...
+			return 0;
+		}	
+	}
+}

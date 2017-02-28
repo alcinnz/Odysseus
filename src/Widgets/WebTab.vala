@@ -40,6 +40,9 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
                 WebKit.CookiePersistentStorage.SQLITE);
         global_context.set_favicon_database_directory(
                 build_config_path("favicons"));
+
+        global_context.register_uri_scheme("oddysseus",
+                Oddysseus.Services.handle_oddysseus_uri);
     }
 
     public WebKit.WebView web; // To allow it to be wrapped in layout views. 
@@ -201,6 +204,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         settings.print_backgrounds = true;
         // Use Safari's user agent so as to avoid standing out to trackers
         //      and having sites warn that we're using a unpopular browser.
+        // Use Safair's, as opposed to FireFox, as we're both using WebKit.
         settings.user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9) AppleWebKit/537.71 (KHTML, like Gecko) Version/7.0 Safari/537.71";
         settings.zoom_text_only = false;
         web.settings = settings;

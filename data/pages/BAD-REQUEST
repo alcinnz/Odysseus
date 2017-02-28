@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Invalid Tool Address</title>
+</head>
+<body>
+  <h1>What Was That You Just Said?</h1>
+  <p>I can't make sense of this web address.</p>
+
+  <!-- TODO point out what can't be parsed -->
+</body>
+</html>
