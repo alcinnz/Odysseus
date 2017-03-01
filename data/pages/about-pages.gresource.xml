@@ -9,6 +9,7 @@
         <file>NOT-FOUND</file>
         <file>SERVER-ERROR</file>
         <file>BAD-REQUEST</file>
+        <file>butterick.css</file>
 
         <file>debugging/failed.ico</file>
         <file>debugging/failed.ico.mime</file>
