@@ -69,7 +69,6 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
             this.web = (WebKit.WebView) related.new_with_related_view();
         } else {
             var user_content = new WebKit.UserContentManager();
-            setup_statusbar(user_content);
             this.web = (WebKit.WebView) Object.@new(typeof(WebKit.WebView),
                     "web-context", global_context,
                     "user-content-manager", user_content);
@@ -127,31 +126,14 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         web.grab_focus.connect(() => {
             find.set_reveal_child(false);
         });
-        setup_statusbar(web.user_content_manager);
+        web.mouse_target_changed.connect((target, modifiers) => {
+            if (target.context_is_link()) {
+                status = target.link_uri;
+            } else status = "";
+        });
 
         configure();
         web.load_uri(uri);
-    }
-
-    private void setup_statusbar(WebKit.UserContentManager ucm) {
-        // NOTE: Two WebKit problems stopping me:
-        // 1. I cannot both specify a custom WebContext & a UserContentManager
-        //      (THIS IS SOLVED using GObject construction)
-        // 2. I need to go through C++ to get the text from a JS value.
-        ucm.register_script_message_handler("status");
-        ucm.script_message_received["status"].connect((json) => {
-            // status = // TODO get the text out of json.
-        });
-        var script = "document.addEventListener('mousemove', (evt) => {"
-                + "var el = evt.target;"
-                + "if (el.nodeName.toLowerCase() == 'a' && 'href' in el) {"
-                + "window.webkit.messageHandlers.status.postMessage(el.href);"
-                + "}"
-                + "});";
-        ucm.add_script(new WebKit.UserScript(script,
-                WebKit.UserContentInjectedFrames.TOP_FRAME,
-                WebKit.UserScriptInjectionTime.START,
-                null, null));
     }
     
     public void find_in_page() {
