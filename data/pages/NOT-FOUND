@@ -7,7 +7,8 @@
 </head>
 <body>
   <main>
-    <h1>This Page Does Not Exist (and probably never has)</h1>
+    <h1>This Page (<code>{{ uri }}</code>) Does Not Exist <br />
+        (and probably never has)</h1>
     <p>Maybe you meant one of these other internal pages?</p>
 
     <dl>

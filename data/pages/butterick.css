@@ -20,6 +20,10 @@ main {
     min-height: 90vh
 }
 
+main h1, main h2, main h3, main h4 {
+    text-align: center;
+}
+
 /* These heading sizes are taken from the elementary Gtk theme
     https://github.com/elementary/stylesheet/blob/master/gtk-3.0/granite-widgets.css#L378 .
     They have been converted into percentages so that I could

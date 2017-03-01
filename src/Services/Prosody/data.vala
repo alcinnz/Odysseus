@@ -302,8 +302,9 @@ namespace Oddysseus.Templating.Data {
 
 	public class Mapping : Data {
 		public Gee.Map<Bytes, Data> data;
-		public Mapping(Gee.Map<Bytes, Data> m) {
-			this.data = m;
+		public Mapping(Gee.Map<Bytes, Data>? m = null) {
+		    if (m != null) this.data = m;
+		    else this.data = ByteUtils.create_map<Data>();
 		}
 
 		public override Data get(Bytes property) {

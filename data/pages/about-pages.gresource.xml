@@ -19,5 +19,6 @@
         <file>debugging/spinner.ico.mime</file>
         <file>debugging/test</file>
         <file>debugging/index</file>
+        <file>debugging/syntaxerror0</file>
     </gresource>
 </gresources>

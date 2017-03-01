@@ -10,7 +10,14 @@
     <h1>This Is Bad…</h1>
     <p>I cannot understand my own code. If you are an Oddysseus developer more information is below. If you aren't, please <a href="https://github.com/alcinnz/Oddysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message.</p>
 
-    <!-- TODO render debugging information -->
+    <h2>{{ err-code }}{% if err-tag %}
+        &mdash; on {% templatetag openblock %} {{ err-tag }}
+        {% templatetag closeblock %}{% endif %}</h2>
+    <p>{{ err-text }}</p>
+    <table><tr>
+      <th><a href="https://github.com/alcinnz/Oddysseus/tree/master/data/pages/{{ path }}#L{{ line-number }}">{{line number }}</a></th>
+      <td><pre>{% error-line %}</pre></td>
+    </tr></table>
   </main>
 </body>
 </html>

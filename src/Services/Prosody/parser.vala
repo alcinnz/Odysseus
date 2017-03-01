@@ -205,12 +205,12 @@ namespace Oddysseus.Templating {
 	    INVALID_ARGS, UNBALANCED_TAGS
 	}
 
-	private enum TokenType {
+	public enum TokenType {
 		TEXT, VAR, TAG, COMMENT
 	}
 
 	namespace Token {
-		private TokenType get_type(Bytes token) {
+		public TokenType get_type(Bytes token) {
 		    if (token[0] != '{') return TokenType.TEXT;
 
 		    switch (token[1]) {
@@ -221,7 +221,7 @@ namespace Oddysseus.Templating {
 		    }
 		}
 
-		private WordIter get_args(Bytes token) {
+		public WordIter get_args(Bytes token) {
 		    return smart_split(token[2:token.length-2], " \t\r\n");
 		}
 	}
@@ -296,9 +296,12 @@ namespace Oddysseus.Templating {
 		}
 
         public Bytes get_current_token(out int line_no = null,
-                out int line_offset = null) {
+                out int line_offset = null,
+                out int start = null, out int end = null) {
             line_no = lex.line_no;
             line_offset = lex.line_offset;
+            start = lex.last_start;
+            end = lex.last_end;
             return lex.text.slice(lex.last_start, lex.last_end);
         }
 
