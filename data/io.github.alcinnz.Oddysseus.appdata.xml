@@ -1,0 +1,18 @@
+<? xml version="1.0" encoding="UTF-8" ?>
+<component type="desktop-application">
+  <id>io.github.alcinnz.Oddysseus</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+
+  <description>
+    <p>A rudimentary Web Browser designed to fit in with elementary OS. Supports tabbed browsing, per-tab history, find-in-page, downloads, stop/reload, and the navigation to user specified Web Addresses. Works with nearly every site you care to use.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>
+        https://github.io/alcinnz/Oddysseus/raw/master/data/screenshot.png
+      </image>
+    </screenshot>
+  </screenshots>
+  <url type="bugtracker">https://github.com/alcinnz/Oddysseus/issues</url>
+</component>
