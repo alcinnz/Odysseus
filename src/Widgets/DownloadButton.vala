@@ -65,7 +65,6 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
     }
     
     private void connect_events() {
-        stdout.printf("Connecting download events\n");
         download.received_data.connect((len) => {
             update_data();
         });

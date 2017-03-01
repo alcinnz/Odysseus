@@ -37,7 +37,6 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         this.title = "(Loading)";
         this.icon_name = "internet-web-browser";
 
-        setup_webcontext();
         init_layout();
         register_events();
         create_accelerators();
@@ -47,14 +46,6 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
     public BrowserWindow.with_urls(Oddysseus.Application ody_app, string[] urls) {
         this(ody_app);
         foreach (var url in urls) new_tab(url);
-    }
-
-    private void setup_webcontext() {
-        var ctx = WebKit.WebContext.get_default();
-        ctx.set_favicon_database_directory(null); // to fix favicon loading
-        ctx.download_started.connect((download) => {
-            downloads.add_entry(new DownloadButton(download));
-        });
     }
 
     private void init_layout() {

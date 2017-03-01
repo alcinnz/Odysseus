@@ -43,6 +43,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
 
         global_context.register_uri_scheme("oddysseus",
                 Oddysseus.Services.handle_oddysseus_uri);
+        DownloadsBar.setup_context(global_context);
     }
 
     public WebKit.WebView web; // To allow it to be wrapped in layout views. 
@@ -125,18 +126,6 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         });
         web.grab_focus.connect(() => {
             find.set_reveal_child(false);
-        });
-        web.load_failed.connect((load_event, uri, error) => {
-            if (error.domain == WebKit.PolicyError.quark()) {
-                web.download_uri(uri);
-                web.stop_loading();
-                return true;
-            } else {
-                GLib.warning("'%s' failed to load:\n", uri);
-                GLib.warning("[%s: %i] %s\n", error.domain.to_string(),
-                        error.code, error.message);
-            }
-            return false;
         });
         setup_statusbar(web.user_content_manager);
 

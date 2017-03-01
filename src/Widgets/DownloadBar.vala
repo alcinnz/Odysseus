@@ -16,6 +16,7 @@
 */
 public class Oddysseus.DownloadsBar : Gtk.Revealer {
     private Gtk.FlowBox mainbox;
+    private static List<DownloadsBar> instances;
 
     public DownloadsBar() {
         var box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 5);
@@ -39,10 +40,24 @@ public class Oddysseus.DownloadsBar : Gtk.Revealer {
         box.pack_end(close_button, false, false);
         
         set_reveal_child(false);
+
+        if (instances == null) instances = new List<DownloadsBar>();
+        instances.append(this);
+    }
+
+    ~DownloadsBar() {
+        instances.remove(this);
     }
     
     public void add_entry(Gtk.Widget widget) {
         set_reveal_child(true);
         mainbox.add(widget);
+    }
+
+    public static void setup_context(WebKit.WebContext ctx) {
+        ctx.download_started.connect((download) => {
+            foreach (var downloads_bar in instances)
+                downloads_bar.add_entry(new DownloadButton(download));
+        });
     }
 }
