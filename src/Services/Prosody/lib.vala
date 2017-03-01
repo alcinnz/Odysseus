@@ -636,8 +636,9 @@ namespace Oddysseus.Templating.Std {
 			yield output.writes(" passed</aside>\n<script>document.title = '");
 			yield output.writes(passed ? "Tests PASSED" : "Tests FAILED");
 			yield output.writes("';\n\t");
-			yield output.writes("document.");
-			yield output.writes("querySelector(\"link[rel*='icon']\").href = '");
+			yield output.writes("document.querySelector");
+			yield output.writes("(\"link[rel*='icon']\").href = ");
+			yield output.writes("'oddysseus:debugging/");
 			yield output.writes(passed ? "passed.ico" : "failed.ico");
 			yield output.writes("';</script>");
 		}

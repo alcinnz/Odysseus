@@ -8,7 +8,7 @@
   <h1>Tools for debugging Oddysseus</h1>
   <p>These tools help the Oddysseus developers to diagnose problems with your browser. It is unlikely you will be interested in them.</p>
   <dl>
-    <dt><a href="test">Testsuite for the Templating Language</a></dt>
+    <dt><a href="oddysseus:debugging/test">Testsuite for the Templating Language</a></dt>
     <dd>If you see red on this page, it means something's wrong with how these internal pages are rendered.</dd>
   </dl>
 </body>
