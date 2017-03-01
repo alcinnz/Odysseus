@@ -27,6 +27,8 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
     private Gtk.Menu menu;
     private Gtk.MenuItem open_item;
 
+    private string destination = "";
+
     public DownloadButton(WebKit.Download download) {
         this.download = download;
         this.completed = false;
@@ -69,6 +71,13 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
             update_data();
         });
         download.finished.connect(() => {
+            // Can't set destination after a download's started,
+            //      so do it afterwords
+            if (destination != "")
+                File.new_for_uri(download.destination).move(
+                        File.new_for_uri(destination),
+                        FileCopyFlags.OVERWRITE | FileCopyFlags.BACKUP);
+
             update_data();
             remaining.label = "DONE";
             completed = true;
@@ -78,7 +87,8 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
 
         button.activate.connect(() => {
             if (completed) {
-                Granite.Services.System.open_uri(download.destination);
+                Granite.Services.System.open_uri(
+                    destination == "" ? download.destination : destination);
             } else {
                 show_menu(null);
             }
@@ -98,7 +108,8 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
         this.progress = download.estimated_progress;
         var mime = download.response.mime_type;
         fileicon.gicon = ContentType.get_icon(ContentType.from_mime_type(mime));
-        filename.label = Filename.display_basename(download.destination);
+        filename.label = Filename.display_basename(
+                destination == "" ? download.destination : destination);
         filesize.label = format_size(download.response.content_length);
 
         var progress = download.estimated_progress;
@@ -128,7 +139,7 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
         menu.add(open_item);
 
         // FIXME Be nice to select alternative download locations
-        /*var save_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.SAVE_AS,
+        var save_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.SAVE_AS,
                                                         null);
         save_item.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
@@ -140,13 +151,13 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
             chooser.set_filename(download.destination);
 
             if (chooser.run() == Gtk.ResponseType.OK) {
-                download.set_destination(chooser.get_uri());
+                destination = chooser.get_uri();
             }
             chooser.destroy();
         });
         menu.add(save_item);
         
-        menu.add(new Gtk.SeparatorMenuItem());*/
+        menu.add(new Gtk.SeparatorMenuItem());
         
         var cancel_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.CANCEL,
                                                             null);
