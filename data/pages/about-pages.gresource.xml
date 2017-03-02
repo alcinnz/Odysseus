@@ -1,4 +1,4 @@
-<? xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <gresources>
     <!-- NOTE The `compress="true"` option is not used as the Prosody parser
             likes to keep Bytes around pointing to slices of the resource.
@@ -20,5 +20,10 @@
         <file>debugging/test</file>
         <file>debugging/index</file>
         <file>debugging/syntaxerror0</file>
+
+        <file>ext/highlight.pack.js</file>
+        <file>ext/highlight.pack.js.mime</file>
+        <file>ext/hljs-solarized-light.css</file>
+        <file>ext/hljs-solarized-light.css.mime</file>
     </gresource>
 </gresources>

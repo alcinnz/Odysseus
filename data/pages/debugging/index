@@ -12,6 +12,9 @@
     <dl>
       <dt><a href="oddysseus:debugging/test">Testsuite for the Templating Language</a></dt>
       <dd>If you see red on this page, it means something's wrong with how these internal pages are rendered.</dd>
+      <dt><a href="oddysseus:debugging/syntaxerror0">Invalid template #0</a></dt>
+      <dd>This template is purposefully poorly written and raises a syntax error.</dd>
+      <dd>Used to test the error reporting.</dd>
     </dl>
   </main>
 </body>

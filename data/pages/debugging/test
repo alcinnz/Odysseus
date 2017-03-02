@@ -6,6 +6,7 @@
   <!-- favicons sourced from http://www.favicon.cc/ -->
   <link rel="shortcut icon" href="oddysseus:debugging/spinner.ico" />
   <style>
+    @import url(oddysseus:ext/hljs-solarized-light.css);
     body {
       font-family: sans-serif;
     }
@@ -20,6 +21,9 @@
     }
     th {
       background: lightgray;
+    }
+    td {
+      background: #fdf6e3; /* To match Solarized Light */
     }
     ins, del {
       font-weight: bold;
@@ -848,6 +852,14 @@ TRUE|FALSE
 {% test "|title" %}{{ "oDDitY twiCE"|title }}{% output %}Oddity Twice{% endtest %}
 
   {% test-report %}
-  <script>parsedEnd = true;</script>
+  <script src="oddysseus:ext/highlight.pack.js"></script>
+  <script>
+    parsedEnd = true; // assert successful load
+
+    // Add syntax highlighting
+    for (let pre of document.querySelectorAll('pre')) {
+      hljs.highlightBlock(pre);
+    }
+  </script>
 </body>
 </html>

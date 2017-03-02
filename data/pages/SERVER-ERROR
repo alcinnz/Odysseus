@@ -5,7 +5,11 @@
   <title>Internal Error</title>
   <style>
     @import url(oddysseus:butterick.css);
+    @import url(oddysseus:ext/hljs-solarized-light.css);
     pre strong {border-bottom: thin dashed red;}
+    table {background: #fdf6e3;} /* Match Solarized light */
+    /* Solarized Light adds whitespace which misaligns the table */
+    pre {margin: 0;}
   </style>
 </head>
 <body>
@@ -19,8 +23,11 @@
     <p>{{ err-text }}</p>
     <table><tr>
       <th><a href="https://github.com/alcinnz/Oddysseus/tree/master/data/pages/{{ path }}#L{{ line-number }}">{{ line-number|add:1 }}</a></th>
-      <td><pre>{% error-line %}</pre></td>
+      <td><pre class="django">{% error-line %}</pre></td>
     </tr></table>
   </main>
+
+  <script src="oddysseus:ext/highlight.pack.js"></script>
+  <script>hljs.highlightBlock(document.querySelector('pre'))</script>
 </body>
 </html>
