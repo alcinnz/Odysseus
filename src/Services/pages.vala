@@ -78,7 +78,17 @@ namespace Oddysseus.Services {
         Templating.Template template;
         Templating.ErrorData? error_data = null;
         try {
-            template = Templating.get_for_resource(path, ref error_data);
+            if (error_tag == null)
+                template = Templating.get_for_resource(path, ref error_data);
+            else {
+                // Parse specially with custom {% error-line %} tag.
+                var bytes = resources_lookup_data(path, 0);
+                var parser = new Templating.Parser(bytes);
+                var error_line_key =
+                    Templating.ByteUtils.from_string("error-line");
+                parser.local_tag_lib[error_line_key] = error_tag;
+                template = parser.parse();
+            }
         } catch (Templating.SyntaxError e) {
             if (render_errors)
                 yield render_alternate_html(webview, "SERVER-ERROR",
@@ -89,7 +99,7 @@ namespace Oddysseus.Services {
             return;
         } catch (Error e) {
             if (render_errors) yield render_alternate_html(webview, "NOT-FOUND",
-                    alt_uri, false); // TODO Add debugging information
+                    alt_uri, false);
             else webview.load_alternate_html(
                     @"<h1>$(e.domain)</h1><p>$(e.message)</p>",
                     alternative_uri, null);
