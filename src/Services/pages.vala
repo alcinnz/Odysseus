@@ -130,8 +130,8 @@ namespace Oddysseus.Services {
                 template = Templating.get_for_resource(path, ref error_data);
             } catch (Templating.SyntaxError e) {
                 // FIXME segfaults with new data
-                render_error(request, "SERVER-ERROR"/*,
-                        error_data, error_data.tag*/);
+                render_error(request, "SERVER-ERROR",
+                        error_data, error_data.tag);
                 return;
             } catch (Error e) {
                 render_error(request, "NOT-FOUND");

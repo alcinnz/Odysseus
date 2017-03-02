@@ -3,7 +3,10 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Internal Error</title>
-  <style>@import url(oddysseus:butterick.css);</style>
+  <style>
+    @import url(oddysseus:butterick.css);
+    pre strong {border-bottom: thin dashed red;}
+  </style>
 </head>
 <body>
   <main>
@@ -15,7 +18,7 @@
         {% templatetag closeblock %}{% endif %}</h2>
     <p>{{ err-text }}</p>
     <table><tr>
-      <th><a href="https://github.com/alcinnz/Oddysseus/tree/master/data/pages/{{ path }}#L{{ line-number }}">{{line number }}</a></th>
+      <th><a href="https://github.com/alcinnz/Oddysseus/tree/master/data/pages/{{ path }}#L{{ line-number }}">{{ line-number|add:1 }}</a></th>
       <td><pre>{% error-line %}</pre></td>
     </tr></table>
   </main>

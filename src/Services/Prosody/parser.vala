@@ -35,6 +35,8 @@ namespace Oddysseus.Templating {
         public int index;
         public int line_no;
         public int line_offset;
+        public int next_line_no;
+        public int next_line_offset;
         public uint8[] delimiters;
 
         public WordIter() {
@@ -44,11 +46,13 @@ namespace Oddysseus.Templating {
         /* lexing methods */
 
         public void next_char(int by = 1) throws SyntaxError {
+            // Save aside start for error reporting
+            line_no = next_line_no; line_offset = next_line_offset;
             // count newlines
             while (by-- > 0) {
                 index++;
                 if (text[index] == '\n') {
-                    line_no++; line_offset = index;
+                    next_line_no++; next_line_offset = index;
                 }
             }
         }

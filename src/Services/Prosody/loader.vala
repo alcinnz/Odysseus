@@ -31,11 +31,11 @@ namespace Oddysseus.Templating {
                 template_cache[resource] = parser.parse();
             } catch (SyntaxError err) {
                 // FIXME segfaults
-                /*int line_number; int line_offset; int err_start; int err_end;
+                int line_number; int line_offset; int err_start; int err_end;
                 parser.get_current_token(out line_number, out line_offset, 
                         out err_start, out err_end);
                 error_data = new ErrorData(err, line_number, line_offset,
-                        err_start, err_end, bytes);*/
+                        err_start, err_end, bytes);
                 throw err;
             }
         }
@@ -46,16 +46,21 @@ namespace Oddysseus.Templating {
 
     public class ErrorData : Data.Mapping {
         public TagBuilder tag;
+        public string[] error_types = {"Unclosed String",
+                "Unexpected End Of File", "Unexpected Character",
+                "Unknown Tag", "Unknown Filter",
+                "Invalid Arguments for Tag", "Unclosed Block Tag"};
         public ErrorData(SyntaxError err, int line_number, int line_offset,
                 int error_start, int error_end, Bytes source) {
-            data[ByteUtils.from_string("err-code")] = new Data.Literal(err.code);
+            data[ByteUtils.from_string("err-code")] =
+                    new Data.Literal(error_types[err.code]);
 
             data[ByteUtils.from_string("err-text")] =
                     new Data.Literal(err.message);
 
             var err_token = source.slice(error_start, error_end);
             if (Token.get_type(err_token) == TokenType.TAG) {
-                var err_tag = new Data.Literal(Token.get_args(err_token).next());
+                var err_tag = new Data.Substr(Token.get_args(err_token).next());
                 data[ByteUtils.from_string("err-tag")] = err_tag;
             }
 
@@ -88,8 +93,8 @@ namespace Oddysseus.Templating {
             this.line_start = line_offset;
             this.line_end = line_offset;
             ByteUtils.find_next(source, {'\n'}, ref this.line_end);
-            this.err_start = error_start - line_offset;
-            this.err_end = error_end - line_offset;
+            this.err_start = error_start - line_start;
+            this.err_end = int.min(error_end, line_end) - line_start;
             this.source = source;
         }
 
@@ -97,8 +102,9 @@ namespace Oddysseus.Templating {
             // Utilize diff rendering for this. 
             var err_ranges = new Gee.ArrayList<Diff.Duo>();
             err_ranges.add(new Diff.Duo(err_start, err_end));
-            Diff.render_ranges(source.slice(line_start, line_end), err_ranges,
-                    "strong", stream);
+            // FIXME segfaults
+            yield Diff.render_ranges(source.slice(line_start, line_end),
+                    err_ranges, "strong", stream);
         }
     }
 }
