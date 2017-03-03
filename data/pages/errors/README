@@ -1,5 +1,5 @@
 This folder contains the HTML/Templated error messages for various network errors.
 
-The goals are to be thorough in regards to the errors that might occur, non-technical in the explanations, and helpful in getting out of error situations. 
+The goals are to be thorough in regards to the errors that might occur, non-technical in the explanations, and helpful in getting out of these situations. Beyond that it helps to be personable (which some may find funny) as that not only helps relieve frustration but makes it easier to be nontechnical. 
 
 Currently this folder contains files for all the standard HTTP error statuses (though some which are almost certainly not going to be encountered aren't HTML formatted), and all the errors WebKit might report to us. 
