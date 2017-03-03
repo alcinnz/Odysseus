@@ -1,5 +1,5 @@
 /**
-* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016).
+* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
 *
 * Oddysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,8 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
 
         global_context.register_uri_scheme("oddysseus",
                 Oddysseus.Services.handle_oddysseus_uri);
+        global_context.register_uri_scheme("source",
+                Oddysseus.Services.handle_source_uri);
         DownloadsBar.setup_context(global_context);
     }
 

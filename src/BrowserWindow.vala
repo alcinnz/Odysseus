@@ -1,5 +1,5 @@
 /**
-* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016).
+* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
 *
 * Oddysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -93,6 +93,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
 
     private Gtk.MenuItem open_item;
     private Gtk.MenuItem save_item;
+    private Gtk.MenuItem view_source_item;
     
     private Gtk.Menu create_appmenu() {
         var menu = new Gtk.Menu();
@@ -148,6 +149,16 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         menu.add(save);
         save_item = save;
+
+        // TODO translate
+        var view_source = new Gtk.MenuItem.with_label("View Source");
+        view_source.activate.connect(() => {
+            var tab = new WebTab(tabs, web, "about:blank");
+            tabs.insert_tab(tab, -1);
+            Services.view_source.begin(web, tab.web);
+        });
+        menu.add(view_source);
+        view_source_item = view_source;
 
         menu.add(new Gtk.SeparatorMenuItem());
 
@@ -266,6 +277,13 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
                         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
                         (group, acceleratable, key, modifier) => {
             save_item.activate();
+            return true;
+        });
+
+        accel.connect(Gdk.Key.U, Gdk.ModifierType.CONTROL_MASK,
+                Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                (group, acceleratable, key, modifier) => {
+            view_source_item.activate();
             return true;
         });
 

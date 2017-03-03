@@ -74,7 +74,7 @@ namespace Oddysseus.Services {
         if (alt_uri != null) alternative_uri = alt_uri;
 
         var path = "/" + Path.build_path("/",
-                "io", "github", "alcinnz", "Oddysseus", "odysseus:", subpath);
+                "io", "github", "alcinnz", "Oddysseus", "oddysseus:", subpath);
         Templating.Template template;
         Templating.ErrorData? error_data = null;
         try {

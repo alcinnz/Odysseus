@@ -25,5 +25,7 @@
         <file>ext/highlight.pack.js.mime</file>
         <file>ext/hljs-solarized-light.css</file>
         <file>ext/hljs-solarized-light.css.mime</file>
+
+        <file>special/viewsource</file>
     </gresource>
 </gresources>
