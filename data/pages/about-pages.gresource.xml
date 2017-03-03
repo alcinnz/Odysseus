@@ -27,5 +27,7 @@
         <file>ext/hljs-solarized-light.css.mime</file>
 
         <file>special/viewsource</file>
+        <file>special/viewsource.ico</file>
+        <file>special/viewsource.ico.mime</file>
     </gresource>
 </gresources>
