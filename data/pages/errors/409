@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>Edit Conflict</title>
+  <link rel="shortcut icon" src="oddysseus:icons/16/dialog-error-symbolic" />
+  <style>@import url(oddysseus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>Your Action Conflicted With Someone Else's</h1>
+    <p>Please <a href="javascript:history.back()">go back</a> and try again.</p>
+  </main>
+</body>
+</html>

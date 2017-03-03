@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>Request Timed Out</title>
+  <link rel="shortcut icon" src="oddysseus:icons/16/task-past-due-symbolic" />
+  <style>@import url(butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>Timed Out While Asking For This Page</h1>
+    <p>Try reloading it later.</p>
+
+    <!-- does a simple reload -->
+    <form method="GET">
+      <p><button type="submit"><img src="oddysseus:icons/48/view-refresh">
+        Reload</button></p>
+    </form>
+  </main>
+</body>
+</html>

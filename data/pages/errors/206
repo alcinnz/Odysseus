@@ -1,0 +1,3 @@
+Partial content received.
+
+{# This page shouldn't show, as the response code implies it has content. #}

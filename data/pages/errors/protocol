@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>INVALID SITE</title>
+  <link rel="shortcut icon" src="oddysseus:icons/16/dialog-error-symbolic" />
+  <style>@import url(butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>I Cannot Work With This Website</h1>
+    <p>It doesn't speak the same language or dialect I do.</p>
+  </main>
+</body>
+</html>

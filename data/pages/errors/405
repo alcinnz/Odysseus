@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>INVALID FORM SUBMISSION</title>
+  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
+  <style>@import (oddysseus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>The Form You Submitted Was Invalid</h1>
+    <p>Please take this up with the website's developers.</p>
+    <!-- TODO find and link to the contact us form -->
+  </main>
+</body>
+</html>

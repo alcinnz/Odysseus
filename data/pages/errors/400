@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>BAD REQUEST</title>
+  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
+  <style>@import url(oddyssus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>This Is Apparently Our Fault</h1>
+    <p>Please <a href="https://github.com/alcinnz/Oddysseus/issues/new">report the problem</a> and we'll see what we can do about it.</p>
+  </main>
+</body>
+</html>

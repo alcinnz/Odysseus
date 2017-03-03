@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>SERVICE UNAVAILABLE</title>
+  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
+  <style>@import url(oddysseus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>Service Temporarily Unavailable</h1>
+    <p>Please try again later.</p>
+
+    <!-- does a simple reload -->
+    <form method="GET">
+      <p><button type="submit"><img src="oddysseus:icons/48/view-refresh">
+        Reload</button></p>
+    </form>
+  </main>
+</body>
+</html>

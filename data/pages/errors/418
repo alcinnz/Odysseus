@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>I'm A Teapot</title>
+  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-information-symbolic" />
+  <style>
+    @import url(oddysseus:butterick.css);
+    main {text-align: center;}
+  </style>
+</head>
+<body>
+  <main>
+    <p>I'm a little teapot<br />
+      Short and stout<br />
+      Here is my handle<br />
+      And here is my spout</p>
+    <p>When I get all steamed up<br />
+      Hear me shout<br />
+      "Tip me over<br />
+      And pour me out!"</p>
+    <p><strong>April Fools!</strong>
+      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>.</p>
+  </main>
+</body>
+</html>

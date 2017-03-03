@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>DOES NOT EXIST</title>
+  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
+  <style>@import url(oddysseus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>This Page Has Been Removed</h1>
+    <p>This page has been purposefully removed, and will not return.</p>
+    <p>Try <a href="/">their homepage</a>, or:<p>
+    <form method="GET" target="https://duckduckgo.com/">
+      <p><input type="search" value="{{uri}}" name="q" /></p>
+    </form>
+  </main>
+</body>
+</html>

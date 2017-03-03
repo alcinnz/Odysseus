@@ -1,0 +1,4 @@
+Could not download selected file segment. 
+
+{# We probably won't get this for HTML,
+    as WebKit downloads the full thing in one go. #}

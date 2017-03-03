@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>NEGOTIATION FAIL</title>
+  <link rel="shortcut icon" src="oddysseus:icons/16/dialog-error-symbolic" />
+  <style>@import url(butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>Failed To Decide on a Format</h1>
+  </main>
+</body>
+</html>

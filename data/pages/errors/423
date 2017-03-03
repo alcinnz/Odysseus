@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>LOCKED</title>
+  <link rel="shortcut icon" src="oddysseus:icons/16/locked-symbolic" />
+  <style>@import url(butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>This WebDAV Page is Locked</h1>
+    <p>Try making your changes again later, or take it up with your group.</p>
+  </main>
+</body>
+</html>

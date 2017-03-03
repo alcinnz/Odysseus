@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>WEBSITE PROBLEMS</title>
+  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
+  <style>@import url(oddysseus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>The Website Experienced An Error</h1>
+    <p>This shouldn't be happening, and you should report it.</p>
+    <!-- TODO find and link contact us form -->
+  </main>
+</body>
+</html>
