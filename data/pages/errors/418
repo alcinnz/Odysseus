@@ -3,7 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>I'm A Teapot</title>
-  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-information-symbolic" />
   <style>
     @import url(oddysseus:butterick.css);
     main {text-align: center;}

@@ -3,7 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>Request Timed Out</title>
-  <link rel="shortcut icon" src="oddysseus:icons/16/task-past-due-symbolic" />
   <style>@import url(butterick.css);</style>
 </head>
 <body>

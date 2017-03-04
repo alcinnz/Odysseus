@@ -3,7 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>Log-in Required</title>
-  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-password-symbolic" />
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>

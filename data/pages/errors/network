@@ -9,7 +9,9 @@
 <body>
   <main>
     <h1>Could Not Connect To The Internet</h1>
-    <!-- TODO link to network settings panel -->
+    <p><a href="settings://network/" title="Open network preferences">
+      <img src="oddysseus:icon/128/preferences-system-network" 
+            alt="Network" /></a></p>
   </main>
   <script>
     document.ononline = () => location.reload()

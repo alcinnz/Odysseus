@@ -3,7 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>LEGAL TAKEDOWN</title>
-  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
@@ -17,5 +16,3 @@
   </main>
 </body>
 </html>
-{# Error code named such for
-  [Fahrenheit 451](http://www.imdb.com/title/tt0060390/) #}

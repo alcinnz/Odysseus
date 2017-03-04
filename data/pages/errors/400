@@ -3,7 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>BAD REQUEST</title>
-  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
   <style>@import url(oddyssus:butterick.css);</style>
 </head>
 <body>

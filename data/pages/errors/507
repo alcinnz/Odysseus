@@ -3,14 +3,15 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>CAN'T CONTACT</title>
-  <link rel="shortcut icon" src="oddysseus:icons/16/network-error-symbolic" />
   <style>@import url(butterick.css);</style>
 </head>
 <body>
   <main>
     <h1>Could Not Contact {{ uri.domain }}</h1>
     <p>This may be due to a network failure or a broken link.</p>
-    <!-- TODO link to network settings panel -->
+    <p><a href="settings://network/" title="Open network preferences">
+      <img src="oddysseus:icon/128/preferences-system-network" 
+            alt="Network" /></a></p>
   </main>
 </body>
 </html>
