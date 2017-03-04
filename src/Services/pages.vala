@@ -120,6 +120,14 @@ namespace Oddysseus.Services {
     }
 
     public void handle_oddysseus_uri(WebKit.URISchemeRequest request) {
+        if (request.get_path().has_prefix("icon/")) {
+            // Serve system icons for consistency there.
+            // Done from the Oddysseus URI scheme so
+            //      so they're allowed to be used as internal favicons
+            handle_sysicon_uri(request);
+            return;
+        }
+
         var path = "/" + Path.build_path("/",
                 "io", "github", "alcinnz", "Oddysseus", "oddysseus:",
                 request.get_path());
