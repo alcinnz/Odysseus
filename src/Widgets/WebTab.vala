@@ -134,6 +134,16 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
             } else status = "";
         });
 
+        web.load_failed.connect((load_evt, failing_uri, err) => {
+            // 101 = CANNOT_SHOW_URI
+            if (err.matches(WebKit.PolicyError.quark(), 101)) {
+                stderr.printf("%s\n", failing_uri);
+                Granite.Services.System.open_uri(failing_uri);
+                return true;
+            }
+            return false;
+        });
+
         configure();
         web.load_uri(uri);
     }
