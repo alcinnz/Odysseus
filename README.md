@@ -27,4 +27,22 @@ At the moment Oddysseus is quite rudimentary and does not yet support those link
 Technical Architecture
 ----------------------
 
-At the moment Oddysseus is simply some GTK/Granite chrome around WebKitGTK. 
+At the moment Oddysseus is simply some GTK/Granite chrome around WebKitGTK. For internal and error pages Oddysseus incorporates a simple internal templating language based on Django's. 
+
+INSTALLING
+----------
+
+I'd like elementary's AppHub to make this less technical, but to install: 
+
+1. download off http://github.com/alcinnz/Oddysseus
+2. In the untarred directory run:
+
+:
+
+    cmake .
+    sudo make install
+
+Contributing
+------------
+
+Feel free to create a pull request or open an issue. The coding convention is GNOME's naming conventions with 4 space indents, another 4 space line continuations, and no spaces between method calls & their argument lists. 
