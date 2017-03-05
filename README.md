@@ -37,6 +37,7 @@ I'd like elementary's AppHub to make this less technical, but to install:
 1. download off http://github.com/alcinnz/Oddysseus
 2. In the untarred directory run:
 
+
     cmake .
     sudo make install
 
