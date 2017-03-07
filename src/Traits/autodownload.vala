@@ -16,8 +16,20 @@
 */
 
 namespace Oddysseus.Traits {
-    public void setup_webview(WebTab tab) {
-        setup_report_errors(tab);
-        setup_autodownload(tab.web);
+    public void setup_autodownload(WebKit.WebView web) {
+        web.decide_policy.connect((decision, type) => {
+            if (type == WebKit.PolicyDecisionType.RESPONSE) {
+                var response_decision = (WebKit.ResponsePolicyDecision) decision;
+                var mime_type = response_decision.response.mime_type;
+
+                if (!web.can_show_mime_type(mime_type) ||
+                        /* Show videos in Audience */
+                        mime_type.has_prefix("video/")) {
+                    decision.download();
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 }

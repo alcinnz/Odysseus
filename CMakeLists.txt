@@ -64,6 +64,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Traits/viewsource.vala
     src/Traits/errors.vala
     src/Traits/init.vala
+    src/Traits/autodownload.vala
 
 # tell what libraries to use when compiling
 PACKAGES
