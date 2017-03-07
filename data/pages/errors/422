@@ -1,5 +1,5 @@
 <script>history.back();</script>
 
 {# Indicates that the semantics of the submitted data are invalid. 
-  Doesn't provide much more information so
-  we'll make it appear that the form didn't submit. #}
+  Does not provide much more information so
+  we will make it appear that the form did not submit. #}

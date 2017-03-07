@@ -29,8 +29,7 @@ namespace Oddysseus.Services {
         try {
             var path = "/" + Path.build_path("/",
                     "io", "github", "alcinnz", "Oddysseus", "oddysseus:", error);
-            /*var stream = resources_open_stream(path, 0);
-            request.finish(stream, -1, "text/html");*/
+
             var raw_data =
                     Templating.ByteUtils.create_map<Templating.Data.Data>();
             raw_data[Templating.ByteUtils.from_string("uri")] =

@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>INVALID SITE</title>
   <link rel="shortcut icon" src="oddysseus:icons/16/dialog-error-symbolic" />
-  <style>@import url(butterick.css);</style>
+  <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>

@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>Request Timed Out</title>
-  <style>@import url(butterick.css);</style>
+  <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
@@ -11,8 +11,8 @@
     <p>Try reloading it later.</p>
 
     <!-- does a simple reload -->
-    <form method="GET">
-      <p><button type="submit"><img src="oddysseus:icons/48/view-refresh">
+    <form method="GET" action="{{ uri }}">
+      <p><button type="submit"><img src="oddysseus:icon/16/view-refresh">
         Reload</button></p>
     </form>
   </main>

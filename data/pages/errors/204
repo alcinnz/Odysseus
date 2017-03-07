@@ -1,1 +1,14 @@
-The website successfully processed you're request, but there's nothing to show. 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
+  <title>NO CONTENT</title>
+  <style>@import url(oddysseus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h2>This Page Has Been Intentionally Left Empty</h2>
+    <p>Until I added this content to let you know so.</p>
+  </main>
+</body>
+</html>

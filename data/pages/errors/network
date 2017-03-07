@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>CAN'T CONNECT</title>
   <link rel="shortcut icon" src="oddysseus:icons/16/network-offline-symbolic" />
-  <style>@import url(butterick.css);</style>
+  <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>

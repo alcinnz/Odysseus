@@ -51,7 +51,6 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Widgets/ProgressBin.vala
 
     src/Services/pages.vala
-    src/Services/viewsource.vala
     src/Services/icons.vala
     src/Services/Prosody/byteutils.vala
     src/Services/Prosody/data.vala
@@ -61,6 +60,10 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Prosody/parser.vala
     src/Services/Prosody/writers.vala
     src/Services/Prosody/loader.vala
+
+    src/Traits/viewsource.vala
+    src/Traits/errors.vala
+    src/Traits/init.vala
 
 # tell what libraries to use when compiling
 PACKAGES

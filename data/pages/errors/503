@@ -12,8 +12,8 @@
     <p>Please try again later.</p>
 
     <!-- does a simple reload -->
-    <form method="GET">
-      <p><button type="submit"><img src="oddysseus:icons/48/view-refresh">
+    <form method="GET" action="{{ uri }}">
+      <p><button type="submit"><img src="oddysseus:icon/16/view-refresh">
         Reload</button></p>
     </form>
   </main>

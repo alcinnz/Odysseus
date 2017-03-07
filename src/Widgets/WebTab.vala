@@ -44,7 +44,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         global_context.register_uri_scheme("oddysseus",
                 Oddysseus.Services.handle_oddysseus_uri);
         global_context.register_uri_scheme("source",
-                Oddysseus.Services.handle_source_uri);
+                Oddysseus.Traits.handle_source_uri);
         DownloadsBar.setup_context(global_context);
     }
 
@@ -143,6 +143,8 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
             }
             return false;
         });
+
+        Traits.setup_webview(this);
 
         configure();
         web.load_uri(uri);

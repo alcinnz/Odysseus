@@ -14,7 +14,9 @@
 * You should have received a copy of the GNU General Public License
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-namespace Oddysseus.Services {
+
+using Oddysseus.Services;
+namespace Oddysseus.Traits {
     // FIXME I prefer this approach as the data flow is cleaner,
     //      but not enough memory gets allocated to successfully render
     //      without a segfault. 

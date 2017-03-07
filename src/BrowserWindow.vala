@@ -155,7 +155,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         view_source.activate.connect(() => {
             var tab = new WebTab(tabs, web, "about:blank");
             tabs.insert_tab(tab, -1);
-            Services.view_source.begin(web, tab.web);
+            Traits.view_source.begin(web, tab.web);
         });
         menu.add(view_source);
         view_source_item = view_source;

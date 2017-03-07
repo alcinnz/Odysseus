@@ -9,9 +9,9 @@
   <main>
     <h1>This Page Does Not Exist</h1>
     <p>Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them.</p>
-    <p>Try <a href="/">their homepage</a>, or:<p>
-    <form method="GET" target="https://duckduckgo.com/">
-      <p><input type="search" value="{{uri}}" name="q" /></p>
+    <form method="GET" action="https://duckduckgo.com/">
+    <p>Try <a href="{{ uri.home }}">their homepage</a>, or: 
+      <input type="search" value="{{uri}}" name="q" /></p>
     </form>
   </main>
 </body>
