@@ -25,7 +25,6 @@ namespace Oddysseus.Services {
     private void render_error(WebKit.URISchemeRequest request, string error,
             Templating.Data.Data? base_data = null,
             Templating.TagBuilder? error_tag = null) {
-        // TODO support rendering debugging information.
         try {
             var path = "/" + Path.build_path("/",
                     "io", "github", "alcinnz", "Oddysseus", "oddysseus:", error);

@@ -18,19 +18,32 @@
 /** Cached loading for templates. */
 namespace Oddysseus.Templating {
     private Gee.Map<string, Template>? template_cache = null;
+    private Gee.ArrayList<string>? cached_keys; // Decides what template to free
+    private const int CACHE_SIZE = 4;
+
     public Template get_for_resource(string resource, ref ErrorData? error_data)
             throws SyntaxError, Error {
         if (template_cache == null)
             template_cache = new Gee.HashMap<string, Template>();
+        if (cached_keys == null) {
+            var array = new string[CACHE_SIZE];
+            cached_keys = new Gee.ArrayList<string>.wrap(array);
+        }
 
         if (!template_cache.has_key(resource)) {
+            if (cached_keys.size > 5) {
+                // cap number of templates
+                var to_free = template_cache.unset(cached_keys[CACHE_SIZE - 1]);
+                cached_keys.remove_at(CACHE_SIZE - 1);
+            }
+
             if (!lib_initialized()) Std.register_standard_library();
             var bytes = resources_lookup_data(resource, 0);
             var parser = new Parser(bytes);
             try {
                 template_cache[resource] = parser.parse();
+                cached_keys.insert(0, resource);
             } catch (SyntaxError err) {
-                // FIXME segfaults
                 int line_number; int line_offset; int err_start; int err_end;
                 parser.get_current_token(out line_number, out line_offset, 
                         out err_start, out err_end);
@@ -38,11 +51,14 @@ namespace Oddysseus.Templating {
                         err_start, err_end, bytes);
                 throw err;
             }
+        } else {
+            // Move recently used items to the front so they don't get culled.
+            cached_keys.remove(resource);
+            cached_keys.insert(0, resource);
         }
+
         return template_cache[resource];
     }
-    // NOTE in the future we may want to cap the number
-    //      of templates in the cache.
 
     public class ErrorData : Data.Mapping {
         public TagBuilder tag;
