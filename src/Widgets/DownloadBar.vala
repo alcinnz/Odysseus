@@ -37,6 +37,7 @@ public class Oddysseus.DownloadsBar : Gtk.Revealer {
             set_reveal_child(false);
         });
         close_button.relief = Gtk.ReliefStyle.NONE;
+        close_button.tooltip_text = _("Close downloads bar");
         box.pack_end(close_button, false, false);
         
         set_reveal_child(false);

@@ -51,16 +51,21 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
     private void init_layout() {
         back = new ButtonWithMenu.from_icon_name ("go-previous-symbolic",
                                                 Gtk.IconSize.LARGE_TOOLBAR);
+        back.tooltip_text = _("Go to previously viewed page");
         forward = new ButtonWithMenu.from_icon_name ("go-next-symbolic",
                                                 Gtk.IconSize.LARGE_TOOLBAR);
+        forward.tooltip_text = _("Go to next viewed page");
         reload = new Gtk.Button.from_icon_name ("view-refresh-symbolic",
                                                 Gtk.IconSize.LARGE_TOOLBAR);
+        reload.tooltip_text = _("Load the page from the website again");
         stop = new Gtk.Button.from_icon_name ("process-stop-symbolic",
                                                 Gtk.IconSize.LARGE_TOOLBAR);
+        stop.tooltip_text = _("Stop loading page");
         reload_stop = new Gtk.Stack();
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
         addressbar = new Oddysseus.AddressBar();
+        addressbar.tooltip_text = _("Current web address");
 
         var appmenu = new Granite.Widgets.AppMenu(create_appmenu());
 
