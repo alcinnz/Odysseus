@@ -15,11 +15,14 @@ translatable_re = """
 {%\s*endtrans\s*%}
 """
 
+strings = {}
+
 for filename in walk_files("data/pages"):
     # ignore certain specially interpreted file extensions
     if filename.endswith(".mime"): continue
     if filename.endswith(".link"): continue
     if filename.endswith(".icon"): continue
+    if filename.endswith("/README"): continue
 
     # check if the fail specifies it's not a template
     try:
@@ -39,6 +42,10 @@ for filename in walk_files("data/pages"):
                 split = string.find("#}")
                 comment = string[2:split].strip()
                 string = string[split+2:].strip()
+
+            # Skip duplicates
+            if string in strings: continue
+            strings.add(string)
 
             # Output the parsed text in PO format
             print()
