@@ -34,7 +34,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
     public BrowserWindow(Oddysseus.Application ody_app) {
         this.app = ody_app;
         set_application(this.app);
-        this.title = "(Loading)";
+        this.title = "";
         this.icon_name = "internet-web-browser";
 
         init_layout();
@@ -98,19 +98,17 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
     private Gtk.Menu create_appmenu() {
         var menu = new Gtk.Menu();
 
-        // TODO translate
-        var new_window = new Gtk.MenuItem.with_label("New Window");
+        var new_window = new Gtk.MenuItem.with_label(_("New Window"));
         new_window.activate.connect(() => {
             var window = new BrowserWindow(Oddysseus.Application.instance);
             window.show_all();
         });
         menu.add(new_window);
 
-        // TODO translate
-        var open = new Gtk.MenuItem.with_label("Open...");
+        var open = new Gtk.MenuItem.with_label(_("Open..."));
         open.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
-                                "Open Local Webpage", // TODO translate
+                                _("Open Local Webpage"),
                                 this,
                                 Gtk.FileChooserAction.OPEN,
                                 Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
@@ -131,11 +129,10 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         menu.add(open);
         open_item = open;
 
-        // TODO translate
-        var save = new Gtk.MenuItem.with_label("Save...");
+        var save = new Gtk.MenuItem.with_label(_("Save..."));
         save.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
-                                "Save Page as", // TODO translate
+                                _("Save Page as"),
                                 this,
                                 Gtk.FileChooserAction.SAVE,
                                 Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
@@ -150,8 +147,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         menu.add(save);
         save_item = save;
 
-        // TODO translate
-        var view_source = new Gtk.MenuItem.with_label("View Source");
+        var view_source = new Gtk.MenuItem.with_label(_("View Source"));
         view_source.activate.connect(() => {
             var tab = new WebTab(tabs, web, "about:blank");
             tabs.insert_tab(tab, -1);
@@ -162,14 +158,13 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         menu.add(new Gtk.SeparatorMenuItem());
 
-        // TODO translate
-        var zoomin = new Gtk.MenuItem.with_label("Zoom in");
+        var zoomin = new Gtk.MenuItem.with_label(_("Zoom in"));
         zoomin.activate.connect(() => {
             web.zoom_level += 0.1;
         });
         menu.add(zoomin);
 
-        var zoomout = new Gtk.MenuItem.with_label("Zoom out");
+        var zoomout = new Gtk.MenuItem.with_label(_("Zoom out"));
         zoomout.activate.connect(() => {
             web.zoom_level -= 0.1;
         });
@@ -177,12 +172,11 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         menu.add(new Gtk.SeparatorMenuItem());
 
-        // TODO translate
-        var find_in_page = new Gtk.MenuItem.with_label("Find In Page...");
+        var find_in_page = new Gtk.MenuItem.with_label(_("Find In Page..."));
         find_in_page.activate.connect(find_in_page_cb);
         menu.add(find_in_page);
 
-        var print = new Gtk.MenuItem.with_label("Print...");
+        var print = new Gtk.MenuItem.with_label(_("Print..."));
         print.activate.connect(() => {
             var printer = new WebKit.PrintOperation(web);
             printer.run_dialog(this);

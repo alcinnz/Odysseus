@@ -34,7 +34,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
 
         search = new Gtk.Entry();
         search.primary_icon_name = "edit-find";
-        search.placeholder_text = "Find in page..."; // TODO translate
+        search.placeholder_text = _("Find in page...");
         find_normal_color();
         search.changed.connect(() => {
             find_in_page();
@@ -77,7 +77,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
 
         var prev = new Gtk.ToolButton(null, "");
         prev.icon_name = "go-up-symbolic";
-        prev.tooltip_text = "Find previous match"; // TODO translate
+        prev.tooltip_text = _("Find previous match");
         prev.clicked.connect(controller.search_previous);
         add_widget(prev);
         var next = new Gtk.ToolButton(null, "");
@@ -89,7 +89,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
         // TODO handle case where this nonstandard icon doesn't exist
         var options = new Gtk.ToolButton(null, "");
         options.icon_name = "open-menu-symbolic";
-        options.tooltip_text = "View search options"; // TODO translate
+        options.tooltip_text = _("View search options");
         var options_menu = build_options_menu();
         options.clicked.connect(() => {
             options_menu.popup(null, null, position_menu_below, 0,
@@ -117,10 +117,9 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
     }
 
     private Gtk.Menu build_options_menu() {
-        // TODO translate menu options
         var options_menu = new Gtk.Menu();
         var match_case = new Gtk.RadioMenuItem.with_label(null,
-                                "Match Uppercase");
+                                _("Match Uppercase"));
         match_case.activate.connect(() => {
             smartcase = false;
             options &= ~WebKit.FindOptions.CASE_INSENSITIVE;
@@ -128,7 +127,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
         });
         options_menu.add(match_case);
         var ignore_case = new Gtk.RadioMenuItem.with_label(
-                                match_case.get_group(), "Ignore Uppercase");
+                                match_case.get_group(), _("Ignore Uppercase"));
         ignore_case.activate.connect(() => {
             smartcase = false;
             options |= WebKit.FindOptions.CASE_INSENSITIVE;
@@ -136,7 +135,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
         });
         options_menu.add(ignore_case);
         var auto_case = new Gtk.RadioMenuItem.with_label(
-                                ignore_case.get_group(), "Auto");
+                                ignore_case.get_group(), _("Auto"));
         auto_case.active = true;
         auto_case.activate.connect(() => {
             smartcase = true;
@@ -146,14 +145,14 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
         options_menu.add(auto_case);
         options_menu.add(new Gtk.SeparatorMenuItem());
 
-        var cyclic = new Gtk.CheckMenuItem.with_label("Cyclic Search");
+        var cyclic = new Gtk.CheckMenuItem.with_label(_("Cyclic Search"));
         cyclic.active = true;
         options |= WebKit.FindOptions.WRAP_AROUND;
         cyclic.toggled.connect(() => {
             toggle_option(WebKit.FindOptions.WRAP_AROUND, cyclic.active);
         });
         options_menu.add(cyclic);
-        var wordstart = new Gtk.CheckMenuItem.with_label("Match Word Start");
+        var wordstart = new Gtk.CheckMenuItem.with_label(_("Match Word Start"));
         wordstart.active = false;
         wordstart.toggled.connect(() => {
             toggle_option(WebKit.FindOptions.AT_WORD_STARTS, wordstart.active);
@@ -161,7 +160,7 @@ public class Oddysseus.FindToolbar : Gtk.Toolbar {
         options_menu.add(wordstart);
         // If the user doesn't know what CamelCase means,
         // they probably don't want this option. (note the hint in it's name)
-        var camelCase = new Gtk.CheckMenuItem.with_label("Match CamelCase");
+        var camelCase = new Gtk.CheckMenuItem.with_label(_("Match CamelCase"));
         camelCase.active = false;
         camelCase.toggled.connect(() => {
             toggle_option(WebKit.FindOptions.TREAT_MEDIAL_CAPITAL_AS_WORD_START,

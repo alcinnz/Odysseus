@@ -84,7 +84,7 @@ namespace Oddysseus.Traits {
         } else {
             // If we're not viewing alternate HTML under this schema,
             //      close any tabs that have persisted. 
-            var response = "Please go through the \"View Source\" menu item.";
+            var response = _("Please go through the \"View Source\" menu item.");
             var stream = new MemoryInputStream.from_bytes(
                     Templating.ByteUtils.from_string(response));
             request.finish(stream, response.length, "text/html");

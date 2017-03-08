@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-08 15:07+1300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/BrowserWindow.vala:102
+msgid "New Window"
+msgstr ""
+
+#: ../src/BrowserWindow.vala:110
+msgid "Open..."
+msgstr ""
+
+#: ../src/BrowserWindow.vala:113
+msgid "Open Local Webpage"
+msgstr ""
+
+#: ../src/BrowserWindow.vala:135
+msgid "Save..."
+msgstr ""
+
+#: ../src/BrowserWindow.vala:138
+msgid "Save Page as"
+msgstr ""
+
+#: ../src/BrowserWindow.vala:153
+msgid "View Source"
+msgstr ""
+
+#: ../src/BrowserWindow.vala:164
+msgid "Zoom in"
+msgstr ""
+
+#: ../src/BrowserWindow.vala:170
+msgid "Zoom out"
+msgstr ""
+
+#: ../src/BrowserWindow.vala:178
+msgid "Find In Page..."
+msgstr ""
+
+#: ../src/BrowserWindow.vala:182
+msgid "Print..."
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:37
+msgid "Find in page..."
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:80
+msgid "Find previous match"
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:92
+msgid "View search options"
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:122
+msgid "Match Uppercase"
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:130
+msgid "Ignore Uppercase"
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:138
+msgid "Auto"
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:148
+msgid "Cyclic Search"
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:155
+msgid "Match Word Start"
+msgstr ""
+
+#: ../src/Widgets/FindToolbar.vala:163
+msgid "Match CamelCase"
+msgstr ""
+
+#: ../src/Widgets/WebTab.vala:87
+msgid "%u matches of \"%s\" found"
+msgstr ""
+
+#: ../src/Widgets/DownloadButton.vala:55
+msgid "[Download]"
+msgstr ""
+
+#: ../src/Widgets/DownloadButton.vala:82
+msgid "DONE"
+msgstr ""
+
+#: ../src/Widgets/DownloadButton.vala:122
+msgid "%.0fs"
+msgstr ""
+
+#: ../src/Widgets/DownloadButton.vala:124
+msgid "%.0fm"
+msgstr ""
+
+#: ../src/Widgets/DownloadButton.vala:126
+msgid "%.0fh %.0fm"
+msgstr ""
+
+#: ../src/Widgets/DownloadButton.vala:145
+msgid "Save Download to:"
+msgstr ""
+
+#: ../src/Traits/viewsource.vala:87
+msgid "Please go through the \"View Source\" menu item."
+msgstr ""

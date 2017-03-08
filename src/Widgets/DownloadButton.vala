@@ -52,7 +52,7 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
                         Gtk.IconSize.LARGE_TOOLBAR);
         container.attach(fileicon, 0, 0, 1, 2);
         
-        filename = new Gtk.Label("[Download]");
+        filename = new Gtk.Label(_("[Download]"));
         filename.get_style_context().add_class("h3");
         filename.halign = Gtk.Align.CENTER;
         container.attach(filename, 1, 0, 2, 1);
@@ -79,7 +79,7 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
                         FileCopyFlags.OVERWRITE | FileCopyFlags.BACKUP);
 
             update_data();
-            remaining.label = "DONE";
+            remaining.label = _("DONE");
             completed = true;
             open_item.sensitive = true;
             button.activate();
@@ -119,11 +119,11 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
     
     private static string format_time(double estimate) {
         if (estimate < 60) {
-            return "%.0fs".printf(estimate);
+            return _("%.0fs").printf(estimate);
         } else if (estimate < 120) {
-            return "%.0fm".printf(estimate / 60);
+            return _("%.0fm").printf(estimate / 60);
         } else {
-            return "%.0fh %.0fm".printf(estimate / 120, estimate / 60);
+            return _("%.0fh %.0fm").printf(estimate / 120, estimate / 60);
         }
     }
 
@@ -138,12 +138,11 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
         open_item.sensitive = false;
         menu.add(open_item);
 
-        // FIXME Be nice to select alternative download locations
         var save_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.SAVE_AS,
                                                         null);
         save_item.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
-                        "Save Download to:", // TODO translate
+                        _("Save Download to:"),
                         (Gtk.Window) get_toplevel(),
                         Gtk.FileChooserAction.SAVE,
                         Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
