@@ -11,6 +11,11 @@ body {
     color: #333;
 }
 
+body.branded {
+    background: url(oddysseus:vitruvian-wave.svg) repeat-x;
+    background-position: 0 80%;
+}
+
 main {
     max-width: 600px; /* almost 3 uppercase alphabets worth */
     margin: 0 auto;

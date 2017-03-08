@@ -5,7 +5,7 @@
   <title>Oddysseus Debugging</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
-<body>
+<body class="branded">
   <main>
     <h1>Tools for debugging Oddysseus</h1>
     <p>These tools help the Oddysseus developers to diagnose problems with your browser. It is unlikely you will be interested in them.</p>

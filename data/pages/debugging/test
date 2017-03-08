@@ -7,6 +7,7 @@
   <link rel="shortcut icon" href="oddysseus:debugging/spinner.ico" />
   <style>
     @import url(oddysseus:ext/hljs-solarized-light.css);
+    @import url(oddysseus:butterick.css);
     body {
       font-family: sans-serif;
     }
@@ -40,7 +41,7 @@
     }
   </script>
 </head>
-<body onload="assertFinished()">
+<body class="branded" onload="assertFinished()">
   <h1>Test Results</h1>
 
   <h2>Canaries</h2>
