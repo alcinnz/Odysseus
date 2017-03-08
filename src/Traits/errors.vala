@@ -59,15 +59,6 @@ namespace Oddysseus.Traits {
         });
     }
 
-    private async void report_status_errors(WebKit.WebView web, WebTab tab) {
-        var resource = web.get_main_resource();
-        var content = yield resource.get_data(null);
-        if (content.length == 0) {
-            var error = resource.response.status_code.to_string();
-            report_error(error, web.uri, tab);
-        }
-    }
-
     private string parse_hostname(string uri) {
         int start = uri.index_of_char('/') + 2;
         int end = uri.index_of_char('/', start);
@@ -113,9 +104,18 @@ namespace Oddysseus.Traits {
             report_error(error, uri, tab);
             return true;
         });
-        web.load_changed.connect((load_evt) => {
-            if (load_evt == WebKit.LoadEvent.FINISHED)
-                report_status_errors.begin(web, tab);
+        web.decide_policy.connect((decision, type) => {
+            if (type == WebKit.PolicyDecisionType.RESPONSE) {
+                var response_decision = (WebKit.ResponsePolicyDecision) decision;
+                var response = response_decision.response;
+                if (response.content_length == 0 &&
+                        response.status_code != 200) {
+                    report_error(response.status_code.to_string(), response.uri,
+                            tab);
+                    return true;
+                }
+            }
+            return false;
         });
         web.authenticate.connect((request) => {
             report_error("401", web.uri, tab);
