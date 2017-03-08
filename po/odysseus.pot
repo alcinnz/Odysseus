@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-08 20:21+1300\n"
+"POT-Creation-Date: 2017-03-09 09:38+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,13 @@ msgstr ""
 msgid "Match CamelCase"
 msgstr ""
 
-#: ../src/Widgets/WebTab.vala:87
+#: ../src/Widgets/DownloadBar.vala:40
+msgid "Close downloads bar"
+msgstr ""
+
+#. / Translators. "%u" will be replaced with the number of matches
+#. / while %s will be replaced with the text being searched for.
+#: ../src/Widgets/WebTab.vala:89
 msgid "%u matches of \"%s\" found"
 msgstr ""
 
@@ -125,19 +131,27 @@ msgstr ""
 msgid "DONE"
 msgstr ""
 
-#: ../src/Widgets/DownloadButton.vala:122
-msgid "%.0fs"
-msgstr ""
-
+#. / TRANSLATORS: "%s" seconds, shown in download button.
+#. / "%s" will be replaced with a whole number of seconds.
 #: ../src/Widgets/DownloadButton.vala:124
-msgid "%.0fm"
+msgid "%ss"
 msgstr ""
 
-#: ../src/Widgets/DownloadButton.vala:126
-msgid "%.0fh %.0fm"
+#. / TRANSLATORS: "%s" minutes, shown in download button.
+#. / "%s" will be replaced with a whole number of minutes.
+#: ../src/Widgets/DownloadButton.vala:128
+msgid "%sm"
 msgstr ""
 
-#: ../src/Widgets/DownloadButton.vala:145
+#. / TRANSLATORS: "%s" hours and "%s" minutes,
+#. / shown in download button.
+#. / The first %s will be replaced with a whole number of hours,
+#. / and the second will be replaced with a whole number of minutes.
+#: ../src/Widgets/DownloadButton.vala:134
+msgid "%sh %sm"
+msgstr ""
+
+#: ../src/Widgets/DownloadButton.vala:155
 msgid "Save Download to:"
 msgstr ""
 

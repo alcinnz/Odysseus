@@ -84,6 +84,8 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         var find_toolbar = new FindToolbar(web.get_find_controller());
         find_toolbar.counted_matches.connect((search, count) => {
             if (find.child_revealed && search != "")
+                /// Translators. "%u" will be replaced with the number of matches
+                /// while %s will be replaced with the text being searched for.
                 this.status = _("%u matches of \"%s\" found").printf(
                         count, search);
             else this.status = "";

@@ -119,11 +119,21 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
     
     private static string format_time(double estimate) {
         if (estimate < 60) {
-            return _("%.0fs").printf(estimate);
+            /// TRANSLATORS: "%s" seconds, shown in download button.
+            /// "%s" will be replaced with a whole number of seconds.
+            return _("%ss").printf("%.0f".printf(estimate));
         } else if (estimate < 120) {
-            return _("%.0fm").printf(estimate / 60);
+            /// TRANSLATORS: "%s" minutes, shown in download button.
+            /// "%s" will be replaced with a whole number of minutes.
+            return _("%sm").printf("%.0f".printf(estimate / 60));
         } else {
-            return _("%.0fh %.0fm").printf(estimate / 120, estimate / 60);
+            /// TRANSLATORS: "%s" hours and "%s" minutes,
+            /// shown in download button.
+            /// The first %s will be replaced with a whole number of hours,
+            /// and the second will be replaced with a whole number of minutes.
+            return _("%sh %sm").printf(
+                    "%.0f".printf(estimate / 120),
+                    "%.0f".printf(estimate / 60));
         }
     }
 
