@@ -1,1 +1,1 @@
-Resource successfully created.
+{% trans %}Resource successfully created.{% endtrans %}

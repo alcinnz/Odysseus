@@ -2,12 +2,12 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>NO CONTENT</title>
+  <title>{% trans %}NO CONTENT{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h2>No content received</h2>
+    <h2>{% trans %}No content received{% endtrans %}</h2>
   </main>
 </body>
 </html>

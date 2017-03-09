@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>NO CONTENT</title>
+  <title>{% trans %}NO CONTENT{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h2>This Page Has Been Intentionally Left Empty</h2>
-    <p>Until I added this content to let you know so.</p>
+    <h2>{% trans %}This Page Has Been Intentionally Left Empty{% endtrans %}</h2>
+    <p>{% trans %}Until I added this content to let you know so.{% endtrans %}</p>
   </main>
 </body>
 </html>
