@@ -2,23 +2,23 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>INVALID CERTIFICATE</title>
+  <title>{% trans %}INVALID CERTIFICATE{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>This Site Appears To Be Masquarading As Someone Else</h1>
-    <p>It provided us with a so-called "cryptographic certificate" to prove who it was, and yet that proof has failed. We encourage you to turn back now. <strong>This is not the site you're looking for!</strong></p>
+    <h1>{% trans %}This Site Appears To Be Masquarading As Someone Else{% endtrans %}</h1>
+    <p>{% trans %}It provided us with a so-called "cryptographic certificate" to prove who it was, and yet that proof has failed. We encourage you to turn back now.{% endtrans %} <strong>{% trans %}This is not the site you're looking for!{% endtrans %}</strong></p>
     
-    <!-- <p>You can check this "cryptographic certificate" in it's normal place within the addressbar.</p> [Add this once there is a normal place for it] -->
+    <!-- <p>{% trans %}You can check this "cryptographic certificate" in it's normal place within the addressbar.{% endtrans %}</p> [Add this once there is a normal place for it] -->
 
     <details>
-      <caption>I Know What I'm Doing…</caption>
-      <p>Be careful</p>
+      <caption>{% trans %}I Know What I'm Doing…<{% endtrans %}/caption>
+      <p>{% trans %}Be careful{% endtrans %}</p>
       <!-- The error handler that rendered this page will
             listen for this form submission before adding an exception -->
       <form>
-        <p><button type="submit">Continue Anyways</button></p>
+        <p><button type="submit">{% trans %}Continue Anyways{% endtrans %}</button></p>
       </form>
     </details>
   </main>

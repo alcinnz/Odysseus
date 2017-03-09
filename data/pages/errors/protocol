@@ -2,14 +2,14 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>INVALID SITE</title>
+  <title>{% trans %}INVALID SITE{% endtrans %}</title>
   <link rel="shortcut icon" src="oddysseus:icons/16/dialog-error-symbolic" />
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>I Cannot Work With This Website</h1>
-    <p>It doesn't speak the same language I do.</p>
+    <h1>{% trans %}I Cannot Work With This Website{% endtrans %}</h1>
+    <p>{% trans %}It doesn't speak the same language I do.{% endtrans %}</p>
   </main>
 </body>
 </html>
