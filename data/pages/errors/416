@@ -1,4 +1,4 @@
-Could not download selected file segment. 
+{% trans %}Could not download selected file segment. {% endtrans %}
 
 {# We probably will not get this for HTML,
     as WebKit downloads the full thing in one go. #}

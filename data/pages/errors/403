@@ -2,14 +2,14 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>FORBIDDEN</title>
+  <title>{% trans %}FORBIDDEN{% endtrans %}</title>
   <link rel="shortcut icon" src="oddysseus:icons/16/locked" />
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>Permission Denied</h1>
-    <p>You are not allowed to access this webpage. Try their <a href="/">homepage</a>.</p>
+    <h1>{% trans %}Permission Denied{% endtrans %}</h1>
+    <p>{% trans %}You are not allowed to access this webpage. Try their <a href="/">homepage</a>.{% endtrans %}</p>
   </main>
 </body>
 <html>

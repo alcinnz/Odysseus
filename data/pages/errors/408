@@ -2,18 +2,18 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>Request Timed Out</title>
+  <title>{% trans %}REQUEST TIMED OUT{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>Timed Out While Asking For This Page</h1>
-    <p>Try reloading it later.</p>
+    <h1>{% trans %}Timed Out While Asking For This Page{% endtrans %}</h1>
+    <p>{% trans %}Try reloading it later.{% endtrans %}</p>
 
     <!-- does a simple reload -->
     <form method="GET" action="{{ uri }}">
       <p><button type="submit"><img src="oddysseus:icon/16/view-refresh">
-        Reload</button></p>
+        {% trans %}Reload{% endtrans %}</button></p>
     </form>
   </main>
 </body>

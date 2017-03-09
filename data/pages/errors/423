@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>LOCKED</title>
+  <title>{% trans %}LOCKED{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>This WebDAV Page is Locked</h1>
-    <p>Try making your changes again later, or take it up with your group.</p>
+    <h1>{% trans %}This WebDAV Page is Locked{% endtrans %}</h1>
+    <p>{% trans %}Try making your changes again later, or take it up with your group.{% endtrans %}</p>
   </main>
 </body>
 </html>

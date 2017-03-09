@@ -2,15 +2,15 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>NOT FOUND</title>
+  <title>{% trans %}NOT FOUND{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>This Page Does Not Exist</h1>
-    <p>Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them.</p>
+    <h1>{% trans %}This Page Does Not Exist{% endtrans %}</h1>
+    <p>{% trans %}Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them.{% endtrans %}</p>
     <form method="GET" action="https://duckduckgo.com/">
-    <p>Try <a href="{{ uri.home }}">their homepage</a>, or: 
+    <p>{% trans %}Try <a href="{{ uri.home }}">their homepage</a>, or: {% endtrans %}
       <input type="search" value="{{uri}}" name="q" /></p>
     </form>
   </main>

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>I'm A Teapot</title>
+  <title>{% trans %}I'm A Teapot{% endtrans %}</title>
   <style>
     @import url(oddysseus:butterick.css);
     main {text-align: center;}
@@ -10,16 +10,20 @@
 </head>
 <body>
   <main>
-    <p>I'm a little teapot<br />
+    <p>{% trans %}{# Easter-egg 418: verse 1 of "I'm A Teapot" nursery rhyme #}
+      I'm a little teapot<br />
       Short and stout<br />
       Here is my handle<br />
-      And here is my spout</p>
-    <p>When I get all steamed up<br />
+      And here is my spout{% endtrans %}</p>
+    <p>{% trans %}{# Easter-egg 418: verse 2 of "I'm A Teapot" nursery rhyme #}
+      When I get all steamed up<br />
       Hear me shout<br />
       "Tip me over<br />
-      And pour me out!"</p>
-    <p><strong>April Fools!</strong>
-      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>.</p>
+      And pour me out!"{% endtrans %}</p>
+    <p>{% trans %}{# Easter-egg 418: attribution #}
+      <strong>April Fools!</strong>
+      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>.
+    {% endtrans %}</p>
   </main>
 </body>
 </html>

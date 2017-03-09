@@ -2,28 +2,28 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>Log-in Required</title>
+  <title>{% trans %}Log-in Required{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>Please Log In</h1>
-    <p>You need to log in to access this page.</p>
+    <h1>{% trans %}Please Log In{% endtrans %}</h1>
+    <p>{% trans %}You need to log in to access this page.{% endtrans %}</p>
 
     <!-- The code which shows this page will listen for a submission -->
     <form>
       <table>
         <tr>
-          <th>Username</th>
+          <th>{% trans %}Username{% endtrans %}</th>
           <td><input type="text" name="username" /></td>
         </tr>
         <tr>
-          <th>Password</th>
+          <th>{% trans %}Password{% endtrans %}</th>
           <td><input type="password" name="password" /></td>
         </tr>
         <tr>
           <th></th>
-          <td><button type="submit">Log In</button></td>
+          <td><button type="submit">{% trans %}Log In{% endtrans %}</button></td>
         </tr>
       </table>
     </form>

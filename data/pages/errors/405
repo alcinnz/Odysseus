@@ -2,14 +2,14 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>INVALID FORM SUBMISSION</title>
+  <title>{% trans %}INVALID FORM SUBMISSION{% endtrans %}</title>
   <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>The Form You Submitted Was Invalid</h1>
-    <p>Please take this up with the website's developers.</p>
+    <h1>{% trans %}The Form You Submitted Was Invalid{% endtrans %}</h1>
+    <p>{% trans %}Please take this up with the website's developers.{% endtrans %}</p>
     <!-- TODO find and link to the contact us form -->
   </main>
 </body>

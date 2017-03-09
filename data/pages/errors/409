@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>Edit Conflict</title>
+  <title>{% trans %}EDIT CONFLICT{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>Your Action Conflicted With Someone Else's</h1>
-    <p>Please <a href="javascript:history.back()">go back</a> and try again.</p>
+    <h1>{% trans %}Your Action Conflicted With Someone Else's{% endtrans %}</h1>
+    <p>{% trans %}Please <a href="javascript:history.back()">go back</a> and try again.{% endtrans %}</p>
   </main>
 </body>
 </html>

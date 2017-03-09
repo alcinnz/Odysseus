@@ -2,15 +2,15 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>LEGAL TAKEDOWN</title>
+  <title>{% trans %}LEGAL TAKEDOWN{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>This Page Has Been Removed For Legal Reasons</h1>
-    <p>This page has been purposefully removed, and may not return.</p>
+    <h1>{% trans %}This Page Has Been Removed For Legal Reasons{% endtrans %}</h1>
+    <p>{% trans %}This page has been purposefully removed, and may not return.{% endtrans %}</p>
     <form method="GET" action="https://duckduckgo.com/">
-    <p>Try <a href="{{ uri.home }}">their homepage</a>, or: 
+    <p>{% trans %}Try <a href="{{ uri.home }}">their homepage</a>, or: {% endtrans %}
       <input type="search" value="{{uri}}" name="q" /></p>
     </form>
   </main>

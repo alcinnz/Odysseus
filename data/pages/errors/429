@@ -2,19 +2,19 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>SITE'S TOO BUSY</title>
+  <title>{% trans %}SITE'S TOO BUSY{% endtrans %}</title>
   <link rel="shortcut icon" src="oddysseus:icons/16/dialog-error-symbolic" />
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>The Website Is Too Busy Serving Others</h1>
-    <p>You'll just have to wait.</p>
+    <h1>{% trans %}The Website Is Too Busy Serving Others{% endtrans %}</h1>
+    <p>{% trans %}You'll just have to wait.{% endtrans %}</p>
 
     <!-- does a simple reload -->
     <form method="GET" action="{{ uri }}">
       <p><button type="submit"><img src="oddysseus:icon/16/view-refresh">
-        Reload</button></p>
+        {% trans %}Reload{% endtrans %}</button></p>
     </form>
   </main>
 </body>

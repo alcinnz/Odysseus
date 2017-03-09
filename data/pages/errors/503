@@ -2,19 +2,18 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>SERVICE UNAVAILABLE</title>
-  <link rel="shortcut icon" src="oddysseus:icon/16/dialog-error-symbolic" />
+  <title>{% trans %}SERVICE UNAVAILABLE{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>Service Temporarily Unavailable</h1>
-    <p>Please try again later.</p>
+    <h1>{% trans %}Service Temporarily Unavailable{% endtrans %}</h1>
+    <p>{% trans %}Please try again later.{% endtrans %}</p>
 
     <!-- does a simple reload -->
     <form method="GET" action="{{ uri }}">
       <p><button type="submit"><img src="oddysseus:icon/16/view-refresh">
-        Reload</button></p>
+        {% trans %}Reload{% endtrans %}</button></p>
     </form>
   </main>
 </body>

@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>CAN'T CONTACT</title>
+  <title>{% trans %}CAN'T CONTACT{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>Could Not Contact {{ uri.domain }}</h1>
-    <p>This may be due to a network failure or a broken link.</p>
+    <h1>{% trans %}Could Not Contact {{ uri.domain }}{% endtrans %}</h1>
+    <p>{% trans %}This may be due to a network failure or a broken link.{% endtrans %}</p>
     <p><a href="settings://network/" title="Open network preferences">
       <img src="oddysseus:icon/128/preferences-system-network" 
             alt="Network" /></a></p>

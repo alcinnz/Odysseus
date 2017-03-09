@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>WEBSITE PROBLEMS</title>
+  <title>{% trans %}WEBSITE PROBLEMS{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>The Website Experienced An Error</h1>
-    <p>This shouldn't be happening, and you should report it.</p>
+    <h1>{% trans %}The Website Experienced An Error{% endtrans %}</h1>
+    <p>{% trans %}This shouldn't be happening, and you should report it.{% endtrans %}</p>
     <!-- TODO find and link contact us form -->
   </main>
 </body>

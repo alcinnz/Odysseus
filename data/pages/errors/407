@@ -1,1 +1,1 @@
-Proxy authentication required. {# TODO how to handle it? #}
+{% trans %}Proxy authentication required.{% endtrans %} {# TODO how to handle it? #}
