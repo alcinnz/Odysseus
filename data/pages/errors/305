@@ -1,1 +1,1 @@
-I'm being told to use a proxy. 
+{% trans %}I'm being told to use a proxy. {% endtrans %}
