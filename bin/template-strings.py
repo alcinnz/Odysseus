@@ -15,13 +15,14 @@ translatable_re = """
 {%\s*endtrans\s*%}
 """
 
-strings = {}
+strings = set()
 
 for filename in walk_files("data/pages"):
     # ignore certain specially interpreted file extensions
     if filename.endswith(".mime"): continue
     if filename.endswith(".link"): continue
     if filename.endswith(".icon"): continue
+    if filename.endswith("~"): continue
     if filename.endswith("/README"): continue
 
     # check if the file specifies it's not a template
@@ -50,7 +51,7 @@ for filename in walk_files("data/pages"):
             # Output the parsed text in PO format
             print()
             if comment: print("#.", comment)
-            print("msgid", string)
+            print("msgid", repr(string))
             plural = match.group('plural')
             if plural: print("msgid_plural", repr(plural))
             print("msgstr", repr(""))

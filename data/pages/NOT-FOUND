@@ -2,18 +2,20 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Tool Not Found</title>
+  <title>{% trans %}Tool Not Found{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
   <main>
-    <h1>This Page (<code>{{ uri }}</code>) Does Not Exist <br />
-        (and probably never has)</h1>
+    <h1>{% trans %}This Page (<code>{{ uri }}</code>) Does Not Exist <br />
+        (and probably never has){% endtrans %}</h1>
     <p>Maybe you meant one of these other internal pages?</p>
 
     <dl>
-      <dt><a href="oddysseus:debugging/index">Oddysseus Debugging</a></dd>
-      <dd>Tools for ensuring your browser is working correctly.</dd>
+      <dt><a href="oddysseus:debugging/index">{% trans %}
+          Oddysseus Debugging{% endtrans %}</a></dt>
+      <dd>{% trans %}Tools for ensuring your browser is working correctly.
+        {% endtrans %}</dd>
     </dl>
   </main>
 </body>

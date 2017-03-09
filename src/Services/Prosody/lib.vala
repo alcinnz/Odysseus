@@ -653,7 +653,7 @@ namespace Oddysseus.Templating.Std {
 
 	        // Parse comment
 	        var token = parser.lex.peek();
-	        if (token[0] in " \t\n".data) {
+	        if (ByteUtils.to_string(token).chug() == "") {
 	            parser.lex.next();
 	            token = parser.lex.peek();
             }
@@ -666,11 +666,12 @@ namespace Oddysseus.Templating.Std {
             // Parse string
             WordIter? endtag;
             var bytes = parser.scan_until("endtrans plural", out endtag);
-            var text = ByteUtils.to_string(bytes).chomp();
+            var text = ByteUtils.to_string(bytes).strip();
 
             // Parse plural
             if (ByteUtils.equals_str(endtag.next(), "plural")) {
-                var plural = parser.scan_until("endtrans", out endtag);
+                var pluralb = parser.scan_until("endtrans", out endtag);
+                var plural = ByteUtils.to_string(pluralb).strip();
                 // TODO handle plurals
             }
 

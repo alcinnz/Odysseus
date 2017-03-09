@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Internal Error</title>
+  <title>{% trans %}Internal Error{% endtrans %}</title>
   <style>
     @import url(oddysseus:butterick.css);
     @import url(oddysseus:ext/hljs-solarized-light.css);
@@ -14,9 +14,10 @@
 </head>
 <body class="branded">
   <main>
-    <h1>This Is Bad…</h1>
-    <p>I cannot understand my own code. If you are an Oddysseus developer more information is below. If you aren't, please <a href="https://github.com/alcinnz/Oddysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message.</p>
+    <h1>{% trans %}This Is Bad…{% endtrans %}</h1>
+    <p>{% trans %}I cannot understand my own code. If you are an Oddysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Oddysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message.{% endtrans %}</p>
 
+    <hr />
     <h2>{{ err-code }}{% if err-tag %}
         &mdash; on {% templatetag openblock %} {{ err-tag }}
         {% templatetag closeblock %}{% endif %}</h2>
