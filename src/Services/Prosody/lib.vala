@@ -646,6 +646,44 @@ namespace Oddysseus.Templating.Std {
 		}
 	}
 
+	private class TransBuilder : TagBuilder, Object {
+	    public Template? build(Parser parser, WordIter args) throws SyntaxError {
+	        // Parse arguments
+	        var parameters = parse_params(args);
+
+	        // Parse comment
+	        var token = parser.lex.peek();
+	        if (token[0] in " \t\n".data) {
+	            parser.lex.next();
+	            token = parser.lex.peek();
+            }
+            if (token.length > 4 && token[0] == '{' && token[1] == '#') {
+                // This is a translator comment
+                // that shouldn't appear in the string
+                parser.lex.next();
+            }
+
+            // Parse string
+            WordIter? endtag;
+            var bytes = parser.scan_until("endtrans plural", out endtag);
+            var text = ByteUtils.to_string(bytes).chomp();
+
+            // Parse plural
+            if (ByteUtils.equals_str(endtag.next(), "plural")) {
+                var plural = parser.scan_until("endtrans", out endtag);
+                // TODO handle plurals
+            }
+
+            // Assert endtag
+            if (endtag == null) throw new SyntaxError.UNBALANCED_TAGS(
+                    "{%% trans %%} must be closed with a {%% endtrans %%}");
+
+            // Translate ahead of time
+            var inner_parser = new Parser(ByteUtils.from_string(_(text)));
+            return new WithTag(parameters, inner_parser.parse());
+        }
+    }
+
 	private class VerbatimBuilder : TagBuilder, Object {
 		public Template? build(Parser parser, WordIter args) throws SyntaxError {
 			args.assert_end();
@@ -980,6 +1018,7 @@ namespace Oddysseus.Templating.Std {
 		register_tag("templatetag", new TemplateTagBuilder());
 		register_tag("test", new TestBuilder()); // *
 		register_tag("test-report", new TestReportBuilder()); // *
+		register_tag("trans", new TransBuilder());
 		register_tag("verbatim", new VerbatimBuilder());
 		register_tag("with", new WithBuilder());
 
