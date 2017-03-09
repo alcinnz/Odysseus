@@ -18,6 +18,25 @@
 /* Standard "tags" and "filters" to use in templates.
 	Beware that these may differ subtly from Django's implementation. */
 namespace Oddysseus.Templating.Std {
+    private Gee.Map<Bytes, Variable> parse_params(WordIter args) {
+		var parameters = ByteUtils.create_map<Variable>();
+		var count = 0;
+		foreach (var arg in args) {
+			var parts = smart_split(arg, "=");
+			var key = parts.next();
+			var val = parts.next_value();
+			parts.assert_end();
+
+			if (val == null) {
+			    val = key;
+				key = ByteUtils.from_string("$%i".printf(count++));
+			}
+
+			parameters[key] = new Variable(val);
+		}
+		return parameters;
+    }
+
 	private class AutoescapeBuilder : TagBuilder, Object {
 		public static Gee.Map<Bytes,Gee.Map<char,string>>? _modes;
 		public static Gee.Map<Bytes,Gee.Map<char,string>> modes {
@@ -71,24 +90,7 @@ namespace Oddysseus.Templating.Std {
 	private class Macro : TagBuilder, Object {
 		public Template body;
 		public Template? build(Parser parser, WordIter args) throws SyntaxError {
-		    // TODO abstract away this syntax
-			var parameters = ByteUtils.create_map<Variable>();
-			var count = 0;
-			foreach (var arg in args) {
-				var parts = smart_split(arg, "=");
-				var key = parts.next();
-				var val = parts.next_value();
-				parts.assert_end();
-
-				if (val == null) {
-				    val = key;
-					key = ByteUtils.from_string("$%i".printf(count++));
-				}
-
-				parameters[key] = new Variable(val);
-			}
-
-			return new BlockTag(this, parameters);
+			return new BlockTag(this, parse_params(args));
 		}
 	}
 	private class BlockTag : Template {
@@ -658,21 +660,7 @@ namespace Oddysseus.Templating.Std {
 
 	private class WithBuilder : TagBuilder, Object {
 		public Template? build(Parser parser, WordIter args) throws SyntaxError {
-			var parameters = ByteUtils.create_map<Variable>();
-			var count = 0;
-			foreach (var arg in args) {
-				var parts = smart_split(arg, "=");
-				var key = parts.next();
-				var val = parts.next_value();
-				parts.assert_end();
-
-				if (val == null) {
-				    val = key;
-					key = ByteUtils.from_string("$%i".printf(count++));
-				}
-
-				parameters[key] = new Variable(val);
-			}
+			var parameters = parse_params(args);
 
 			WordIter? endtoken;
 			var body = parser.parse("endwith", out endtoken);

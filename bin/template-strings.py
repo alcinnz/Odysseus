@@ -24,7 +24,7 @@ for filename in walk_files("data/pages"):
     if filename.endswith(".icon"): continue
     if filename.endswith("/README"): continue
 
-    # check if the fail specifies it's not a template
+    # check if the file specifies it's not a template
     try:
         with open(filename + ".mime") as f:
             if f.read()[0] != '+': continue
