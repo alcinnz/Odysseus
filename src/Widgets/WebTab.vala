@@ -113,8 +113,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         
         web.bind_property("title", this, "label");
         web.notify["favicon"].connect((sender, property) => {
-            var fav = BrowserWindow.surface_to_pixbuf(web.get_favicon());
-            icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
+            restore_favicon();
         });
         web.bind_property("is-loading", this, "working");
 
@@ -150,6 +149,11 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
 
         configure();
         web.load_uri(uri);
+    }
+
+    public void restore_favicon() {
+        var fav = BrowserWindow.surface_to_pixbuf(web.get_favicon());
+        icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
     }
     
     public void find_in_page() {

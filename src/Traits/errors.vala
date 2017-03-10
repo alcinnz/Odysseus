@@ -114,6 +114,9 @@ namespace Oddysseus.Traits {
                     report_error(response.status_code.to_string(), response.uri,
                             tab);
                     return true;
+                } else {
+                    // So we don't get stuck with the error icon
+                    tab.restore_favicon();
                 }
             }
             return false;
