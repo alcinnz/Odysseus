@@ -38,6 +38,13 @@ def parse(text):
         yield 0, body, comment, plural
         i = text.find("{% trans", i)
 
+def esc(text):
+    """Outputs a double quoted string"""
+    text = repr(text)
+    if text[0] == '"': return text
+    text = text.replace('"', '\\"')
+    return '"' + text[1:-1] + '"'
+
 for filename in walk_files("data/pages"):
     # ignore certain specially interpreted file extensions
     if filename.endswith(".mime"): continue
@@ -62,7 +69,7 @@ for filename in walk_files("data/pages"):
             if comment:
                 print("/* TRANSLATORS", comment, "*/")
             if plural:
-                print("char *s = NC_(" + repr(string) + ", "
-                    + repr(plural) + ");")
+                print("char *s = NC_(" + esc(string) + ", "
+                    + esc(plural) + ");")
             else:
-                print("char *s = N_(" + repr(string) + ");")
+                print("char *s = N_(" + esc(string) + ");")
