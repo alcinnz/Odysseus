@@ -36,7 +36,12 @@ namespace Oddysseus.Traits {
     public async void view_source(WebKit.WebView source, WebKit.WebView dest) {
         var data = new Source();
         data.title = source.title;
-        data.code = new Bytes(yield source.get_main_resource().get_data(null));
+        try {
+            var code = yield source.get_main_resource().get_data(null);
+            data.code = new Bytes(code);
+        } catch (Error e) {
+            return; // Don't go through
+        }
 
         var url = "source:" + source.get_main_resource().uri;
         if (sources == null) sources = new Gee.HashMap<string, Source>();
@@ -79,8 +84,12 @@ namespace Oddysseus.Traits {
                request.finish_error(err); 
             }
         } else if (request.get_uri() == "source:favicon.ico") {
-            var stream = resources_open_stream("/io/github/alcinnz/Oddysseus/oddysseus:/special/viewsource.ico", 0);
-            request.finish(stream, -1, "image/x-icon");
+            try {
+                var stream = resources_open_stream("/io/github/alcinnz/Oddysseus/oddysseus:/special/viewsource.ico", 0);
+                request.finish(stream, -1, "image/x-icon");
+            } catch (Error e) {
+                request.finish_error(e);
+            }
         } else {
             // If we're not viewing alternate HTML under this schema,
             //      close any tabs that have persisted. 

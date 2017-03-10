@@ -73,10 +73,22 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
         download.finished.connect(() => {
             // Can't set destination after a download's started,
             //      so do it afterwords
-            if (destination != "")
+            if (destination != "") try {
                 File.new_for_uri(download.destination).move(
                         File.new_for_uri(destination),
                         FileCopyFlags.OVERWRITE | FileCopyFlags.BACKUP);
+            } catch (Error e) {
+                var dlg = new Gtk.MessageDialog((Gtk.Window) get_toplevel(),
+                        Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                        Gtk.MessageType.ERROR,
+                        Gtk.ButtonsType.CLOSE,
+                        // TRANSLATORS "%s is replaced with the filepath
+                        // the user specified they wanted their download to be at
+                        _("Error moving download to %s.\nIt has been left in you Downloads folder") + "\n\n%s",
+                        destination, e.message);
+                dlg.run();
+                dlg.destroy();
+            }
 
             update_data();
             remaining.label = _("DONE");
@@ -140,23 +152,26 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
 
     private void create_menu() {
         menu = new Gtk.Menu();
-        
-        open_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.OPEN, null);
+
+        // TRANSLATORS _ precedes shortcut key
+        open_item = new Gtk.MenuItem.with_mnemonic(_("_Open"));
         open_item.activate.connect(() => {
             Granite.Services.System.open_uri(download.destination);
         });
         open_item.sensitive = false;
         menu.add(open_item);
 
-        var save_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.SAVE_AS,
-                                                        null);
+        // TRANSLATORS _ precedes shortcut key
+        var save_item = new Gtk.MenuItem.with_mnemonic(_("_Save As"));
         save_item.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
                         _("Save Download to:"),
                         (Gtk.Window) get_toplevel(),
                         Gtk.FileChooserAction.SAVE,
-                        Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
-                        Gtk.Stock.SAVE_AS, Gtk.ResponseType.OK);
+                        // TRANSLATORS _ precedes the shortcut key
+                        _("_Cancel"), Gtk.ResponseType.CANCEL,
+                        // TRANSLATORS _ precedes the shortcut key
+                        _("_Save As"), Gtk.ResponseType.OK);
             chooser.set_filename(download.destination);
 
             if (chooser.run() == Gtk.ResponseType.OK) {
@@ -167,9 +182,9 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
         menu.add(save_item);
         
         menu.add(new Gtk.SeparatorMenuItem());
-        
-        var cancel_item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.CANCEL,
-                                                            null);
+
+        // TRANSLATORS _ precedes shortcut key
+        var cancel_item = new Gtk.MenuItem.with_mnemonic(_("_Cancel"));
         cancel_item.activate.connect(() => this.destroy());
         menu.add(cancel_item);
         

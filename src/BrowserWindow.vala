@@ -103,21 +103,23 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
     private Gtk.Menu create_appmenu() {
         var menu = new Gtk.Menu();
 
-        var new_window = new Gtk.MenuItem.with_label(_("New Window"));
+        // TRANSLATORS _ precedes the keyboard shortcut
+        var new_window = new Gtk.MenuItem.with_label(_("_New Window"));
         new_window.activate.connect(() => {
             var window = new BrowserWindow(Oddysseus.Application.instance);
             window.show_all();
         });
         menu.add(new_window);
 
-        var open = new Gtk.MenuItem.with_label(_("Open..."));
+        // TRANSLATORS _ precedes the keyboard shortcut
+        var open = new Gtk.MenuItem.with_label(_("_Open..."));
         open.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
                                 _("Open Local Webpage"),
                                 this,
                                 Gtk.FileChooserAction.OPEN,
-                                Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
-                                Gtk.Stock.OPEN, Gtk.ResponseType.OK);
+                                _("_Cancel"), Gtk.ResponseType.CANCEL,
+                                _("_Open"), Gtk.ResponseType.OK);
             chooser.filter.add_mime_type("text/html");
             chooser.filter.add_mime_type("application/xhtml+xml");
             chooser.filter.add_pattern("*.html");
@@ -134,17 +136,18 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         menu.add(open);
         open_item = open;
 
-        var save = new Gtk.MenuItem.with_label(_("Save..."));
+        // TRANSLATORS _ precedes the keyboard shortcut
+        var save = new Gtk.MenuItem.with_label(_("_Save..."));
         save.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
                                 _("Save Page as"),
                                 this,
                                 Gtk.FileChooserAction.SAVE,
-                                Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
-                                Gtk.Stock.SAVE_AS, Gtk.ResponseType.OK);
+                                _("_Cancel"), Gtk.ResponseType.CANCEL,
+                                _("_Save As"), Gtk.ResponseType.OK);
 
             if (chooser.run() == Gtk.ResponseType.OK) {
-                web.save_to_file(File.new_for_uri(chooser.get_uri()),
+                web.save_to_file.begin(File.new_for_uri(chooser.get_uri()),
                                                     WebKit.SaveMode.MHTML, null);
             }
             chooser.destroy();
@@ -152,7 +155,8 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         menu.add(save);
         save_item = save;
 
-        var view_source = new Gtk.MenuItem.with_label(_("View Source"));
+        // TRANSLATORS _ precedes the keyboard shortcut
+        var view_source = new Gtk.MenuItem.with_label(_("_View Source"));
         view_source.activate.connect(() => {
             var tab = new WebTab(tabs, web, "about:blank");
             tabs.insert_tab(tab, -1);
@@ -177,11 +181,13 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         menu.add(new Gtk.SeparatorMenuItem());
 
-        var find_in_page = new Gtk.MenuItem.with_label(_("Find In Page..."));
+        // TRANSLATORS _ precedes the keyboard shortcut
+        var find_in_page = new Gtk.MenuItem.with_label(_("_Find In Page..."));
         find_in_page.activate.connect(find_in_page_cb);
         menu.add(find_in_page);
 
-        var print = new Gtk.MenuItem.with_label(_("Print..."));
+        // TRANSLATORS _ precedes the keyboard shortcut
+        var print = new Gtk.MenuItem.with_label(_("_Print..."));
         print.activate.connect(() => {
             var printer = new WebKit.PrintOperation(web);
             printer.run_dialog(this);
@@ -454,7 +460,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
                 yield persistFile.write_all_async(url.data,
                                                 Priority.DEFAULT,
                                                 null, out bytes_written);
-            } catch (IOError e) {
+            } catch (Error e) {
                 // The file should still work reasonably well. 
                 // The separator must be successful written before the url is,
                 // and if that isn't fully written things should still work.

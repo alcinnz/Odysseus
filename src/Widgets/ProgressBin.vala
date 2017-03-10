@@ -17,12 +17,8 @@
 public class Oddysseus.ProgressBin : Gtk.Bin {
     public Cairo.Pattern progressFill {get; set;}
     public double progress {get; set;}
-    private Gdk.Window window; // A clear background to use
 
     public ProgressBin() {
-        window = new Gdk.Window(null, Gdk.WindowAttr(), 0);
-        window.set_background({0, green: 0, blue: 0, alpha: 0});
-        
         progressFill = new Cairo.Pattern.rgba(0.7, 0.8, 1.0, 0.9);
         
         this.notify.connect((sender, property) => queue_draw());
@@ -39,7 +35,7 @@ public class Oddysseus.ProgressBin : Gtk.Bin {
         // TODO Works, at the moment, on elementary OS without this,
         //      but needs fixing.
         //      The goal: set a transparent background before rendering child.
-        //child_ctx.set_background(window);
+        //child_ctx.set_background(?);
         
         // Render progress
         cr.rectangle(0, 0, width * progress, height);

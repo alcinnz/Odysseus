@@ -176,13 +176,7 @@ namespace Oddysseus.Services {
                 render_error(request, "NOT-FOUND");
                 return;
             }
-            Templating.Data.Data data;
-            try {
-                data = parse_url_to_prosody(request.get_uri());
-            } catch (Error e) {
-                render_error(request, "BAD-REQUEST");
-                return;
-            }
+            Templating.Data.Data data = parse_url_to_prosody(request.get_uri());
 
             var stream = new Templating.InputStreamWriter();
             request.finish(stream, -1, mime_type);

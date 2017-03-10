@@ -33,7 +33,7 @@ namespace Oddysseus.Templating {
         if (!template_cache.has_key(resource)) {
             if (cached_keys.size > 5) {
                 // cap number of templates
-                var to_free = template_cache.unset(cached_keys[CACHE_SIZE - 1]);
+                template_cache.unset(cached_keys[CACHE_SIZE - 1]);
                 cached_keys.remove_at(CACHE_SIZE - 1);
             }
 
@@ -67,7 +67,8 @@ namespace Oddysseus.Templating {
                 "Unknown Tag", "Unknown Filter",
                 "Invalid Arguments for Tag", "Unclosed Block Tag"};
         public ErrorData(SyntaxError err, int line_number, int line_offset,
-                int error_start, int error_end, Bytes source) {
+                int error_start, int error_end, Bytes source)
+                throws SyntaxError {
             data[ByteUtils.from_string("err-code")] =
                     new Data.Literal(error_types[err.code]);
 
@@ -91,7 +92,7 @@ namespace Oddysseus.Templating {
     private class ErrorTagBuilder : Object, TagBuilder {
         private ErrorTag tag;
         public ErrorTagBuilder(ErrorTag tag) {this.tag = tag;}
-        public Template? build(Parser parser, WordIter args) {
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
             args.assert_end();
             return tag;
         }

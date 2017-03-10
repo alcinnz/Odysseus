@@ -39,7 +39,7 @@ namespace Oddysseus.Traits {
             }
         }
 
-        render_alternate_html(web, "errors/" + error, uri);
+        render_alternate_html.begin(web, "errors/" + error, uri);
         try {
             var path = "/" + Path.build_path("/",
                     "io", "github", "alcinnz", "Oddysseus", "oddysseus:",

@@ -18,7 +18,8 @@
 /* Standard "tags" and "filters" to use in templates.
 	Beware that these may differ subtly from Django's implementation. */
 namespace Oddysseus.Templating.Std {
-    private Gee.Map<Bytes, Variable> parse_params(WordIter args) {
+    private Gee.Map<Bytes, Variable> parse_params(WordIter args)
+            throws SyntaxError {
 		var parameters = ByteUtils.create_map<Variable>();
 		var count = 0;
 		foreach (var arg in args) {
@@ -665,14 +666,22 @@ namespace Oddysseus.Templating.Std {
 
             // Parse string
             WordIter? endtag;
-            var bytes = parser.scan_until("endtrans plural", out endtag);
+            Bytes bytes;
+            // Ensures source string is a valid template
+            parser.parse("endtrans plural", out endtag, out bytes);
             var text = ByteUtils.to_string(bytes).strip();
 
             // Parse plural
             if (ByteUtils.equals_str(endtag.next(), "plural")) {
-                var pluralb = parser.scan_until("endtrans", out endtag);
+                Bytes pluralb;
+                parser.parse("endtrans", out endtag, out pluralb);
                 var plural = ByteUtils.to_string(pluralb).strip();
-                // TODO handle plurals
+
+                // Assert endtag
+                if (endtag == null) throw new SyntaxError.UNBALANCED_TAGS(
+                        "{%% trans %%} must be closed with a {%% endtrans %%}");
+
+                return new TransTag(parameters, text, plural);
             }
 
             // Assert endtag
@@ -689,6 +698,34 @@ namespace Oddysseus.Templating.Std {
             var inner_parser = new Parser(translatedb);
 
             return new WithTag(parameters, inner_parser.parse());
+        }
+    }
+    private class TransTag : Template {
+        private string text;
+        private string plural;
+        private Gee.Map<Bytes,Variable> vars;
+        public TransTag(Gee.Map<Bytes,Variable> vars, string t, string p) {
+            this.vars = vars;
+            this.text = t;
+            this.plural = p;
+        }
+
+        public override async void exec(Data.Data ctx, Writer output) {
+            // TODO optimize! by parsing ahead of time
+            var inner_ctx = new Data.Lazy(vars, ctx);
+            var n = inner_ctx[ByteUtils.from_string("count")].to_int();
+            var translated = ngettext(text, plural, n);
+
+            try {
+                var parser = new Parser(ByteUtils.from_string(translated));
+                var block = parser.parse();
+                yield block.exec(inner_ctx, output);
+            } catch (SyntaxError e) {
+                // TRANSLATORS Feel free to put in a different web address
+                // for users to report your invalid templates to.
+                yield output.writes(_("TRANSLATION ERROR! Please report to " +
+                        "https://github.com/alcinnz/Oddysseus/issues"));
+            }
         }
     }
 

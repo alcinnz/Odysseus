@@ -84,8 +84,6 @@ public class Oddysseus.Application : Granite.Application {
                 }
             } catch (Error e) {
                 warning("Failed to restore tabs: %s", e.message);
-            } catch (IOError e) {
-                warning("Failed to restore tabs: %s", e.message);
             }
         }
         
@@ -160,8 +158,6 @@ public class Oddysseus.Application : Granite.Application {
             }
         } catch (Error e) {
             warning("Failed to persist state: %s", e.message);
-        } catch (IOError e) {
-            warning("Failed to write window seperator: %s", e.message);
         }
     }
 }
