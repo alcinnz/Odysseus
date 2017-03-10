@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-10 15:04+1300\n"
+"POT-Creation-Date: 2017-03-10 15:36+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,61 +159,61 @@ msgstr ""
 msgid "%u matches of \"%s\" found"
 msgstr ""
 
-#: tmp/templates.h:20
+#: tmp/templates.h:24
 msgid "I can't make sense of this web address."
 msgstr ""
 
-#: tmp/templates.h:22
+#: tmp/templates.h:26
 msgid ""
 "A proxy server has modified the response you're seeing. (Which for this "
 "message to show is presumably empty)."
 msgstr ""
 
-#: tmp/templates.h:32
+#: tmp/templates.h:36
 msgid ""
 "The server says it can't give us a file format that we accept. This is odd "
 "as, while we have our preferences, we can accept anything."
 msgstr ""
 
-#: tmp/templates.h:46
+#: tmp/templates.h:50
 msgid "I'm being told to use a proxy."
 msgstr ""
 
-#: tmp/templates.h:54
+#: tmp/templates.h:58
 msgid ""
 "Maybe you typed it wrong or followed an invalid link. Or maybe the site "
 "you're visiting has inconsiderately moved pages around or even removed them."
 msgstr ""
 
-#: tmp/templates.h:64
+#: tmp/templates.h:68
 msgid "Please take this up with the website's developers."
 msgstr ""
 
-#: tmp/templates.h:66
+#: tmp/templates.h:70
 msgid "The website's still processing you're request."
 msgstr ""
 
-#: tmp/templates.h:72
+#: tmp/templates.h:76
 msgid "It doesn't speak the same language I do."
 msgstr ""
 
-#: tmp/templates.h:74 tmp/templates.h:189
+#: tmp/templates.h:78 tmp/templates.h:193
 msgid "CAN'T CONTACT"
 msgstr ""
 
-#: tmp/templates.h:100
+#: tmp/templates.h:104
 msgid "This is not the site you're looking for!"
 msgstr ""
 
-#: tmp/templates.h:104
+#: tmp/templates.h:108
 msgid "I Know What I'm Doing…<"
 msgstr ""
 
-#: tmp/templates.h:120
+#: tmp/templates.h:124
 msgid "I'm A Teapot"
 msgstr ""
 
-#: tmp/templates.h:123
+#: tmp/templates.h:127
 msgid ""
 "I'm a little teapot<br />\n"
 "      Short and stout<br />\n"
@@ -221,38 +221,38 @@ msgid ""
 "      And here is my spout"
 msgstr ""
 
-#: tmp/templates.h:133
+#: tmp/templates.h:137
 msgid "Your Action Conflicted With Someone Else's"
 msgstr ""
 
-#: tmp/templates.h:145
+#: tmp/templates.h:149
 msgid "CAN'T CONNECT"
 msgstr ""
 
-#: tmp/templates.h:163
+#: tmp/templates.h:167
 msgid "SITE'S TOO BUSY"
 msgstr ""
 
-#: tmp/templates.h:167
+#: tmp/templates.h:171
 msgid "You'll just have to wait."
 msgstr ""
 
-#: tmp/templates.h:171
+#: tmp/templates.h:175
 msgid ""
 "The server says it's presenting you with a choice of formats for this "
 "resource, but I don't see any choices."
 msgstr ""
 
-#: tmp/templates.h:187
+#: tmp/templates.h:191
 msgid ""
 "The site is requesting you pay to access it's content. However they're not "
 "clear how they want you to pay."
 msgstr ""
 
-#: tmp/templates.h:201
+#: tmp/templates.h:205
 msgid "This shouldn't be happening, and you should report it."
 msgstr ""
 
-#: tmp/templates.h:227
+#: tmp/templates.h:231
 msgid "But I don't understand what it was."
 msgstr ""
