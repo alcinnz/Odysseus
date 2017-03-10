@@ -109,6 +109,7 @@ namespace Oddysseus.Traits {
                 var response_decision = (WebKit.ResponsePolicyDecision) decision;
                 var response = response_decision.response;
                 if (response.content_length == 0 &&
+                        response.uri == web.uri &&
                         response.status_code != 200) {
                     report_error(response.status_code.to_string(), response.uri,
                             tab);
