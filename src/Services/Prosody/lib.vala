@@ -680,7 +680,14 @@ namespace Oddysseus.Templating.Std {
                     "{%% trans %%} must be closed with a {%% endtrans %%}");
 
             // Translate ahead of time
-            var inner_parser = new Parser(ByteUtils.from_string(_(text)));
+            var translated = _(text);
+            // Ensure the translation is memory mapped, helps reduce segfaults.
+            var translatedb = bytes;
+            if (((void*) translated) != ((void*) text))
+                translatedb = ByteUtils.from_string(translated);
+            // And then parse
+            var inner_parser = new Parser(translatedb);
+
             return new WithTag(parameters, inner_parser.parse());
         }
     }
