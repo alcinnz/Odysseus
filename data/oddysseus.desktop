@@ -1,24 +1,25 @@
 [Desktop Entry]
 Type=Application
 Name=Oddysseus
-Comment=Browse knowledge, entertainment, and services on The Web
+_Comment=Browse knowledge, entertainment, and services on The Web
 Exec=oddysseus
 Icon=oddysseus-web
 Terminal=false
 Categories=Network;WebBrowser;GTK;GNOME;
-Keywords=WWW;Web;Internet;Browser;
+# TRANSLATORS This is a semicolon list of keywords for this application
+_Keywords=WWW;Web;Internet;Browser;
 StartupNotify=true
 Actions=NewWindow;NewTab;AboutDialog;
 MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtml+xml;
 
 [Desktop Action NewWindow]
-Name=New Window
+_Name=New Window
 Exec=odysseus --new-window
 
 [Desktop Action NewTab]
-Name=New Tab
+_Name=New Tab
 Exec=odysseus --new-tab
 
 [Desktop Action AboutDialog]
-Name=About Odysseus
+_Name=About Odysseus
 Exec=odysseus --about

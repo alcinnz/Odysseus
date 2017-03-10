@@ -1,0 +1,258 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-10 15:04+1300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/BrowserWindow.vala:54
+msgid "Go to previously viewed page"
+msgstr ""
+
+#: src/BrowserWindow.vala:57
+msgid "Go to next viewed page"
+msgstr ""
+
+#: src/BrowserWindow.vala:60
+msgid "Load the page from the website again"
+msgstr ""
+
+#: src/BrowserWindow.vala:63
+msgid "Stop loading page"
+msgstr ""
+
+#: src/BrowserWindow.vala:68
+msgid "Current web address"
+msgstr ""
+
+#: src/BrowserWindow.vala:106
+msgid "New Window"
+msgstr ""
+
+#: src/BrowserWindow.vala:113
+msgid "Open..."
+msgstr ""
+
+#: src/BrowserWindow.vala:116
+msgid "Open Local Webpage"
+msgstr ""
+
+#: src/BrowserWindow.vala:137
+msgid "Save..."
+msgstr ""
+
+#: src/BrowserWindow.vala:140
+msgid "Save Page as"
+msgstr ""
+
+#: src/BrowserWindow.vala:155
+msgid "View Source"
+msgstr ""
+
+#: src/BrowserWindow.vala:166
+msgid "Zoom in"
+msgstr ""
+
+#: src/BrowserWindow.vala:172
+msgid "Zoom out"
+msgstr ""
+
+#: src/BrowserWindow.vala:180
+msgid "Find In Page..."
+msgstr ""
+
+#: src/BrowserWindow.vala:184
+msgid "Print..."
+msgstr ""
+
+#: src/Traits/viewsource.vala:87
+msgid "Please go through the \"View Source\" menu item."
+msgstr ""
+
+#: src/Widgets/DownloadBar.vala:40
+msgid "Close downloads bar"
+msgstr ""
+
+#: src/Widgets/DownloadButton.vala:55
+msgid "[Download]"
+msgstr ""
+
+#: src/Widgets/DownloadButton.vala:82
+msgid "DONE"
+msgstr ""
+
+#. / TRANSLATORS: "%s" seconds, shown in download button.
+#. / "%s" will be replaced with a whole number of seconds.
+#: src/Widgets/DownloadButton.vala:124
+msgid "%ss"
+msgstr ""
+
+#. / TRANSLATORS: "%s" minutes, shown in download button.
+#. / "%s" will be replaced with a whole number of minutes.
+#: src/Widgets/DownloadButton.vala:128
+msgid "%sm"
+msgstr ""
+
+#. / TRANSLATORS: "%s" hours and "%s" minutes,
+#. / shown in download button.
+#. / The first %s will be replaced with a whole number of hours,
+#. / and the second will be replaced with a whole number of minutes.
+#: src/Widgets/DownloadButton.vala:134
+msgid "%sh %sm"
+msgstr ""
+
+#: src/Widgets/DownloadButton.vala:155
+msgid "Save Download to:"
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:37
+msgid "Find in page..."
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:80
+msgid "Find previous match"
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:92
+msgid "View search options"
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:122
+msgid "Match Uppercase"
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:130
+msgid "Ignore Uppercase"
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:138
+msgid "Auto"
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:148
+msgid "Cyclic Search"
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:155
+msgid "Match Word Start"
+msgstr ""
+
+#: src/Widgets/FindToolbar.vala:163
+msgid "Match CamelCase"
+msgstr ""
+
+#. / Translators. "%u" will be replaced with the number of matches
+#. / while %s will be replaced with the text being searched for.
+#: src/Widgets/WebTab.vala:89
+msgid "%u matches of \"%s\" found"
+msgstr ""
+
+#: tmp/templates.h:20
+msgid "I can't make sense of this web address."
+msgstr ""
+
+#: tmp/templates.h:22
+msgid ""
+"A proxy server has modified the response you're seeing. (Which for this "
+"message to show is presumably empty)."
+msgstr ""
+
+#: tmp/templates.h:32
+msgid ""
+"The server says it can't give us a file format that we accept. This is odd "
+"as, while we have our preferences, we can accept anything."
+msgstr ""
+
+#: tmp/templates.h:46
+msgid "I'm being told to use a proxy."
+msgstr ""
+
+#: tmp/templates.h:54
+msgid ""
+"Maybe you typed it wrong or followed an invalid link. Or maybe the site "
+"you're visiting has inconsiderately moved pages around or even removed them."
+msgstr ""
+
+#: tmp/templates.h:64
+msgid "Please take this up with the website's developers."
+msgstr ""
+
+#: tmp/templates.h:66
+msgid "The website's still processing you're request."
+msgstr ""
+
+#: tmp/templates.h:72
+msgid "It doesn't speak the same language I do."
+msgstr ""
+
+#: tmp/templates.h:74 tmp/templates.h:189
+msgid "CAN'T CONTACT"
+msgstr ""
+
+#: tmp/templates.h:100
+msgid "This is not the site you're looking for!"
+msgstr ""
+
+#: tmp/templates.h:104
+msgid "I Know What I'm Doing…<"
+msgstr ""
+
+#: tmp/templates.h:120
+msgid "I'm A Teapot"
+msgstr ""
+
+#: tmp/templates.h:123
+msgid ""
+"I'm a little teapot<br />\n"
+"      Short and stout<br />\n"
+"      Here is my handle<br />\n"
+"      And here is my spout"
+msgstr ""
+
+#: tmp/templates.h:133
+msgid "Your Action Conflicted With Someone Else's"
+msgstr ""
+
+#: tmp/templates.h:145
+msgid "CAN'T CONNECT"
+msgstr ""
+
+#: tmp/templates.h:163
+msgid "SITE'S TOO BUSY"
+msgstr ""
+
+#: tmp/templates.h:167
+msgid "You'll just have to wait."
+msgstr ""
+
+#: tmp/templates.h:171
+msgid ""
+"The server says it's presenting you with a choice of formats for this "
+"resource, but I don't see any choices."
+msgstr ""
+
+#: tmp/templates.h:187
+msgid ""
+"The site is requesting you pay to access it's content. However they're not "
+"clear how they want you to pay."
+msgstr ""
+
+#: tmp/templates.h:201
+msgid "This shouldn't be happening, and you should report it."
+msgstr ""
+
+#: tmp/templates.h:227
+msgid "But I don't understand what it was."
+msgstr ""
