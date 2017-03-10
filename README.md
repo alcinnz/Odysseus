@@ -47,4 +47,4 @@ Contributing
 
 Feel free to create a pull request or open an issue. The coding convention is GNOME's naming conventions with 4 space indents, another 4 space line continuations, and no spaces between method calls & their argument lists. 
 
-If you want to help teach Oddysseus a new language, please visit https://poeditor.com/join/project/CXYmd0gvmt. 
+If you want to help teach Oddysseus a new language, please visit https://poeditor.com/join/project/6VytorOTQY. 
