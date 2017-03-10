@@ -26,23 +26,21 @@ namespace Oddysseus.Services {
         raw[b("url")] = new Templating.Data.Mapping(raw_url, url);
 
         var parser = new Soup.URI(url);
-        raw[b("fragment")] = new Templating.Data.Literal(parser.fragment);
-        raw[b("host")] = new Templating.Data.Literal(parser.host);
-        raw[b("password")] = new Templating.Data.Literal(parser.password);
-        raw[b("path")] = new Templating.Data.Literal(parser.path);
-        raw[b("port")] = new Templating.Data.Literal(parser.port);
+        raw_url[b("fragment")] = new Templating.Data.Literal(parser.fragment);
+        raw_url[b("host")] = new Templating.Data.Literal(parser.host);
+        raw_url[b("password")] = new Templating.Data.Literal(parser.password);
+        raw_url[b("path")] = new Templating.Data.Literal(parser.path);
+        raw_url[b("port")] = new Templating.Data.Literal(parser.port);
         // TODO parse this into a map
         // In doing so each key should be exposed as both a collection
         // and singular string.
-        raw[b("query")] = new Templating.Data.Literal(parser.query);
-        raw[b("scheme")] = new Templating.Data.Literal(parser.scheme);
-        raw[b("user")] = new Templating.Data.Literal(parser.user);
+        raw_url[b("query")] = new Templating.Data.Literal(parser.query);
+        raw_url[b("scheme")] = new Templating.Data.Literal(parser.scheme);
+        raw_url[b("user")] = new Templating.Data.Literal(parser.user);
 
         // Get the homepage
-        parser.fragment = "";
-        parser.path = "/";
-        parser.query = "";
-        raw[b("home")] = new Templating.Data.Literal(parser.to_string(false));
+        var home = new Soup.URI.with_base(parser, "/");
+        raw_url[b("home")] = new Templating.Data.Literal(home.to_string(false));
 
         return new Templating.Data.Mapping(raw);
     }
