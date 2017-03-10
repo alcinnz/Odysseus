@@ -1,5 +1,5 @@
 /**
-* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016).
+* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
 *
 * Oddysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,16 @@
 */
 public class Oddysseus.Application : Granite.Application {
     construct {
-        application_id = "com.github.alcinnz.oddysseus";
-        flags = ApplicationFlags.FLAGS_NONE;
-        /*Intl.setlocale (LocaleCategory.ALL, "");
-        Intl.textdomain (Build.GETTEXT_PACKAGE);*/
+        this.flags |= ApplicationFlags.HANDLES_OPEN;
+        this.flags |= ApplicationFlags.HANDLES_COMMAND_LINE;
+        application_id = "io.github.alcinnz.Oddysseus";
+        Intl.setlocale (LocaleCategory.ALL, "");
+        Intl.textdomain ("oddysseus");
 
         program_name = "Oddysseus";
-        app_years = "2016";
-
-        /* TODO specify more metadata */
+        app_years = "2016-2017";
         app_icon = "internet-web-browser";
-        app_launcher = "odysseus.desktop";
+        app_launcher = "oddysseus.desktop";
         main_url = "https://github.com/alcinnz/Oddysseus";
         bug_url = "https://github.com/alcinnz/Oddysseus/issues";
         about_authors = { "Adrian Cochrane <alcinnz@eml.cc>", null };
@@ -39,32 +38,6 @@ public class Oddysseus.Application : Granite.Application {
             if (_instance == null)
                 _instance = new Oddysseus.Application();
             return _instance;
-        }
-    }
-
-    public override void activate () {
-        /* Configure save directories */
-        var web_ctx = WebKit.WebContext.get_default();
-        
-        /* Restore tabs */
-        try {
-            var file = File.new_for_commandline_arg_and_cwd(".oddysseus",
-                                Environment.get_home_dir());
-            if (!file.query_exists()) {
-                new BrowserWindow(this).show_all();
-            }
-
-            var restoreFile = new DataInputStream(file.read());
-
-            string? windowState;
-            while ((windowState = restoreFile.read_line()) != null) {
-                new BrowserWindow.with_urls(this, windowState.split("\t"))
-                    .show_all();
-            }
-        } catch (Error e) {
-            warning("Failed to restore tabs: %s", e.message);
-        } catch (IOError e) {
-            warning("Failed to restore tabs: %s", e.message);
         }
     }
     
@@ -91,12 +64,32 @@ public class Oddysseus.Application : Granite.Application {
             stdout.printf("Copyright 2016 Adrian Cochrane\n");
             return Posix.EXIT_SUCCESS;
         }
-        
-        // Create (or show) the first window
-        activate();
+
+        bool is_app_launch = (get_last_window() == null);
+        if (is_app_launch) {
+            /* Restore tabs */
+            try {
+                var file = File.new_for_commandline_arg_and_cwd(".oddysseus",
+                                    Environment.get_home_dir());
+                if (!file.query_exists()) {
+                    new BrowserWindow(this).show_all();
+                }
+
+                var restoreFile = new DataInputStream(file.read());
+
+                string? windowState;
+                while ((windowState = restoreFile.read_line()) != null) {
+                    new BrowserWindow.with_urls(this, windowState.split("\t"))
+                        .show_all();
+                }
+            } catch (Error e) {
+                warning("Failed to restore tabs: %s", e.message);
+            } catch (IOError e) {
+                warning("Failed to restore tabs: %s", e.message);
+            }
+        }
         
         // Create a next window if requested and it's not the app launch
-        bool is_app_launch = (get_last_window() == null);
         if (create_new_window && !is_app_launch) {
             create_new_window = false;
             var window = new BrowserWindow(this);
@@ -113,24 +106,17 @@ public class Oddysseus.Application : Granite.Application {
         
         // Open all URLs given as arguments
         if (unclaimed_args > 0) {
-            // TODO Open given URLs
-            File[] files = new File[unclaimed_args];
-            files.length = 0;
-            
+            var window = get_last_window();
             foreach (string arg in args[1:unclaimed_args + 1]) {
-                try {
-                    files += File.new_for_uri(arg);
-                } catch (Error e) {
-                    warning(e.message);
-                }
+                window.new_tab(File.new_for_commandline_arg(arg).get_uri());
             }
-            open(files, "");
         }
-        
+
         return Posix.EXIT_SUCCESS;
     }
 
-    protected override void open(File[] files, string hint) {
+    public override void open(File[] files, string hint) {
+        stderr.printf("iamhere\n");
         var window = get_last_window();
         if (window == null) return;
 

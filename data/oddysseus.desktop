@@ -2,7 +2,7 @@
 Type=Application
 Name=Oddysseus
 _Comment=Browse knowledge, entertainment, and services on The Web
-Exec=oddysseus
+Exec=oddysseus %U
 Icon=oddysseus-web
 Terminal=false
 Categories=Network;WebBrowser;GTK;GNOME;
