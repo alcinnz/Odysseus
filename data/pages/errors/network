@@ -3,7 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>{% trans %}CAN'T CONNECT{% endtrans %}</title>
-  <link rel="shortcut icon" src="oddysseus:icons/16/network-offline-symbolic" />
   <style>@import url(oddysseus:butterick.css);</style>
 </head>
 <body>
@@ -11,7 +10,7 @@
     <h1>{% trans %}Could Not Connect To The Internet{% endtrans %}</h1>
     <p><a href="settings://network/" title="Open network preferences">
       <img src="oddysseus:icon/128/preferences-system-network" 
-            alt="Network" /></a></p>
+            alt="{% trans %}Network{% endtrans %}" /></a></p>
   </main>
   <script>
     document.ononline = () => location.reload()

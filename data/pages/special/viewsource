@@ -12,7 +12,6 @@
         overflow-x: visible;
         padding: 0;
     }
-        
   </style>
   <script src="oddysseus:ext/highlight.pack.js"></script>
 </head>

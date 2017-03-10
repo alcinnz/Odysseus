@@ -8,7 +8,6 @@
     <gresource prefix="/io/github/alcinnz/Oddysseus/oddysseus:/">
         <file>NOT-FOUND</file>
         <file>SERVER-ERROR</file>
-        <file>BAD-REQUEST</file>
         <file>butterick.css</file>
         <file>vitruvian-wave.svg</file>
         <file>vitruvian-wave.svg.mime</file>

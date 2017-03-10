@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-10 15:44+1300\n"
+"POT-Creation-Date: 2017-03-10 20:30+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -181,7 +181,7 @@ msgstr ""
 
 #: tmp/templates.h:10
 msgid ""
-"This Page (<code>{{ uri }}</code>) Does Not Exist <br />\n"
+"This Page (<code>{{ url }}</code>) Does Not Exist <br />\n"
 "        (and probably never has)"
 msgstr ""
 
@@ -194,224 +194,212 @@ msgid "Tools for ensuring your browser is working correctly."
 msgstr ""
 
 #: tmp/templates.h:16
-msgid "Invalid Tool Address"
-msgstr ""
-
-#: tmp/templates.h:18
-msgid "What Was That You Just Said?"
-msgstr ""
-
-#: tmp/templates.h:20
-msgid "I can't make sense of this web address."
-msgstr ""
-
-#: tmp/templates.h:22
 msgid ""
 "A proxy server has modified the response you're seeing. (Which for this "
 "message to show is presumably empty)."
 msgstr ""
 
-#: tmp/templates.h:24
+#: tmp/templates.h:18
 msgid "Redirecting and updating history to new location…"
 msgstr ""
 
-#: tmp/templates.h:26
+#: tmp/templates.h:20
 msgid "Proxy authentication required."
 msgstr ""
 
-#: tmp/templates.h:28 tmp/templates.h:110
+#: tmp/templates.h:22 tmp/templates.h:104
 msgid "NO CONTENT"
 msgstr ""
 
-#: tmp/templates.h:30
+#: tmp/templates.h:24
 msgid "No content received"
 msgstr ""
 
-#: tmp/templates.h:32
+#: tmp/templates.h:26
 msgid ""
 "The server says it can't give us a file format that we accept. This is odd "
 "as, while we have our preferences, we can accept anything."
 msgstr ""
 
-#: tmp/templates.h:34
+#: tmp/templates.h:28
 msgid "Log-in Required"
 msgstr ""
 
-#: tmp/templates.h:36
+#: tmp/templates.h:30
 msgid "Please Log In"
 msgstr ""
 
-#: tmp/templates.h:38
+#: tmp/templates.h:32
 msgid "You need to log in to access this page."
 msgstr ""
 
-#: tmp/templates.h:40
+#: tmp/templates.h:34
 msgid "Username"
 msgstr ""
 
-#: tmp/templates.h:42
+#: tmp/templates.h:36
 msgid "Password"
 msgstr ""
 
-#: tmp/templates.h:44
+#: tmp/templates.h:38
 msgid "Log In"
 msgstr ""
 
-#: tmp/templates.h:46
+#: tmp/templates.h:40
 msgid "I'm being told to use a proxy."
 msgstr ""
 
-#: tmp/templates.h:48
+#: tmp/templates.h:42
 msgid "Upgrading protocol…"
 msgstr ""
 
-#: tmp/templates.h:50
+#: tmp/templates.h:44
 msgid "NOT FOUND"
 msgstr ""
 
-#: tmp/templates.h:52
+#: tmp/templates.h:46
 msgid "This Page Does Not Exist"
 msgstr ""
 
-#: tmp/templates.h:54
+#: tmp/templates.h:48
 msgid ""
 "Maybe you typed it wrong or followed an invalid link. Or maybe the site "
 "you're visiting has inconsiderately moved pages around or even removed them."
 msgstr ""
 
-#: tmp/templates.h:56 tmp/templates.h:185 tmp/templates.h:223
-msgid "Try <a href=\"{{ uri.home }}\">their homepage</a>, or:"
+#: tmp/templates.h:50 tmp/templates.h:181 tmp/templates.h:219
+msgid "Try <a href=\"{{ url.home }}\">their homepage</a>, or:"
 msgstr ""
 
-#: tmp/templates.h:58
+#: tmp/templates.h:52
 msgid "Precondition failed."
 msgstr ""
 
-#: tmp/templates.h:60
+#: tmp/templates.h:54
 msgid "INVALID FORM SUBMISSION"
 msgstr ""
 
-#: tmp/templates.h:62
+#: tmp/templates.h:56
 msgid "The Form You Submitted Was Invalid"
 msgstr ""
 
-#: tmp/templates.h:64
+#: tmp/templates.h:58
 msgid "Please take this up with the website's developers."
 msgstr ""
 
-#: tmp/templates.h:66
+#: tmp/templates.h:60
 msgid "The website's still processing you're request."
 msgstr ""
 
-#: tmp/templates.h:68
+#: tmp/templates.h:62
 msgid "INVALID SITE"
 msgstr ""
 
-#: tmp/templates.h:70
+#: tmp/templates.h:64
 msgid "I Cannot Work With This Website"
 msgstr ""
 
-#: tmp/templates.h:72
+#: tmp/templates.h:66
 msgid "It doesn't speak the same language I do."
 msgstr ""
 
-#: tmp/templates.h:74 tmp/templates.h:189
+#: tmp/templates.h:68 tmp/templates.h:185
 msgid "CAN'T CONTACT"
 msgstr ""
 
-#: tmp/templates.h:76
-msgid "Could Not Contact {{ uri.domain }}"
+#: tmp/templates.h:70
+msgid "Could Not Contact {{ url.host }}"
 msgstr ""
 
-#: tmp/templates.h:78 tmp/templates.h:193
+#: tmp/templates.h:72 tmp/templates.h:189
 msgid "This may be due to a network failure or a broken link."
 msgstr ""
 
-#: tmp/templates.h:80
+#: tmp/templates.h:74
 msgid "NEGOTIATION FAIL"
 msgstr ""
 
-#: tmp/templates.h:82
+#: tmp/templates.h:76
 msgid "Failed To Decide on a Format"
 msgstr ""
 
-#: tmp/templates.h:84
+#: tmp/templates.h:78
 msgid "Resource successfully created."
 msgstr ""
 
-#: tmp/templates.h:86
+#: tmp/templates.h:80
 msgid "Partial content received."
 msgstr ""
 
-#: tmp/templates.h:88
+#: tmp/templates.h:82
 msgid "LOCKED"
 msgstr ""
 
-#: tmp/templates.h:90
+#: tmp/templates.h:84
 msgid "This WebDAV Page is Locked"
 msgstr ""
 
-#: tmp/templates.h:92
+#: tmp/templates.h:86
 msgid "Try making your changes again later, or take it up with your group."
 msgstr ""
 
-#: tmp/templates.h:94
+#: tmp/templates.h:88
 msgid "INVALID CERTIFICATE"
 msgstr ""
 
-#: tmp/templates.h:96
+#: tmp/templates.h:90
 msgid "This Site Appears To Be Masquarading As Someone Else"
 msgstr ""
 
-#: tmp/templates.h:98
+#: tmp/templates.h:92
 msgid ""
 "It provided us with a so-called \"cryptographic certificate\" to prove who "
 "it was, and yet that proof has failed. We encourage you to turn back now."
 msgstr ""
 
-#: tmp/templates.h:100
+#: tmp/templates.h:94
 msgid "This is not the site you're looking for!"
 msgstr ""
 
-#: tmp/templates.h:102
+#: tmp/templates.h:96
 msgid ""
 "You can check this \"cryptographic certificate\" in it's normal place within "
 "the addressbar."
 msgstr ""
 
-#: tmp/templates.h:104
+#: tmp/templates.h:98
 msgid "I Know What I'm Doing…<"
 msgstr ""
 
-#: tmp/templates.h:106
+#: tmp/templates.h:100
 msgid "Be careful"
 msgstr ""
 
-#: tmp/templates.h:108
+#: tmp/templates.h:102
 msgid "Continue Anyways"
 msgstr ""
 
-#: tmp/templates.h:112
+#: tmp/templates.h:106
 msgid "This Page Has Been Intentionally Left Empty"
 msgstr ""
 
-#: tmp/templates.h:114
+#: tmp/templates.h:108
 msgid "Until I added this content to let you know so."
 msgstr ""
 
-#: tmp/templates.h:116
+#: tmp/templates.h:110
 msgid "The WiFi authentication window should have opened…"
 msgstr ""
 
-#: tmp/templates.h:118
+#: tmp/templates.h:112
 msgid "An up to date version of this page should still be in my cache."
 msgstr ""
 
-#: tmp/templates.h:120
+#: tmp/templates.h:114
 msgid "I'm A Teapot"
 msgstr ""
 
-#: tmp/templates.h:123
+#: tmp/templates.h:117
 msgid ""
 "I'm a little teapot<br />\n"
 "      Short and stout<br />\n"
@@ -419,7 +407,7 @@ msgid ""
 "      And here is my spout"
 msgstr ""
 
-#: tmp/templates.h:126
+#: tmp/templates.h:120
 msgid ""
 "When I get all steamed up<br />\n"
 "      Hear me shout<br />\n"
@@ -427,188 +415,192 @@ msgid ""
 "      And pour me out!\""
 msgstr ""
 
-#: tmp/templates.h:129
+#: tmp/templates.h:123
 msgid ""
 "<strong>April Fools!</strong>\n"
 "      From the <a href=\"https://tools.ietf.org/html/rfc2324\">IETF</a>."
 msgstr ""
 
-#: tmp/templates.h:131
+#: tmp/templates.h:125
 msgid "EDIT CONFLICT"
 msgstr ""
 
-#: tmp/templates.h:133
+#: tmp/templates.h:127
 msgid "Your Action Conflicted With Someone Else's"
 msgstr ""
 
-#: tmp/templates.h:135
+#: tmp/templates.h:129
 msgid "Please <a href=\"javascript:history.back()\">go back</a> and try again."
 msgstr ""
 
-#: tmp/templates.h:137
+#: tmp/templates.h:131
 msgid "Redirecting…"
 msgstr ""
 
-#: tmp/templates.h:139
+#: tmp/templates.h:133
 msgid "BAD REQUEST"
 msgstr ""
 
-#: tmp/templates.h:141
+#: tmp/templates.h:135
 msgid "This Is Apparently Our Fault"
 msgstr ""
 
-#: tmp/templates.h:143
+#: tmp/templates.h:137
 msgid ""
 "Please <a href=\"https://github.com/alcinnz/Oddysseus/issues/new\">report "
 "the problem</a> and we'll see what we can do about it."
 msgstr ""
 
-#: tmp/templates.h:145
+#: tmp/templates.h:139
 msgid "CAN'T CONNECT"
 msgstr ""
 
-#: tmp/templates.h:147
+#: tmp/templates.h:141
 msgid "Could Not Connect To The Internet"
 msgstr ""
 
-#: tmp/templates.h:149
+#: tmp/templates.h:143
+msgid "Network"
+msgstr ""
+
+#: tmp/templates.h:145
 msgid "UNSUPPORTED"
 msgstr ""
 
-#: tmp/templates.h:151
+#: tmp/templates.h:147
 msgid "Feature Not Supported"
 msgstr ""
 
-#: tmp/templates.h:153
+#: tmp/templates.h:149
 msgid "Though it might be in the future."
 msgstr ""
 
-#: tmp/templates.h:155
+#: tmp/templates.h:151
 msgid "SERVICE UNAVAILABLE"
 msgstr ""
 
-#: tmp/templates.h:157
+#: tmp/templates.h:153
 msgid "Service Temporarily Unavailable"
 msgstr ""
 
-#: tmp/templates.h:159
+#: tmp/templates.h:155
 msgid "Please try again later."
 msgstr ""
 
-#: tmp/templates.h:161 tmp/templates.h:169 tmp/templates.h:215
+#: tmp/templates.h:157 tmp/templates.h:165 tmp/templates.h:211
 msgid "Reload"
 msgstr ""
 
-#: tmp/templates.h:163
+#: tmp/templates.h:159
 msgid "SITE'S TOO BUSY"
 msgstr ""
 
-#: tmp/templates.h:165
+#: tmp/templates.h:161
 msgid "The Website Is Too Busy Serving Others"
 msgstr ""
 
-#: tmp/templates.h:167
+#: tmp/templates.h:163
 msgid "You'll just have to wait."
 msgstr ""
 
-#: tmp/templates.h:171
+#: tmp/templates.h:167
 msgid ""
 "The server says it's presenting you with a choice of formats for this "
 "resource, but I don't see any choices."
 msgstr ""
 
-#: tmp/templates.h:173
+#: tmp/templates.h:169
 msgid "REPEATED ERRORS"
 msgstr ""
 
-#: tmp/templates.h:175
+#: tmp/templates.h:171
 msgid "Follow On From a Previous Error"
 msgstr ""
 
-#: tmp/templates.h:177
+#: tmp/templates.h:173
 msgid "Could not download selected file segment."
 msgstr ""
 
-#: tmp/templates.h:179
+#: tmp/templates.h:175
 msgid "LEGAL TAKEDOWN"
 msgstr ""
 
-#: tmp/templates.h:181
+#: tmp/templates.h:177
 msgid "This Page Has Been Removed For Legal Reasons"
 msgstr ""
 
-#: tmp/templates.h:183
+#: tmp/templates.h:179
 msgid "This page has been purposefully removed, and may not return."
 msgstr ""
 
-#: tmp/templates.h:187
+#: tmp/templates.h:183
 msgid ""
 "The site is requesting you pay to access it's content. However they're not "
 "clear how they want you to pay."
 msgstr ""
 
-#: tmp/templates.h:191
-msgid "Could Not Contact {{ uri.home }}"
+#: tmp/templates.h:187
+msgid "Could Not Contact {{ url.home }}"
 msgstr ""
 
-#: tmp/templates.h:195
+#: tmp/templates.h:191
 msgid "The conditions we have set failed."
 msgstr ""
 
-#: tmp/templates.h:197
+#: tmp/templates.h:193
 msgid "WEBSITE PROBLEMS"
 msgstr ""
 
-#: tmp/templates.h:199
+#: tmp/templates.h:195
 msgid "The Website Experienced An Error"
 msgstr ""
 
-#: tmp/templates.h:201
+#: tmp/templates.h:197
 msgid "This shouldn't be happening, and you should report it."
 msgstr ""
 
-#: tmp/templates.h:203
+#: tmp/templates.h:199
 msgid "FORBIDDEN"
 msgstr ""
 
-#: tmp/templates.h:205
+#: tmp/templates.h:201
 msgid "Permission Denied"
 msgstr ""
 
-#: tmp/templates.h:207
+#: tmp/templates.h:203
 msgid ""
-"You are not allowed to access this webpage. Try their <a href=\"/"
-"\">homepage</a>."
+"You are not allowed to access this webpage. Try their <a href=\"{{ url."
+"home }}\">homepage</a>."
 msgstr ""
 
-#: tmp/templates.h:209
+#: tmp/templates.h:205
 msgid "REQUEST TIMED OUT"
 msgstr ""
 
-#: tmp/templates.h:211
+#: tmp/templates.h:207
 msgid "Timed Out While Asking For This Page"
 msgstr ""
 
-#: tmp/templates.h:213
+#: tmp/templates.h:209
 msgid "Try reloading it later."
 msgstr ""
 
-#: tmp/templates.h:217
+#: tmp/templates.h:213
 msgid "DOES NOT EXIST"
 msgstr ""
 
-#: tmp/templates.h:219
+#: tmp/templates.h:215
 msgid "This Page Has Been Removed"
 msgstr ""
 
-#: tmp/templates.h:221
+#: tmp/templates.h:217
 msgid "This page has been purposefully removed, and will not return."
 msgstr ""
 
-#: tmp/templates.h:225
+#: tmp/templates.h:221
 msgid "Something went wrong!"
 msgstr ""
 
-#: tmp/templates.h:227
+#: tmp/templates.h:223
 msgid "But I don't understand what it was."
 msgstr ""

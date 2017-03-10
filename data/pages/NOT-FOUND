@@ -7,7 +7,7 @@
 </head>
 <body>
   <main>
-    <h1>{% trans %}This Page (<code>{{ uri }}</code>) Does Not Exist <br />
+    <h1>{% trans %}This Page (<code>{{ url }}</code>) Does Not Exist <br />
         (and probably never has){% endtrans %}</h1>
     <p>Maybe you meant one of these other internal pages?</p>
 

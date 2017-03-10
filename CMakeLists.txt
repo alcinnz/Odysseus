@@ -29,7 +29,7 @@ find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
 pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite webkit2gtk-4.0 json-glib-1.0
-        gee-0.8)
+        gee-0.8 libsoup-2.4)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -79,6 +79,7 @@ PACKAGES
     json-glib-1.0
     gee-0.8
     posix
+    libsoup-2.4
 )
 
 # Bundle in about: page templates

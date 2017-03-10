@@ -11,7 +11,7 @@
     <p>{% trans %}Please try again later.{% endtrans %}</p>
 
     <!-- does a simple reload -->
-    <form method="GET" action="{{ uri }}">
+    <form method="GET" action="{{ url }}">
       <p><button type="submit"><img src="oddysseus:icon/16/view-refresh">
         {% trans %}Reload{% endtrans %}</button></p>
     </form>

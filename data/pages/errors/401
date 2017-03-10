@@ -14,12 +14,12 @@
     <form>
       <table>
         <tr>
-          <th>{% trans %}Username{% endtrans %}</th>
-          <td><input type="text" name="username" /></td>
+          <th><label for="username">{% trans %}Username{% endtrans %}</label></th>
+          <td><input id="username" type="text" name="username" /></td>
         </tr>
         <tr>
-          <th>{% trans %}Password{% endtrans %}</th>
-          <td><input type="password" name="password" /></td>
+          <th><label for="password">{% trans %}Password{% endtrans %}</label></th>
+          <td><input id="password" type="password" name="password" /></td>
         </tr>
         <tr>
           <th></th>
