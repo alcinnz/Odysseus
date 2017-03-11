@@ -33,13 +33,23 @@ namespace Oddysseus.Templating {
             length += text.length;
         }
 
-        public Bytes grab_data() {
-            var ret = new uint8[length];
+        public uint8[] grab(int extra_bytes = 0) {
+            var ret = new uint8[length + extra_bytes];
             var builder = ArrayBuilder(ret);
             foreach (var block in data) {
                 builder.append(block.get_data());
             }
-            return new Bytes(ret);
+            return ret;
+        }
+
+        public Bytes grab_data() {
+            return new Bytes(grab());
+        }
+
+        public string grab_string() {
+            var ret = grab(1);
+            ret[ret.length - 1] = '\0';
+            return (string) ret;
         }
     }
 

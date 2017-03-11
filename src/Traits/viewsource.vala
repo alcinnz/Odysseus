@@ -17,22 +17,6 @@
 
 using Oddysseus.Services;
 namespace Oddysseus.Traits {
-    // FIXME I prefer this approach as the data flow is cleaner,
-    //      but not enough memory gets allocated to successfully render
-    //      without a segfault. 
-    /*public async void view_source(WebKit.WebView source, WebKit.WebView dest) {
-        var data = Templating.ByteUtils.create_map<Templating.Data.Data>();
-        var source_bytes = yield source.get_main_resource().get_data(null);
-        var source_code = new Templating.Data.Substr(new Bytes(source_bytes));
-        data[Templating.ByteUtils.from_string("source")] = source_code;
-        var title = new Templating.Data.Literal(source.title);
-        data[Templating.ByteUtils.from_string("title")] = title;
-
-        yield render_alternate_html(dest, "special/viewsource",
-                    "source:" + source.get_main_resource().uri, true,
-                    new Templating.Data.Mapping(data));
-    }*/
-
     public async void view_source(WebKit.WebView source, WebKit.WebView dest) {
         var data = new Source();
         data.title = source.title;
@@ -57,7 +41,6 @@ namespace Oddysseus.Traits {
 
     public void handle_source_uri(WebKit.URISchemeRequest request) {
         if (sources != null && sources.has_key(request.get_uri())) {
-            // When the above FIXME is corrected, this condition can be removed.
             var resource = sources[request.get_uri()];
             sources.unset(request.get_uri());
 

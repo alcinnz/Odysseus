@@ -135,8 +135,7 @@ namespace Oddysseus.Services {
 
         var stream = new Templating.CaptureWriter();
         yield template.exec(full_data, stream);
-        webview.load_alternate_html(
-                Templating.ByteUtils.to_string(stream.grab_data()),
+        webview.load_alternate_html(stream.grab_string(),
                 alternative_uri, "oddysseus:" + subpath);
     }
 
