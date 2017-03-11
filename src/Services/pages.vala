@@ -135,8 +135,8 @@ namespace Oddysseus.Services {
 
         var stream = new Templating.CaptureWriter();
         yield template.exec(full_data, stream);
-        webview.load_alternate_html(stream.grab_string(),
-                alternative_uri, "oddysseus:" + subpath);
+        var content = stream.grab_string();
+        webview.load_alternate_html(content, alternative_uri, alternative_uri);
     }
 
     public void handle_oddysseus_uri(WebKit.URISchemeRequest request) {
@@ -167,7 +167,6 @@ namespace Oddysseus.Services {
             try {
                 template = Templating.get_for_resource(path, ref error_data);
             } catch (Templating.SyntaxError e) {
-                // FIXME segfaults with new data
                 render_error(request, "SERVER-ERROR",
                         error_data, error_data.tag);
                 return;
