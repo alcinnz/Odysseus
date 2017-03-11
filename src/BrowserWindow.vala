@@ -39,7 +39,6 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         init_layout();
         register_events();
-        create_accelerators();
         set_default_size(1200, 800);
     }
     
@@ -95,13 +94,17 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         downloads.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
         container.pack_end(downloads, false);
     }
-
-    private Gtk.MenuItem open_item;
-    private Gtk.MenuItem save_item;
-    private Gtk.MenuItem view_source_item;
     
     private Gtk.Menu create_appmenu() {
+        var accel = new Gtk.AccelGroup();
         var menu = new Gtk.Menu();
+
+        accel.connect(Gdk.Key.T, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            new_tab();
+            return true;
+        });
 
         // TRANSLATORS _ precedes the keyboard shortcut
         var new_window = new Gtk.MenuItem.with_label(_("_New Window"));
@@ -110,6 +113,12 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
             window.show_all();
         });
         menu.add(new_window);
+        accel.connect(Gdk.Key.N, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            new_window.activate();
+            return true;
+        });
 
         // TRANSLATORS _ precedes the keyboard shortcut
         var open = new Gtk.MenuItem.with_label(_("_Open..."));
@@ -134,7 +143,12 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
             chooser.destroy();
         });
         menu.add(open);
-        open_item = open;
+        accel.connect(Gdk.Key.O, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            open.activate();
+            return true;
+        });
 
         // TRANSLATORS _ precedes the keyboard shortcut
         var save = new Gtk.MenuItem.with_label(_("_Save..."));
@@ -153,7 +167,12 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
             chooser.destroy();
         });
         menu.add(save);
-        save_item = save;
+        accel.connect(Gdk.Key.S, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            save.activate();
+            return true;
+        });
 
         // TRANSLATORS _ precedes the keyboard shortcut
         var view_source = new Gtk.MenuItem.with_label(_("_View Source"));
@@ -163,7 +182,12 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
             Traits.view_source.begin(web, tab.web);
         });
         menu.add(view_source);
-        view_source_item = view_source;
+        accel.connect(Gdk.Key.U, Gdk.ModifierType.CONTROL_MASK,
+                Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                (group, acceleratable, key, modifier) => {
+            view_source.activate();
+            return true;
+        });
 
         menu.add(new Gtk.SeparatorMenuItem());
 
@@ -172,12 +196,38 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
             web.zoom_level += 0.1;
         });
         menu.add(zoomin);
+        accel.connect(Gdk.Key.plus, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            zoomin.activate();
+            return true;
+        });
+        accel.connect(Gdk.Key.equal, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            // So users can press ctrl-= instead of ctrl-shift-=
+            zoomin.activate();
+            return true;
+        });
 
         var zoomout = new Gtk.MenuItem.with_label(_("Zoom out"));
         zoomout.activate.connect(() => {
             web.zoom_level -= 0.1;
         });
         menu.add(zoomout);
+        accel.connect(Gdk.Key.minus, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            zoomout.activate();
+            return true;
+        });
+
+        accel.connect(Gdk.Key.@0, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            web.zoom_level = 1.0;
+            return true;
+        });
 
         menu.add(new Gtk.SeparatorMenuItem());
 
@@ -185,6 +235,12 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         var find_in_page = new Gtk.MenuItem.with_label(_("_Find In Page..."));
         find_in_page.activate.connect(find_in_page_cb);
         menu.add(find_in_page);
+        accel.connect(Gdk.Key.F, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            find_in_page.activate();
+            return true;
+        });
 
         // TRANSLATORS _ precedes the keyboard shortcut
         var print = new Gtk.MenuItem.with_label(_("_Print..."));
@@ -193,7 +249,14 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
             printer.run_dialog(this);
         });
         menu.add(print);
+        accel.connect(Gdk.Key.P, Gdk.ModifierType.CONTROL_MASK,
+                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+                        (group, acceleratable, key, modifier) => {
+            print.activate();
+            return true;
+        });
         
+        add_accel_group(accel);
         menu.show_all();
         return menu;
     }
@@ -241,84 +304,6 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         tabs.show.connect(() => {
             if (tabs.n_tabs == 0) tabs.new_tab_requested();
         });
-    }
-    
-    private void create_accelerators() {
-        var accel = new Gtk.AccelGroup();
-
-        accel.connect(Gdk.Key.F, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            find_in_page_cb();
-            return true;
-        });
-        accel.connect(Gdk.Key.T, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            new_tab();
-            return true;
-        });
-        accel.connect(Gdk.Key.N, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            new BrowserWindow(Oddysseus.Application.instance);
-            return true;
-        });
-        accel.connect(Gdk.Key.P, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            var printer = new WebKit.PrintOperation(web);
-            printer.run_dialog(this);
-            return true;
-        });
-
-        accel.connect(Gdk.Key.O, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            open_item.activate();
-            return true;
-        });
-        accel.connect(Gdk.Key.S, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            save_item.activate();
-            return true;
-        });
-
-        accel.connect(Gdk.Key.U, Gdk.ModifierType.CONTROL_MASK,
-                Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                (group, acceleratable, key, modifier) => {
-            view_source_item.activate();
-            return true;
-        });
-
-        accel.connect(Gdk.Key.minus, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            web.zoom_level -= 0.1;
-            return true;
-        });
-        accel.connect(Gdk.Key.plus, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            web.zoom_level += 0.1;
-            return true;
-        });
-        accel.connect(Gdk.Key.equal, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            // So users can press ctrl-= instead of ctrl-shift-=
-            web.zoom_level += 0.1;
-            return true;
-        });
-        accel.connect(Gdk.Key.@0, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            web.zoom_level = 1.0;
-            return true;
-        });
-
-        add_accel_group(accel);
     }
 
     private void connect_webview(WebTab tab) {
