@@ -14,6 +14,7 @@
 * You should have received a copy of the GNU General Public License
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
+using Granite.Widgets;
 public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
     private weak Oddysseus.Application app;
 
@@ -82,6 +83,14 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         this.add(container);
 
         tabs = new Granite.Widgets.DynamicNotebook();
+        // Don't show tabbar when fullscreen
+        window_state_event.connect((evt) => {
+            stderr.printf("iamhere\n");
+            if (Gdk.WindowState.FULLSCREEN in evt.new_window_state)
+                tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.NEVER;
+            else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
+            return false;
+        });
         tabs.allow_drag = true;
         //tabs.allow_duplication = true; // TODO implement
         tabs.allow_new_window = true;
