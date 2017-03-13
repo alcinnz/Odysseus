@@ -22,10 +22,24 @@ namespace Oddysseus.Traits {
                 var response_decision = (WebKit.ResponsePolicyDecision) decision;
                 var mime_type = response_decision.response.mime_type;
 
-                if (!web.can_show_mime_type(mime_type) ||
+                if (!response_decision.is_mime_type_supported() ||
                         /* Show videos in Audience */
                         mime_type.has_prefix("video/")) {
+                    var appinfo = AppInfo.get_default_for_type(mime_type, false);
+                    if (appinfo.supports_uris()) {
+                        // Probably means it supports HTTP URIs.
+                        var uris = new List<string>();
+                        uris.append(response_decision.response.uri);
+                        try {
+                            appinfo.launch_uris(uris, null);
+                            decision.ignore();
+                            return true;
+                        } catch (Error e) {/* Fallback to download */}
+                    }
+
+                    // Didn't work, download it first.
                     decision.download();
+                    decision.ignore();
                     return true;
                 }
             }

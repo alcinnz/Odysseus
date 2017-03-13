@@ -86,9 +86,11 @@ namespace Oddysseus.Traits {
            return true;
         });
         web.load_failed.connect((load_evt, uri, err) => {
-            // Diagnose the problem
-            if (err.code == 302) // Network.CANCELLED
+            // Policy and manual cancels shouldn't be handled as errors. 
+            if (err.code == 302 || err.code == 204 || err.code == 102)
                 return false;
+
+            // Diagnose the problem
             var netman = NetworkMonitor.get_default();
             string error = "protocol";
             if (!netman.network_available) error = "network";
