@@ -114,7 +114,6 @@ public class Oddysseus.Application : Granite.Application {
     }
 
     public override void open(File[] files, string hint) {
-        stderr.printf("iamhere\n");
         var window = get_last_window();
         if (window == null) return;
 

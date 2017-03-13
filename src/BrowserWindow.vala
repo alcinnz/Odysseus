@@ -85,7 +85,6 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         tabs = new Granite.Widgets.DynamicNotebook();
         // Don't show tabbar when fullscreen
         window_state_event.connect((evt) => {
-            stderr.printf("iamhere\n");
             if (Gdk.WindowState.FULLSCREEN in evt.new_window_state)
                 tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.NEVER;
             else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
@@ -116,7 +115,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
 
         // TRANSLATORS _ precedes the keyboard shortcut
-        var new_window = new Gtk.MenuItem.with_label(_("_New Window"));
+        var new_window = new Gtk.MenuItem.with_mnemonic(_("_New Window"));
         new_window.activate.connect(() => {
             var window = new BrowserWindow(Oddysseus.Application.instance);
             window.show_all();
@@ -130,7 +129,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
 
         // TRANSLATORS _ precedes the keyboard shortcut
-        var open = new Gtk.MenuItem.with_label(_("_Open..."));
+        var open = new Gtk.MenuItem.with_mnemonic(_("_Open..."));
         open.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
                                 _("Open Local Webpage"),
@@ -160,7 +159,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
 
         // TRANSLATORS _ precedes the keyboard shortcut
-        var save = new Gtk.MenuItem.with_label(_("_Save..."));
+        var save = new Gtk.MenuItem.with_mnemonic(_("_Save..."));
         save.activate.connect(() => {
             var chooser = new Gtk.FileChooserDialog(
                                 _("Save Page as"),
@@ -184,7 +183,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
 
         // TRANSLATORS _ precedes the keyboard shortcut
-        var view_source = new Gtk.MenuItem.with_label(_("_View Source"));
+        var view_source = new Gtk.MenuItem.with_mnemonic(_("_View Source"));
         view_source.activate.connect(() => {
             var tab = new WebTab(tabs, web, "about:blank");
             tabs.insert_tab(tab, -1);
@@ -200,7 +199,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         menu.add(new Gtk.SeparatorMenuItem());
 
-        var zoomin = new Gtk.MenuItem.with_label(_("Zoom in"));
+        var zoomin = new Gtk.MenuItem.with_mnemonic(_("Zoom in"));
         zoomin.activate.connect(() => {
             web.zoom_level += 0.1;
         });
@@ -219,7 +218,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
             return true;
         });
 
-        var zoomout = new Gtk.MenuItem.with_label(_("Zoom out"));
+        var zoomout = new Gtk.MenuItem.with_mnemonic(_("Zoom out"));
         zoomout.activate.connect(() => {
             web.zoom_level -= 0.1;
         });
@@ -241,7 +240,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         menu.add(new Gtk.SeparatorMenuItem());
 
         // TRANSLATORS _ precedes the keyboard shortcut
-        var find_in_page = new Gtk.MenuItem.with_label(_("_Find In Page..."));
+        var find_in_page = new Gtk.MenuItem.with_mnemonic(_("_Find In Page..."));
         find_in_page.activate.connect(find_in_page_cb);
         menu.add(find_in_page);
         accel.connect(Gdk.Key.F, Gdk.ModifierType.CONTROL_MASK,
@@ -252,7 +251,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
 
         // TRANSLATORS _ precedes the keyboard shortcut
-        var print = new Gtk.MenuItem.with_label(_("_Print..."));
+        var print = new Gtk.MenuItem.with_mnemonic(_("_Print..."));
         print.activate.connect(() => {
             var printer = new WebKit.PrintOperation(web);
             printer.run_dialog(this);
