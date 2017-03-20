@@ -94,5 +94,6 @@ target_link_libraries(${EXEC_NAME} ${DEPS_LIBRARIES})
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
 
 # install our .desktop file so the Applications menu will see it
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/oddysseus.desktop DESTINATION ${DATADIR}/applications/)
+configure_file_translation(${CMAKE_SOURCE_DIR}/data/oddysseus.desktop ${CMAKE_BINARY_DIR}/data/oddysseus.desktop ${CMAKE_SOURCE_DIR}/po/extra/)
+install (FILES ${CMAKE_BINARY_DIR}/data/oddysseus.desktop DESTINATION ${DATADIR}/applications/)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/256/oddysseus-web.svg DESTINATION share/icons/hicolor/256x256/apps)
