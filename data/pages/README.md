@@ -12,7 +12,7 @@ The way this works is:
 5. WebKit displays the page
 6. Forms and JavaScript on these pages are allowed to POST or UPDATE about:database/* pages, which'll mutate the SQLite database before reloading the referring page.
 
-The templating language is syntactically very similar to [Django's](https://docs.djangoproject.com/en/1.10/ref/templates/language/) though it's tags differ somewhat, and the basics should be familiar to anyone who's used a web framework like [Django](https://www.djangoproject.com/), [Ruby on Rails](http://rubyonrails.org/), or even [node.js](https://nodejs.org/en/). The best place to go currently for documentation on it's tags is unfortunately [the testsuite](about:debugging/test) (link must be opened using Oddysseus). You can call this language "Prosody" if you need a name.
+The templating language is syntactically very similar to [Django's](https://docs.djangoproject.com/en/1.10/ref/templates/language/) though it's tags differ somewhat, and the basics should be familiar to anyone who's used a web framework like [Django](https://www.djangoproject.com/), [Ruby on Rails](http://rubyonrails.org/), or even [node.js](https://nodejs.org/en/). You can call this language "Prosody" if you need a name.
 
 Design Guidelines
 -----------------
