@@ -14,12 +14,12 @@ MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtm
 
 [Desktop Action NewWindow]
 _Name=New Window
-Exec=odysseus --new-window
+Exec=oddysseus --new-window
 
 [Desktop Action NewTab]
 _Name=New Tab
-Exec=odysseus --new-tab
+Exec=oddysseus --new-tab
 
 [Desktop Action AboutDialog]
 _Name=About Odysseus
-Exec=odysseus --about
+Exec=oddysseus --about

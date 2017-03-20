@@ -24,10 +24,11 @@ public class Oddysseus.Application : Granite.Application {
 
         program_name = "Oddysseus";
         app_years = "2016-2017";
-        app_icon = "internet-web-browser";
+        app_icon = "oddysseus-web";
         app_launcher = "oddysseus.desktop";
         main_url = "https://github.com/alcinnz/Oddysseus";
         bug_url = "https://github.com/alcinnz/Oddysseus/issues";
+        translate_url = "https://poeditor.com/join/project/6VytorOTQY";
         about_authors = { "Adrian Cochrane <alcinnz@eml.cc>", null };
         about_license_type = Gtk.License.GPL_3_0;
     }
