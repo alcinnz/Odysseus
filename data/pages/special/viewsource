@@ -1,3 +1,13 @@
+{# Renders view-source in the browser, triggered by the view-source menu item with custom variables. 
+Oddysseus does it this way, as opposed to using Scratch as both applications are capable of rendering text
+and Oddysseus is better suited to the Read-only nature of this feature.
+
+The styling of this page matches Scratch's defaults. 
+
+A custom favicon is used to indicate this is a view-source tab and
+    information about the source page is displayed in the usual places.
+Line numbers aren't included as the developer of our syntax highlighting library wishes to discourage them
+    and I (Adrian Cochrane) am not missing them. #}
 <!DOCTYPE html>
 <html>
 <head>

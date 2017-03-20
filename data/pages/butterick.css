@@ -2,6 +2,8 @@
     so this file fixes that for our internal pages. 
 It is named for the [typography guide](http://practicaltypography.com/)
     elementary refers to, and it's author.
+    However it does not adhear to his guidance on avoiding defaults,
+    because Oddysseus uses those to blend in to elementary OS.
 The style rules here should follow Butterick's guidelines
     and where applicable be based off
     https://github.com/elementary/stylesheet/tree/master/gtk-3.0/.  */

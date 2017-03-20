@@ -47,6 +47,8 @@ Code Guidelines
 * Use each language for what it's good at: <strong>SQL</strong> for <em>logic</em>, <strong>Prosody</strong> for <em>data mapping</em>, <strong>HTML</strong> for <em>structuring the text</em>, <strong>CSS</strong> for <em>custom appearance</em>, & <strong>JavaScript</strong> for <em>custom behaviours</em>.
 * Don't use AJAX [to cover up latency](http://www.oreilly.com/catalog/headra/chapter/ch01.pdf) &mdash; we don't have any.
 * Write [meaningful CSS](https://alistapart.com/article/meaningful-css-style-like-you-mean-it)
-* Where you use third party libraries, host the uncompressed version in the application bundle so it works offline.
+* Where you use third party libraries, host the uncompressed version in the application bundle so it works offli
 
 Finally the more you use CSS or particularly JavaScript, the more we'll question whether you're adhearing to the design guidelines of relying on the browser's defaults. 
+
+Most importantly document the design of each internal page in a preceding template comment for it's file. 
