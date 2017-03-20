@@ -26,6 +26,7 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
     
     private Gtk.Menu menu;
     private Gtk.MenuItem open_item;
+    private Gtk.CheckMenuItem open_automatic_item;
 
     private string destination = "";
 
@@ -94,7 +95,8 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
             remaining.label = _("DONE");
             completed = true;
             open_item.sensitive = true;
-            button.activate();
+            open_automatic_item.sensitive = false;
+            if (open_automatic_item.active) button.activate();
         });
 
         button.activate.connect(() => {
@@ -160,6 +162,11 @@ public class Oddysseus.DownloadButton : Oddysseus.ProgressBin {
         });
         open_item.sensitive = false;
         menu.add(open_item);
+
+        // TRANSLATORS _ precedes shortcut key
+        open_automatic_item = new Gtk.CheckMenuItem.with_mnemonic(_("Open _Automatically"));
+        open_automatic_item.active = true;
+        menu.add(open_automatic_item);
 
         // TRANSLATORS _ precedes shortcut key
         var save_item = new Gtk.MenuItem.with_mnemonic(_("_Save As"));
