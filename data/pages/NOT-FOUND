@@ -9,6 +9,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>{% trans %}Tool Not Found{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
+  <link rel="shortcut icon" href="oddysseus:icons/16/folder-symbolic" />
 </head>
 <body>
   <main>
