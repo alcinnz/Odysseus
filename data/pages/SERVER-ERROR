@@ -16,6 +16,7 @@ The debugging information is in English in the expectation that any contributors
     /* Solarized Light adds whitespace which misaligns the table */
     pre {margin: 0;}
   </style>
+  <link rel="shortcut icon" href="oddysseus:icon/16/dialog-error-symbolic" />
 </head>
 <body class="branded">
   <main>
