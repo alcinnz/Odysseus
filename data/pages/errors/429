@@ -11,7 +11,7 @@
     <p>{% trans %}You'll just have to wait.{% endtrans %}</p>
 
     <!-- does a simple reload -->
-    <form method="GET" action="{{ url }}">
+    <form method="GET">
       <p><button type="submit"><img src="oddysseus:icon/16/view-refresh">
         {% trans %}Reload{% endtrans %}</button></p>
     </form>
