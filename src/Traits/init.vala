@@ -16,6 +16,16 @@
 */
 
 namespace Oddysseus.Traits {
+    public void setup_context(WebKit.WebContext ctx) {
+        var sec = ctx.get_security_manager();
+
+        ctx.register_uri_scheme("oddysseus", Services.handle_oddysseus_uri);
+        sec.register_uri_scheme_as_secure("oddysseus"); // so resources load in error pages on an HTTPS connection
+        sec.register_uri_scheme_as_no_access("oddysseus"); // Forces us to not rely on the Internet
+        ctx.register_uri_scheme("source", handle_source_uri);
+        DownloadsBar.setup_context(ctx);
+    }
+
     public void setup_webview(WebTab tab) {
         setup_report_errors(tab);
         setup_autodownload(tab.web);
