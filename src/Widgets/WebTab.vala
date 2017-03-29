@@ -196,7 +196,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         // Use Safari's user agent so as to avoid standing out to trackers
         //      and having sites warn that we're using a unpopular browser.
         // Use Safair's, as opposed to FireFox, as we're both using WebKit.
-        settings.user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A";
+        settings.user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/602.4.8 (KHTML, like Gecko) Version/10.0.3 Safari/602.4.8";
         settings.zoom_text_only = false;
         web.settings = settings;
     }
