@@ -10,7 +10,7 @@
     <h1>{% trans %}This Page Does Not Exist{% endtrans %}</h1>
     <p>{% trans %}Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them.{% endtrans %}</p>
     <form method="GET" action="https://duckduckgo.com/">
-    <p>{% trans %}Try <a href="{{ url.home }}">their homepage</a>, or: {% endtrans %}
+    <p>{% trans %}Try <a href="/">their homepage</a>, or: {% endtrans %}
       <input type="search" value="{{url}}" name="q" /></p>
     </form>
   </main>
