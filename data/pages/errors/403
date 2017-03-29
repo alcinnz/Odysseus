@@ -9,7 +9,7 @@
 <body>
   <main>
     <h1>{% trans %}Permission Denied{% endtrans %}</h1>
-    <p>{% trans %}You are not allowed to access this webpage. Try their <a href="{{ url.home }}">homepage</a>.{% endtrans %}</p>
+    <p>{% trans %}You are not allowed to access this webpage. Try their <a href="/">homepage</a>.{% endtrans %}</p>
   </main>
 </body>
 <html>
