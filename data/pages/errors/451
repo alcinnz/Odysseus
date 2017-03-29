@@ -10,7 +10,7 @@
     <h1>{% trans %}This Page Has Been Removed For Legal Reasons{% endtrans %}</h1>
     <p>{% trans %}This page has been purposefully removed, and may not return.{% endtrans %}</p>
     <form method="GET" action="https://duckduckgo.com/">
-    <p>{% trans %}Try <a href="{{ url.home }}">their homepage</a>, or: {% endtrans %}
+    <p>{% trans %}Try <a href="/">their homepage</a>, or: {% endtrans %}
       <input type="search" value="{{url}}" name="q" /></p>
     </form>
   </main>
