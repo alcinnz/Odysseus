@@ -49,6 +49,10 @@ namespace Oddysseus.Traits {
                     new Templating.Data.Substr(resource.code);
             data[Templating.ByteUtils.from_string("title")] =
                     new Templating.Data.Literal(resource.title);
+            var url = request.get_uri();
+            url = url["source:".length:url.length];
+            data[Templating.ByteUtils.from_string("url")] =
+                    new Templating.Data.Literal(url);
 
             try {
                 Templating.ErrorData? ignored = null;

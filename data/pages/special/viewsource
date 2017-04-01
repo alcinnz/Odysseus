@@ -24,12 +24,20 @@ Line numbers aren't included as the developer of our syntax highlighting library
     }
   </style>
   <script src="oddysseus:ext/highlight.pack.js"></script>
+  <base href="{{ url }}" />
 </head>
 <body>
   <pre>{{ source }}</pre>
   <script src="oddysseus:ext/highlight.pack.js"></script>
   <script>
     var code = document.querySelector("pre");
+    // Autolink any resources (uses the above base URL to resolve relative links)
+    // highlight.js will be able to merge these links in with it's highlighting.
+    // FIXME can't handle & in URIs, and those render as ugly &amp;'s
+    var linkedCode = code.innerHTML.replace(
+        /((?:url\(|&lt;(?:a|link|script|img)[^&]+(?:src|href)\s*=\s*)['"]?)([^'"\)\s&]+)/g,
+        (match, prefix, url) => prefix + url.link(url))
+    code.innerHTML = linkedCode
     // FIXME freezing hazard when viewing the source of large pages
     hljs.highlightBlock(code);
   </script>
