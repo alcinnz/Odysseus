@@ -1,3 +1,9 @@
+{# Displayed when certificate validation fails.
+    Most browsers communicate this [fairly poorly](https://blogs.gnome.org/mcatanzaro/2016/03/12/do-you-trust-this-website/), so I get right to the point that (in nontechnical language) there might be a man-in-the-middle attack.
+
+    Furthermore the psuedo-conversation users must engage in to bypass this warning clearly indicates the danger (adding an extra step to indicate this) and when it is appropriate to bypass this security check (that is bypass for sites you DO NOT trust, not for ones you do).
+
+    In case users want the technical details, a link to Wikipedia is provided. #}
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,19 +14,25 @@
 <body>
   <main>
     <h1>{% trans %}This Site Appears To Be Masquarading As Someone Else{% endtrans %}</h1>
-    <p>{% trans %}It provided us with a so-called "cryptographic certificate" to prove who it was, and yet that proof has failed. We encourage you to turn back now.{% endtrans %} <strong>{% trans %}This is not the site you're looking for!{% endtrans %}</strong></p>
+    <p>{% trans %}It provided us with a so-called "<a href="https://en.wikipedia.org/wiki/Public_key_certificate">cryptographic certificate</a>" to prove who it was, and yet that proof has <em>failed</em>. We encourage you to turn back now.{% endtrans %} <strong>{% trans %}This is not the site you're looking for!{% endtrans %}</strong></p>
     
     <!-- <p>{% trans %}You can check this "cryptographic certificate" in it's normal place within the addressbar.{% endtrans %}</p> [Add this once there is a normal place for it] -->
 
     <details>
-      <caption>{% trans %}I Know What I'm Doing…<{% endtrans %}/caption>
-      <p>{% trans %}Be careful{% endtrans %}</p>
+      <caption>{% trans %}Hey, I don't trust this site anyways<{% endtrans %}/caption>
+      <p>{% trans %}Alright…, but be careful.{% endtrans %}</p>
       <!-- The error handler that rendered this page will
             listen for this form submission before adding an exception -->
       <form>
-        <p><button type="submit">{% trans %}Continue Anyways{% endtrans %}</button></p>
+        <p><button type="submit" style="background-color: yellow">{% trans %}Show Me {{ url.host }}{% endtrans %}</button></p>
       </form>
     </details>
   </main>
+  <script>
+    // Tack on a little extra dialog while WebKit loads the page.
+    var submit = document.querySelector("button[type=submit]")
+    submit.onclick = () => document.body.innerHTML =
+        "{% trans %}{# Shown briefly after bad-certificate warning is bypassed #}Fine then!{% endtrans %}"
+  </script>
 </body>
 </html>
