@@ -1,7 +1,7 @@
 {# This page is shown for any syntax errors in a template.
 This should NOT come up for an end-user, as it indicates a bad mess-up on our part.
 
-As such there's not much that end-user can do except report it to us.
+As such there is not much that end-user can do except report it to us.
 The debugging information is in English in the expectation that any contributors are at least somewhat familiar in that language #}
 <!DOCTYPE html>
 <html>

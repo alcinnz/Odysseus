@@ -20,6 +20,7 @@ namespace Oddysseus.Traits {
         var sec = ctx.get_security_manager();
 
         ctx.register_uri_scheme("oddysseus", Services.handle_oddysseus_uri);
+        // Explicitly do not enable CORs, as the information here is quite sensitive. 
         sec.register_uri_scheme_as_secure("oddysseus"); // so resources load in error pages on an HTTPS connection
         sec.register_uri_scheme_as_no_access("oddysseus"); // Forces us to not rely on the Internet
         ctx.register_uri_scheme("source", handle_source_uri);

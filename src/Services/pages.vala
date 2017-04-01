@@ -54,7 +54,7 @@ namespace Oddysseus.Services {
 
             var raw_data =
                     Templating.ByteUtils.create_map<Templating.Data.Data>();
-            raw_data[Templating.ByteUtils.from_string("uri")] =
+            raw_data[Templating.ByteUtils.from_string("url")] =
                     new Templating.Data.Literal(request.get_uri());
             raw_data[Templating.ByteUtils.from_string("path")] =
                     new Templating.Data.Literal(request.get_path());

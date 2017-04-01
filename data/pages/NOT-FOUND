@@ -9,13 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>{% trans %}Tool Not Found{% endtrans %}</title>
   <style>@import url(oddysseus:butterick.css);</style>
-  <link rel="shortcut icon" href="oddysseus:icon/16/folder-symbolic" />
+  <link rel="shortcut icon" href="oddysseus:icon/16/folder" />
 </head>
 <body>
   <main>
     <h1>{% trans %}This Page (<code>{{ url }}</code>) Does Not Exist <br />
         (and probably never has){% endtrans %}</h1>
-    <p>Maybe you meant one of these other internal pages?</p>
+    <p>{% trans %}Maybe you meant one of these other internal pages?{% endtrans %}</p>
 
     <dl>
       <dt><a href="oddysseus:debugging/index">{% trans %}

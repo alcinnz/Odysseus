@@ -92,7 +92,7 @@ namespace Oddysseus.Templating.ByteUtils {
 	}
 
 	private uint hash_bytes(Bytes b) {return b.hash();}
-	private bool bytes_equal(Bytes a, Bytes b) {return a.compare(b) == 0;}
+	public bool bytes_equal(Bytes a, Bytes b) {return a.compare(b) == 0;}
 
 	public Gee.Map<Bytes, V> create_map<V>(
 	        owned Gee.EqualDataFunc<V>? value_equal_func = null) {
@@ -141,4 +141,14 @@ namespace Oddysseus.Templating.ByteUtils {
 	bool equals_str(Bytes? bytes, string chars) {
 		return bytes != null && bytes.compare(from_string(chars)) == 0;
 	}
+
+	Bytes strip(Bytes text) {
+	    var start = 0;
+	    while (start < text.length && text[start] in " \t\r\n".data) start++;
+	    if (start == text.length) return from_string("");
+
+	    var end = text.length - 1;
+	    while (end > start && text[end] in " \t\r\n".data) end--;
+	    return text[start:end+1];
+    }
 }

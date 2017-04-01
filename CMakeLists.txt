@@ -65,6 +65,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Prosody/parser.vala
     src/Services/Prosody/writers.vala
     src/Services/Prosody/loader.vala
+    src/Services/Prosody/i18n.vala
 
     src/Traits/viewsource.vala
     src/Traits/errors.vala

@@ -1,75 +1,158 @@
-#! /usr/bin/python3
-"""Extracts text from the templates used to create internal pages."""
-import re, sys
+#!/usr/bin/python3
+"""Parses {% trans %} Prosody tags to extract strings,
+which it then writes out into data/page-l10n/Oddysseus and
+merges into the other catalogue files in that directory. """
+import re
+from collections import defaultdict
 
-def walk_files(top):
+# Utilities
+tag_re = re.compile("({%x%}|{{x}}|{#x#})".replace("x",
+        """([^'"]|'([^\\']|\\\\.)*?'|"([^\\"]|\\\\.)*?")*?"""))
+def tags(filename):
+    with open(filename) as f:
+        line_no = 0
+        for bit in tag_re.split(f.read()):
+            if not bit: continue
+            yield bit, line_no
+            line_no += bit.count("\n")
+
+def is_tag(token, tagnames):
+    if not token.startswith("{%"): return False
+    token = token[2:-2].strip().split()
+    return token[0] in tagnames.split()
+
+def next(template, tagnames):
+    for token, line_no in template:
+        if is_tag(token, tagnames):
+            return line_no
+    return None
+
+def block(template, tagnames):
+    block = ""
+    for token, line_no in template:
+        if is_tag(token, tagnames): return block.strip(), token
+        else: block += token
+    raise ValueError("Failed to find endtag out of '{}'".format(tagnames))
+
+def walk(top):
     import os
     for path, dirnames, filenames in os.walk(top):
         for filename in filenames:
-            yield os.path.join(path, filename)
+            # ignore certain specially interpreted file extensions
+            if filename.endswith(".mime"): continue
+            if filename.endswith(".link"): continue
+            if filename.endswith(".icon"): continue
+            if filename.endswith("~"): continue
+            if filename in ("README", "README.md"): continue
+            if filename.endswith(".gresource.xml"): continue
+            filepath = os.path.join(path, filename)
 
-def parse(text):
-    # Parse manually, as regular expressions don't like handling newlines
-    # NOTE I'm requiring a single space before and after the tagnames
-    i = text.find("{% trans")
-    while i != -1:
-        # body text
-        i = text.find("%}", i)
-        if i == -1: raise SyntaxError("Unexpected end of file")
-        start = i + 2
-        end = i = text.find("{% endtrans %}", i)
-        body = text[start:end].strip()
+            # Final check: does the optional .mime specify it's a template?
+            try:
+                with open(filepath + ".mime") as f:
+                    if f.read(1) != "+": continue
+            except:
+                "Implicit MIMEType is an HTML template"
 
-        # comment
-        comment = ""
-        if body.startswith("{#"):
-            split = body.find("#}")
-            comment = body[2:split].strip()
-            body = body[split+2:].strip()
+            yield filepath, filepath[len(top):]
 
-        # plural forms
-        plural = body.find("{% plural %}")
-        if plural != -1:
-            plural = body[split + len("{% plural %}"):].strip()
-            body = body[:split].strip()
-        else:
-            plural = ""
+def concat(a, b):
+    yield from a
+    yield from b
 
-        yield 0, body, comment, plural
-        i = text.find("{% trans", i)
+# Parsers
+def parse_templates(repo_root="."):
+    from os import path
+    messages = defaultdict(list)
+    plurals = {}
+    for filename, subpath in walk(path.join(repo_root, "data", "pages")):
+        print("Parsing template", subpath)
+        template = tags(filename)
+        while True:
+            line_no = next(template, "trans")
+            if line_no is None: break
 
-def esc(text):
-    """Outputs a double quoted string"""
-    text = repr(text)
-    if text[0] == '"': return text
-    text = text.replace('"', '\\"')
-    return '"' + text[1:-1] + '"'
-
-for filename in walk_files("data/pages"):
-    # ignore certain specially interpreted file extensions
-    if filename.endswith(".mime"): continue
-    if filename.endswith(".link"): continue
-    if filename.endswith(".icon"): continue
-    if filename.endswith("~"): continue
-    if filename.endswith("/README"): continue
-
-    # check if the file specifies it's not a template
-    try:
-        with open(filename + ".mime") as f:
-            if f.read()[0] != '+': continue
-    except:
-        "If file.mime doesn't exist, file is a template"
-
-    # Now it's safe
-    with open(filename) as fd:
-        sys.stderr.write(filename + "\n")
-        for lineno, string, comment, plural in parse(fd.read()):
-            # Output the parsed text in an .h file format  format
-            print("#line", lineno, filename)
-            if comment:
-                print("/* TRANSLATORS", comment, "*/")
-            if plural:
-                print("char *s = NC_(" + esc(string) + ", "
-                    + esc(plural) + ");")
+            message, endtag = block(template, "plural endtrans")
+            if message.startswith("{#"):
+                key = message[message.find("#}") + 2:].strip()
             else:
-                print("char *s = N_(" + esc(string) + ");")
+                key = message
+
+            plural = None
+            if is_tag(endtag, "plural"):
+                plural = block(template, "endtrans").strip()
+
+            messages[key].append("{}#L{}".format(subpath, line_no))
+            plurals[key] = (message, plural) # Can't handle more than one
+    return messages, plurals
+
+def parse_catalogue(filename):
+    template = tags(filename)
+    while next(template, "msg") is not None:
+        variations = []
+        variant, endtag = block(template, "msg en").strip()
+        while is_tag(endtag, "msg"):
+            variations.append(variant)
+            variant, endtag = block(template, "msg en").strip()
+        key, endtag = block(template, "plural endmsg")
+        if key.startswith("{#"):
+            key = key[key.find("#}") + 2:].strip()
+
+        if is_tag(endtag, "plural"): next("endmsg")
+        yield key, variations
+
+# Main
+if __name__ == "__main__":
+    from sys import argv
+    import os
+    repo_root = argv[1] if len(argv) > 1 else "."
+    l10n_root = os.path.join(repo_root, "data", "page-l10n")
+
+    catalogue_sources, catalogue = parse_templates(repo_root)
+    with open(os.path.join(l10n_root, "Oddysseus"), 'w') as f:
+        print("Writing reference catalogue")
+        for key, message in catalogue.items():
+            f.write("{% msg " + " ".join(catalogue_sources[key]) + " %}\n")
+            f.write("{% en %}\n")
+            f.write(message[0] + "\n")
+            if message[1] is not None:
+                f.write("{% plural %}\n" + message[1] + "\n")
+            f.write("{% endmsg %}\n")
+
+    for filename in os.listdir(l10n_root):
+        if filename.endswith(".unused"): continue
+        if filename in ("README", "Oddysseus"): continue
+        print("Merging into catalogue for", filename)
+
+        unused_entries = []
+        filepath = os.path.join(l10n_root, filename)
+        with open(filepath+".tmp", 'w') as f:
+            for key, variations in concat(
+                    parse_catalogue(filepath),
+                    parse_catalogue(filepath+".unused")):
+                if key in catalogue:
+                    for i, variant in enumerate(variations):
+                        args = ""
+                        if i == 0:
+                            args = " " + " ".join(catalogue_sources[key])
+                        f.write("{% msg" + args + " %}\n")
+                        f.write(variant + "\n")
+                    f.write("{% en %}\n")
+                    singular, plural = catalogue[key]
+                    f.write(singular + "\n")
+                    if plural is not None:
+                        f.write(plural + "\n")
+                    f.write("{% endmsg %}\n")
+                elif variations and variations != [""]:
+                    # There's a translation here,
+                    # so don't through away that translator's hard work.
+                    unused_entries.append(key, variations)
+        os.rename(filepath+".tmp", filepath)
+
+        with open(filepath + ".unused", 'w') as f:
+            for key, variations in unused_entries:
+                for variant in variations:
+                    f.write("{% msg %}" + variant + "\n")
+                f.write("{% en %}" + key + "{% endmsg %}")
+                # No need to preserve the plural block or comment.
+                # They're not used for lookup.

@@ -43,13 +43,15 @@ namespace Oddysseus.Templating.Expression {
         }
 
         /* Evaluation */
-        protected Data.Data context;
+        public Data.Data context;
         public double x {
             get {return left.eval_type(preference, context);}
         }
         public double y {
             get {return right.eval_type(preference, context);}
         }
+        public bool a {get {return x != 0;}}
+        public bool b {get {return y != 0;}}
         public virtual TypePreference preference {
             get {return TypePreference.BOOL;}
         }
@@ -146,6 +148,16 @@ namespace Oddysseus.Templating.Expression {
                     token = new NotEqual();
                 else if (packed == 0x696E) /* "in" */
                     token = new In();
+                else if (packed == 0x25) /* "%" */
+                    token = new Modulo();
+                else if (packed == 0x6966) /* "if" */
+                    token = new Ternary();
+                else if (packed == 0x656C7365) /* "else" */
+                    token = new TernaryElse();
+                else if (packed == 0x28) /* "(" */
+                    token = new Parenthesized();
+                else if (packed == 0x29) /* ")" */
+                    token = new CloseParen();
                 else
                     token = new Value(arg);
             }
@@ -167,6 +179,12 @@ namespace Oddysseus.Templating.Expression {
             }
             return left;
         }
+
+        public void advance(string expected) throws SyntaxError {
+            if (token.name != expected)
+                throw new SyntaxError.INVALID_ARGS("Expected '%s' at index %i", expected, token.index);
+            token = next();
+        }
     }
 
     /* Token implementation */
@@ -179,14 +197,14 @@ namespace Oddysseus.Templating.Expression {
         public override int lbp {get {return 10;}}
         public override string name {get {return "or";}}
 
-        public override double eval() {return x != 0 || y != 0 ? 1 : 0;}
+        public override double eval() {return a || b ? 1 : 0;}
     }
 
     private class And : Infix {
         public override int lbp {get {return 20;}}
         public override string name {get {return "and";}}
 
-        public override double eval() {return x != 0 && y != 0 ? 1 : 0;}
+        public override double eval() {return a && b ? 1 : 0;}
     }
 
     private class Not : Expression {
@@ -205,7 +223,7 @@ namespace Oddysseus.Templating.Expression {
             return this;
         }
 
-        public override double eval() {return !(x != 0) ? 1 : 0;}
+        public override double eval() {return !a ? 1 : 0;}
     }
 
     private class LessThan : NumericExpression {
@@ -289,7 +307,7 @@ namespace Oddysseus.Templating.Expression {
             this.exp = new Variable(source);
         }
 
-        public override int lbp {get {return 100;}}
+        public override int lbp {get {return 200;}}
         public override string name {get {return "[variable]";}}
 
         public override Expression nud() {
@@ -302,5 +320,46 @@ namespace Oddysseus.Templating.Expression {
                 return val.exists ? 1 : 0;
             else return val.to_double();
         }
+    }
+
+    // The following are largely only useful for use in plural forms, but other templates may use it
+    private class Modulo : Infix {
+        public override int lbp {get {return 120;}}
+        public override string name {get {return "%";}}
+        // Vala doesn't link to the appropriate libraries to implement fmod,
+        // So implement it ourselves, hoping that GCC optimizes this to the CPU's modulo instruction where it exists.
+        public override double eval() {return x - (x/y)*y;}
+    }
+
+    private class Ternary : Expression {
+        public override int lbp {get {return 5;}}
+        public override string name {get {return "if";}}
+        public override Expression led(Expression left) throws SyntaxError {
+            this.right = parser.expression(lbp);
+            if (this.right.name != "else") throw new SyntaxError.INVALID_ARGS("Expected 'else' operator not found");
+            this.left = this.right.left;
+            this.right.left = left;
+            return this;
+        }
+
+        public override double eval() {return a ? right.x : right.y;}
+    }
+    private class TernaryElse : Infix {
+        public override int lbp {get {return 6;}}
+        public override string name {get {return "else";}}
+    }
+
+    private class Parenthesized : Expression {
+        public override int lbp {get {return 150;}}
+        public override string name {get {return "(";}}
+        public override Expression nud() throws SyntaxError {
+            var expr = parser.expression();
+            parser.advance(")");
+            return expr;
+        }
+    }
+    private class CloseParen : Expression {
+        public override int lbp {get {return 0;}}
+        public override string name {get {return ")";}}
     }
 }

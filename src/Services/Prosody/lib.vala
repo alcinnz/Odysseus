@@ -18,7 +18,7 @@
 /* Standard "tags" and "filters" to use in templates.
 	Beware that these may differ subtly from Django's implementation. */
 namespace Oddysseus.Templating.Std {
-    private Gee.Map<Bytes, Variable> parse_params(WordIter args)
+    public Gee.Map<Bytes, Variable> parse_params(WordIter args)
             throws SyntaxError {
 		var parameters = ByteUtils.create_map<Variable>();
 		var count = 0;
@@ -647,88 +647,6 @@ namespace Oddysseus.Templating.Std {
 		}
 	}
 
-	private class TransBuilder : TagBuilder, Object {
-	    public Template? build(Parser parser, WordIter args) throws SyntaxError {
-	        // Parse arguments
-	        var parameters = parse_params(args);
-
-	        // Parse comment
-	        var token = parser.lex.peek();
-	        if (ByteUtils.to_string(token).chug() == "") {
-	            parser.lex.next();
-	            token = parser.lex.peek();
-            }
-            if (token.length > 4 && token[0] == '{' && token[1] == '#') {
-                // This is a translator comment
-                // that shouldn't appear in the string
-                parser.lex.next();
-            }
-
-            // Parse string
-            WordIter? endtag;
-            Bytes bytes;
-            // Ensures source string is a valid template
-            parser.parse("endtrans plural", out endtag, out bytes);
-            var text = ByteUtils.to_string(bytes).strip();
-
-            // Parse plural
-            if (ByteUtils.equals_str(endtag.next(), "plural")) {
-                Bytes pluralb;
-                parser.parse("endtrans", out endtag, out pluralb);
-                var plural = ByteUtils.to_string(pluralb).strip();
-
-                // Assert endtag
-                if (endtag == null) throw new SyntaxError.UNBALANCED_TAGS(
-                        "{%% trans %%} must be closed with a {%% endtrans %%}");
-
-                return new TransTag(parameters, text, plural);
-            }
-
-            // Assert endtag
-            if (endtag == null) throw new SyntaxError.UNBALANCED_TAGS(
-                    "{%% trans %%} must be closed with a {%% endtrans %%}");
-
-            // Translate ahead of time
-            var translated = _(text);
-            // Ensure the translation is memory mapped, helps reduce segfaults.
-            var translatedb = bytes;
-            if (((void*) translated) != ((void*) text))
-                translatedb = ByteUtils.from_string(translated);
-            // And then parse
-            var inner_parser = new Parser(translatedb);
-
-            return new WithTag(parameters, inner_parser.parse());
-        }
-    }
-    private class TransTag : Template {
-        private string text;
-        private string plural;
-        private Gee.Map<Bytes,Variable> vars;
-        public TransTag(Gee.Map<Bytes,Variable> vars, string t, string p) {
-            this.vars = vars;
-            this.text = t;
-            this.plural = p;
-        }
-
-        public override async void exec(Data.Data ctx, Writer output) {
-            // TODO optimize! by parsing ahead of time
-            var inner_ctx = new Data.Lazy(vars, ctx);
-            var n = inner_ctx[ByteUtils.from_string("count")].to_int();
-            var translated = ngettext(text, plural, n);
-
-            try {
-                var parser = new Parser(ByteUtils.from_string(translated));
-                var block = parser.parse();
-                yield block.exec(inner_ctx, output);
-            } catch (SyntaxError e) {
-                // TRANSLATORS Feel free to put in a different web address
-                // for users to report your invalid templates to.
-                yield output.writes(_("TRANSLATION ERROR! Please report to " +
-                        "https://github.com/alcinnz/Oddysseus/issues"));
-            }
-        }
-    }
-
 	private class VerbatimBuilder : TagBuilder, Object {
 		public Template? build(Parser parser, WordIter args) throws SyntaxError {
 			args.assert_end();
@@ -1063,7 +981,7 @@ namespace Oddysseus.Templating.Std {
 		register_tag("templatetag", new TemplateTagBuilder());
 		register_tag("test", new TestBuilder()); // *
 		register_tag("test-report", new TestReportBuilder()); // *
-		register_tag("trans", new TransBuilder());
+		register_tag("trans", new I18n.TransTagBuilder());
 		register_tag("verbatim", new VerbatimBuilder());
 		register_tag("with", new WithBuilder());
 
