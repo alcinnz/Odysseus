@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submitting Your Changes</title>
+  <style>
+    @import url(oddysseus:butterick.css);
+    section {border-bottom: thin solid gray;}
+  </style>
+</head>
+<body>
+  <main></main>
+  <script>
+    var formData = {}
+    function* main() => {
+      // TODO
+    }
+
+    var mainThread = main()
+    +function driver() {
+      status_data = mainThread.next()
+      if (status_data.done) return;
+      status_row = document.createElement('section')
+      status_row.innerHTML = status_data
+      document.getElementsByTagName('main')[0].appendChild(status_row)
+
+      var forms = status_row.getElementsByTagName('form')
+      if (forms.length > 0) {
+        forms[0].onsubmit = () => {
+          extractFormData()
+          driver()
+        }
+      } else driver(); // Recurse immediately
+    }()
+
+    // Derived from zepto.js
+    // https://github.com/madrobby/zepto/blob/master/src/form.js
+    function extractFormData(form) {
+      foreach (var input in form.elements) {
+        var type = input.type, name = input.name
+        if (name && input.nodeName.toLowerCase() != "fieldset" &&
+            !input.disabled && type != "submit" && type != 'reset' &&
+            type != "button" && type != "file" &&
+            ((type != "radio" && type != "checkbox") || input.checked))
+          formData[name] = input.value
+      }
+    }
+  </script>
+</main>

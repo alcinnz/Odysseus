@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teach Me {{ language }}</title>
+  <style>@import url(oddysseus:butterick.css);</style>
+</head>
+<body>
+  <p>Thanks for offering to help teach me {{ language }}! I really appreciate it.</p>
+  <p>The phrases I need help translating are in the table below, but before we start I need to teach you a bit of notation I use.</p>
+  <p>Text between <code>{% template tag openvariable %}</code> and <code>{% templatetag closevariable %}</code> indicates that I should replace that text with some data described by the text between the brackets. The meaning beyond that should be self-explanatory, and should be copied into the translation verbatim or I might not understand it.</p>
+  <p>Text between <code>&lt;</code> and <code>&gt;</code> describes how I should format that text. If you don't already understand HTML (the formatting language I use) these should be left as is<sup title="Some quoted text between these characters do need translation, but some must not be.">NOTE</sup>.</p>
+  <p>We do our best not to put this notation in the phrases below, but sometimes we can't get around not embedding it without breaking the grammer for some language or other. Perhaps in the future I'll provide you with some formatting controls for this syntax to hide behind.</p>
+  <!-- Have to rely on embedder to catch form submission,
+        as this is an internal page -->
+  <form>
+    <input type="hidden" name="language" value="{{ language.code }}" />
+    <p>This text uses a fair bit of notation for Oddysseus
+    <table>
+      {% for entry in catalogue %}
+        <tr>
+          <td>
+            {% if entry.english in recentlyUsed %}
+              <img src="oddysseus:icon/16/starred"
+                title="I (Oddysseus) have recently used this translation for you" />
+            {% endif %}
+            {% if not entry.translations %}
+              <img src="oddysseus:icon/16/emblem-important-symbolic"
+                title="This text hasn't been translated yet. Please help!" />
+            {% endif %}
+          </td>
+          <th>
+            <input type="hidden" name="${{count}}.en" value="{{entry.english }}" />
+            <div>{{ entry.english }}</div>
+            {% if entry.plural %}
+              <hr />
+              <input type="hidden" name="${{count}}.plural" value="{{ entry.plural }}" />
+              <div>{{ entry.plural }}</div>
+            {% endif %}
+          </th>
+          <td>{% with entry_no=count %}
+            {% for translation in entry.translations %}
+              <textarea name="${{ entry_no }}.{{ count }}">
+                {{ translation }}
+              </textarea>
+            {% endfor %}
+          </td>
+          <td><a
+              href="https://github.com/alcinnz/Oddysseus/blame/master/data/page-l10n/{{ language.code }}#L{{ entry.line }}"
+              title="View change history for this translation">
+            <img src="oddysseus:icon/16/document-open-recent-symbolic" />
+          </a></td>
+        </th>
+      </tr>
+    {% endfor %}
+  </table>
+  <p><button type="submit">Suggest Translations…</button></p>
+</body>
+</html>

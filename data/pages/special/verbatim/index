@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teach Me a New Language</title>
+  <style>@import url(oddysseus:butterick.css);</script>
+</head>
+<body>
+  <main>
+    <h1>Are You Multilingual?</h1>
+    <h2>Then We Need Your Help</h1>
+
+    <p>Oddysseus natively speaks English (specifically British/New Zealand English), but we want people from other cultures to comfortably use this browser. That's where you come in! All you need to do is teach Oddysseus how to say certain things, and that'll be enough for it to speak fluently in your language.</p>
+    <p>Even if you just speak English, but you think we're misspelling things you can help by correcting the spelling to what best suits your nationality.</p>
+
+    <dl>
+      <dt><a href="https://poeditor.com/join/project/6VytorOTQY">Translate Window Decoration</a></h3>
+      <dd>This includes all the menu options, tooltips, and a handful of labels which surrounds the content you're viewing.</dd>
+      <dt><a href="https://poeditor.com/join/project/kmC0hFirZj">Translate Branding</a></dt>
+      <dd>These shows up in elementary's application launcher and AppCenter, as well as the equivalents on other desktops.</dd>
+      <dt><a href="#languages">Internal Content</a></dt>
+      <dd>This includes error pages, and as of yet not much else.</dd>
+      <dd>Developer and translation tools are exempt from being translated, as we expect anyone working on Oddysseus to have some familiarity with English in order to be able to communicate live with them.</dd>
+    </dl>
+
+    <table id="languages">
+      {% for language in native %}{% if language.code in progress %}
+        <tr>
+          <th><a href="oddysseus-verbatim:{{ language.code }}">
+            {{ languageNames|lookup:language }}
+            {% if language.nation %}({{ language.nation }}{% endif %}
+          </a></th>
+          <td>{% with progress=progress|lookup:language.code %}
+            <progress value="{{ progress.translated }}" max="{{ progress.count }}" />
+          {% endwith %}</td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <details><summary>All Languages</summary>
+      <table>
+        {% for language progress in progress %}
+          <tr>
+            <th><a href="oddysseus-verbatim:{{ language }}">
+              {% with code=language|split:"_"|first nation=language|split:"_"|last %}
+                {{languageNames|lookup:code }}
+                {% if nation != code %}({{ nation }})
+              {% endwith %}
+            </a></th>
+            <td>
+              <progress value="{{ progress.translated }}" max="{{ progress.count }}" />
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </details>
+  </main>
+</body>
+</html>
