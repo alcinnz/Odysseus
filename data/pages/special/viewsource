@@ -35,8 +35,11 @@ Line numbers aren't included as the developer of our syntax highlighting library
     // highlight.js will be able to merge these links in with it's highlighting.
     // FIXME can't handle & in URIs, and those render as ugly &amp;'s
     var linkedCode = code.innerHTML.replace(
-        /((?:url\(|&lt;(?:a|link|script|img)[^&]+(?:src|href)\s*=\s*)['"]?)([^'"\)\s&]+)/g,
-        (match, prefix, url) => prefix + url.link(url))
+        /((?:url\(|&lt;(?:a|link|script|img)[^&]+(?:src|href)\s*=\s*)['"]?)(.*?)('|"|\)|\s|&gt;)/g,
+        (match, prefix, url, suffix) => {
+          url = url.replace("&amp;amp;", "&"); // Don't know how those are getting in
+          return prefix + url.link() + suffix
+        })
     code.innerHTML = linkedCode
     // FIXME freezing hazard when viewing the source of large pages
     hljs.highlightBlock(code);
