@@ -38,7 +38,7 @@ Line numbers aren't included as the developer of our syntax highlighting library
         /((?:url\(|&lt;(?:a|link|script|img)[^&]+(?:src|href)\s*=\s*)['"]?)(.*?)('|"|\)|\s|&gt;)/g,
         (match, prefix, url, suffix) => {
           url = url.replace("&amp;amp;", "&"); // Don't know how those are getting in
-          return prefix + url.link() + suffix
+          return prefix + url.link(url) + suffix
         })
     code.innerHTML = linkedCode
     // FIXME freezing hazard when viewing the source of large pages
