@@ -54,6 +54,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Widgets/DownloadButton.vala
     src/Widgets/DownloadBar.vala
     src/Widgets/ProgressBin.vala
+    src/Widgets/InfoContainer.vala
+    src/Widgets/Shades.vala
 
     src/Services/pages.vala
     src/Services/icons.vala
@@ -71,6 +73,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Traits/errors.vala
     src/Traits/init.vala
     src/Traits/autodownload.vala
+    src/Traits/alert.vala
+    src/Traits/permit.vala
 
 # tell what libraries to use when compiling
 PACKAGES

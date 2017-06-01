@@ -46,6 +46,9 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
 
     public WebKit.WebView web; // To allow it to be wrapped in layout views. 
     private Gtk.Revealer find;
+    public InfoContainer info; // for prompts.
+    private Shades shadow; // grays out page.
+
     public string url {
         get {return web.uri;}
     }
@@ -56,6 +59,11 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
             status_bar.status = value;
             status_bar.visible = value != "";
         }
+    }
+
+    public bool paused {
+        get {return shadow.visible;}
+        set {shadow.visible = value;}
     }
 
     public WebTab(Granite.Widgets.DynamicNotebook parent,
@@ -71,9 +79,15 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
                     "web-context", global_context,
                     "user-content-manager", user_content);
         }
+        this.info = new InfoContainer();
+        info.expand = true;
+        this.page = info;
+
         var container = new Gtk.Overlay();
+        container.expand = true;
         container.add(this.web);
-        this.page = container;
+        info.add(container);
+        //this.page = container;
 
         // Avoid taking too much screen realestate away from the page.
         // That's why we're using an overlay
@@ -106,6 +120,11 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
         status_bar = new Granite.Widgets.OverlayBar(container);
         status_bar.visible = false;
         status_bar.no_show_all = true;
+
+        shadow = new Shades();
+        container.add_overlay(shadow);
+        shadow.no_show_all = true;
+        shadow.visible = false;
         
         web.bind_property("title", this, "label");
         web.notify["favicon"].connect((sender, property) => {
@@ -141,8 +160,9 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
             return false;
         });
 
-        Traits.setup_webview(this);
+        this.page.show_all();
 
+        Traits.setup_webview(this);
         configure();
         web.load_uri(uri);
     }

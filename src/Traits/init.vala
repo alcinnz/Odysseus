@@ -28,7 +28,8 @@ namespace Oddysseus.Traits {
     }
 
     public void setup_webview(WebTab tab) {
-        setup_report_errors(tab);
+        // FIXME overrides site-provided pages too often:
+        //setup_report_errors(tab);
         setup_autodownload(tab.web);
     }
 }
