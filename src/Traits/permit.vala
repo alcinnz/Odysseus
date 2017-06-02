@@ -27,6 +27,8 @@ namespace Oddysseus.Traits {
         var msg = "";
         var opts = new InfoContainer.MessageOptions();
         opts.type = Gtk.MessageType.WARNING;
+        opts.ok_text = "Allow"; opts.cancel_text = "Deny";
+
         if (req is WebKit.GeolocationPermissionRequest) {
             msg = "This page wants to know where you currently are.";
         } else if (req is WebKit.NotificationPermissionRequest) {
