@@ -21,7 +21,7 @@ I know this isn't the best UI but take up with webpages which use these APIs,
 namespace Oddysseus.Traits {
     private async bool show_alert(WebTab tab, WebKit.ScriptDialog dlg,
             out bool confirm, out bool prompt) {
-        //tab.paused = true; // Communicate page-level modality.
+        // TODO Communicate page-level modality.
 
         var msg = dlg.get_message();
         var opts = new InfoContainer.MessageOptions();
@@ -45,10 +45,8 @@ namespace Oddysseus.Traits {
             default:
                 error("Unreachable code");
         }
-        var confirmed = yield tab.info.message(msg, opts);
-        
-        //tab.paused = false;
-        return confirmed;
+
+        return yield tab.info.message(msg, opts);
     }
 
     public void setup_alerts(WebTab tab) {
