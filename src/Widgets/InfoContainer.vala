@@ -76,9 +76,14 @@ public class Oddysseus.InfoContainer : Gtk.Grid {
         revealer.reveal_child = true;
 
         var response = 1;
-        info.response.connect((id) => {response = id; message.callback();});
+        var handler = info.response.connect((id) => {
+            response = id;
+            message.callback();
+        });
         yield;
-        
+        info.disconnect(handler);
+        info.close();
+
         return (bool) response;
     }
 }

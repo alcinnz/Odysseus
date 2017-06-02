@@ -31,5 +31,6 @@ namespace Oddysseus.Traits {
         // FIXME overrides site-provided pages too often:
         //setup_report_errors(tab);
         setup_autodownload(tab.web);
+        setup_alerts(tab);
     }
 }

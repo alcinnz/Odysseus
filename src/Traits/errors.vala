@@ -106,7 +106,9 @@ namespace Oddysseus.Traits {
             report_error(error, uri, tab);
             return true;
         });
-        web.decide_policy.connect((decision, type) => {
+        // FIXME Overrides site-provided pages too often.
+        //      I think this needs to be fixed in WebKitGTK (but not WebCore)
+        /*web.decide_policy.connect((decision, type) => {
             if (type == WebKit.PolicyDecisionType.RESPONSE) {
                 var response_decision = (WebKit.ResponsePolicyDecision) decision;
                 var response = response_decision.response;
@@ -122,7 +124,7 @@ namespace Oddysseus.Traits {
                 }
             }
             return false;
-        });
+        });*/
         web.authenticate.connect((request) => {
             report_error("401", web.uri, tab);
             connect_form(web, (req) => {

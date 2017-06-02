@@ -19,34 +19,51 @@
 I know this isn't the best UI but take up with webpages which use these APIs,
     I'm just trying to make it not quite so bad by reducing it's modality. */
 namespace Oddysseus.Traits {
-    private async void show_alert(WebTab tab, WebKit.ScriptDialog dlg) {
-        tab.paused = true; // Communicate page-level modality.
+    private async bool show_alert(WebTab tab, WebKit.ScriptDialog dlg,
+            out bool confirm, out bool prompt) {
+        //tab.paused = true; // Communicate page-level modality.
 
         var msg = dlg.get_message();
-        InfoContainer.MessageOptions opts = new InfoContainer.MessageOptions();
+        var opts = new InfoContainer.MessageOptions();
         switch (dlg.get_dialog_type()) {
             case WebKit.ScriptDialogType.ALERT:
                 opts.type = Gtk.MessageType.INFO; opts.show_cancel = false;
+                confirm = false; prompt = false;
                 break;
             case WebKit.ScriptDialogType.CONFIRM:
+                confirm = true; prompt = false;
                 break;
             case WebKit.ScriptDialogType.PROMPT:
                 opts.show_entry = true;
                 opts.prefill = dlg.prompt_get_default_text();
+                confirm = false; prompt = true;
                 break;
             case WebKit.ScriptDialogType.BEFORE_UNLOAD_CONFIRM:
                 opts.ok_text = "Leave"; opts.cancel_text = "Stay";
+                confirm = true; prompt = false;
                 break;
+            default:
+                error("Unreachable code");
         }
-        dlg.confirm_set_confirmed(yield tab.info.message(msg, opts));
-        dlg.prompt_set_text(tab.info.response);
+        var confirmed = yield tab.info.message(msg, opts);
         
-        tab.paused = false;
+        //tab.paused = false;
+        return confirmed;
     }
 
     public void setup_alerts(WebTab tab) {
         tab.web.script_dialog.connect((dlg) => {
-            show_alert.begin(tab, dlg);
+            var loop = new MainLoop();
+            bool ret = true;
+            bool confirm = true; bool prompt = false;
+            show_alert.begin(tab, dlg, (obj, res) => {
+                ret = show_alert.end(res, out confirm, out prompt);
+                loop.quit();
+            });
+            loop.run();
+
+            if (confirm) dlg.confirm_set_confirmed(ret);
+            if (prompt && ret) dlg.prompt_set_text(tab.info.response);
             return true;
         });
     }
