@@ -15,13 +15,16 @@
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 public class Oddysseus.AddressBar : Gtk.Entry {
-    public AddressBar() {
+    construct {
         this.margin_start = 20;
         this.margin_end = 20;
+
+        // GTK BUG: This code should expand this to fill, but it doesn't.
+        this.hexpand = true;
+        this.halign = Gtk.Align.FILL;
     }
 
-    /* While there's more planned here,
-        at the moment I just need this class to customize sizing */
+    /* This approximates the expand to fill effect. */
     public override void get_preferred_width(out int min_width, out int nat_width) {
         min_width = 20; // Meh
         nat_width = 848; // Something large, so it fills this space if possible
