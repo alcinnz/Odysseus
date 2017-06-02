@@ -40,6 +40,8 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
                 WebKit.CookiePersistentStorage.SQLITE);
         global_context.set_favicon_database_directory(
                 build_config_path("favicons"));
+        global_context.set_process_model(
+                WebKit.ProcessModel.MULTIPLE_SECONDARY_PROCESSES);
 
         Traits.setup_context(global_context);
     }
