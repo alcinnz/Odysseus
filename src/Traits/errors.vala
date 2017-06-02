@@ -21,9 +21,6 @@ namespace Oddysseus.Traits {
         var web = tab.web;
         string error = error_;
 
-        web.go_back();// Hack for replacing page,
-                // though has unfortunate side-effects
-
         var test_path = "/" + Path.build_path("/",
                 "io", "github", "alcinnz", "Oddysseus", "oddysseus:", "errors",
                 error);
