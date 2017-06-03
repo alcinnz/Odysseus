@@ -25,7 +25,8 @@ namespace Oddysseus.Traits.Search {
         private DuckDuckGo output;
         
         construct {
-            output = new DuckDuckGo(completer);
+            output = Object.@new(typeof(DuckDuckGo), "completer", completer)
+                    as DuckDuckGo;
         }
         
         public override void autocomplete() {

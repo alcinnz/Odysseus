@@ -21,11 +21,11 @@ This helps to combine results from multiple sources including
     the Web, simple transformations, and eventually a local database. */
 namespace Oddysseus.Services {
     public abstract class CompleterDelegate : Object {
-        public Completer completer;
+        public Completer completer { construct; get; }
         public string query = "";
 
-        protected void suggest(string url, string label = "") {
-            completer.@yield(url, label == "" ? url : label);
+        protected void suggest(string url, string label = "-") {
+            completer.@yield(url, label == "-" ? url : label);
         }
 
         public abstract void autocomplete();
@@ -64,7 +64,7 @@ namespace Oddysseus.Services {
         public void @yield(string url, string label) {
             Gtk.TreeIter item;
             model.append(out item);
-            model.@set(item, 0, url, 1, label);
+            model.@set(item, 0, url, 1, label, -1);
         }
     }
 }

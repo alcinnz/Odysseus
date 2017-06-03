@@ -18,10 +18,6 @@
 namespace Oddysseus.Traits.Search {
     public class DuckDuckGo : Services.CompleterDelegate {
 
-        public DuckDuckGo(Services.Completer completer, string query = "") {
-            this.completer = completer; this.query = query;
-        }
-
         public override void autocomplete() {
             suggest("http://duckduckgo.com/?q=" + Soup.URI.encode(query, null),
                     "🔍\t" + query);

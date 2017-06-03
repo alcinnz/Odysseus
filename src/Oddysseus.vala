@@ -163,5 +163,6 @@ public class Oddysseus.Application : Granite.Application {
 }
 
 public static int main(string[] args) {
+    Oddysseus.Traits.setup_autosuggest();
     return Oddysseus.Application.instance.run(args);
 }

@@ -33,4 +33,8 @@ namespace Oddysseus.Traits {
         setup_alerts(tab);
         setup_permits(tab);
     }
+
+    public void setup_autosuggest() {
+        Services.Completer.register(typeof(ImplyHTTP));
+    }
 }

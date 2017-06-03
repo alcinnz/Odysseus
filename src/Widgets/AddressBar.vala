@@ -46,7 +46,9 @@ public class Oddysseus.AddressBar : Gtk.Entry {
         //  b) Require an entry to be selected.
         //  and c) Not have to subvert the completion's logic.
         completion.clear();
-        completion.add_attribute(new Gtk.CellRendererText(), "text", 1);
+        var labelRenderer = new Gtk.CellRendererText();
+        completion.pack_start(labelRenderer, true);
+        completion.add_attribute(labelRenderer, "text", 1);
 
         changed.connect(() => {completer.suggest(this.text);});
     }
