@@ -68,6 +68,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Prosody/writers.vala
     src/Services/Prosody/loader.vala
     src/Services/Prosody/i18n.vala
+    src/Services/Completer.vala
 
     src/Traits/viewsource.vala
     src/Traits/errors.vala
@@ -75,6 +76,10 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Traits/autodownload.vala
     src/Traits/alert.vala
     src/Traits/permit.vala
+    src/Traits/imply-http.vala
+    src/Traits/search/duckduckgo.vala
+    src/Traits/search/ddg-autocomplete.vala
+
 
 # tell what libraries to use when compiling
 PACKAGES
