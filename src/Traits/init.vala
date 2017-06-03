@@ -36,5 +36,6 @@ namespace Oddysseus.Traits {
 
     public void setup_autosuggest() {
         Services.Completer.register(typeof(ImplyHTTP));
+        Services.Completer.register(typeof(Search.DuckDuckGo));
     }
 }
