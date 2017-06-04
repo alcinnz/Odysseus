@@ -14,10 +14,7 @@
 * You should have received a copy of the GNU General Public License
 * along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-/** Loads autocompletions from DuckDuckGo. 
-
-So as not to be a keylogger (even for a service with such a strong privacy policy),
-    this doesn't activate until it's clear this is a search. */
+/** Loads autocompletions from DuckDuckGo. */
 namespace Oddysseus.Traits.Search {
     public class DDGOnlineCompletions : Services.CompleterDelegate {
         private Soup.Session session = new Soup.Session();
@@ -30,6 +27,8 @@ namespace Oddysseus.Traits.Search {
         }
         
         public override void autocomplete() {
+            // Don't want this to be keylogger, even for DuckDuckGo.
+            if (!(" " in query)) return;
             // Cancel current request if any, then reset for reuse.
             in_progress.cancel(); in_progress.reset();
 
