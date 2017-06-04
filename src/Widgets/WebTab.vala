@@ -64,7 +64,7 @@ public class Oddysseus.WebTab : Granite.Widgets.Tab {
 
     public WebTab(Granite.Widgets.DynamicNotebook parent,
                   WebKit.WebView? related = null,
-                  string uri = "https://ddg.gg/") {
+                  string uri = "oddysseus:home") {
         if (global_context == null) init_global_context();
 
         if (related != null) {

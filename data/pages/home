@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>New Tab</title>
+  <style>
+    @import url(oddysseus:butterick.css);
+    body {color: #ddd; text-align: center;}
+    hr {border: none; border-bottom: thin solid #eee; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Watch This Space</h1>
+    <p>It, and the addressbar, are going to get alot more helpful.</p>
+    <hr />
+    <p>Don't worry, Oddysseus will maintain it's elementary simplicity.</p>
+  </main>
+</body>
+</html>
