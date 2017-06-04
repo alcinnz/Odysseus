@@ -27,7 +27,7 @@ namespace Oddysseus.Traits.Search {
         }
         
         public override void autocomplete() {
-            // Don't want this to be keylogger, even for DuckDuckGo.
+            // Don't want this to be a keylogger, even for DuckDuckGo.
             if (!(" " in query)) return;
             // Cancel current request if any, then reset for reuse.
             in_progress.cancel(); in_progress.reset();
@@ -42,18 +42,14 @@ namespace Oddysseus.Traits.Search {
                 var response = yield request.send_async(in_progress);
 
                 // See sample-completion.json for what is being parsed here.
-                // Guards against malformed input and streams data in for
-                //      subtle performance improvements.
-                // Alas JSON isn't as convenient in a strictly typed language.
+                // Streams data in for subtle performance improvements.
                 var jsonParser = new Json.Parser();
                 jsonParser.object_member.connect((obj, member) => {
                     if (member != "phrase") return;
-                    var jsonString = obj.get_member(member);
-                    if (jsonString.get_node_type() != Json.NodeType.VALUE ||
-                            jsonString.get_value_type() != typeof(string))
-                        return;
+                    var jsonString = obj.get_string_member(member);
+                    if (jsonString == null) return;
 
-                    output.query = jsonString.get_string();
+                    output.query = jsonString;
                     output.autocomplete();
                 });
                 yield jsonParser.load_from_stream_async(response, in_progress);
