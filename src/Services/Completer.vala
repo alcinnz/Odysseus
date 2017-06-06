@@ -52,11 +52,10 @@ namespace Oddysseus.Services {
         }
 
         public void suggest(string query) {
-            var q = query.strip();
             model.clear();
 
             foreach (var completer in delegates) {
-                completer.query = q;
+                completer.query = query;
                 completer.autocomplete();
             }
         }
