@@ -35,6 +35,8 @@ Technical Architecture
 
 At the moment Oddysseus is simply some GTK/Granite chrome around WebKitGTK. For internal and error pages Oddysseus incorporates a simple internal templating language based on Django's. 
 
+Autocompletion of URIs are implemented by dispatching the entry's change event through a number of different sources, for their results to be loaded into a Gtk.ListStore and displayed in a Gtk.EntryCompletion. Work is ongoing to change the look and behaviour of the completion popup to be more appropriate to this usecase. 
+
 INSTALLING
 ----------
 
