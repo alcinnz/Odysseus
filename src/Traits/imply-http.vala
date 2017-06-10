@@ -45,7 +45,7 @@ namespace Oddysseus.Traits {
             }
 
             if (has_schema) suggest(query);
-            else suggest("http://" + query);
+            else suggest("https://" + query);
         }
     }
 }

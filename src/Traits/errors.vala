@@ -91,6 +91,9 @@ namespace Oddysseus.Traits {
             var netman = NetworkMonitor.get_default();
             string error = "protocol";
             if (!netman.network_available) error = "network";
+            else if (uri.has_prefix("https://"))
+                // Try falling back to HTTP
+                web.load_uri("http" + uri["https".length:uri.length]);
             else {
                 try {
                     var dest = NetworkAddress.parse_uri(uri, 80);
