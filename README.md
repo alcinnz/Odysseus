@@ -1,9 +1,9 @@
-Oddysseus Web Browser
+Odysseus Web Browser
 ====================
 
 **Designed for elementary OS**
 
-At the moment Oddysseus is quite rudimentary and does not yet support browser history or bookmarks. That said it's still quite comfortable for normal browsing. 
+At the moment Odysseus is quite rudimentary and does not yet support browser history or bookmarks. That said it's still quite comfortable for normal browsing. 
 
 Design Principles
 -----------------
@@ -33,7 +33,7 @@ Where in doubt, consult elementary's HIG.
 Technical Architecture
 ----------------------
 
-At the moment Oddysseus is simply some GTK/Granite chrome around WebKitGTK. For internal and error pages Oddysseus incorporates a simple internal templating language based on Django's. 
+At the moment Odysseus is simply some GTK/Granite chrome around WebKitGTK. For internal and error pages Odysseus incorporates a simple internal templating language based on Django's. 
 
 Autocompletion of URIs are implemented by dispatching the entry's change event through a number of different sources, for their results to be loaded into a Gtk.ListStore and displayed in a Gtk.EntryCompletion. Work is ongoing to change the look and behaviour of the completion popup to be more appropriate to this usecase. 
 
