@@ -462,4 +462,8 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
             }
         }
     }
+
+    public override void grab_focus() {
+        web.grab_focus();
+    }
 }

@@ -112,6 +112,9 @@ public class Oddysseus.AddressBar : Gtk.Entry {
             string url;
             row.@get("url", out url);
             navigate_to(url);
+
+            // Remove focus from text entry
+            get_toplevel().grab_focus();
         });
         
         list.row_activated.connect((row) => {
