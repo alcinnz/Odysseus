@@ -21,8 +21,10 @@ URIs entered into the addressbar may be opened by other applications. */
 namespace Oddysseus.Traits {
     public class ImplyHTTP : Services.CompleterDelegate {
         public override void autocomplete() {
-            if (" " in query || !("." in query)) return; // Doesn't even resemble a URI!
+            if (" " in query || !("." in query || ":" in query))
+                return; // Doesn't even resemble a URI!
 
+            // TODO handle IPv6 addresses.
             bool has_schema;
             if ("://" in query) has_schema = true;
             else if (!(":" in query)) has_schema = false;
@@ -31,12 +33,12 @@ namespace Oddysseus.Traits {
                 if (host == null) host = query;
 
                 var user = host.str("@");
-                if (user != null) has_schema = ":" in user;
+                if (user != null) has_schema = !(":" in user);
                 else {
                     var port = host.rstr(":");
                     has_schema = false;
                     foreach (var digit in port.data) {
-                        if ('0' <= digit && digit <= '9') {
+                        if ('0' < digit || digit > '9') {
                             has_schema = true;
                             break;
                         }
