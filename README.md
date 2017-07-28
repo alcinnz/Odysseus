@@ -1,9 +1,9 @@
-Oddysseus Web Browser
+Odysseus Web Browser
 ====================
 
 **Designed for elementary OS**
 
-At the moment Oddysseus is quite rudimentary and does not yet support browser history or bookmarks. That said it's still quite comfortable for normal browsing. 
+At the moment Odysseus is quite rudimentary and does not yet support browser history or bookmarks. That said it's still quite comfortable for normal browsing. 
 
 Design Principles
 -----------------
@@ -25,7 +25,7 @@ Design Principles
 
 <dd>Odysseus is a "User Agent", it serves it's users not webmasters. Give them the control over what's uploaded to the SEC (Someone Elses' Computers).</dd>
 
-<dd>For it's own uses Odysseus should feel free to capture data, but only share it online with informed consent. </dd>
+<dd>For it's own uses Odysseus should feel free to capture data, but only share it online with informed consent. Odysseus shouldn't even upload any information to a service operated by the project, as that would be asking for blind faith. </dd>
 </dl>
 
 Where in doubt, consult elementary's HIG. 
@@ -33,7 +33,7 @@ Where in doubt, consult elementary's HIG.
 Technical Architecture
 ----------------------
 
-At the moment Oddysseus is simply some GTK/Granite chrome around WebKitGTK. For internal and error pages Oddysseus incorporates a simple internal templating language based on Django's. 
+At the moment Odysseus is simply some GTK/Granite chrome around WebKitGTK. For internal and error pages Odysseus incorporates a simple internal templating language based on Django's. 
 
 Autocompletion of URIs are implemented by dispatching the entry's change event through a number of different sources, for their results to be loaded into a Gtk.ListStore and displayed in a Gtk.EntryCompletion. Work is ongoing to change the look and behaviour of the completion popup to be more appropriate to this usecase. 
 
