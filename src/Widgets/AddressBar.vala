@@ -94,6 +94,10 @@ public class Oddysseus.AddressBar : Gtk.Entry {
             default:
                 return false;
             }
+
+            if (list.get_row_at_index(selected) == null)
+                return true; // Don't go beyond the boundaries.
+
             list.select_row(list.get_row_at_index(selected));
             return true;
         });
