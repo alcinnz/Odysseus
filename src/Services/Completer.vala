@@ -31,9 +31,18 @@ namespace Oddysseus.Services {
         public abstract void autocomplete();
     }
 
+    private class Completion : Object {
+        public string url {get; set;}
+        public string label {get; set;}
+
+        public Completion(string url, string label) {
+            this.url = url;
+            this.label = label;
+        }
+    }
+
     public class Completer : Object {
-        public Gtk.ListStore model =
-                new Gtk.ListStore(2, typeof(string), typeof(string));
+        public ListStore model = new ListStore(typeof(Completion));
         private static Gee.ArrayList<Type>? delegate_classes = null;
         private Gee.ArrayList<CompleterDelegate> delegates =
                 new Gee.ArrayList<CompleterDelegate>();
@@ -51,8 +60,10 @@ namespace Oddysseus.Services {
             delegate_classes.add(completer);
         }
 
-        public void suggest(string query) {
-            model.clear();
+        public delegate void YieldCallback(string url, string label);
+        private YieldCallback yieldCallback;
+        public void suggest(string query, owned YieldCallback cb) {
+            this.yieldCallback = cb;
 
             foreach (var completer in delegates) {
                 completer.query = query;
@@ -61,9 +72,7 @@ namespace Oddysseus.Services {
         }
 
         public void @yield(string url, string label) {
-            Gtk.TreeIter item;
-            model.append(out item);
-            model.@set(item, 0, url, 1, label, -1);
+            yieldCallback(url, label);
         }
     }
 }

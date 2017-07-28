@@ -80,7 +80,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         set_titlebar(header);
 
         var container = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
-        this.add(container);
+        add(container);
 
         tabs = new Granite.Widgets.DynamicNotebook();
         // Don't show tabbar when fullscreen
@@ -291,8 +291,8 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         };
         reload.clicked.connect(() => {web.reload();});
         stop.clicked.connect(() => {web.stop_loading();});
-        addressbar.activate.connect(() => {
-            web.load_uri(addressbar.text);
+        addressbar.navigate_to.connect((url) => {
+            web.load_uri(url);
         });
 
         tabs.tab_switched.connect((old_tab, new_tab) => {
