@@ -67,6 +67,11 @@ public class Oddysseus.AddressBar : Gtk.Entry {
         this.focus_in_event.connect((evt) => {
             popover.show_all();
             autocomplete();
+
+            Idle.add(() => {
+                this.select_region(0, -1);
+                return false;
+            }, Priority.HIGH); // To aid retyping URLs, copy+paste
             return false;
         });
         this.focus_out_event.connect((evt) => {
@@ -110,6 +115,7 @@ public class Oddysseus.AddressBar : Gtk.Entry {
         });
         
         list.row_activated.connect((row) => {
+            stdout.printf("\tRow clicked!\n");
             string url;
             row.@get("url", out url);
             navigate_to(url);
