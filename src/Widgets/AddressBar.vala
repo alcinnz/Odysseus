@@ -39,27 +39,6 @@ public class Odysseus.AddressBar : Gtk.Entry {
         min_width = 20; // Meh
         nat_width = 848; // Something large, so it fills this space if possible
     }
-
-    /*private void build_autocomplete() {
-        this.completion = new Gtk.EntryCompletion();
-        var completer = new Services.Completer();
-
-        completion.model = completer.model;
-        completion.text_column = 0;
-        // Don't second guess the completer.
-        completion.set_match_func((completion, key, iter) => {return true;});
-
-        // Serves to get started, but ideally:
-        //  a) I'd render a favicon and the URL as subtext.
-        //  b) Require an entry to be selected.
-        //  and c) Not have to subvert the completion's logic.
-        completion.clear();
-        var labelRenderer = new Gtk.CellRendererText();
-        completion.pack_start(labelRenderer, true);
-        completion.add_attribute(labelRenderer, "text", 1);
-
-        changed.connect(() => {completer.suggest(this.text);});
-    }*/
     
     private void connect_events() {
         changed.connect(autocomplete);
