@@ -41,7 +41,7 @@
     }
   </script>
 </head>
-<body class="branded" onload="assertFinished()">
+<body onload="assertFinished()">
   <h1>Test Results</h1>
 
   <h2>Canaries</h2>
@@ -93,7 +93,7 @@ Beware of sirens!
 {% output %}
   <details style='opacity: 75%'>
 	<summary style='background: yellow' title='Ignored ERROR'>This should fail</summary>
-	<h3>oddysseus_templating_syntax_error-quark thrown :: While Parsing <code>{% 404 %}</code></h3>
+	<h3>odysseus_templating_syntax_error-quark thrown :: While Parsing <code>{% 404 %}</code></h3>
 	<p>Unknown tag '404'</p>
 </details>
 {% endtest %}

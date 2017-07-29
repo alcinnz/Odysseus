@@ -1,22 +1,22 @@
 /**
 * This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using Oddysseus.Services;
-namespace Oddysseus.Traits {
+using Odysseus.Services;
+namespace Odysseus.Traits {
     public async void view_source(WebKit.WebView source, WebKit.WebView dest) {
         var data = new Source();
         data.title = source.title;
@@ -57,7 +57,7 @@ namespace Oddysseus.Traits {
             try {
                 Templating.ErrorData? ignored = null;
                 var template = Templating.get_for_resource(
-                        "/io/github/alcinnz/Oddysseus/oddysseus:/special/viewsource",
+                        "/io/github/alcinnz/Odysseus/odysseus:/special/viewsource",
                         ref ignored);
                 // This is the reason for the hack: InputStreamWriter
                 var stream = new Templating.InputStreamWriter();
@@ -72,7 +72,7 @@ namespace Oddysseus.Traits {
             }
         } else if (request.get_uri() == "source:favicon.ico") {
             try {
-                var stream = resources_open_stream("/io/github/alcinnz/Oddysseus/oddysseus:/special/viewsource.ico", 0);
+                var stream = resources_open_stream("/io/github/alcinnz/Odysseus/odysseus:/special/viewsource.ico", 0);
                 request.finish(stream, -1, "image/x-icon");
             } catch (Error e) {
                 request.finish_error(e);

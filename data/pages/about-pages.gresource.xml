@@ -5,7 +5,7 @@
         The `preprocess="xml-stripblanks" option is not used as lacking
             runtime latency concerns I prefer to keep my "view source" readable.
     -->
-    <gresource prefix="/io/github/alcinnz/Oddysseus/oddysseus:/">
+    <gresource prefix="/io/github/alcinnz/Odysseus/odysseus:/">
         <file>NOT-FOUND</file>
         <file>SERVER-ERROR</file>
         <file>home</file>

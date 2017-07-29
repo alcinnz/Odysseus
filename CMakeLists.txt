@@ -1,5 +1,5 @@
 # project name
-project (oddysseus)
+project (odysseus)
 
 # the oldest stable cmake version we support
 cmake_minimum_required (VERSION 2.6)
@@ -12,9 +12,9 @@ list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/src)
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 
 # what to call that directory where we install data too
-set (PKGDATADIR "${DATADIR}/oddysseus")
+set (PKGDATADIR "${DATADIR}/odysseus")
 
-set (EXEC_NAME "oddysseus")
+set (EXEC_NAME "io.github.alcinnz.odysseus")
 set (RELEASE_NAME "A web browser for elementary OS")
 set (VERSION "0.1")
 set (VERSION_INFO "development")
@@ -45,7 +45,7 @@ ensure_vala_version("0.16" MINIMUM)
 # files we want to compile
 include(ValaPrecompile)
 vala_precompile(VALA_C ${EXEC_NAME}
-    src/Oddysseus.vala
+    src/Odysseus.vala
     src/BrowserWindow.vala
     src/Widgets/AddressBar.vala
     src/Widgets/WebTab.vala
@@ -105,12 +105,12 @@ target_link_libraries(${EXEC_NAME} ${DEPS_LIBRARIES})
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
 
 # install our .desktop file so the Applications menu will see it
-configure_file_translation(${CMAKE_SOURCE_DIR}/data/oddysseus.desktop ${CMAKE_BINARY_DIR}/data/oddysseus.desktop ${CMAKE_SOURCE_DIR}/po/extra/)
-install (FILES ${CMAKE_BINARY_DIR}/data/oddysseus.desktop DESTINATION ${DATADIR}/applications/)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/256/oddysseus-web.svg DESTINATION share/icons/hicolor/256x256/apps)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/128/oddysseus-web.svg DESTINATION share/icons/hicolor/128x128/apps)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/64/oddysseus-web.svg DESTINATION share/icons/hicolor/64x64/apps)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/48/oddysseus-web.svg DESTINATION share/icons/hicolor/48x48/apps)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/32/oddysseus-web.svg DESTINATION share/icons/hicolor/32x32/apps)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/24/oddysseus-web.svg DESTINATION share/icons/hicolor/24x24/apps)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/16/oddysseus-web.svg DESTINATION share/icons/hicolor/16x16/apps)
+configure_file_translation(${CMAKE_SOURCE_DIR}/data/io.github.alcinnz.odysseus.desktop ${CMAKE_BINARY_DIR}/data/io.github.alcinnz.odysseus.desktop ${CMAKE_SOURCE_DIR}/po/extra/)
+install (FILES ${CMAKE_BINARY_DIR}/data/io.github.alcinnz.odysseus.desktop DESTINATION ${DATADIR}/applications/)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/256/odysseus-web.svg DESTINATION share/icons/hicolor/256x256/apps)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/128/odysseus-web.svg DESTINATION share/icons/hicolor/128x128/apps)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/64/odysseus-web.svg DESTINATION share/icons/hicolor/64x64/apps)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/48/odysseus-web.svg DESTINATION share/icons/hicolor/48x48/apps)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/32/odysseus-web.svg DESTINATION share/icons/hicolor/32x32/apps)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/24/odysseus-web.svg DESTINATION share/icons/hicolor/24x24/apps)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/16/odysseus-web.svg DESTINATION share/icons/hicolor/16x16/apps)

@@ -1,43 +1,43 @@
 /**
-* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-public class Oddysseus.Application : Granite.Application {
+public class Odysseus.Application : Granite.Application {
     construct {
         this.flags |= ApplicationFlags.HANDLES_OPEN;
         this.flags |= ApplicationFlags.HANDLES_COMMAND_LINE;
-        application_id = "io.github.alcinnz.Oddysseus";
+        application_id = "io.github.alcinnz.Odysseus";
         Intl.setlocale (LocaleCategory.ALL, "");
-        Intl.textdomain ("oddysseus");
+        Intl.textdomain ("odysseus");
 
-        program_name = "Oddysseus";
+        program_name = "Odysseus";
         app_years = "2016-2017";
-        app_icon = "oddysseus-web";
-        app_launcher = "oddysseus.desktop";
-        main_url = "https://github.com/alcinnz/Oddysseus";
-        bug_url = "https://github.com/alcinnz/Oddysseus/issues";
+        app_icon = "odysseus-web";
+        app_launcher = "io.github.alcinnz.odysseus.desktop";
+        main_url = "https://github.com/alcinnz/Odysseus";
+        bug_url = "https://github.com/alcinnz/Odysseus/issues";
         translate_url = "https://poeditor.com/join/project/6VytorOTQY";
         about_authors = { "Adrian Cochrane <alcinnz@eml.cc>", null };
         about_license_type = Gtk.License.GPL_3_0;
     }
     
-    private static Oddysseus.Application _instance = null;
-    public static Oddysseus.Application instance {
+    private static Odysseus.Application _instance = null;
+    public static Odysseus.Application instance {
         get {
             if (_instance == null)
-                _instance = new Oddysseus.Application();
+                _instance = new Odysseus.Application();
             return _instance;
         }
     }
@@ -61,7 +61,7 @@ public class Oddysseus.Application : Granite.Application {
         }
         
         if (print_version) {
-            stdout.printf("Oddysseus Web Browser version 0.1\n");
+            stdout.printf("Odysseus Web Browser version 0.1\n");
             stdout.printf("Copyright 2016 Adrian Cochrane\n");
             return Posix.EXIT_SUCCESS;
         }
@@ -163,6 +163,6 @@ public class Oddysseus.Application : Granite.Application {
 }
 
 public static int main(string[] args) {
-    Oddysseus.Traits.setup_autosuggest();
-    return Oddysseus.Application.instance.run(args);
+    Odysseus.Traits.setup_autosuggest();
+    return Odysseus.Application.instance.run(args);
 }

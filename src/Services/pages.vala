@@ -1,22 +1,22 @@
 /**
 * This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /** Exposes our GLib.Resource templates to WebKit. */
-namespace Oddysseus.Services {
+namespace Odysseus.Services {
     /* shortname for Templating.ByteUtils.from_string */
     private Bytes b(string s) {return Templating.ByteUtils.from_string(s);}
 
@@ -50,7 +50,7 @@ namespace Oddysseus.Services {
             Templating.TagBuilder? error_tag = null) {
         try {
             var path = "/" + Path.build_path("/",
-                    "io", "github", "alcinnz", "Oddysseus", "oddysseus:", error);
+                    "io", "github", "alcinnz", "Odysseus", "odysseus:", error);
 
             var raw_data =
                     Templating.ByteUtils.create_map<Templating.Data.Data>();
@@ -95,7 +95,7 @@ namespace Oddysseus.Services {
         if (alt_uri != null) alternative_uri = alt_uri;
 
         var path = "/" + Path.build_path("/",
-                "io", "github", "alcinnz", "Oddysseus", "oddysseus:", subpath);
+                "io", "github", "alcinnz", "Odysseus", "odysseus:", subpath);
         Templating.Template template;
         Templating.ErrorData? error_data = null;
         try {
@@ -139,17 +139,17 @@ namespace Oddysseus.Services {
         webview.load_alternate_html(content, alternative_uri, alternative_uri);
     }
 
-    public void handle_oddysseus_uri(WebKit.URISchemeRequest request) {
+    public void handle_odysseus_uri(WebKit.URISchemeRequest request) {
         if (request.get_path().has_prefix("icon/")) {
             // Serve system icons for consistency there.
-            // Done from the Oddysseus URI scheme so
+            // Done from the Odysseus URI scheme so
             //      so they're allowed to be used as internal favicons
             handle_sysicon_uri(request);
             return;
         }
 
         var path = "/" + Path.build_path("/",
-                "io", "github", "alcinnz", "Oddysseus", "oddysseus:",
+                "io", "github", "alcinnz", "Odysseus", "odysseus:",
                 request.get_path());
         string? mime_type;
         try {

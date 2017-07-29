@@ -1,23 +1,23 @@
 /**
 * This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* Standard "tags" and "filters" to use in templates.
 	Beware that these may differ subtly from Django's implementation. */
-namespace Oddysseus.Templating.Std {
+namespace Odysseus.Templating.Std {
     public Gee.Map<Bytes, Variable> parse_params(WordIter args)
             throws SyntaxError {
 		var parameters = ByteUtils.create_map<Variable>();
@@ -641,7 +641,7 @@ namespace Oddysseus.Templating.Std {
 			yield output.writes("';\n\t");
 			yield output.writes("document.querySelector");
 			yield output.writes("(\"link[rel*='icon']\").href = ");
-			yield output.writes("'oddysseus:debugging/");
+			yield output.writes("'odysseus:debugging/");
 			yield output.writes(passed ? "passed.ico" : "failed.ico");
 			yield output.writes("';</script>");
 		}

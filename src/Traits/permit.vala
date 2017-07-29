@@ -1,18 +1,18 @@
 /**
-* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 /** Exposes a UI for when WebKit asks for various permissions
     on behalf of webpages. 
@@ -22,7 +22,7 @@ This is not the final UI as it neither persists configurations
 Also It's an easy UI for a webpage to spoof,
     so an alternative would be more secure.
 As such this UI will be reimplemented later. */
-namespace Oddysseus.Traits {
+namespace Odysseus.Traits {
     private async bool confirm_permit(WebTab tab, WebKit.PermissionRequest req) {
         var msg = "";
         var opts = new InfoContainer.MessageOptions();

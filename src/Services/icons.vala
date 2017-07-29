@@ -1,22 +1,22 @@
 /**
 * This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /** Exposes GTK's Icons to WebKit (and in particular internal pages). */
-namespace Oddysseus.Services {
+namespace Odysseus.Services {
     public void handle_sysicon_uri(WebKit.URISchemeRequest request) {
         var stream = new MemoryInputStream();
         var components = request.get_path().split("/");

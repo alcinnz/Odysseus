@@ -1,20 +1,20 @@
 /**
-* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-public class Oddysseus.AddressBar : Gtk.Entry {
+public class Odysseus.AddressBar : Gtk.Entry {
     private Services.Completer completer = new Services.Completer();
     private Gtk.Popover popover;
     private Gtk.ListBox list;

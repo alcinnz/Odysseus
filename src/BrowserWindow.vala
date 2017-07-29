@@ -1,22 +1,22 @@
 /**
-* This file is part of Oddysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 using Granite.Widgets;
-public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
-    private weak Oddysseus.Application app;
+public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
+    private weak Odysseus.Application app;
 
     private WebKit.WebView web;
     private Granite.Widgets.DynamicNotebook tabs;
@@ -32,18 +32,17 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
     private Gee.List<ulong> web_event_handlers;
     private Gee.List<Binding> bindings;
 
-    public BrowserWindow(Oddysseus.Application ody_app) {
+    public BrowserWindow(Odysseus.Application ody_app) {
         this.app = ody_app;
         set_application(this.app);
         this.title = "";
-        this.icon_name = "internet-web-browser";
 
         init_layout();
         register_events();
         set_default_size(1200, 800);
     }
     
-    public BrowserWindow.with_urls(Oddysseus.Application ody_app, string[] urls) {
+    public BrowserWindow.with_urls(Odysseus.Application ody_app, string[] urls) {
         this(ody_app);
         foreach (var url in urls) new_tab(url);
     }
@@ -64,7 +63,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         reload_stop = new Gtk.Stack();
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
-        addressbar = new Oddysseus.AddressBar();
+        addressbar = new Odysseus.AddressBar();
         addressbar.tooltip_text = _("Current web address");
 
         var appmenu = new Granite.Widgets.AppMenu(create_appmenu());
@@ -117,7 +116,7 @@ public class Oddysseus.BrowserWindow : Gtk.ApplicationWindow {
         // TRANSLATORS _ precedes the keyboard shortcut
         var new_window = new Gtk.MenuItem.with_mnemonic(_("_New Window"));
         new_window.activate.connect(() => {
-            var window = new BrowserWindow(Oddysseus.Application.instance);
+            var window = new BrowserWindow(Odysseus.Application.instance);
             window.show_all();
         });
         menu.add(new_window);

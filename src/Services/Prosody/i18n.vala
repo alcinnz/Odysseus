@@ -1,18 +1,18 @@
 /**
 * This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
 *
-* Oddysseus is free software: you can redistribute it and/or modify
+* Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Oddysseus is distributed in the hope that it will be useful,
+* Odysseus is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 
 * You should have received a copy of the GNU General Public License
-* along with Oddysseus.  If not, see <http://www.gnu.org/licenses/>.
+* along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /** Custom Natural Language Support routines.
@@ -26,7 +26,7 @@ the "{% trans %}" tag.
 
 When integrated with GitHub via templates this data can also be used to help
 readers to improve the text they see. */
-namespace Oddysseus.Templating.I18n {
+namespace Odysseus.Templating.I18n {
     private Bytes b(string s) {return ByteUtils.from_string(s);}
 
     private Expression.Expression plural_form;
@@ -44,7 +44,7 @@ namespace Oddysseus.Templating.I18n {
                 uint8[] source;
                 var SEP = Path.DIR_SEPARATOR_S;
                 FileUtils.get_data(SEP + Path.build_path(SEP, "usr", "share",
-                                "Oddysseus", "l10n", language),
+                                "Odysseus", "l10n", language),
                         out source);
                 catalogue_file = new Bytes(source);
                 var parser = new Parser(catalogue_file);
@@ -315,7 +315,7 @@ namespace Oddysseus.Templating.I18n {
             var SEP = Path.DIR_SEPARATOR_S;
             try {
                 FileUtils.get_data(SEP + Path.build_path(SEP, "usr", "share",
-                                "Oddysseus", "l10n", language),
+                                "Odysseus", "l10n", language),
                         out source);
                 catalogue_file = new Bytes(source);
                 var parser = new Parser(catalogue_file);
@@ -334,7 +334,7 @@ namespace Oddysseus.Templating.I18n {
             try {
                 var SEP = Path.DIR_SEPARATOR_S;
                 var catalogue = File.new_for_path(SEP + Path.build_path(SEP,
-                        "usr", "share", "Oddysseus", "l10n"));
+                        "usr", "share", "Odysseus", "l10n"));
                 var enumerator = catalogue.enumerate_children("standard::*",
                         FileQueryInfoFlags.NONE);
                 FileInfo info;

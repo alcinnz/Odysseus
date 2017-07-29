@@ -24,7 +24,7 @@
  * A scroll box that takes its child's height, unless that height is more than max_height.
  * If it is actually higher than max_height, then it will stick to max_height.
  */
-public class Oddysseus.AutomaticScrollBox : Gtk.ScrolledWindow {
+public class Odysseus.AutomaticScrollBox : Gtk.ScrolledWindow {
     /**
      * The maximal height of the scroll box before it starts scrolling.
      */
