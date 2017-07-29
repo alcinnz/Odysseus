@@ -1,6 +1,6 @@
 {# Renders view-source in the browser, triggered by the view-source menu item with custom variables. 
-Oddysseus does it this way, as opposed to using Scratch as both applications are capable of rendering text
-and Oddysseus is better suited to the Read-only nature of this feature.
+Odysseus does it this way, as opposed to using Scratch as both applications are capable of rendering text
+and Odysseus is better suited to the Read-only nature of this feature.
 
 The styling of this page matches Scratch's defaults. 
 
@@ -16,19 +16,19 @@ Line numbers aren't included as the developer of our syntax highlighting library
   <link rel="shortcut icon" href="source:favicon.ico" />
 
   <style>
-    @import url(oddysseus:ext/hljs-solarized-light.css);
+    @import url(odysseus:ext/hljs-solarized-light.css);
     body {background: #fdf6e3;} /* To match Solarized Light */
     pre.hljs {
         overflow-x: visible;
         padding: 0;
     }
   </style>
-  <script src="oddysseus:ext/highlight.pack.js"></script>
+  <script src="odysseus:ext/highlight.pack.js"></script>
   <base href="{{ url }}" />
 </head>
 <body>
   <pre>{{ source }}</pre>
-  <script src="oddysseus:ext/highlight.pack.js"></script>
+  <script src="odysseus:ext/highlight.pack.js"></script>
   <script>
     var code = document.querySelector("pre");
     // Autolink any resources (uses the above base URL to resolve relative links)

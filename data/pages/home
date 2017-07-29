@@ -3,7 +3,7 @@
 <head>
   <title>New Tab</title>
   <style>
-    @import url(oddysseus:butterick.css);
+    @import url(odysseus:butterick.css);
     body {color: #ddd; text-align: center;}
     hr {border: none; border-bottom: thin solid #eee; }
   </style>
@@ -13,7 +13,7 @@
     <h1>Watch This Space</h1>
     <p>It, and the addressbar, are going to get alot more helpful.</p>
     <hr />
-    <p>Don't worry, Oddysseus will maintain it's elementary simplicity.</p>
+    <p>Don't worry, Odysseus will maintain it's elementary simplicity.</p>
   </main>
 </body>
 </html>

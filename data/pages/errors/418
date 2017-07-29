@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>{% trans %}I'm A Teapot{% endtrans %}</title>
   <style>
-    @import url(oddysseus:butterick.css);
+    @import url(odysseus:butterick.css);
     main {text-align: center;}
   </style>
 </head>

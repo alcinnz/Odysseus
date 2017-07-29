@@ -3,12 +3,12 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>{% trans %}BAD REQUEST{% endtrans %}</title>
-  <style>@import url(oddysseus:butterick.css);</style>
+  <style>@import url(odysseus:butterick.css);</style>
 </head>
 <body>
   <main>
     <h1>{% trans %}This Is Apparently Our Fault{% endtrans %}</h1>
-    <p>{% trans %}Please <a href="https://github.com/alcinnz/Oddysseus/issues/new">report the problem</a> and we'll see what we can do about it.{% endtrans %}</p>
+    <p>{% trans %}Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and we'll see what we can do about it.{% endtrans %}</p>
   </main>
 </body>
 </html>

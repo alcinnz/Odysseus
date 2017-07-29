@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>{% trans %}REQUEST TIMED OUT{% endtrans %}</title>
-  <style>@import url(oddysseus:butterick.css);</style>
+  <style>@import url(odysseus:butterick.css);</style>
 </head>
 <body>
   <main>
@@ -12,7 +12,7 @@
 
     <!-- does a simple reload -->
     <form method="GET" action="/">
-      <p><button type="submit"><img src="oddysseus:icon/16/view-refresh">
+      <p><button type="submit"><img src="odysseus:icon/16/view-refresh">
         {% trans %}Reload{% endtrans %}</button></p>
     </form>
   </main>

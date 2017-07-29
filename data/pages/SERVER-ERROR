@@ -9,19 +9,19 @@ The debugging information is in English in the expectation that any contributors
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>{% trans %}Internal Error{% endtrans %}</title>
   <style>
-    @import url(oddysseus:butterick.css);
-    @import url(oddysseus:ext/hljs-solarized-light.css);
+    @import url(odysseus:butterick.css);
+    @import url(odysseus:ext/hljs-solarized-light.css);
     pre strong {border-bottom: thin dashed red;}
     table {background: #fdf6e3;} /* Match Solarized light */
     /* Solarized Light adds whitespace which misaligns the table */
     pre {margin: 0;}
   </style>
-  <link rel="shortcut icon" href="oddysseus:icon/16/dialog-error-symbolic" />
+  <link rel="shortcut icon" href="odysseus:icon/16/dialog-error-symbolic" />
 </head>
 <body class="branded">
   <main>
     <h1>{% trans %}This Is Bad…{% endtrans %}</h1>
-    <p>{% trans %}I cannot understand my own code. If you are an Oddysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Oddysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message.{% endtrans %}</p>
+    <p>{% trans %}I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message.{% endtrans %}</p>
 
     <hr />
     <h2>{{ err-code }}{% if err-tag %}
@@ -29,12 +29,12 @@ The debugging information is in English in the expectation that any contributors
         {% templatetag closeblock %}{% endif %}</h2>
     <p>{{ err-text }}</p>
     <table><tr>
-      <th><a href="https://github.com/alcinnz/Oddysseus/tree/master/data/pages/{{ path }}#L{{ line-number }}">{{ line-number|add:1 }}</a></th>
+      <th><a href="https://github.com/alcinnz/Odysseus/tree/master/data/pages/{{ path }}#L{{ line-number }}">{{ line-number|add:1 }}</a></th>
       <td><pre class="django">{% error-line %}</pre></td>
     </tr></table>
   </main>
 
-  <script src="oddysseus:ext/highlight.pack.js"></script>
+  <script src="odysseus:ext/highlight.pack.js"></script>
   <script>hljs.highlightBlock(document.querySelector('pre'))</script>
 </body>
 </html>

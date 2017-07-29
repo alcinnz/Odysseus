@@ -1,5 +1,5 @@
-{# This page is shown we we navigate to an invalid oddysseus: URI.
-  The note that this page probably never has existed refers to a promise Oddysseus hereby makes
+{# This page is shown we we navigate to an invalid odysseus: URI.
+  The note that this page probably never has existed refers to a promise Odysseus hereby makes
   that we'll never outright remove any internal pages. At most we'll leave a tombstone at that URI. #}
 {# Please add links to any internal pages you make here, sorting it in alphabetical order.
   This helps users get out of this error situation. #}
@@ -8,8 +8,8 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>{% trans %}Tool Not Found{% endtrans %}</title>
-  <style>@import url(oddysseus:butterick.css);</style>
-  <link rel="shortcut icon" href="oddysseus:icon/16/folder" />
+  <style>@import url(odysseus:butterick.css);</style>
+  <link rel="shortcut icon" href="odysseus:icon/16/folder" />
 </head>
 <body>
   <main>
@@ -18,8 +18,8 @@
     <p>{% trans %}Maybe you meant one of these other internal pages?{% endtrans %}</p>
 
     <dl>
-      <dt><a href="oddysseus:debugging/index">{% trans %}
-          Oddysseus Debugging{% endtrans %}</a></dt>
+      <dt><a href="odysseus:debugging/index">{% trans %}
+          Odysseus Debugging{% endtrans %}</a></dt>
       <dd>{% trans %}Tools for ensuring your browser is working correctly.
         {% endtrans %}</dd>
     </dl>

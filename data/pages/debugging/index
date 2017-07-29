@@ -2,18 +2,18 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Oddysseus Debugging</title>
-  <style>@import url(oddysseus:butterick.css);</style>
-  <link rel="shortcut icon" href="oddysseus:icon/16/application-x-executable-symbolic" />
+  <title>Odysseus Debugging</title>
+  <style>@import url(odysseus:butterick.css);</style>
+  <link rel="shortcut icon" href="odysseus:icon/16/application-x-executable-symbolic" />
 </head>
 <body class="branded">
   <main>
-    <h1>Tools for debugging Oddysseus</h1>
-    <p>These tools help the Oddysseus developers to diagnose problems with your browser. It is unlikely you will be interested in them.</p>
+    <h1>Tools for debugging Odysseus</h1>
+    <p>These tools help the Odysseus developers to diagnose problems with your browser. It is unlikely you will be interested in them.</p>
     <dl>
-      <dt><a href="oddysseus:debugging/test">Testsuite for the Templating Language</a></dt>
+      <dt><a href="odysseus:debugging/test">Testsuite for the Templating Language</a></dt>
       <dd>If you see red on this page, it means something's wrong with how these internal pages are rendered.</dd>
-      <dt><a href="oddysseus:debugging/syntaxerror0">Invalid template #0</a></dt>
+      <dt><a href="odysseus:debugging/syntaxerror0">Invalid template #0</a></dt>
       <dd>This template is purposefully poorly written and raises a syntax error.</dd>
       <dd>Used to test the error reporting.</dd>
     </dl>
