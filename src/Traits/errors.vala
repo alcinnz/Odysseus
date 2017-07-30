@@ -88,16 +88,19 @@ namespace Odysseus.Traits {
                 return false;
 
             // Diagnose the problem
+            // This is necessary as otherwise unknown domains
+            //      are indistiguishable from network outages.
             var netman = NetworkMonitor.get_default();
             string error = "protocol";
             if (!netman.network_available) error = "network";
-            else if (uri.has_prefix("https://"))
+            else if (uri.has_prefix("https://")) {
                 // Try falling back to HTTP
                 web.load_uri("http" + uri["https".length:uri.length]);
-            else {
+                return true;
+            } else {
                 try {
                     var dest = NetworkAddress.parse_uri(uri, 80);
-                    if (netman.can_reach(dest)) error = "dns";
+                    if (!netman.can_reach(dest)) error = "dns";
                 } catch (Error e) {
                     error = "dns";
                 }
