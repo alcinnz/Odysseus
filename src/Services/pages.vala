@@ -38,9 +38,12 @@ namespace Odysseus.Services {
         raw_url[b("scheme")] = new Templating.Data.Literal(parser.scheme);
         raw_url[b("user")] = new Templating.Data.Literal(parser.user);
 
-        // Get the homepage
-        var home = new Soup.URI.with_base(parser, "/");
-        raw_url[b("home")] = new Templating.Data.Literal(home.to_string(false));
+        // Predominantly used by the bad-certificate error page.
+        if (url.has_prefix("https://")) {
+            var http_url = "http" + url["https".length:url.length];
+            raw_url[b("http")] = new Templating.Data.Literal(http_url);
+        }
+
 
         return new Templating.Data.Mapping(raw);
     }

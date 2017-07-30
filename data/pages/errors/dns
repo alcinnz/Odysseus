@@ -9,6 +9,7 @@
   <main>
     <h1>{% trans %}Could Not Contact {{ url.host }}{% endtrans %}</h1>
     <p>{% trans %}This may be due to a network failure or a broken link.{% endtrans %}</p>
+    <p>{% trans %}Or it could be simply that <em>this site does not exist</em>.</p>
     <p><a href="settings://network/" title="Open network preferences">
       <img src="odysseus:icon/128/preferences-system-network"
             alt="Network" /></a></p>
