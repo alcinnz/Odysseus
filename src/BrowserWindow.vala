@@ -40,6 +40,13 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         init_layout();
         register_events();
         set_default_size(1200, 800);
+
+        // This makes sure that UI remains consistant with WebKit,
+        // Even if the event handlers don't keep us up-to-date successfully.
+        Timeout.add_seconds(1, () => {
+            connect_webview((Odysseus.WebTab) tabs.current);
+            return true;
+        }, Priority.DEFAULT_IDLE);
     }
     
     public BrowserWindow.with_urls(Odysseus.Application ody_app, string[] urls) {
