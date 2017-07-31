@@ -25,7 +25,7 @@ public class Odysseus.Download : Object {
     private string _destination = "";
     public string destination {
         get {
-            return _destination;
+            return _destination == "" ? download.destination : _destination;
         }
         set {
             if (completed) move(_destination, value);
@@ -37,7 +37,6 @@ public class Odysseus.Download : Object {
     
     public Download(WebKit.Download download) {
         this.download = download;
-        this.destination = download.destination;
         
         download.received_data.connect((len) => received_data());
         download.finished.connect(() => {
@@ -99,26 +98,20 @@ public class Odysseus.Download : Object {
     }
 
     // Downloads collection
-    public static ListStore? downloads;
-    public static int active_downloads = 0;
+    private static DownloadSet? downloads;
+    public static DownloadSet get_downloads() {
+        if (downloads == null) downloads = new DownloadSet();
+        return downloads;
+    }
+
     public static void setup_ctx(WebKit.WebContext ctx) {
-        if (downloads == null) downloads = new ListStore(typeof(Download));
+        var downloads = get_downloads();
         ctx.download_started.connect((download) => {
-            downloads.append(new Download(download));
+            downloads.add(new Download(download));
         });
     }
     
-    public void cancel() {
+    public virtual signal void cancel() {
         download.cancel();
-
-        // Remove from list
-        uint i = 0;
-        while (downloads.get_item(i) != null) {
-            if (downloads.get_item(i) == this) {
-                downloads.remove(i);
-                return;
-            }
-            i++;
-        }
     }
 }

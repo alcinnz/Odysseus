@@ -29,6 +29,7 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
 
     public DownloadButton(Odysseus.Download download) {
         this.download = download;
+        this.sensitive = true;
         
         setup_ui();
         connect_events();
@@ -79,6 +80,7 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
                 download.open();
             return true;
         });
+        download.cancel.connect(() => this.destroy());
     }
     private void update_data() {
         var inner_d = download.download;
@@ -86,11 +88,11 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
         var mime = inner_d.response.mime_type;
         fileicon.gicon = ContentType.get_icon(ContentType.from_mime_type(mime));
         filename.label = Filename.display_basename(download.destination);
-        if (download.completed)
-            filesize.label = format_size(inner_d.response.content_length);
+        filesize.label = format_size(inner_d.response.content_length);
+        if (!download.completed)
+            remaining.label = download.estimate();
         else
-            filesize.label = _("DONE");
-        remaining.label = download.estimate();
+            remaining.label = _("DONE");
     }
 
 
@@ -132,7 +134,7 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
 
         // TRANSLATORS _ precedes shortcut key
         var cancel_item = new Gtk.MenuItem.with_mnemonic(_("_Cancel"));
-        cancel_item.activate.connect(download.cancel);
+        cancel_item.activate.connect(() => download.cancel());
         menu.add(cancel_item);
         
         menu.show_all();
