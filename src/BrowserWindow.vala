@@ -45,7 +45,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         // Even if the event handlers don't keep us up-to-date successfully.
         Timeout.add_seconds(1, () => {
             disconnect_webview();
-            connect_webview((Odysseus.WebTab) tabs.current);
+            connect_webview((Odysseus.WebTab) tabs.current, false);
             return true;
         }, Priority.DEFAULT_IDLE);
     }
@@ -321,7 +321,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
     }
 
-    private void connect_webview(WebTab tab) {
+    private void connect_webview(WebTab tab, bool full=true) {
         var hs = web_event_handlers;
 
         hs.add(web.load_changed.connect ((load_event) => {
@@ -362,7 +362,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         reload_stop.set_visible_child(web.is_loading ? stop : reload);
         addressbar.progress_fraction = web.estimated_load_progress == 1.0 ?
                 0.0 : web.estimated_load_progress;
-        addressbar.text = web.uri;
+        if (full) addressbar.text = web.uri;
         this.title = web.title;
         if (web.get_favicon() != null) {
             var fav = surface_to_pixbuf(web.get_favicon());
