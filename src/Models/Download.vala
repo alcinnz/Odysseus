@@ -74,7 +74,30 @@ public class Odysseus.Download : Object {
             dlg.destroy();
         }
     }
-    
+
+    public string estimate() {
+        var progress = download.estimated_progress;
+        var estimate = (download.get_elapsed_time()/progress) * (1-progress);
+
+        if (estimate < 60) {
+            /// TRANSLATORS: "%s" seconds, shown in download button.
+            /// "%s" will be replaced with a whole number of seconds.
+            return _("%ss").printf("%.0f".printf(estimate));
+        } else if (estimate < 120) {
+            /// TRANSLATORS: "%s" minutes, shown in download button.
+            /// "%s" will be replaced with a whole number of minutes.
+            return _("%sm").printf("%.0f".printf(estimate / 60));
+        } else {
+            /// TRANSLATORS: "%s" hours and "%s" minutes,
+            /// shown in download button.
+            /// The first %s will be replaced with a whole number of hours,
+            /// and the second will be replaced with a whole number of minutes.
+            return _("%sh %sm").printf(
+                    "%.0f".printf(estimate / 120),
+                    "%.0f".printf(estimate / 60));
+        }
+    }
+
     // Downloads collection
     public static ListStore? downloads;
     public static int active_downloads = 0;

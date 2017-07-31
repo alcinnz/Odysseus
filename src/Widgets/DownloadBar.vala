@@ -56,9 +56,9 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
     }
 
     public static void setup_context(WebKit.WebContext ctx) {
-        ctx.download_started.connect((download) => {
+        /*ctx.download_started.connect((download) => {
             foreach (var downloads_bar in instances)
                 downloads_bar.add_entry(new DownloadButton(download));
-        });
+        });*/
     }
 }

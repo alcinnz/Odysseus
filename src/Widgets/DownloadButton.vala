@@ -15,8 +15,7 @@
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 public class Odysseus.DownloadButton : Odysseus.ProgressBin {
-    private WebKit.Download download;
-    private bool completed; 
+    private Odysseus.Download download;
     
     private Gtk.Button button;
     private Gtk.Image fileicon;
@@ -28,11 +27,8 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
     private Gtk.MenuItem open_item;
     private Gtk.CheckMenuItem open_automatic_item;
 
-    private string destination = "";
-
-    public DownloadButton(WebKit.Download download) {
+    public DownloadButton(Odysseus.Download download) {
         this.download = download;
-        this.completed = false;
         
         setup_ui();
         connect_events();
@@ -68,87 +64,33 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
     }
     
     private void connect_events() {
-        download.received_data.connect((len) => {
+        download.received_data.connect(() => {
             update_data();
-        });
-        download.finished.connect(() => {
-            // Can't set destination after a download's started,
-            //      so do it afterwords
-            if (destination != "") try {
-                File.new_for_uri(download.destination).move(
-                        File.new_for_uri(destination),
-                        FileCopyFlags.OVERWRITE | FileCopyFlags.BACKUP);
-            } catch (Error e) {
-                var dlg = new Gtk.MessageDialog((Gtk.Window) get_toplevel(),
-                        Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                        Gtk.MessageType.ERROR,
-                        Gtk.ButtonsType.CLOSE,
-                        // TRANSLATORS "%s is replaced with the filepath
-                        // the user specified they wanted their download to be at
-                        _("Error moving download to %s.\nIt has been left in you Downloads folder") + "\n\n%s",
-                        destination, e.message);
-                dlg.run();
-                dlg.destroy();
-            }
-
-            update_data();
-            remaining.label = _("DONE");
-            completed = true;
-            open_item.sensitive = true;
-            open_automatic_item.sensitive = false;
-            if (open_automatic_item.active) button.activate();
         });
 
         button.activate.connect(() => {
-            if (completed) {
-                Granite.Services.System.open_uri(
-                    destination == "" ? download.destination : destination);
-            } else {
-                show_menu(null);
-            }
+            if (download.completed) download.open();
+            else show_menu(null);
         });
         button.button_press_event.connect((evt) => {
-            if (evt.button == Gdk.BUTTON_SECONDARY || !completed) {
+            if (evt.button == Gdk.BUTTON_SECONDARY || !download.completed)
                 show_menu(evt);
-            } else {
-                button.activate();
-            }
+            else
+                download.open();
             return true;
         });
-        
-        this.destroy.connect(() => download.cancel());
     }
     private void update_data() {
-        this.progress = download.estimated_progress;
-        var mime = download.response.mime_type;
+        var inner_d = download.download;
+        this.progress = inner_d.estimated_progress;
+        var mime = inner_d.response.mime_type;
         fileicon.gicon = ContentType.get_icon(ContentType.from_mime_type(mime));
-        filename.label = Filename.display_basename(
-                destination == "" ? download.destination : destination);
-        filesize.label = format_size(download.response.content_length);
-
-        var progress = download.estimated_progress;
-        var estimate = (download.get_elapsed_time()/progress) * (1-progress);
-        remaining.label = format_time(estimate);
-    }
-    
-    private static string format_time(double estimate) {
-        if (estimate < 60) {
-            /// TRANSLATORS: "%s" seconds, shown in download button.
-            /// "%s" will be replaced with a whole number of seconds.
-            return _("%ss").printf("%.0f".printf(estimate));
-        } else if (estimate < 120) {
-            /// TRANSLATORS: "%s" minutes, shown in download button.
-            /// "%s" will be replaced with a whole number of minutes.
-            return _("%sm").printf("%.0f".printf(estimate / 60));
-        } else {
-            /// TRANSLATORS: "%s" hours and "%s" minutes,
-            /// shown in download button.
-            /// The first %s will be replaced with a whole number of hours,
-            /// and the second will be replaced with a whole number of minutes.
-            return _("%sh %sm").printf(
-                    "%.0f".printf(estimate / 120),
-                    "%.0f".printf(estimate / 60));
-        }
+        filename.label = Filename.display_basename(download.destination);
+        if (download.completed)
+            filesize.label = format_size(inner_d.response.content_length);
+        else
+            filesize.label = _("DONE");
+        remaining.label = download.estimate();
     }
 
 
@@ -157,9 +99,7 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
 
         // TRANSLATORS _ precedes shortcut key
         open_item = new Gtk.MenuItem.with_mnemonic(_("_Open"));
-        open_item.activate.connect(() => {
-            Granite.Services.System.open_uri(download.destination);
-        });
+        open_item.activate.connect(() => download.open());
         open_item.sensitive = false;
         menu.add(open_item);
 
@@ -182,7 +122,7 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
             chooser.set_filename(download.destination);
 
             if (chooser.run() == Gtk.ResponseType.OK) {
-                destination = chooser.get_uri();
+                download.destination = chooser.get_uri();
             }
             chooser.destroy();
         });
@@ -192,7 +132,7 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
 
         // TRANSLATORS _ precedes shortcut key
         var cancel_item = new Gtk.MenuItem.with_mnemonic(_("_Cancel"));
-        cancel_item.activate.connect(() => this.destroy());
+        cancel_item.activate.connect(download.cancel);
         menu.add(cancel_item);
         
         menu.show_all();
@@ -206,6 +146,9 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
             button = evt.button;
             activate_time = evt.get_time();
         }
+        open_item.sensitive = download.completed;
+        open_automatic_item.sensitive = !download.completed;
+        open_automatic_item.active = download.auto_open;
         menu.popup(null, null, null, button, activate_time);
     }
 }
