@@ -44,10 +44,12 @@
     <!-- <p>{% trans %}You can check this "cryptographic certificate" in it's normal place within the addressbar.{% endtrans %}</p> [Add this once there is a normal place for it] -->
 
     <p>
-      <form>
-        <button type="submit" class="warning">I Don't Trust <code>{{ url.host }}</code> Anyways</button>
+      <form method="POST">
+        <button type="submit" title="{% trans %}Load {% url %} despite this warning{% endtrans %}" class="warning">
+          {% trans %}I Don't Trust <code>{{ url.host }}</code> Anyways{% endtrans %}
+        </button>
       </form>
-      <a href="{{ url.http }}">Try insecure connection</a>
+      <a href="{{ url.http }}">{% trans %}Try insecure connection{% endtrans %}</a>
     </p>
   </main>
 </body>

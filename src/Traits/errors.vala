@@ -50,12 +50,17 @@ namespace Odysseus.Traits {
     // Utility to handle a form submit on an error page. 
     // FIXME Does not successfully trigger callbacks.
     private delegate void FormCallback(WebKit.FormSubmissionRequest request);
-    private void connect_form(WebKit.WebView web, FormCallback cb) {
+    private void connect_form(WebKit.WebView web, owned FormCallback cb) {
         var handler_id = web.submit_form.connect((req) => cb(req));
         ulong remove_handler_id = 0;
-        remove_handler_id = web.load_changed.connect((evt) => {
-            web.disconnect(handler_id);
-            web.disconnect(remove_handler_id);
+        remove_handler_id = web.decide_policy.connect((decision, type) => {
+            if (type != WebKit.PolicyDecisionType.NAVIGATION_ACTION) return false;
+            Idle.add(() => {
+                web.disconnect(handler_id);
+                web.disconnect(remove_handler_id);
+                return false;
+            });
+            return false;
         });
     }
 
@@ -73,10 +78,8 @@ namespace Odysseus.Traits {
             return true;
         });
         web.load_failed_with_tls_errors.connect((uri, certificate, error) => {
-            // TODO test
             report_error("bad-certificate", uri, tab);
             // This is to debug potential hostname parsing problems.
-            stderr.printf("'%s'\n", parse_hostname(uri));
             connect_form(web, (req) => {
                 var host = parse_hostname(uri);
                 WebTab.global_context.allow_tls_certificate_for_host(
