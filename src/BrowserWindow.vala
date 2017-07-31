@@ -43,7 +43,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         // This makes sure that UI remains consistant with WebKit,
         // Even if the event handlers don't keep us up-to-date successfully.
-        Timeout.add_seconds(1, () => {
+        Timeout.add_seconds(2, () => {
             connect_webview((Odysseus.WebTab) tabs.current);
             return true;
         }, Priority.DEFAULT_IDLE);
