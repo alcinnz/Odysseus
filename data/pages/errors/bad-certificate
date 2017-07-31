@@ -45,7 +45,7 @@
 
     <p>
       <form method="POST">
-        <button type="submit" title="{% trans %}Load {% url %} despite this warning{% endtrans %}" class="warning">
+        <button type="submit" title="{% trans %}Load {{ url }} despite this warning{% endtrans %}" class="warning">
           {% trans %}I Don't Trust <code>{{ url.host }}</code> Anyways{% endtrans %}
         </button>
       </form>

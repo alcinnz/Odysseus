@@ -48,18 +48,19 @@ namespace Odysseus.Traits {
     }
 
     // Utility to handle a form submit on an error page. 
-    // FIXME Does not successfully trigger callbacks.
     private delegate void FormCallback(WebKit.FormSubmissionRequest request);
     private void connect_form(WebKit.WebView web, owned FormCallback cb) {
-        var handler_id = web.submit_form.connect((req) => cb(req));
+        var handler_id = web.submit_form.connect((req) => {
+            cb(req);
+        });
         ulong remove_handler_id = 0;
         remove_handler_id = web.decide_policy.connect((decision, type) => {
             if (type != WebKit.PolicyDecisionType.NAVIGATION_ACTION) return false;
-            Idle.add(() => {
+            Timeout.add(100, () => {
                 web.disconnect(handler_id);
                 web.disconnect(remove_handler_id);
                 return false;
-            });
+            }); // FIXME Code smell in that the timing might still not work out.
             return false;
         });
     }
