@@ -19,7 +19,7 @@ namespace Odysseus.Traits.Search {
     public class DuckDuckGo : Services.CompleterDelegate {
 
         public override void autocomplete() {
-            suggest("http://duckduckgo.com/?q=" + Soup.URI.encode(query, null),
+            suggest("https://duckduckgo.com/?q=" + Soup.URI.encode(query, null),
                     "🔍\t" + query);
         }
     }
