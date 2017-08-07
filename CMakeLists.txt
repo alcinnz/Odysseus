@@ -29,7 +29,7 @@ find_package(PkgConfig)
 
 # now let's actually check for the required dependencies
 pkg_check_modules(DEPS REQUIRED gtk+-3.0 granite webkit2gtk-4.0 json-glib-1.0
-        gee-0.8 libsoup-2.4)
+        gee-0.8 libsoup-2.4 sqlite3)
 
 add_definitions(${DEPS_CFLAGS})
 link_libraries(${DEPS_LIBRARIES})
@@ -70,6 +70,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Prosody/loader.vala
     src/Services/Prosody/i18n.vala
     src/Services/Completer.vala
+    src/Services/database/database.vala
 
     src/Traits/viewsource.vala
     src/Traits/errors.vala
@@ -94,14 +95,16 @@ PACKAGES
     gee-0.8
     posix
     libsoup-2.4
+    sqlite3
 )
 
 # Bundle in about: page templates
 include(GResource)
 glib_compile_resources(GLIB_RESOURCES_PAGES SOURCE data/pages/about-pages.gresource.xml)
+glib_compile_resources(GLIB_RESOURCES_DB SOURCE data/db/database.gresource.xml)
 
 # tell cmake what to call the executable we just made
-add_executable(${EXEC_NAME} ${VALA_C} ${GLIB_RESOURCES_PAGES})
+add_executable(${EXEC_NAME} ${VALA_C} ${GLIB_RESOURCES_PAGES} ${GLIB_RESOURCES_DB})
 target_link_libraries(${EXEC_NAME} ${DEPS_LIBRARIES})
 
 # install the binaries we just made
