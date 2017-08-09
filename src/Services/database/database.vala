@@ -21,6 +21,21 @@ namespace Odysseus.Database {
         return main_db;
     }
 
+    private class ProsodyPipeSQLite : Templating.Writer, Object {
+        // NOTE: This Writer doesn't like SQL statements
+        //      being split up by templating.
+        public async void write(Bytes text) {
+            yield writes(Templating.ByteUtils.to_string(text));
+        }
+        public async void writes(string text) {
+            stdout.printf("%s\n", text);
+            string err_msg;
+            var err = get_database().exec(text, null, out err_msg);
+            if (err != Sqlite.OK)
+                error("Failed to execute SQL: %s: %s", err_msg, text);
+        }
+    }
+
     public void setup_database() {
         if (main_db != null) return; // Doesn't need initialization.
 
@@ -39,19 +54,14 @@ namespace Odysseus.Database {
                     new Templating.Data.Literal(version);
             var data = new Templating.Data.Mapping(raw_data);
 
-            var upgrade_path = "/io/github/alcinnz/database/init.sql";
+            var upgrade_path = "/io/github/alcinnz/Odysseus/database/init.sql";
             Templating.ErrorData? error_data = null;
             var template = Templating.get_for_resource(upgrade_path, ref error_data);
             if (error_data != null)
                 error("Failed to parse init script's templating!");
 
-            var writer = new Templating.CaptureWriter();
+            var writer = new ProsodyPipeSQLite();
             template.exec(data, writer);
-
-            var errmsg2 = "";
-            var err2 = main_db.exec(writer.grab_string(), null, out errmsg2);
-            if (err2 != Sqlite.OK)
-                error("Failed to execute init script's SQL! " + errmsg2);
 
             return 0;
         }, out errmsg);

@@ -470,6 +470,39 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         }
     }
 
+    // Persistance code
+    public int window_id = 0;
+    public static Gee.ArrayList<int> closed_windows;
+    protected override bool delete_event(Gdk.EventAny evt) {
+        // Read window state...
+        var state = get_window().get_state();
+        string window_state;
+        int width = 0, height = 0;
+        if (Gdk.WindowState.MAXIMIZED in state) window_state = "M";
+        else if (Gdk.WindowState.FULLSCREEN in state) window_state = "F";
+        else {
+            window_state = "N"; // 'N'ormal
+            get_size(out width, out height);
+        }
+
+        int x, y;
+        get_position(out x, out y);
+
+        // then save it to disk
+        var stmt = Database.parse("""UPDATE window
+                SET x = ?, y = ?, width = ?, height = ?, state = ?
+                WHERE window_id = ?;""");
+        stmt.bind_int(0, x);
+        stmt.bind_int(1, y);
+        stmt.bind_int(2, width);
+        stmt.bind_int(3, height);
+        stmt.bind_text(4, window_state);
+        stmt.bind_int(5, window_id);
+        stmt.step();
+
+        return false;
+    }
+
     public override void grab_focus() {
         web.grab_focus();
     }

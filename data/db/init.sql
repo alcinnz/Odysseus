@@ -18,15 +18,17 @@
 --      to apply any changes required to keep the database up-to-date.
 -- Only ever append to this file, whilst incrementing the
 --      the user_version pragma on the last line.
+-- Please note the piping into SQLite requires the SQL statements to be
+--      unbroken by Prosody templating tags/variables.
 {% if v < 1 %}
   CREATE TABLE window(
-    window_id PRIMARY KEY AUTOINCREMENT,
+    window_id INTEGER PRIMARY KEY AUTOINCREMENT,
     x, y, width, height, state,
     focused_index
   );
   CREATE TABLE tab(
-    tab_id PRIMARY KEY AUTOINCREMENT,
-    window_id REFERENCES window ON UPDATE DELETE,
+    tab_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    window_id REFERENCES window ON UPDATE CASCADE,
     order_, pinned,
     history /* JSON */
   );
