@@ -50,6 +50,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     private Gtk.Revealer find;
     public InfoContainer info; // for prompts.
 
+    public int64 tab_id;
+
     public string url {
         get {return web.uri;}
     }
@@ -64,7 +66,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     public WebTab(Granite.Widgets.DynamicNotebook parent,
                   WebKit.WebView? related = null,
-                  string uri = "odysseus:home") {
+                  int64 tab_id) {
+        this.tab_id = tab_id;
         if (global_context == null) init_global_context();
 
         if (related != null) {
@@ -124,7 +127,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         web.bind_property("is-loading", this, "working");
 
         web.create.connect((nav_action) => {
-            var tab = new WebTab(parent, web, nav_action.get_request().uri);
+            var tab = new WebTab.with_new_entry(parent, web, nav_action.get_request().uri);
             parent.insert_tab(tab, -1);
             parent.current = tab;
             return tab.web;
@@ -158,7 +161,27 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
         Traits.setup_webview(this);
         configure();
-        web.load_uri(uri);
+        //web.load_uri(uri);
+
+        restore_state(); setup_persist();
+    }
+
+    private static Sqlite.Statement? Qinsert_new;
+    public WebTab.with_new_entry(Granite.Widgets.DynamicNotebook parent,
+                  WebKit.WebView? related = null,
+                  string uri = "odysseus:home") {
+        var history_json = @"{\"current\": \"$(uri.escape())\"}";
+        if (Qinsert_new == null)
+            Qinsert_new = Database.parse("""INSERT
+                    INTO tab(window_id, order_, pinned, history)
+                    VALUES (?, -1, 0, ?);""");
+        Qinsert_new.reset();
+        var window = parent.get_toplevel() as BrowserWindow;
+        Qinsert_new.bind_int64(1, window.window_id);
+        Qinsert_new.bind_text(2, history_json);
+
+        Qinsert_new.step();
+        this(parent, related, Database.get_database().last_insert_rowid());
     }
 
     public void restore_favicon() {
@@ -213,5 +236,51 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         settings.user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/602.4.8 (KHTML, like Gecko) Version/10.0.3 Safari/602.4.8";
         settings.zoom_text_only = false;
         web.settings = settings;
+    }
+
+    private static Sqlite.Statement? Qsave_pinned;
+    private static Sqlite.Statement? Qsave_restore_data;
+    private void setup_persist() {
+        if (Qsave_pinned == null)
+            Qsave_pinned = Database.parse(
+                    "UPDATE tab SET pinned = ? WHERE ROWID = ?;");
+        if (Qsave_restore_data == null)
+            Qsave_restore_data = Database.parse(
+                    "UPDATE tab SET history = ? WHERE ROWID = ?;");
+        notify["pinned"].connect((pspec) => {
+            Qsave_pinned.reset();
+            Qsave_pinned.bind_int(1, pinned ? 0 : 1);
+            Qsave_pinned.bind_int64(2, tab_id);
+            Qsave_pinned.step();
+        });
+        notify["restore_data"].connect((pspec) => {
+            Qsave_restore_data.reset();
+            Qsave_restore_data.bind_text(1, restore_data);
+            Qsave_restore_data.bind_int64(2, tab_id);
+            Qsave_restore_data.step();
+        });
+    }
+
+    private static Sqlite.Statement? Qload_state;
+    private void restore_state() {
+        if (Qload_state == null)
+            Qload_state = Database.parse(
+                    "SELECT pinned, history FROM tab WHERE ROWID = ?");
+        Qload_state.reset();
+        Qload_state.bind_int64(1, tab_id);
+        var resp = Qload_state.step();
+        assert(resp == Sqlite.ROW);
+
+        pinned = Qload_state.column_int(0) != 0;
+        restore_data = Qload_state.column_text(1);
+
+        var parser = new Json.Parser();
+        try {
+            parser.load_from_data(restore_data);
+            var root = parser.get_root();
+            web.load_uri(root.get_object().get_string_member("current"));
+        } catch (Error err) {
+            web.load_uri("odysseus:errors/crashed");
+        }
     }
 }

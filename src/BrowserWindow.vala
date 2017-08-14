@@ -218,7 +218,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         // TRANSLATORS _ precedes the keyboard shortcut
         var view_source = new Gtk.MenuItem.with_mnemonic(_("_View Source"));
         view_source.activate.connect(() => {
-            var tab = new WebTab(tabs, web, "about:blank");
+            var tab = new WebTab.with_new_entry(tabs, web);
             tabs.insert_tab(tab, -1);
             Traits.view_source.begin(web, tab.web);
         });
@@ -334,7 +334,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             connect_webview((WebTab) new_tab);
         });
         tabs.new_tab_requested.connect(() => {
-            var tab = new WebTab(tabs);
+            var tab = new WebTab.with_new_entry(tabs);
             tabs.insert_tab(tab, -1);
             tabs.current = tab;
         });
@@ -447,7 +447,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     }
     
     public void new_tab(string url = "https://ddg.gg/") {
-        var tab = new WebTab(tabs, null, url);
+        var tab = new WebTab.with_new_entry(tabs, null, url);
         tabs.insert_tab(tab, -1);
         tabs.current = tab;
     }
@@ -552,10 +552,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
                 WHERE window.ROWID = ?;""");
         stmt.bind_int64(1, window_id);
         var resp = stmt.step();
-        if (resp == Sqlite.BUSY) stdout.printf("DB Busy\n");
-        if (resp == Sqlite.ERROR) stdout.printf("DB Errored\n");
-        if (resp == Sqlite.MISUSE) stdout.printf("DB misused\n");
-        if (resp == Sqlite.DONE) stdout.printf("No records\n");
         assert(resp == Sqlite.ROW);
 
         set_default_size(stmt.column_int(2), stmt.column_int(3));
