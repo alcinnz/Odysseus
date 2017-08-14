@@ -34,6 +34,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     private Gee.List<ulong> web_event_handlers;
     private Gee.List<Binding> bindings;
 
+    private bool closing = false;
+
     public BrowserWindow(Odysseus.Application ody_app, int64 window_id) {
         this.app = ody_app;
         this.window_id = window_id;
@@ -340,7 +342,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         // Ensure a tab is always open
         tabs.tab_removed.connect((tab) => {
-            if (tabs.n_tabs == 0) tabs.new_tab_requested();
+            if (tabs.n_tabs == 0 && !closing) tabs.new_tab_requested();
         });
         tabs.show.connect(() => {
             if (tabs.n_tabs == 0) tabs.new_tab_requested();
@@ -530,6 +532,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         // We assume it's quit Odysseus, but on browse apply close to database.
         if (closed_windows == null) closed_windows = new Gee.ArrayList<int64?>();
         closed_windows.add(window_id);
+
+        closing = true;
 
         return false;
     }
