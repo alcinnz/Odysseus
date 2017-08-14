@@ -29,17 +29,19 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     private Gtk.Stack reload_stop;
     private AddressBar addressbar;
 
+    private Gtk.MenuItem restore_windows;
+
     private Gee.List<ulong> web_event_handlers;
     private Gee.List<Binding> bindings;
 
-    public BrowserWindow(Odysseus.Application ody_app) {
+    public BrowserWindow(Odysseus.Application ody_app, int64 window_id) {
         this.app = ody_app;
+        this.window_id = window_id;
         set_application(this.app);
         this.title = "";
 
         init_layout();
         register_events();
-        set_default_size(1200, 800);
 
         // This makes sure that UI remains consistant with WebKit,
         // Even if the event handlers don't keep us up-to-date successfully.
@@ -48,10 +50,22 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             connect_webview((Odysseus.WebTab) tabs.current, false);
             return true;
         }, Priority.DEFAULT_IDLE);
+        restore_state();
+    }
+
+    public BrowserWindow.from_new_entry(Odysseus.Application ody_app) {
+        string errmsg;
+        unowned Sqlite.Database db = Database.get_database();
+        var err = db.exec("""INSERT INTO window
+                    (x, y, width, height, state, focused_index)
+                VALUES (-1, -1, 1200, 800, 'N', 0);""", null, out errmsg);
+        if (err != Sqlite.OK || db.last_insert_rowid() == 0)
+            error("Failed to INSERT new window into database: %s", errmsg);
+        this(ody_app, db.last_insert_rowid());
     }
     
     public BrowserWindow.with_urls(Odysseus.Application ody_app, string[] urls) {
-        this(ody_app);
+        this.from_new_entry(ody_app);
         foreach (var url in urls) new_tab(url);
     }
 
@@ -75,6 +89,10 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         addressbar.tooltip_text = _("Current web address");
 
         var appmenu = new Granite.Widgets.AppMenu(create_appmenu());
+        appmenu.toggled.connect(() => {
+            restore_windows.label = ngettext("Restore Closed Window", "Restore %i Closed Windows", closed_windows.size);
+            restore_windows.sensitive = closed_windows.size > 0;
+        });
 
         Gtk.HeaderBar header = new Gtk.HeaderBar();
         header.show_close_button = true;
@@ -114,6 +132,14 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         var accel = new Gtk.AccelGroup();
         var menu = new Gtk.Menu();
 
+        restore_windows = new Gtk.MenuItem.with_mnemonic(_("_Restore Closed Windows"));
+        restore_windows.activate.connect(() => {
+            foreach (var id in closed_windows) {
+                new BrowserWindow((Odysseus.Application) application, id);
+            }
+        });
+        menu.add(restore_windows);
+
         accel.connect(Gdk.Key.T, Gdk.ModifierType.CONTROL_MASK,
                         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
                         (group, acceleratable, key, modifier) => {
@@ -124,7 +150,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         // TRANSLATORS _ precedes the keyboard shortcut
         var new_window = new Gtk.MenuItem.with_mnemonic(_("_New Window"));
         new_window.activate.connect(() => {
-            var window = new BrowserWindow(Odysseus.Application.instance);
+            var window = new BrowserWindow.from_new_entry(Odysseus.Application.instance);
             window.show_all();
         });
         menu.add(new_window);
@@ -471,13 +497,13 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     }
 
     // Persistance code
-    public int window_id = 0;
-    public static Gee.ArrayList<int> closed_windows;
+    public int64 window_id = 0;
+    public static Gee.ArrayList<int64?>? closed_windows;
     protected override bool delete_event(Gdk.EventAny evt) {
         // Read window state...
         var state = get_window().get_state();
         string window_state;
-        int width = 0, height = 0;
+        int width = 1200, height = 800;
         if (Gdk.WindowState.MAXIMIZED in state) window_state = "M";
         else if (Gdk.WindowState.FULLSCREEN in state) window_state = "F";
         else {
@@ -491,16 +517,60 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         // then save it to disk
         var stmt = Database.parse("""UPDATE window
                 SET x = ?, y = ?, width = ?, height = ?, state = ?
-                WHERE window_id = ?;""");
-        stmt.bind_int(0, x);
-        stmt.bind_int(1, y);
-        stmt.bind_int(2, width);
-        stmt.bind_int(3, height);
-        stmt.bind_text(4, window_state);
-        stmt.bind_int(5, window_id);
+                WHERE ROWID = ?;""");
+        stmt.bind_int(1, x);
+        stmt.bind_int(2, y);
+        stmt.bind_int(3, width);
+        stmt.bind_int(4, height);
+        stmt.bind_text(5, window_state);
+        stmt.bind_int64(6, window_id);
         stmt.step();
 
+        // This array is used to differentiate quit Odysseus from close window
+        // We assume it's quit Odysseus, but on browse apply close to database.
+        if (closed_windows == null) closed_windows = new Gee.ArrayList<int64?>();
+        closed_windows.add(window_id);
+
         return false;
+    }
+
+    public static void on_browse() {
+        if (closed_windows == null) return;
+
+        var stmt = Database.parse("""DELETE FROM window WHERE ROWID = ?;""");
+        foreach (var id in closed_windows) {
+            stmt.bind_int64(0, id);
+            stmt.step();
+        }
+
+        closed_windows.clear();
+    }
+
+    public void restore_state() {
+        var stmt = Database.parse("""SELECT x, y, width, height, state
+                FROM window
+                WHERE window.ROWID = ?;""");
+        stmt.bind_int64(1, window_id);
+        var resp = stmt.step();
+        if (resp == Sqlite.BUSY) stdout.printf("DB Busy\n");
+        if (resp == Sqlite.ERROR) stdout.printf("DB Errored\n");
+        if (resp == Sqlite.MISUSE) stdout.printf("DB misused\n");
+        if (resp == Sqlite.DONE) stdout.printf("No records\n");
+        assert(resp == Sqlite.ROW);
+
+        set_default_size(stmt.column_int(2), stmt.column_int(3));
+        switch (stmt.column_text(4)) {
+        case "M":
+            maximize();
+            break;
+        case "F":
+            fullscreen();
+            break;
+        default:
+            if (stmt.column_int(0) == -1 || stmt.column_int(1) == -1) break;
+            move(stmt.column_int(0), stmt.column_int(1));
+            break;
+        }
     }
 
     public override void grab_focus() {

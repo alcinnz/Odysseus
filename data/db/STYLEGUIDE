@@ -1,0 +1,12 @@
+1. All column names should be lower case with words seperated by underscores.
+2. A line of text should never exceed 80 characters (this is good typography not
+    just a limitation of old technology).
+3. If a SQL clause is manually wrapped to be within 80 characters, the lines
+    comprising that clause should be indented by 4 spaces.
+4. The body of a template tag should be indented a further 4 spaces.
+
+And because we're using SQLite, who have promised not to change their SQL syntax
+out from under us:
+1. Don't bother specifying column types - SQLite largely ignores them.
+2. Don't bother specifying a primary key - SQLite provides one called "ROWID"
+    for it's indices to reference unless you tell it not to.

@@ -22,12 +22,10 @@
 --      unbroken by Prosody templating tags/variables.
 {% if v < 1 %}
   CREATE TABLE window(
-    window_id INTEGER PRIMARY KEY AUTOINCREMENT,
     x, y, width, height, state,
     focused_index
   );
   CREATE TABLE tab(
-    tab_id INTEGER PRIMARY KEY AUTOINCREMENT,
     window_id REFERENCES window ON UPDATE CASCADE,
     order_, pinned,
     history /* JSON */

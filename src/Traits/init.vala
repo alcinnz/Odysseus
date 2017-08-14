@@ -17,8 +17,6 @@
 
 namespace Odysseus.Traits {
     public void setup_context(WebKit.WebContext ctx) {
-        Database.setup_database();
-
         var sec = ctx.get_security_manager();
 
         // NOTE: In early versions I misspelled Odysseus's name,

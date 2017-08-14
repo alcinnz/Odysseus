@@ -28,7 +28,6 @@ namespace Odysseus.Database {
             yield writes(Templating.ByteUtils.to_string(text));
         }
         public async void writes(string text) {
-            stdout.printf("%s\n", text);
             string err_msg;
             var err = get_database().exec(text, null, out err_msg);
             if (err != Sqlite.OK)
@@ -40,7 +39,7 @@ namespace Odysseus.Database {
         if (main_db != null) return; // Doesn't need initialization.
 
         var db_path = Path.build_path(Path.DIR_SEPARATOR_S,
-                Environment.get_user_config_dir(), "odysseus", "chrome.sqlite");
+                Environment.get_user_config_dir(), "odysseus", "ui.sqlite");
         var err = Sqlite.Database.open(db_path, out main_db);
         if (err != Sqlite.OK)
             error("Failed to load UI state! " + main_db.errmsg());
@@ -49,6 +48,7 @@ namespace Odysseus.Database {
         var errmsg = "";
         err = main_db.exec("PRAGMA user_version;", (n, values, columns) => {
             var version = int.parse(values[0]);
+            stdout.printf("%i\n", version);
             var raw_data = Templating.ByteUtils.create_map<Templating.Data.Data>();
             raw_data[Templating.ByteUtils.from_string("v")] =
                     new Templating.Data.Literal(version);
@@ -61,7 +61,9 @@ namespace Odysseus.Database {
                 error("Failed to parse init script's templating!");
 
             var writer = new ProsodyPipeSQLite();
-            template.exec(data, writer);
+            var loop = new MainLoop();
+            template.exec.begin(data, writer, (obj, res) => loop.quit());
+            loop.run();
 
             return 0;
         }, out errmsg);

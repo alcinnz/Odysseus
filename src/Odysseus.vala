@@ -73,7 +73,7 @@ public class Odysseus.Application : Granite.Application {
                 var file = File.new_for_commandline_arg_and_cwd(".oddysseus",
                                     Environment.get_home_dir());
                 if (!file.query_exists()) {
-                    new BrowserWindow(this).show_all();
+                    new BrowserWindow.from_new_entry(this).show_all();
                 }
 
                 var restoreFile = new DataInputStream(file.read());
@@ -91,7 +91,7 @@ public class Odysseus.Application : Granite.Application {
         // Create a next window if requested and it's not the app launch
         if (create_new_window && !is_app_launch) {
             create_new_window = false;
-            var window = new BrowserWindow(this);
+            var window = new BrowserWindow.from_new_entry(this);
             window.show_all();
         }
         
@@ -163,6 +163,7 @@ public class Odysseus.Application : Granite.Application {
 }
 
 public static int main(string[] args) {
+    Odysseus.Database.setup_database();
     Odysseus.Traits.setup_autosuggest();
     return Odysseus.Application.instance.run(args);
 }
