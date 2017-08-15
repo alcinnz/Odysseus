@@ -239,26 +239,30 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     }
 
     private static Sqlite.Statement? Qsave_pinned;
-    private static Sqlite.Statement? Qsave_restore_data;
     private void setup_persist() {
         if (Qsave_pinned == null)
             Qsave_pinned = Database.parse(
                     "UPDATE tab SET pinned = ? WHERE ROWID = ?;");
-        if (Qsave_restore_data == null)
-            Qsave_restore_data = Database.parse(
-                    "UPDATE tab SET history = ? WHERE ROWID = ?;");
         notify["pinned"].connect((pspec) => {
             Qsave_pinned.reset();
             Qsave_pinned.bind_int(1, pinned ? 1 : 0);
             Qsave_pinned.bind_int64(2, tab_id);
             Qsave_pinned.step();
         });
-        notify["restore_data"].connect((pspec) => {
-            Qsave_restore_data.reset();
-            Qsave_restore_data.bind_text(1, restore_data);
-            Qsave_restore_data.bind_int64(2, tab_id);
-            Qsave_restore_data.step();
-        });
+    }
+
+    private static Sqlite.Statement? Qsave_restore_data;
+    // This method is here because the notify signal
+    //      isn't triggered for restore_data.
+    public void save_restore_data() {
+        if (Qsave_restore_data == null)
+            Qsave_restore_data = Database.parse(
+                    "UPDATE tab SET history = ? WHERE ROWID = ?;");
+
+        Qsave_restore_data.reset();
+        Qsave_restore_data.bind_text(1, restore_data);
+        Qsave_restore_data.bind_int64(2, tab_id);
+        Qsave_restore_data.step();
     }
 
     private static Sqlite.Statement? Qload_state;

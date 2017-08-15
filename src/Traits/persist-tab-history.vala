@@ -55,6 +55,7 @@ namespace Odysseus.Traits {
             var generator = new Json.Generator();
             generator.set_root(json.get_root());
             tab.restore_data = generator.to_data(null);
+            tab.save_restore_data();
         });
     }
 }
