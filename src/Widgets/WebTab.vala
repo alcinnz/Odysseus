@@ -51,6 +51,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     public InfoContainer info; // for prompts.
 
     public int64 tab_id;
+    public int order = -1;
 
     public string url {
         get {return web.uri;}

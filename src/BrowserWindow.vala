@@ -347,6 +347,58 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         tabs.show.connect(() => {
             if (tabs.n_tabs == 0) tabs.new_tab_requested();
         });
+
+        register_persist_events();
+    }
+
+    private void register_persist_events() {
+        var Qupdate_window = Database.parse(
+                "UPDATE tab SET window_id = ? WHERE ROWID = ?;");
+        tabs.tab_added.connect((tab) => {
+            var wtab = (WebTab) tab;
+            Qupdate_window.reset();
+            Qupdate_window.bind_int64(1, window_id);
+            Qupdate_window.bind_int64(2, wtab.tab_id);
+            Qupdate_window.step();
+
+            persist_tab_order();
+        });
+        var Qdelete_tab = Database.parse("DELETE FROM tab WHERE ROWID = ?;");
+        tabs.tab_removed.connect((tab) => {
+            var wtab = (WebTab) tab;
+            Qdelete_tab.reset();
+            Qdelete_tab.bind_int64(1, wtab.tab_id);
+            Qdelete_tab.step();
+
+            persist_tab_order();
+        });
+        tabs.tab_reordered.connect((tab, new_pos) => {
+            persist_tab_order();
+        });
+        var Qupdate_focused_tab = Database.parse(
+                "UPDATE window SET focused_index = ? WHERE ROWID = ?;");
+        tabs.tab_switched.connect((old_tab, new_tab) => {
+            Qupdate_focused_tab.reset();
+            Qupdate_focused_tab.bind_int(1, tabs.get_tab_position(new_tab));
+            Qupdate_focused_tab.bind_int64(2, window_id);
+            Qupdate_focused_tab.step();
+        });
+    }
+
+    private void persist_tab_order() {
+        var Qsave_index = Database.parse(
+                "UPDATE tab SET order_ = ? WHERE ROWID = ?;");
+
+        int i = 0;
+        for (var tab = tabs.get_tab_by_index(i) as WebTab;
+                tab != null;
+                tab = tabs.get_tab_by_index(++i) as WebTab) {
+            if (tab.order == i) continue;
+            Qsave_index.reset();
+            Qsave_index.bind_int(1, i);
+            Qsave_index.bind_int64(2, tab.tab_id);
+            Qsave_index.step();
+        }
     }
 
     private void connect_webview(WebTab tab, bool full=true) {
