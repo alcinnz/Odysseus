@@ -38,6 +38,7 @@ namespace Odysseus.Traits {
         setup_autodownload(tab.web);
         setup_alerts(tab);
         setup_permits(tab);
+        setup_persist_tab_history(tab);
     }
 
     public void setup_autosuggest() {
