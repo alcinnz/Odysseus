@@ -162,7 +162,6 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
         Traits.setup_webview(this);
         configure();
-        //web.load_uri(uri);
 
         restore_state(); setup_persist();
     }
@@ -181,7 +180,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         Qinsert_new.bind_int64(1, window.window_id);
         Qinsert_new.bind_text(2, history_json);
 
-        Qinsert_new.step();
+        var resp = Qinsert_new.step();
         this(parent, related, Database.get_database().last_insert_rowid());
     }
 
@@ -250,7 +249,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
                     "UPDATE tab SET history = ? WHERE ROWID = ?;");
         notify["pinned"].connect((pspec) => {
             Qsave_pinned.reset();
-            Qsave_pinned.bind_int(1, pinned ? 0 : 1);
+            Qsave_pinned.bind_int(1, pinned ? 1 : 0);
             Qsave_pinned.bind_int64(2, tab_id);
             Qsave_pinned.step();
         });

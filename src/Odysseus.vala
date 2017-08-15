@@ -66,7 +66,7 @@ public class Odysseus.Application : Granite.Application {
             return Posix.EXIT_SUCCESS;
         }
 
-        /*if (get_last_window() == null) {
+        if (get_last_window() == null) {
             string errmsg;
             var err = Database.get_database().exec("SELECT ROWID FROM window;",
                     build_window, out errmsg);
@@ -75,7 +75,11 @@ public class Odysseus.Application : Granite.Application {
                 Database.get_database().exec("DELETE FROM window;", null);
                 error("Failed to restore previous ");
             }
-        }*/
+
+            var file = File.new_for_commandline_arg_and_cwd(".odysseus",
+                    Environment.get_home_dir());
+            if (file.query_exists()) file.@delete();
+        }
         // Second attempt using older persistance file format.
         if (get_last_window() == null) {
             /* Restore tabs */
@@ -124,8 +128,9 @@ public class Odysseus.Application : Granite.Application {
         return Posix.EXIT_SUCCESS;
     }
 
-    private void build_window(int n_columns, string[] values, string[] column_names) {
+    private int build_window(int n_columns, string[] values, string[] column_names) {
         (new BrowserWindow(this, int64.parse(values[0]))).show_all();
+        return 0;
     }
 
     public override void open(File[] files, string hint) {
@@ -158,7 +163,7 @@ public class Odysseus.Application : Granite.Application {
     
     // Called by windows when a tab navigates to a new page
     public async void persist() {
-        try {
+        /*try {
             var file = File.new_for_commandline_arg_and_cwd(".oddysseus",
                                 Environment.get_home_dir());
             var persistFile = yield file.replace_async(null, false,
@@ -172,7 +177,7 @@ public class Odysseus.Application : Granite.Application {
             }
         } catch (Error e) {
             warning("Failed to persist state: %s", e.message);
-        }
+        }*/
     }
 }
 

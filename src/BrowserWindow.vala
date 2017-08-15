@@ -365,6 +365,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         var Qdelete_tab = Database.parse("DELETE FROM tab WHERE ROWID = ?;");
         tabs.tab_removed.connect((tab) => {
+            if (closing) return; // We want to persist them then. 
+
             var wtab = (WebTab) tab;
             Qdelete_tab.reset();
             Qdelete_tab.bind_int64(1, wtab.tab_id);
@@ -628,7 +630,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
                 "SELECT ROWID FROM tab WHERE window_id = ? ORDER BY order_ ASC;");
         Qtabs.bind_int64(1, window_id);
         while (Qtabs.step() == Sqlite.ROW) {
-            tabs.insert_tab(new WebTab(tabs, null, stmt.column_int64(0)), -1);
+            tabs.insert_tab(new WebTab(tabs, null, Qtabs.column_int64(0)), -1);
         }
 
         tabs.current = tabs.get_tab_by_index(stmt.column_int(5));
