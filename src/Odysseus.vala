@@ -66,8 +66,18 @@ public class Odysseus.Application : Granite.Application {
             return Posix.EXIT_SUCCESS;
         }
 
-        bool is_app_launch = (get_last_window() == null);
-        if (is_app_launch) {
+        /*if (get_last_window() == null) {
+            string errmsg;
+            var err = Database.get_database().exec("SELECT ROWID FROM window;",
+                    build_window, out errmsg);
+            if (err != Sqlite.OK) {
+                // Remove faulty persistance, then crash. 
+                Database.get_database().exec("DELETE FROM window;", null);
+                error("Failed to restore previous ");
+            }
+        }*/
+        // Second attempt using older persistance file format.
+        if (get_last_window() == null) {
             /* Restore tabs */
             try {
                 var file = File.new_for_commandline_arg_and_cwd(".oddysseus",
@@ -89,7 +99,7 @@ public class Odysseus.Application : Granite.Application {
         }
         
         // Create a next window if requested and it's not the app launch
-        if (create_new_window && !is_app_launch) {
+        if (create_new_window || get_last_window() == null) {
             create_new_window = false;
             var window = new BrowserWindow.from_new_entry(this);
             window.show_all();
@@ -112,6 +122,10 @@ public class Odysseus.Application : Granite.Application {
         }
 
         return Posix.EXIT_SUCCESS;
+    }
+
+    private void build_window(int n_columns, string[] values, string[] column_names) {
+        (new BrowserWindow(this, int64.parse(values[0]))).show_all();
     }
 
     public override void open(File[] files, string hint) {

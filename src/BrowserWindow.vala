@@ -603,7 +603,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     }
 
     public void restore_state() {
-        var stmt = Database.parse("""SELECT x, y, width, height, state
+        var stmt = Database.parse("""SELECT x, y, width, height, state, focused_index
                 FROM window
                 WHERE window.ROWID = ?;""");
         stmt.bind_int64(1, window_id);
@@ -623,6 +623,15 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             move(stmt.column_int(0), stmt.column_int(1));
             break;
         }
+
+        var Qtabs = Database.parse(
+                "SELECT ROWID FROM tab WHERE window_id = ? ORDER BY order_ ASC;");
+        Qtabs.bind_int64(1, window_id);
+        while (Qtabs.step() == Sqlite.ROW) {
+            tabs.insert_tab(new WebTab(tabs, null, stmt.column_int64(0)), -1);
+        }
+
+        tabs.current = tabs.get_tab_by_index(stmt.column_int(5));
     }
 
     public override void grab_focus() {

@@ -266,7 +266,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     private void restore_state() {
         if (Qload_state == null)
             Qload_state = Database.parse(
-                    "SELECT pinned, history FROM tab WHERE ROWID = ?");
+                    "SELECT pinned, history, order_ FROM tab WHERE ROWID = ?");
         Qload_state.reset();
         Qload_state.bind_int64(1, tab_id);
         var resp = Qload_state.step();
@@ -274,6 +274,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
         pinned = Qload_state.column_int(0) != 0;
         restore_data = Qload_state.column_text(1);
+        order = Qload_state.column_int(2);
 
         var parser = new Json.Parser();
         try {
