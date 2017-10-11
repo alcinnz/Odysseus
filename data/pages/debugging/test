@@ -35,10 +35,10 @@
   </style>
   <script>
     /* Ensure all tests have run. */
-    var parsedEnd = false;
+    var parsedEnd = false
     function assertFinished() {
-      if (!parsedEnd) alert("Failed to run all tests & parse last chunk");
-      if (emeSupported) document.querySelector("link[rel*='icon']").href = 'odysseus:debugging/failed.ico';
+      if (!parsedEnd) alert("Failed to run all tests & parse last chunk")
+      if (emeSupported) document.querySelector("link[rel*='icon']").href = 'odysseus:debugging/failed.ico'
     }
   </script>
 </head>
@@ -864,12 +864,10 @@ TRUE|FALSE
   {% test-report %}
   <script src="odysseus:ext/highlight.pack.js"></script>
   <script>
-    parsedEnd = true; // assert successful load
+    parsedEnd = true // assert successful load
 
     // Add syntax highlighting
-    for (let pre of document.querySelectorAll('pre')) {
-      hljs.highlightBlock(pre);
-    }
+    for (let pre of document.querySelectorAll('pre')) hljs.highlightBlock(pre)
   </script>
 </body>
 </html>
