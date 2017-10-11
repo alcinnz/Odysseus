@@ -38,11 +38,20 @@
     var parsedEnd = false;
     function assertFinished() {
       if (!parsedEnd) alert("Failed to run all tests & parse last chunk");
+      if (emeSupported) document.querySelector("link[rel*='icon']").href = 'odysseus:debugging/failed.ico';
     }
   </script>
 </head>
 <body onload="assertFinished()">
   <h1>Test Results</h1>
+
+  <p>Will I be complicit in restricting my users?
+    <script>
+      var emeSupported = "MediaKeys" in window || "WebKitMediaKeys" in window
+            || "requestMediaKeySystemAccess" in navigator
+      document.write(emeSupported);
+    </script>
+  </p>
 
   <h2>Canaries</h2>
   <p>If these fail it means the test runner isn't working right.</p>
