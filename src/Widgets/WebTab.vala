@@ -71,9 +71,9 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         this.tab_id = tab_id;
         if (global_context == null) init_global_context();
 
-        if (related != null) {
+        /*if (related != null) {
             this.web = (WebKit.WebView) related.new_with_related_view();
-        } else {
+        } else*/ {
             var user_content = new WebKit.UserContentManager();
             this.web = (WebKit.WebView) Object.@new(typeof(WebKit.WebView),
                     "web-context", global_context,

@@ -29,7 +29,7 @@ namespace Odysseus.Traits {
             if ("://" in query) has_schema = true;
             else if (!(":" in query)) has_schema = false;
             else {
-                var host = query.str("/");
+                var host = query.split("/", 0)[0];
                 if (host == null) host = query;
 
                 var user = host.str("@");
