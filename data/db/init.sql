@@ -26,9 +26,16 @@
     focused_index
   );
   CREATE TABLE tab(
-    window_id REFERENCES window ON UPDATE CASCADE,
+    window_id REFERENCES window ON UPDATE CASCADE ON DELETE CASCADE,
     order_, pinned,
     history /* JSON */
   );
 {% endif %}
-PRAGMA user_version = 1;
+
+{% if v < 3 %}
+  -- I am struggling to actually delete Window instances from the database,
+  --    (which is where schema v2 dissappeared to), so allow a soft delete instead.
+  ALTER TABLE window ADD COLUMN delete_batch DEFAULT 0;
+{% endif %}
+
+PRAGMA user_version = 3;

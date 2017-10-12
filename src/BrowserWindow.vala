@@ -90,18 +90,13 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         addressbar = new Odysseus.AddressBar();
         addressbar.tooltip_text = _("Current web address");
 
-        var appmenu = new Granite.Widgets.AppMenu(create_appmenu());
-        appmenu.toggled.connect(() => {
-            restore_windows.label = ngettext("Restore Closed Window", "Restore %i Closed Windows", closed_windows.size);
-            restore_windows.sensitive = closed_windows.size > 0;
-        });
-
         Gtk.HeaderBar header = new Gtk.HeaderBar();
         header.show_close_button = true;
         header.pack_start(back);
         header.pack_start(forward);
         header.pack_start(reload_stop);
         header.set_custom_title(addressbar);
+        var appmenu = new Granite.Widgets.AppMenu(create_appmenu());
         header.pack_end(appmenu);
         header.set_has_subtitle(false);
         set_titlebar(header);
@@ -133,14 +128,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     private Gtk.Menu create_appmenu() {
         var accel = new Gtk.AccelGroup();
         var menu = new Gtk.Menu();
-
-        restore_windows = new Gtk.MenuItem.with_mnemonic(_("_Restore Closed Windows"));
-        restore_windows.activate.connect(() => {
-            foreach (var id in closed_windows) {
-                new BrowserWindow((Odysseus.Application) application, id);
-            }
-        });
-        menu.add(restore_windows);
 
         accel.connect(Gdk.Key.T, Gdk.ModifierType.CONTROL_MASK,
                         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
@@ -554,7 +541,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
     // Persistance code
     public int64 window_id = 0;
-    public static Gee.ArrayList<int64?>? closed_windows;
+    public static int delete_batch = 0;
+    public static bool in_batch = true;
     protected override bool delete_event(Gdk.EventAny evt) {
         // Read window state...
         var state = get_window().get_state();
@@ -572,36 +560,28 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         // then save it to disk
         var stmt = Database.parse("""UPDATE window
-                SET x = ?, y = ?, width = ?, height = ?, state = ?
+                SET x=?, y=?, width=?, height=?, state=?, delete_batch=?
                 WHERE ROWID = ?;""");
         stmt.bind_int(1, x);
         stmt.bind_int(2, y);
         stmt.bind_int(3, width);
         stmt.bind_int(4, height);
         stmt.bind_text(5, window_state);
-        stmt.bind_int64(6, window_id);
+        stmt.bind_int(6, delete_batch);
+        stmt.bind_int64(7, window_id);
         stmt.step();
 
-        // This array is used to differentiate quit Odysseus from close window
-        // We assume it's quit Odysseus, but on browse apply close to database.
-        if (closed_windows == null) closed_windows = new Gee.ArrayList<int64?>();
-        closed_windows.add(window_id);
-
         closing = true;
+        in_batch = true;
 
         return false;
     }
 
     public static void on_browse() {
-        if (closed_windows == null) return;
-
-        var stmt = Database.parse("""DELETE FROM window WHERE ROWID = ?;""");
-        foreach (var id in closed_windows) {
-            stmt.bind_int64(0, id);
-            stmt.step();
+        if (in_batch) {
+            in_batch = false;
+            delete_batch++;
         }
-
-        closed_windows.clear();
     }
 
     public void restore_state() {
