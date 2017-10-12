@@ -32,7 +32,7 @@ public class Odysseus.Application : Granite.Application {
         about_authors = { "Adrian Cochrane <alcinnz@eml.cc>", null };
         about_license_type = Gtk.License.GPL_3_0;
     }
-    
+
     private static Odysseus.Application _instance = null;
     public static Odysseus.Application instance {
         get {
@@ -41,25 +41,25 @@ public class Odysseus.Application : Granite.Application {
             return _instance;
         }
     }
-    
+
     public override int command_line(ApplicationCommandLine cmdline) {
         var context = new OptionContext("File");
         context.add_main_entries(entries, null);
         context.add_group(Gtk.get_option_group(true));
-        
+
         string[] args = cmdline.get_arguments();
         int unclaimed_args;
-        
+
         try {
             unowned string[] tmp = args;
             context.parse(ref tmp);
             unclaimed_args = tmp.length - 1;
         } catch(Error e) {
             print(e.message + "\n");
-            
+
             return Posix.EXIT_FAILURE;
         }
-        
+
         if (print_version) {
             stdout.printf("Odysseus Web Browser version 0.1\n");
             stdout.printf("Copyright 2016 Adrian Cochrane\n");
@@ -67,6 +67,11 @@ public class Odysseus.Application : Granite.Application {
         }
 
         if (get_last_window() == null) {
+            // Doing this any earlier causes additional executions to crash
+            // before they can hand links to the single unique process,
+            // as they can't obtain a database lock.
+            Odysseus.Database.setup_database();
+
             var stmt = Database.parse("SELECT MAX(delete_batch) FROM window;");
             var resp = stmt.step();
             assert(resp == Sqlite.ROW);
@@ -78,7 +83,7 @@ public class Odysseus.Application : Granite.Application {
                         BrowserWindow.delete_batch),
                     build_window, out errmsg);
             if (err != Sqlite.OK) {
-                // Remove faulty persistance, then crash. 
+                // Remove faulty persistance, then crash.
                 Database.get_database().exec("DELETE FROM window;", null);
                 error("Failed to restore previous ");
             }
@@ -108,14 +113,14 @@ public class Odysseus.Application : Granite.Application {
                 warning("Failed to restore tabs: %s", e.message);
             }
         }
-        
+
         // Create a next window if requested and it's not the app launch
         if (create_new_window || get_last_window() == null) {
             create_new_window = false;
             var window = new BrowserWindow.from_new_entry(this);
             window.show_all();
         }
-        
+
         // Create new tab if requested
         // TODO Check if we're on a new tab
         if (create_new_tab) {
@@ -123,7 +128,7 @@ public class Odysseus.Application : Granite.Application {
             var window = get_last_window();
             window.new_tab();
         }
-        
+
         // Open all URLs given as arguments
         if (unclaimed_args > 0) {
             var window = get_last_window();
@@ -167,7 +172,7 @@ public class Odysseus.Application : Granite.Application {
                 "Print version info and exit", null},
         { null }
     };
-    
+
     // Called by windows when a tab navigates to a new page
     public async void persist() {
         /*try {
@@ -189,7 +194,6 @@ public class Odysseus.Application : Granite.Application {
 }
 
 public static int main(string[] args) {
-    Odysseus.Database.setup_database();
     Odysseus.Traits.setup_autosuggest();
     return Odysseus.Application.instance.run(args);
 }
