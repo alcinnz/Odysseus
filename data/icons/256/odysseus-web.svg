@@ -16,7 +16,7 @@
    width="256"
    height="256"
    viewBox="0 0 256 256"
-   sodipodi:docname="odysseus-eye.svg">
+   sodipodi:docname="odysseus-web.svg">
   <metadata
      id="metadata8">
     <rdf:RDF>
@@ -25,12 +25,28 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
      id="defs6">
+    <linearGradient
+       id="linearGradient4203-3"
+       inkscape:collect="always">
+      <stop
+         id="stop4221"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0.26530612"
+         offset="0.46783629"
+         id="stop4225" />
+      <stop
+         id="stop4223"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:0.81122446" />
+    </linearGradient>
     <inkscape:path-effect
        effect="interpolate"
        id="path-effect4154"
@@ -84,6 +100,16 @@
          style="stop-color:#686868;stop-opacity:0"
          offset="1" />
     </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4203-3"
+       id="linearGradient4209"
+       x1="127.62639"
+       y1="4.8120241"
+       x2="127.41122"
+       y2="251.66917"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.99429948,0,0,0.99429952,2.0143288,1.4340285)" />
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -98,9 +124,9 @@
      inkscape:window-height="705"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="2.078125"
-     inkscape:cx="128.4812"
-     inkscape:cy="128"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="125.35338"
+     inkscape:cy="189.67453"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -110,7 +136,7 @@
      style="fill:url(#radialGradient3163);fill-opacity:1;stroke:none"
      id="path3818-0-5-0"
      d="m 209.90647,233.89474 a 86.237296,26.942625 0 0 1 -172.474591,0 86.237296,26.942625 0 1 1 172.474591,0 z" />
-  <circle
+  <ellipse
      style="fill:#33cc97;fill-opacity:1;stroke:#25956e;stroke-width:1.914;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="path4192"
      cx="127.5"
@@ -160,4 +186,16 @@
      cy="128.97194"
      rx="13.30427"
      ry="14.642924" />
+  <circle
+     style="fill:none;fill-opacity:1;stroke:url(#linearGradient4209);stroke-width:3.97719789;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.73979594"
+     id="path4192-6"
+     cx="127.84929"
+     cy="128.22589"
+     r="121.34708" />
+  <circle
+     style="fill:none;fill-opacity:1;stroke:#25956e;stroke-width:1.91400003;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="path4192-62"
+     cx="127.27921"
+     cy="127.66011"
+     r="122.04279" />
 </svg>
