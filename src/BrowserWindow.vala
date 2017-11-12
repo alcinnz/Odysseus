@@ -34,7 +34,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     private Gee.List<ulong> web_event_handlers;
     private Gee.List<Binding> bindings;
 
-    private bool closing = false;
+    public bool closing = false;
 
     public BrowserWindow(Odysseus.Application ody_app, int64 window_id) {
         this.app = ody_app;

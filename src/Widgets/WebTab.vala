@@ -46,7 +46,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         Traits.setup_context(global_context);
     }
 
-    public WebKit.WebView web; // To allow it to be wrapped in layout views. 
+    public WebKit.WebView web; // To allow it to be wrapped in layout views.
     private Gtk.Revealer find;
     public InfoContainer info; // for prompts.
 
@@ -120,7 +120,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         status_bar = new Granite.Widgets.OverlayBar(container);
         status_bar.visible = false;
         status_bar.no_show_all = true;
-        
+
         web.bind_property("title", this, "label");
         web.notify["favicon"].connect((sender, property) => {
             restore_favicon();
@@ -188,7 +188,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         var fav = BrowserWindow.surface_to_pixbuf(web.get_favicon());
         icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
     }
-    
+
     public void find_in_page() {
         if (!find.has_focus || !find.child_revealed) {
             find.set_reveal_child(true);
@@ -196,7 +196,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         } else {
             find.set_reveal_child(false);
             web.grab_focus();
-        }   
+        }
     }
 
     private void configure() {
@@ -228,7 +228,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         settings.javascript_can_open_windows_automatically = false;
         settings.load_icons_ignoring_image_load_setting = true;
         settings.media_playback_allows_inline = true;
-        settings.media_playback_requires_user_gesture = true;
+        settings.media_playback_requires_user_gesture = false;
         settings.print_backgrounds = true;
         // Use Safari's user agent so as to avoid standing out to trackers
         //      and having sites warn that we're using a unpopular browser.
@@ -244,6 +244,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
             Qsave_pinned = Database.parse(
                     "UPDATE tab SET pinned = ? WHERE ROWID = ?;");
         notify["pinned"].connect((pspec) => {
+            var window = get_toplevel() as BrowserWindow;
+            if (window == null || window.closing) return;
             Qsave_pinned.reset();
             Qsave_pinned.bind_int(1, pinned ? 1 : 0);
             Qsave_pinned.bind_int64(2, tab_id);
