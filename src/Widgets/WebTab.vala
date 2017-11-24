@@ -163,7 +163,16 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         Traits.setup_webview(this);
         configure();
 
-        restore_state(); setup_persist();
+        ulong on_add_registration = 0;
+        on_add_registration = parent.tab_added.connect((added) => {
+            if (added != this) return;
+            Idle.add(() => {
+                restore_state(); setup_persist();
+                return false;
+            });
+
+            parent.disconnect(on_add_registration);
+        });
     }
 
     private static Sqlite.Statement? Qinsert_new;
