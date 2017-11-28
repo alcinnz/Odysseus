@@ -17,20 +17,20 @@
 
 using Odysseus.Services;
 namespace Odysseus.Traits {
-    public async void view_source(WebKit.WebView source, WebKit.WebView dest) {
+    public async string view_source(WebKit.WebView source) {
         var data = new Source();
         data.title = source.title;
         try {
             var code = yield source.get_main_resource().get_data(null);
             data.code = new Bytes(code);
         } catch (Error e) {
-            return; // Don't go through
+            return "odysseus:errors/no-source"; // Don't go through
         }
 
         var url = "source:" + source.get_main_resource().uri;
         if (sources == null) sources = new Gee.HashMap<string, Source>();
         sources[url] = data;
-        dest.load_uri(url);
+        return url;
     }
 
     private class Source {

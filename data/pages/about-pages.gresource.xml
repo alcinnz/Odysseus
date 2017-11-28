@@ -133,5 +133,6 @@
         <file>errors/network.icon</file>
         <file>errors/protocol</file>
         <file>errors/protocol.icon</file>
+        <file>errors/no-source</file>
     </gresource>
 </gresources>

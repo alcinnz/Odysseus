@@ -125,6 +125,11 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         container.pack_end(downloads, false);
     }
     
+    private async void viewsource_activated() {
+        var tab = new WebTab.with_new_entry(tabs, web, yield Traits.view_source(web));
+        tabs.insert_tab(tab, -1);
+    }
+
     private Gtk.Menu create_appmenu() {
         var accel = new Gtk.AccelGroup();
         var menu = new Gtk.Menu();
@@ -207,9 +212,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         // TRANSLATORS _ precedes the keyboard shortcut
         var view_source = new Gtk.MenuItem.with_mnemonic(_("_View Source"));
         view_source.activate.connect(() => {
-            var tab = new WebTab.with_new_entry(tabs, web);
-            tabs.insert_tab(tab, -1);
-            Traits.view_source.begin(web, tab.web);
+            viewsource_activated.begin();
         });
         menu.add(view_source);
         accel.connect(Gdk.Key.U, Gdk.ModifierType.CONTROL_MASK,
