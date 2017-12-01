@@ -193,6 +193,25 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         this(parent, related, Database.get_database().last_insert_rowid());
     }
 
+    public WebTab.rebuild_existing(Granite.Widgets.DynamicNotebook parent,
+                    string title, Icon? icon, string history_json,
+                    WebKit.WebView? related = null) {
+        if (Qinsert_new == null)
+            Qinsert_new = Database.parse("""INSERT
+                    INTO tab(window_id, order_, pinned, history)
+                    VALUES (?, -1, 0, ?);""");
+        Qinsert_new.reset();
+        var window = parent.get_toplevel() as BrowserWindow;
+        Qinsert_new.bind_int64(1, window.window_id);
+        Qinsert_new.bind_text(2, history_json);
+
+        var resp = Qinsert_new.step();
+        this(parent, related, Database.get_database().last_insert_rowid());
+
+        this.label = title;
+        if (icon != null) this.icon = icon;
+    }
+
     public void restore_favicon() {
         var fav = BrowserWindow.surface_to_pixbuf(web.get_favicon());
         icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);

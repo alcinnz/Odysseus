@@ -113,10 +113,10 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             return false;
         });
         tabs.allow_drag = true;
-        //tabs.allow_duplication = true; // TODO implement
+        tabs.allow_duplication = true;
         tabs.allow_new_window = true;
         tabs.allow_pinning = true;
-        //tabs.allow_restoring = true; // TODO implement
+        tabs.allow_restoring = true;
         tabs.group_name = "odysseus-web-browser";
         container.pack_start(tabs);
         
@@ -336,6 +336,14 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         tabs.show.connect(() => {
             if (tabs.n_tabs == 0) tabs.new_tab_requested();
+        });
+
+        tabs.tab_duplicated.connect((tab) => {
+            tabs.insert_tab(new WebTab.rebuild_existing(tabs, tab.label,
+                    tab.icon, tab.restore_data), -1);
+        });
+        tabs.tab_restored.connect((label, data, icon) => {
+            tabs.insert_tab(new WebTab.rebuild_existing(tabs, label, icon, data), -1);
         });
 
         register_persist_events();
