@@ -19,7 +19,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     private weak Odysseus.Application app;
 
     private WebKit.WebView web;
-    private Granite.Widgets.DynamicNotebook tabs;
+    public Granite.Widgets.DynamicNotebook tabs;
     private DownloadsBar downloads;
 
     private ButtonWithMenu back;
@@ -65,6 +65,22 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             error("Failed to INSERT new window into database: %s", errmsg);
         this(ody_app, db.last_insert_rowid());
     }
+
+    private Sqlite.Statement? Qinsert_new_geom = null;
+    public BrowserWindow.with_geometry(Odysseus.Application ody_app,
+                int x, int y, int width, int height) {
+        if (Qinsert_new_geom == null)
+            Qinsert_new_geom = Database.parse("""INSERT INTO window
+                    (x, y, width, height, state, focused_index)
+                    VALUES (?, ?, ?, ?, 'N', 0);""");
+        Qinsert_new_geom.reset();
+        Qinsert_new_geom.bind_int(1, x); Qinsert_new_geom.bind_int(2, y);
+        Qinsert_new_geom.bind_int(3, width); Qinsert_new_geom.bind_int(4, height);
+
+        var resp = Qinsert_new_geom.step();
+        this(ody_app, Database.get_database().last_insert_rowid());
+    }
+        
     
     public BrowserWindow.with_urls(Odysseus.Application ody_app, string[] urls) {
         this.from_new_entry(ody_app);
@@ -330,14 +346,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             tabs.insert_tab(tab, -1);
             tabs.current = tab;
         });
-        // Ensure a tab is always open
-        tabs.tab_removed.connect((tab) => {
-            if (tabs.n_tabs == 0 && !closing) tabs.new_tab_requested();
-        });
-        tabs.show.connect(() => {
-            if (tabs.n_tabs == 0) tabs.new_tab_requested();
-        });
-
         tabs.tab_duplicated.connect((tab) => {
             tabs.insert_tab(new WebTab.rebuild_existing(tabs, tab.label,
                     tab.icon, tab.restore_data), -1);
@@ -345,6 +353,25 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         tabs.tab_restored.connect((label, data, icon) => {
             tabs.insert_tab(new WebTab.rebuild_existing(tabs, label, icon, data), -1);
         });
+        tabs.tab_moved.connect((tab, x, y) => {
+            int width = 1200, height = 800;
+            get_size(out width, out height);
+            var window = new BrowserWindow.from_new_entry(app);
+            window.show_all();
+            Idle.add(() => {
+              tabs.remove_tab(tab);
+              window.tabs.insert_tab(tab, -1);
+
+              return false;
+            });
+        });
+        // Ensure a tab is always open
+        tabs.tab_removed.connect((tab) => {
+            if (tabs.n_tabs == 0 && !closing) tabs.new_tab_requested();
+        });
+        /*tabs.show.connect(() => {
+            if (tabs.n_tabs == 0) tabs.new_tab_requested();
+        });*/
 
         register_persist_events();
     }
