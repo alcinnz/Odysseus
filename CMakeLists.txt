@@ -47,6 +47,7 @@ include(ValaPrecompile)
 vala_precompile(VALA_C ${EXEC_NAME}
     src/Odysseus.vala
     src/BrowserWindow.vala
+    src/Persistance.vala
     src/Widgets/AddressBar.vala
     src/Widgets/WebTab.vala
     src/Widgets/ButtonWithMenu.vala

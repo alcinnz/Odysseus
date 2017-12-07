@@ -46,12 +46,12 @@ public class Odysseus.Application : Granite.Application {
         var stmt = Database.parse("SELECT MAX(delete_batch) FROM window;");
         var resp = stmt.step();
         assert(resp == Sqlite.ROW);
-        BrowserWindow.delete_batch = stmt.column_int(0);
+        Persist.delete_batch = stmt.column_int(0);
 
         string errmsg;
         var err = Database.get_database().exec(
                 "SELECT ROWID FROM window WHERE delete_batch = %i;".printf(
-                    BrowserWindow.delete_batch),
+                    Persist.delete_batch),
                 build_window, out errmsg);
         if (err != Sqlite.OK) {
             // Remove faulty persistance, then crash.

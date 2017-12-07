@@ -155,7 +155,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
             return false;
         });
         web.load_changed.connect((load_evt) => {
-            BrowserWindow.on_browse();
+            Persist.on_browse();
         });
 
         this.page.show_all();

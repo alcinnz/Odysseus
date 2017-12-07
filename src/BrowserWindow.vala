@@ -49,7 +49,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             connect_webview((Odysseus.WebTab) tabs.current, false);
             return true;
         }, Priority.DEFAULT_IDLE);
-        restore_state();
+        Persist.restore_window_state(this);
     }
 
     public BrowserWindow.from_new_entry() {
@@ -543,84 +543,14 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         }
     }
 
-    // Persistance code
-    public int64 window_id = 0;
-    public static int delete_batch = 0;
-    public static bool in_batch = true;
-    protected override bool delete_event(Gdk.EventAny evt) {
-        // Read window state...
-        var state = get_window().get_state();
-        string window_state;
-        int width = 1200, height = 800;
-        if (Gdk.WindowState.MAXIMIZED in state) window_state = "M";
-        else if (Gdk.WindowState.FULLSCREEN in state) window_state = "F";
-        else {
-            window_state = "N"; // 'N'ormal
-            get_size(out width, out height);
-        }
-
-        int x, y;
-        get_position(out x, out y);
-
-        // then save it to disk
-        var stmt = Database.parse("""UPDATE window
-                SET x=?, y=?, width=?, height=?, state=?, delete_batch=?
-                WHERE ROWID = ?;""");
-        stmt.bind_int(1, x);
-        stmt.bind_int(2, y);
-        stmt.bind_int(3, width);
-        stmt.bind_int(4, height);
-        stmt.bind_text(5, window_state);
-        stmt.bind_int(6, delete_batch);
-        stmt.bind_int64(7, window_id);
-        stmt.step();
-
-        closing = true;
-        in_batch = true;
-
-        return false;
-    }
-
-    public static void on_browse() {
-        if (in_batch) {
-            in_batch = false;
-            delete_batch++;
-        }
-    }
-
-    public void restore_state() {
-        var stmt = Database.parse("""SELECT x, y, width, height, state, focused_index
-                FROM window
-                WHERE window.ROWID = ?;""");
-        stmt.bind_int64(1, window_id);
-        var resp = stmt.step();
-        assert(resp == Sqlite.ROW);
-
-        set_default_size(stmt.column_int(2), stmt.column_int(3));
-        switch (stmt.column_text(4)) {
-        case "M":
-            maximize();
-            break;
-        case "F":
-            fullscreen();
-            break;
-        default:
-            if (stmt.column_int(0) == -1 || stmt.column_int(1) == -1) break;
-            move(stmt.column_int(0), stmt.column_int(1));
-            break;
-        }
-
-        var Qtabs = Database.parse(
-                "SELECT ROWID FROM tab WHERE window_id = ? ORDER BY order_ ASC;");
-        Qtabs.bind_int64(1, window_id);
-        while (Qtabs.step() == Sqlite.ROW) {
-            tabs.insert_tab(new WebTab(tabs, null, Qtabs.column_int64(0)), -1);
-        }
-
-        tabs.current = tabs.get_tab_by_index(stmt.column_int(5));
-    }
-
     public override void grab_focus() {
         web.grab_focus();
+    }
+
+    // Persistance code
+    public int64 window_id = 0;
+    protected override bool delete_event(Gdk.EventAny evt) {
+        Persist.on_window_closed(this);
+        return false;
     }
 }
