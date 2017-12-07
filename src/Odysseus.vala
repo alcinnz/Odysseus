@@ -61,7 +61,7 @@ public class Odysseus.Application : Granite.Application {
 
         // Create main application window, upon restore failure.
         if (get_last_window() == null) {
-            var window = new BrowserWindow.from_new_entry(this);
+            var window = new BrowserWindow.from_new_entry();
             window.new_tab("https://alcinnz.github.io/Odysseus-recommendations/");
             window.show_all();
 
@@ -76,7 +76,7 @@ public class Odysseus.Application : Granite.Application {
         foreach (var file in files) {
             if (file.get_uri() == NewWindow_url) {
                 if (!ignore_NewWindow) {
-                    window = new BrowserWindow.from_new_entry(this);
+                    window = new BrowserWindow.from_new_entry();
                     window.new_tab();
                     window.show_all();
                 }
@@ -94,7 +94,7 @@ public class Odysseus.Application : Granite.Application {
     }
 
     private int build_window(int n_columns, string[] values, string[] column_names) {
-        (new BrowserWindow(this, int64.parse(values[0]))).show_all();
+        (new BrowserWindow(int64.parse(values[0]))).show_all();
         return 0;
     }
 

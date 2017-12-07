@@ -16,8 +16,6 @@
 */
 using Granite.Widgets;
 public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
-    private weak Odysseus.Application app;
-
     private WebKit.WebView web;
     public Granite.Widgets.DynamicNotebook tabs;
     private DownloadsBar downloads;
@@ -36,10 +34,9 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
     public bool closing = false;
 
-    public BrowserWindow(Odysseus.Application ody_app, int64 window_id) {
-        this.app = ody_app;
+    public BrowserWindow(int64 window_id) {
         this.window_id = window_id;
-        set_application(this.app);
+        set_application(Odysseus.Application.instance);
         this.title = "";
 
         init_layout();
@@ -55,7 +52,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         restore_state();
     }
 
-    public BrowserWindow.from_new_entry(Odysseus.Application ody_app) {
+    public BrowserWindow.from_new_entry() {
         string errmsg;
         unowned Sqlite.Database db = Database.get_database();
         var err = db.exec("""INSERT INTO window
@@ -63,12 +60,11 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
                 VALUES (-1, -1, 1200, 800, 'N', 0);""", null, out errmsg);
         if (err != Sqlite.OK || db.last_insert_rowid() == 0)
             error("Failed to INSERT new window into database: %s", errmsg);
-        this(ody_app, db.last_insert_rowid());
+        this(db.last_insert_rowid());
     }
 
     private Sqlite.Statement? Qinsert_new_geom = null;
-    public BrowserWindow.with_geometry(Odysseus.Application ody_app,
-                int x, int y, int width, int height) {
+    public BrowserWindow.with_geometry(int x, int y, int width, int height) {
         if (Qinsert_new_geom == null)
             Qinsert_new_geom = Database.parse("""INSERT INTO window
                     (x, y, width, height, state, focused_index)
@@ -78,12 +74,12 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         Qinsert_new_geom.bind_int(3, width); Qinsert_new_geom.bind_int(4, height);
 
         var resp = Qinsert_new_geom.step();
-        this(ody_app, Database.get_database().last_insert_rowid());
+        this(Database.get_database().last_insert_rowid());
     }
         
     
-    public BrowserWindow.with_urls(Odysseus.Application ody_app, string[] urls) {
-        this.from_new_entry(ody_app);
+    public BrowserWindow.with_urls(string[] urls) {
+        this.from_new_entry();
         foreach (var url in urls) new_tab(url);
     }
 
@@ -160,7 +156,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         // TRANSLATORS _ precedes the keyboard shortcut
         var new_window = new Gtk.MenuItem.with_mnemonic(_("_New Window"));
         new_window.activate.connect(() => {
-            var window = new BrowserWindow.from_new_entry(Odysseus.Application.instance);
+            var window = new BrowserWindow.from_new_entry();
             window.show_all();
         });
         menu.add(new_window);
@@ -356,7 +352,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         tabs.tab_moved.connect((tab, x, y) => {
             int width = 1200, height = 800;
             get_size(out width, out height);
-            var window = new BrowserWindow.from_new_entry(app);
+            var window = new BrowserWindow.from_new_entry();
             window.show_all();
             Idle.add(() => {
               tabs.remove_tab(tab);
