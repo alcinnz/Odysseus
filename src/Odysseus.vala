@@ -37,7 +37,6 @@ public class Odysseus.Application : Granite.Application {
     }
 
     public void initialize() {
-        stdout.printf("STARTING...\n");
         // Setup application-unique resources.
         Odysseus.Database.setup_database();
         Odysseus.Traits.setup_autosuggest();
@@ -109,7 +108,7 @@ const string NewWindow_url = "odysseus:///NewWindow";
 public static int main(string[] args) {
     // It's a bit of a hack to use a URI to open new windows,
     // which means we need to be able to cancel these URIs. 
-    Odysseus.Application.has_NewWindow_arg = NewWindow_url in args;
+    Odysseus.Application.has_NewWindow_arg = "odysseus:NewWindow" in args;
 
     return Odysseus.Application.instance.run(args);
 }
