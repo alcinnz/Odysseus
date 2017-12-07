@@ -76,12 +76,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         var resp = Qinsert_new_geom.step();
         this(Database.get_database().last_insert_rowid());
     }
-        
-    
-    public BrowserWindow.with_urls(string[] urls) {
-        this.from_new_entry();
-        foreach (var url in urls) new_tab(url);
-    }
 
     private void init_layout() {
         back = new ButtonWithMenu.from_icon_name ("go-previous-symbolic",
