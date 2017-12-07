@@ -62,7 +62,7 @@ public class Odysseus.Application : Granite.Application {
         // Create main application window, upon restore failure.
         if (get_last_window() == null) {
             var window = new BrowserWindow.from_new_entry(this);
-            window.new_tab();
+            window.new_tab("https://alcinnz.github.io/Odysseus-recommendations/");
             window.show_all();
 
             ignore_NewWindow = has_NewWindow_arg;
