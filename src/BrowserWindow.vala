@@ -542,29 +542,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             return null;
         }
     }
-    
-    // Called by application to persist open tabs
-    public async void persist(OutputStream persistFile) {
-        var first = true;
-        foreach (var tab in tabs.tabs) {
-            try {
-                if (!first) yield persistFile.write_async("\t".data);
-                first = false;
-
-                size_t bytes_written;
-                var url = ((WebTab) tab).url;
-                yield persistFile.write_all_async(url.data,
-                                                Priority.DEFAULT,
-                                                null, out bytes_written);
-            } catch (Error e) {
-                // The file should still work reasonably well. 
-                // The separator must be successful written before the url is,
-                // and if that isn't fully written things should still work.
-                var url = ((WebTab) tab).url;
-                warning("Failed to write tab for %s: %s", url, e.message);
-            }
-        }
-    }
 
     // Persistance code
     public int64 window_id = 0;
