@@ -438,7 +438,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             } else if (load_event == WebKit.LoadEvent.FINISHED) {
                 reload_stop.set_visible_child(reload);
                 addressbar.progress_fraction = 0.0;
-                app.persist.begin();
             } else {
                 reload_stop.set_visible_child(stop);
             }

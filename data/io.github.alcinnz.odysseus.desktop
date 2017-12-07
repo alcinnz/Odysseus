@@ -14,8 +14,8 @@ MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtm
 
 [Desktop Action NewWindow]
 _Name=New Window
-Exec=io.github.alcinnz.odysseus --new-window
+Exec=io.github.alcinnz.odysseus odysseus:NewWindow
 
 [Desktop Action NewTab]
 _Name=New Tab
-Exec=io.github.alcinnz.odysseus --new-tab
+Exec=io.github.alcinnz.odysseus odysseus:home
