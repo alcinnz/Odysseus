@@ -58,6 +58,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Widgets/InfoContainer.vala
     src/Widgets/Shades.vala
     src/Widgets/AutomaticScrollBox.vala
+    src/Widgets/WebNotebook.vala
 
     src/Services/pages.vala
     src/Services/icons.vala

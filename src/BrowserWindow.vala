@@ -16,8 +16,8 @@
 */
 using Granite.Widgets;
 public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
-    private WebKit.WebView web;
-    public Granite.Widgets.DynamicNotebook tabs;
+    private WebKit.WebView web {get {return tabs.web;}}
+    public WebNotebook tabs;
     private DownloadsBar downloads;
 
     private ButtonWithMenu back;
@@ -28,10 +28,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     private AddressBar addressbar;
 
     private Gtk.MenuItem restore_windows;
-
-    private Gee.List<ulong> web_event_handlers;
-    private Gee.List<Binding> bindings;
-
     public bool closing = false;
 
     public BrowserWindow(int64 window_id) {
@@ -41,14 +37,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         init_layout();
         register_events();
-
-        // This makes sure that UI remains consistant with WebKit,
-        // Even if the event handlers don't keep us up-to-date successfully.
-        Timeout.add_seconds(1, () => {
-            disconnect_webview();
-            connect_webview((Odysseus.WebTab) tabs.current, false);
-            return true;
-        }, Priority.DEFAULT_IDLE);
         Persist.restore_window_state(this);
     }
 
@@ -63,27 +51,16 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         this(db.last_insert_rowid());
     }
 
-    private Sqlite.Statement? Qinsert_new_geom = null;
-    public BrowserWindow.with_geometry(int x, int y, int width, int height) {
-        if (Qinsert_new_geom == null)
-            Qinsert_new_geom = Database.parse("""INSERT INTO window
-                    (x, y, width, height, state, focused_index)
-                    VALUES (?, ?, ?, ?, 'N', 0);""");
-        Qinsert_new_geom.reset();
-        Qinsert_new_geom.bind_int(1, x); Qinsert_new_geom.bind_int(2, y);
-        Qinsert_new_geom.bind_int(3, width); Qinsert_new_geom.bind_int(4, height);
-
-        var resp = Qinsert_new_geom.step();
-        this(Database.get_database().last_insert_rowid());
-    }
-
     private void init_layout() {
+        tabs = new WebNotebook();
         back = new ButtonWithMenu.from_icon_name ("go-previous-symbolic",
                                                 Gtk.IconSize.LARGE_TOOLBAR);
         back.tooltip_text = _("Go to previously viewed page");
+        tabs.bind_property("can-go-back", back, "sensitive", BindingFlags.SYNC_CREATE);
         forward = new ButtonWithMenu.from_icon_name ("go-next-symbolic",
                                                 Gtk.IconSize.LARGE_TOOLBAR);
         forward.tooltip_text = _("Go to next viewed page");
+        tabs.bind_property("can-go-forward", forward, "sensitive", BindingFlags.SYNC_CREATE);
         reload = new Gtk.Button.from_icon_name ("view-refresh-symbolic",
                                                 Gtk.IconSize.LARGE_TOOLBAR);
         reload.tooltip_text = _("Load the page from the website again");
@@ -93,8 +70,17 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         reload_stop = new Gtk.Stack();
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
+        tabs.notify["is-loading"].connect((pspec) => {
+            if (tabs.is_loading) reload_stop.set_visible_child(stop);
+            else reload_stop.set_visible_child(reload);
+        });
         addressbar = new Odysseus.AddressBar();
         addressbar.tooltip_text = _("Current web address");
+        tabs.bind_property("uri", addressbar, "text", BindingFlags.SYNC_CREATE);
+        tabs.bind_property("favicon", addressbar, "primary-icon-gicon",
+                BindingFlags.SYNC_CREATE);
+        tabs.bind_property("progress", addressbar, "progress-fraction",
+                BindingFlags.SYNC_CREATE);
 
         Gtk.HeaderBar header = new Gtk.HeaderBar();
         header.show_close_button = true;
@@ -106,11 +92,11 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         header.pack_end(appmenu);
         header.set_has_subtitle(false);
         set_titlebar(header);
+        tabs.bind_property("title", this, "title");
 
         var container = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
         add(container);
 
-        tabs = new Granite.Widgets.DynamicNotebook();
         // Don't show tabbar when fullscreen
         window_state_event.connect((evt) => {
             if (Gdk.WindowState.FULLSCREEN in evt.new_window_state)
@@ -118,12 +104,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
             return false;
         });
-        tabs.allow_drag = true;
-        tabs.allow_duplication = true;
-        tabs.allow_new_window = true;
-        tabs.allow_pinning = true;
-        tabs.allow_restoring = true;
-        tabs.group_name = "odysseus-web-browser";
         container.pack_start(tabs);
         
         downloads = new DownloadsBar();
@@ -301,9 +281,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     }
 
     private void register_events() {
-        web_event_handlers = new Gee.ArrayList<ulong>();
-        bindings = new Gee.ArrayList<Binding>();
-
         back.button_release_event.connect((e) => {
             web.go_back();
             return false;
@@ -326,103 +303,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             web.load_uri(url);
         });
 
-        tabs.tab_switched.connect((old_tab, new_tab) => {
-            if (web != null) disconnect_webview();
-            web = ((WebTab) new_tab).web;
-            connect_webview((WebTab) new_tab);
-        });
-        tabs.new_tab_requested.connect(() => {
-            var tab = new WebTab.with_new_entry(tabs);
-            tabs.insert_tab(tab, -1);
-            tabs.current = tab;
-        });
-        tabs.tab_duplicated.connect((tab) => {
-            tabs.insert_tab(new WebTab.rebuild_existing(tabs, tab.label,
-                    tab.icon, tab.restore_data), -1);
-        });
-        tabs.tab_restored.connect((label, data, icon) => {
-            tabs.insert_tab(new WebTab.rebuild_existing(tabs, label, icon, data), -1);
-        });
-        tabs.tab_moved.connect((tab, x, y) => {
-            int width = 1200, height = 800;
-            get_size(out width, out height);
-            var window = new BrowserWindow.from_new_entry();
-            window.show_all();
-            Idle.add(() => {
-              tabs.remove_tab(tab);
-              window.tabs.insert_tab(tab, -1);
-
-              return false;
-            });
-        });
-        // Ensure a tab is always open
-        tabs.tab_removed.connect((tab) => {
-            if (tabs.n_tabs == 0 && !closing) tabs.new_tab_requested();
-        });
-
         Persist.register_notebook_events(this);
-    }
-
-    private void connect_webview(WebTab tab, bool full=true) {
-        var hs = web_event_handlers;
-
-        hs.add(web.load_changed.connect ((load_event) => {
-            if (load_event == WebKit.LoadEvent.COMMITTED) {
-                back.sensitive = web.can_go_back();
-                forward.sensitive = web.can_go_forward();
-            } else if (load_event == WebKit.LoadEvent.FINISHED) {
-                reload_stop.set_visible_child(reload);
-                addressbar.progress_fraction = 0.0;
-            } else {
-                reload_stop.set_visible_child(stop);
-            }
-        }));
-
-        bindings.add(web.bind_property("uri", addressbar, "text"));
-        hs.add(web.notify["uri"].connect((pspec) => {
-            Idle.add(() => {
-                // This works better with history.push/pop_state().
-                back.sensitive = web.can_go_back();
-                forward.sensitive = web.can_go_forward();
-                return Source.REMOVE;
-            });
-        }));
-        bindings.add(web.bind_property("title", this, "title"));
-        bindings.add(web.bind_property("estimated-load-progress", addressbar,
-                            "progress-fraction"));
-        hs.add(web.notify["favicon"].connect((sender, property) => {
-            if (web.get_favicon() != null) {
-                var fav = surface_to_pixbuf(web.get_favicon());
-                addressbar.primary_icon_pixbuf = fav;
-            }
-        }));
-
-        // Replicate tab state to headerbar
-        back.sensitive = web.can_go_back();
-        forward.sensitive = web.can_go_forward();
-        reload_stop.set_visible_child(web.is_loading ? stop : reload);
-        addressbar.progress_fraction = web.estimated_load_progress == 1.0 ?
-                0.0 : web.estimated_load_progress;
-        if (full) addressbar.text = web.uri;
-        this.title = web.title;
-        if (web.get_favicon() != null) {
-            var fav = surface_to_pixbuf(web.get_favicon());
-            addressbar.primary_icon_pixbuf = fav;
-        } else {
-            addressbar.primary_icon_name = "internet-web-browser";
-        }
-    }
-
-    private void disconnect_webview() {
-        foreach (var binding in bindings) {
-            binding.unbind();
-        }
-        bindings.clear();
-
-        foreach (var handler in web_event_handlers) {
-            web.disconnect(handler);
-        }
-        web_event_handlers.clear();
     }
     
     private void find_in_page_cb() {

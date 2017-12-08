@@ -94,7 +94,7 @@ namespace Odysseus.Persist {
 
     /* Notebook Persistance */
     public void register_notebook_events(BrowserWindow win) {
-        var tabs = win.tabs;
+        Granite.Widgets.DynamicNotebook tabs = win.tabs;
 
         var Qupdate_window = Database.parse(
                 "UPDATE tab SET window_id = ? WHERE ROWID = ?;");
