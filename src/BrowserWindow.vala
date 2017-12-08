@@ -359,9 +359,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         tabs.tab_removed.connect((tab) => {
             if (tabs.n_tabs == 0 && !closing) tabs.new_tab_requested();
         });
-        /*tabs.show.connect(() => {
-            if (tabs.n_tabs == 0) tabs.new_tab_requested();
-        });*/
 
         register_persist_events();
     }
