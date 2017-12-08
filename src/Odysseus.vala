@@ -41,25 +41,8 @@ public class Odysseus.Application : Granite.Application {
         Odysseus.Database.setup_database();
         Odysseus.Traits.setup_autosuggest();
 
-        // Restore application state.
-        var stmt = Database.parse("SELECT MAX(delete_batch) FROM window;");
-        var resp = stmt.step();
-        assert(resp == Sqlite.ROW);
-        Persist.delete_batch = stmt.column_int(0);
-
-        string errmsg;
-        var err = Database.get_database().exec(
-                "SELECT ROWID FROM window WHERE delete_batch = %i;".printf(
-                    Persist.delete_batch),
-                build_window, out errmsg);
-        if (err != Sqlite.OK) {
-            // Remove faulty persistance, then crash.
-            Database.get_database().exec("DELETE FROM window;", null);
-            error("Failed to restore previous ");
-        }
-
         // Create main application window, upon restore failure.
-        if (get_last_window() == null) {
+        if (!Persist.restore_application()) {
             var window = new BrowserWindow.from_new_entry();
             window.new_tab("https://alcinnz.github.io/Odysseus-recommendations/");
             window.show_all();
@@ -90,11 +73,6 @@ public class Odysseus.Application : Granite.Application {
             initialize();
             initialized = true;
         }
-    }
-
-    private int build_window(int n_columns, string[] values, string[] column_names) {
-        (new BrowserWindow(int64.parse(values[0]))).show_all();
-        return 0;
     }
 
     public BrowserWindow? get_last_window() {

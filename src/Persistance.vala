@@ -20,6 +20,30 @@
 
 It is integrated directly into windows and tabs. */
 namespace Odysseus.Persist {
+    public bool restore_application() {
+        var stmt = Database.parse("SELECT MAX(delete_batch) FROM window;");
+        var resp = stmt.step();
+        if (resp != Sqlite.ROW) return false;
+        Persist.delete_batch = stmt.column_int(0);
+
+        string errmsg;
+        var err = Database.get_database().exec(
+                "SELECT ROWID FROM window WHERE delete_batch = %i;".printf(
+                    Persist.delete_batch),
+                build_window, out errmsg);
+        if (err != Sqlite.OK) {
+            // Remove faulty persistance, then crash.
+            Database.get_database().exec("DELETE FROM window;", null);
+            error("Failed to restore previous ");
+        }
+
+        return true;
+    }
+
+    private int build_window(int n_columns, string[] values, string[] column_names) {
+        (new BrowserWindow(int64.parse(values[0]))).show_all();
+        return 0;
+    }
 
     /* Window persistance */
     public static int delete_batch = 0;
