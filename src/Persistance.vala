@@ -20,6 +20,8 @@
 
 It is integrated directly into windows and tabs. */
 namespace Odysseus.Persist {
+
+    /* Window persistance */
     public static int delete_batch = 0;
     public static bool in_batch = true;
 
@@ -88,5 +90,60 @@ namespace Odysseus.Persist {
         }
 
         win.tabs.current = win.tabs.get_tab_by_index(stmt.column_int(5));
+    }
+
+    /* Notebook Persistance */
+    public void register_notebook_events(BrowserWindow win) {
+        var tabs = win.tabs;
+
+        var Qupdate_window = Database.parse(
+                "UPDATE tab SET window_id = ? WHERE ROWID = ?;");
+        tabs.tab_added.connect((tab) => {
+            var wtab = (WebTab) tab;
+            Qupdate_window.reset();
+            Qupdate_window.bind_int64(1, win.window_id);
+            Qupdate_window.bind_int64(2, wtab.tab_id);
+            Qupdate_window.step();
+
+            persist_tab_order(tabs);
+        });
+        var Qdelete_tab = Database.parse("DELETE FROM tab WHERE ROWID = ?;");
+        tabs.tab_removed.connect((tab) => {
+            if (win.closing) return; // We want to persist them then. 
+
+            var wtab = (WebTab) tab;
+            Qdelete_tab.reset();
+            Qdelete_tab.bind_int64(1, wtab.tab_id);
+            Qdelete_tab.step();
+
+            persist_tab_order(tabs);
+        });
+        tabs.tab_reordered.connect((tab, new_pos) => {
+            persist_tab_order(tabs);
+        });
+        var Qupdate_focused_tab = Database.parse(
+                "UPDATE window SET focused_index = ? WHERE ROWID = ?;");
+        tabs.tab_switched.connect((old_tab, new_tab) => {
+            Qupdate_focused_tab.reset();
+            Qupdate_focused_tab.bind_int(1, tabs.get_tab_position(new_tab));
+            Qupdate_focused_tab.bind_int64(2, win.window_id);
+            Qupdate_focused_tab.step();
+        });
+    }
+
+    private void persist_tab_order(Granite.Widgets.DynamicNotebook tabs) {
+        var Qsave_index = Database.parse(
+                "UPDATE tab SET order_ = ? WHERE ROWID = ?;");
+
+        int i = 0;
+        for (var tab = tabs.get_tab_by_index(i) as WebTab;
+                tab != null;
+                tab = tabs.get_tab_by_index(++i) as WebTab) {
+            if (tab.order == i) continue;
+            Qsave_index.reset();
+            Qsave_index.bind_int(1, i);
+            Qsave_index.bind_int64(2, tab.tab_id);
+            Qsave_index.step();
+        }
     }
 }
