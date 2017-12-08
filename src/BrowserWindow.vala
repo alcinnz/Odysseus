@@ -516,7 +516,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         }
     }
     
-    public void new_tab(string url = "https://ddg.gg/") {
+    public void new_tab(string url = "odysseus:home") {
         var tab = new WebTab.with_new_entry(tabs, null, url);
         tabs.insert_tab(tab, -1);
         tabs.current = tab;
