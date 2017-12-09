@@ -40,6 +40,7 @@ namespace Odysseus.Traits {
         setup_alerts(tab);
         setup_permits(tab);
         setup_persist_tab_history(tab);
+        setup_internal_favicons(tab);
     }
 
     public void setup_autosuggest() {

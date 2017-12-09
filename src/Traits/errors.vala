@@ -36,7 +36,7 @@ namespace Odysseus.Traits {
             }
         }
 
-        render_alternate_html.begin(web, "errors/" + error, uri);
+        render_alternate_html.begin(tab, "errors/" + error, uri);
         try {
             var path = "/" + Path.build_path("/",
                     "io", "github", "alcinnz", "Odysseus", "odysseus:",

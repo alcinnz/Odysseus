@@ -21,6 +21,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     public int64 tab_id;
     public int order = -1;
+    public bool is_internal_page {get; set; default = false;}
 
     public string url {
         get {return web.uri;}
@@ -29,8 +30,12 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     public string status {
         get {return status_bar.status;}
         set {
-            status_bar.status = value;
-            status_bar.visible = value != "";
+            if (value == "" || value == null) {
+                status_bar.visible = false;
+            } else {
+                status_bar.visible = true;
+                status_bar.status = value;
+            }
         }
     }
     public string default_status;
@@ -118,6 +123,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         });
 
         web.load_changed.connect((load_evt) => {
+            if (load_evt == WebKit.LoadEvent.STARTED) is_internal_page = false;
             Persist.on_browse();
         });
     }

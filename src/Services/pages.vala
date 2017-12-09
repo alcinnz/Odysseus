@@ -90,10 +90,13 @@ namespace Odysseus.Services {
         }
     }
 
-    public async void render_alternate_html(WebKit.WebView webview,
+    public async void render_alternate_html(WebTab tab,
             string subpath, string? alt_uri = null, bool render_errors = true,
             Templating.Data.Data? data = null,
             Templating.TagBuilder? error_tag = null) {
+        var webview = tab.web;
+        tab.is_internal_page = true;
+
         var alternative_uri = webview.uri;
         if (alt_uri != null) alternative_uri = alt_uri;
 
@@ -115,14 +118,14 @@ namespace Odysseus.Services {
             }
         } catch (Templating.SyntaxError e) {
             if (render_errors)
-                yield render_alternate_html(webview, "SERVER-ERROR",
+                yield render_alternate_html(tab, "SERVER-ERROR",
                         alt_uri, false, error_data, error_data.tag);
             else webview.load_alternate_html(
                     @"<h1>$(e.domain)</h1><p>$(e.message)</p>",
                     alternative_uri, null);
             return;
         } catch (Error e) {
-            if (render_errors) yield render_alternate_html(webview, "NOT-FOUND",
+            if (render_errors) yield render_alternate_html(tab, "NOT-FOUND",
                     alt_uri, false);
             else webview.load_alternate_html(
                     @"<h1>$(e.domain)</h1><p>$(e.message)</p>",
