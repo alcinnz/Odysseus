@@ -46,23 +46,19 @@ public class Odysseus.Application : Granite.Application {
             var window = new BrowserWindow.from_new_entry();
             window.new_tab("https://alcinnz.github.io/Odysseus-recommendations/");
             window.show_all();
-
-            ignore_NewWindow = has_NewWindow_arg;
         }
     }
 
-    public static bool has_NewWindow_arg = false;
-    public static bool ignore_NewWindow = false;
     public override void open(File[] files, string hint) {
+        activate(); // To gaurantee the application is initialized.
+
         var window = get_last_window();
         foreach (var file in files) {
-            if (file.get_uri() == NewWindow_url) {
-                if (!ignore_NewWindow) {
-                    window = new BrowserWindow.from_new_entry();
-                    window.new_tab();
-                    window.show_all();
-                }
-                ignore_NewWindow = false;
+            if (file.get_uri() == "odysseus:///NewWindow" ||
+                    file.get_uri() == "odysseus:NewWindow") {
+                window = new BrowserWindow.from_new_entry();
+                window.new_tab();
+                window.show_all();
             } else window.new_tab(file.get_uri());
         }
     }
@@ -82,11 +78,6 @@ public class Odysseus.Application : Granite.Application {
     }
 }
 
-const string NewWindow_url = "odysseus:///NewWindow";
 public static int main(string[] args) {
-    // It's a bit of a hack to use a URI to open new windows,
-    // which means we need to be able to cancel these URIs. 
-    Odysseus.Application.has_NewWindow_arg = "odysseus:NewWindow" in args;
-
     return Odysseus.Application.instance.run(args);
 }
