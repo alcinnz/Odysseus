@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>New Tab</title>
+  <title>[user-home-symbolic] New Tab</title>
   <style>
     @import url(odysseus:butterick.css);
     body {color: #ddd; text-align: center;}

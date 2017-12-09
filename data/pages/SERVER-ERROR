@@ -7,7 +7,7 @@ The debugging information is in English in the expectation that any contributors
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>{% trans %}Internal Error{% endtrans %}</title>
+  <title>[dialog-error-symbolic]{% trans %}Internal Error{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
     @import url(odysseus:ext/hljs-solarized-light.css);
@@ -16,7 +16,6 @@ The debugging information is in English in the expectation that any contributors
     /* Solarized Light adds whitespace which misaligns the table */
     pre {margin: 0;}
   </style>
-  <link rel="shortcut icon" href="odysseus:icon/16/dialog-error-symbolic" />
 </head>
 <body class="branded">
   <main>
