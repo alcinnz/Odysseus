@@ -29,10 +29,12 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     public string status {
         get {return status_bar.status;}
         set {
+            if (value == "") value = default_status;
             status_bar.status = value;
             status_bar.visible = value != "";
         }
     }
+    public string default_status;
 
     public WebTab(Granite.Widgets.DynamicNotebook parent, int64 tab_id) {
         this.tab_id = tab_id;
@@ -70,14 +72,14 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
         find.counted_matches.connect((search, count) => {
             if (revealer.child_revealed && search != "")
-                status = _("%u matches of \"%s\" found").printf(count, search);
-            else status = "";
+                default_status = status = _("%u matches of \"%s\" found").printf(count, search);
+            else default_status = status = "";
         });
         find.escape_pressed.connect(() => revealer.reveal_child = false);
 
         revealer.notify["reveal_child"].connect((pspec) => {
             if (!revealer.reveal_child) {
-                status = "";
+                default_status = status = "";
                 web.get_find_controller().search_finish();
             } else find.grab_focus();
         });
@@ -113,7 +115,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         web.mouse_target_changed.connect((target, modifiers) => {
             if (target.context_is_link()) {
                 status = target.link_uri;
-            } else status = "";
+            } else status = default_status;
         });
 
         web.load_changed.connect((load_evt) => {
@@ -156,8 +158,29 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         if (icon != null) this.icon = icon;
     }
 
+    // GDK does provide a utility for this,
+    // but it requires me to specify size information I do not have.
+    public static Gdk.Pixbuf? surface_to_pixbuf(Cairo.Surface surface) {
+        try {
+            var loader = new Gdk.PixbufLoader.with_mime_type("image/png");
+            surface.write_to_png_stream((data) => {
+                try {
+                    loader.write((uint8[]) data);
+                } catch (Error e) {
+                    return Cairo.Status.DEVICE_ERROR;
+                }
+                return Cairo.Status.SUCCESS;
+            });
+            var pixbuf = loader.get_pixbuf();
+            loader.close();
+            return pixbuf;
+        } catch (Error e) {
+            return null;
+        }
+    }
+
     public void restore_favicon() {
-        var fav = BrowserWindow.surface_to_pixbuf(web.get_favicon());
+        var fav = surface_to_pixbuf(web.get_favicon());
         icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
     }
 
@@ -168,6 +191,6 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     public void close_find() {
         find.reveal_child = false;
-        status = "";
+        default_status = status = "";
     }
 }

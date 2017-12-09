@@ -165,7 +165,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         try {
             var favicon_db = web.web_context.get_favicon_database();
             var favicon = yield favicon_db.get_favicon(item.get_uri(), null);
-            var icon = surface_to_pixbuf(favicon);
+            var icon = WebTab.surface_to_pixbuf(favicon);
             menuitem.image = new Gtk.Image.from_gicon(icon, Gtk.IconSize.MENU);
         } catch (Error e) {
             warning("Failed to load favicon for '%s':", item.get_uri());
@@ -176,27 +176,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         var tab = new WebTab.with_new_entry(tabs, url);
         tabs.insert_tab(tab, -1);
         tabs.current = tab;
-    }
-
-    // GDK does provide a utility for this,
-    // but it requires me to specify size information I do not have.
-    public static Gdk.Pixbuf? surface_to_pixbuf(Cairo.Surface surface) {
-        try {
-            var loader = new Gdk.PixbufLoader.with_mime_type("image/png");
-            surface.write_to_png_stream((data) => {
-                try {
-                    loader.write((uint8[]) data);
-                } catch (Error e) {
-                    return Cairo.Status.DEVICE_ERROR;
-                }
-                return Cairo.Status.SUCCESS;
-            });
-            var pixbuf = loader.get_pixbuf();
-            loader.close();
-            return pixbuf;
-        } catch (Error e) {
-            return null;
-        }
     }
 
 
