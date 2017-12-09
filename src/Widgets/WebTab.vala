@@ -29,7 +29,6 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     public string status {
         get {return status_bar.status;}
         set {
-            if (value == "") value = default_status;
             status_bar.status = value;
             status_bar.visible = value != "";
         }
