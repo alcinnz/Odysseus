@@ -48,18 +48,18 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Odysseus.vala
     src/BrowserWindow.vala
     src/Persistance.vala
-    src/Widgets/AddressBar.vala
+    src/Widgets/header/AddressBar.vala
     src/Widgets/WebTab.vala
-    src/Widgets/ButtonWithMenu.vala
-    src/Widgets/FindToolbar.vala
+    src/Widgets/header/ButtonWithMenu.vala
+    src/Widgets/overlays/FindToolbar.vala
     src/Widgets/DownloadButton.vala
     src/Widgets/DownloadBar.vala
     src/Widgets/ProgressBin.vala
-    src/Widgets/InfoContainer.vala
-    src/Widgets/Shades.vala
-    src/Widgets/AutomaticScrollBox.vala
+    src/Widgets/overlays/InfoContainer.vala
+    src/Widgets/overlays/Shades.vala
+    src/Widgets/header/AutomaticScrollBox.vala
     src/Widgets/WebNotebook.vala
-    src/Widgets/HeaderBarWithMenus.vala
+    src/Widgets/header/HeaderBarWithMenus.vala
 
     src/Services/pages.vala
     src/Services/Prosody/byteutils.vala
