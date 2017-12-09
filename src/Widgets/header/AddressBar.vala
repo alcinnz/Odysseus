@@ -14,7 +14,7 @@
 * You should have received a copy of the GNU General Public License
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-public class Odysseus.AddressBar : Gtk.Entry {
+public class Odysseus.Header.AddressBar : Gtk.Entry {
     private Services.Completer completer = new Services.Completer();
     private Gtk.Popover popover;
     private Gtk.ListBox list;

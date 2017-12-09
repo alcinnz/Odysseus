@@ -27,7 +27,7 @@ To aid that sort of UI, this class both allows specifying toolbar icons, tooltip
 Also this is a normal headerbar, so all everything that's normally possible is
     still possible and just as easy. This is vital to allow for controls like
     the AddressBar. */
-public class Odysseus.HeaderBarWithMenus : Gtk.HeaderBar {
+public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
     public Gtk.AccelGroup accel_group = new Gtk.AccelGroup();
 
     construct {

@@ -46,7 +46,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
     private void init_layout() {
         tabs = new WebNotebook();
-        var header = new HeaderBarWithMenus();
+        var header = new Header.HeaderBarWithMenus();
         build_toolbar(header);
         set_titlebar(header);
         add_accel_group(header.accel_group);
@@ -71,7 +71,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         container.add(downloads);
     }
 
-    private void build_toolbar(HeaderBarWithMenus tools) {
+    private void build_toolbar(Header.HeaderBarWithMenus tools) {
         var back = tools.add_item_left("go-previous-symbolic", _("Go to previously viewed page"),
                 Gdk.Key.Left, () => web.go_back(), (menu) => {
             web.get_back_forward_list().get_back_list().@foreach((item) => {
@@ -107,7 +107,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         tools.pack_start(reload_stop);
 
-        var addressbar = new Odysseus.AddressBar();
+        var addressbar = new Odysseus.Header.AddressBar();
         addressbar.tooltip_text = _("Current web address");
         addressbar.navigate_to.connect((url) => web.load_uri(url));
         tabs.bind_property("uri", addressbar, "text", BindingFlags.SYNC_CREATE);

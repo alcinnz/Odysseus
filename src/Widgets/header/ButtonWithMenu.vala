@@ -30,7 +30,7 @@ in 2016) under the following license:
  *
  */
 
-namespace Odysseus {
+namespace Odysseus.Header {
 
     /**
      * ButtonWithMenu
