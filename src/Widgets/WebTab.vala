@@ -15,37 +15,6 @@
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 public class Odysseus.WebTab : Granite.Widgets.Tab {
-    public static WebKit.WebContext? global_context;
-
-    private static string build_config_path(string subdir) {
-        return Path.build_path(Path.DIR_SEPARATOR_S,
-                Environment.get_user_config_dir(), "odysseus", subdir);
-    }
-
-    public static void init_global_context() {
-        var data_manager = Object.@new(typeof(WebKit.WebsiteDataManager),
-                "base_cache_directory", build_config_path("site-cache"),
-                "base_data_directory", build_config_path("site-data"),
-                "disk_cache_directory", build_config_path("http-cache"),
-                "indexeddb_directory", build_config_path("indexeddb"),
-                "local_storage_directory", build_config_path("localstorage"),
-                "offline_application_cache_directory",
-                    build_config_path("offline-cache"),
-                "websql_directory", build_config_path("websql")
-                ) as WebKit.WebsiteDataManager;
-        global_context = new WebKit.WebContext.with_website_data_manager(
-                data_manager);
-        global_context.get_cookie_manager().set_persistent_storage(
-                build_config_path("cookies.sqlite"),
-                WebKit.CookiePersistentStorage.SQLITE);
-        global_context.set_favicon_database_directory(
-                build_config_path("favicons"));
-        global_context.set_process_model(
-                WebKit.ProcessModel.MULTIPLE_SECONDARY_PROCESSES);
-
-        Traits.setup_context(global_context);
-    }
-
     public WebKit.WebView web; // To allow it to be wrapped in layout views.
     private Gtk.Revealer find;
     public InfoContainer info; // for prompts.
@@ -69,16 +38,12 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
                   WebKit.WebView? related = null,
                   int64 tab_id) {
         this.tab_id = tab_id;
-        if (global_context == null) init_global_context();
 
-        /*if (related != null) {
-            this.web = (WebKit.WebView) related.new_with_related_view();
-        } else*/ {
-            var user_content = new WebKit.UserContentManager();
-            this.web = (WebKit.WebView) Object.@new(typeof(WebKit.WebView),
-                    "web-context", global_context,
-                    "user-content-manager", user_content);
-        }
+        var user_content = new WebKit.UserContentManager();
+        this.web = (WebKit.WebView) Object.@new(typeof(WebKit.WebView),
+                "web-context", get_web_context(),
+                "user-content-manager", user_content);
+
         this.info = new InfoContainer();
         info.expand = true;
         this.page = info;

@@ -86,6 +86,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Traits/search/duckduckgo.vala
     src/Traits/search/ddg-autocomplete.vala
     src/Traits/persist-tab-history.vala
+    src/Traits/settings.vala
 
     src/Models/Download.vala
     src/Models/DownloadSet.vala

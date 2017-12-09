@@ -83,8 +83,7 @@ namespace Odysseus.Traits {
             // This is to debug potential hostname parsing problems.
             connect_form(web, (req) => {
                 var host = parse_hostname(uri);
-                WebTab.global_context.allow_tls_certificate_for_host(
-                        certificate, host);
+                get_web_context().allow_tls_certificate_for_host(certificate, host);
             });
             // TODO show certificate
            return true;
