@@ -30,8 +30,9 @@ public class Odysseus.WebNotebook : DynamicNotebook {
     public Icon? favicon {get; set;}
     public string title {get; set;}
 
-    public WebKit.WebView web {
+    public WebKit.WebView? web {
         get {
+            if (current == null) return null;
             return (current as WebTab).web;
         }
     }
@@ -88,7 +89,8 @@ public class Odysseus.WebNotebook : DynamicNotebook {
     }
 
     public void on_tab_removed(Tab tab) {
-        if (n_tabs == 0 && !((BrowserWindow) get_parent_window).closing)
+        var window = get_parent_window() as BrowserWindow;
+        if (n_tabs == 0 && window != null && !window.closing)
             new_tab_requested();
     }
 
