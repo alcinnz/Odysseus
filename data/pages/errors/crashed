@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% trans %}CRASHED{% endtrans %}</title>
+  <title>[computer-failed]{% trans %}CRASHED{% endtrans %}</title>
 </head>
 <body style="background: blue;">
   <!-- Blue screen of death! Taken from Windows -->

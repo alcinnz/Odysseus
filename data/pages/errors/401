@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>{% trans %}Log-in Required{% endtrans %}</title>
+  <title>[dialog-password]{% trans %}Log-in Required{% endtrans %}</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
 <body>

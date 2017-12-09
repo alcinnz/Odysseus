@@ -1,1 +1,2 @@
 {% trans %}Proxy authentication required.{% endtrans %} {# TODO how to handle it? #}
+{# Potential icon: dialog-password #}

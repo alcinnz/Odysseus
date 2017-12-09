@@ -3,8 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Testing Templating Engine…</title>
-  <!-- favicons sourced from http://www.favicon.cc/ -->
-  <link rel="shortcut icon" href="odysseus:debugging/spinner.ico" />
   <style>
     @import url(odysseus:ext/hljs-solarized-light.css);
     @import url(odysseus:butterick.css);

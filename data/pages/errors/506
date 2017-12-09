@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>{% trans %}NEGOTIATION FAIL{% endtrans %}</title>
+  <title>[dialog-error]{% trans %}NEGOTIATION FAIL{% endtrans %}</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
 <body>

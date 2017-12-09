@@ -2,11 +2,10 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Odysseus Debugging</title>
+  <title>[application-x-executable-symbolic] Odysseus Debugging</title>
   <style>@import url(odysseus:butterick.css);</style>
-  <link rel="shortcut icon" href="odysseus:icon/16/application-x-executable-symbolic" />
 </head>
-<body class="branded">
+<body>
   <main>
     <h1>Tools for debugging Odysseus</h1>
     <p>These tools help the Odysseus developers to diagnose problems with your browser. It is unlikely you will be interested in them.</p>
