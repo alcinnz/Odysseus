@@ -20,10 +20,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     public WebNotebook tabs;
     private DownloadsBar downloads;
 
-    private ButtonWithMenu back;
-    private ButtonWithMenu forward;
-    private Gtk.Button reload;
-    private Gtk.Button stop;
     private Gtk.Stack reload_stop;
     private AddressBar addressbar;
 
@@ -53,45 +49,10 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
     private void init_layout() {
         tabs = new WebNotebook();
-        back = new ButtonWithMenu.from_icon_name ("go-previous-symbolic",
-                                                Gtk.IconSize.LARGE_TOOLBAR);
-        back.tooltip_text = _("Go to previously viewed page");
-        tabs.bind_property("can-go-back", back, "sensitive", BindingFlags.SYNC_CREATE);
-        forward = new ButtonWithMenu.from_icon_name ("go-next-symbolic",
-                                                Gtk.IconSize.LARGE_TOOLBAR);
-        forward.tooltip_text = _("Go to next viewed page");
-        tabs.bind_property("can-go-forward", forward, "sensitive", BindingFlags.SYNC_CREATE);
-        reload = new Gtk.Button.from_icon_name ("view-refresh-symbolic",
-                                                Gtk.IconSize.LARGE_TOOLBAR);
-        reload.tooltip_text = _("Load the page from the website again");
-        stop = new Gtk.Button.from_icon_name ("process-stop-symbolic",
-                                                Gtk.IconSize.LARGE_TOOLBAR);
-        stop.tooltip_text = _("Stop loading page");
-        reload_stop = new Gtk.Stack();
-        reload_stop.add_named (reload, "reload");
-        reload_stop.add_named (stop, "stop");
-        tabs.notify["is-loading"].connect((pspec) => {
-            if (tabs.is_loading) reload_stop.set_visible_child(stop);
-            else reload_stop.set_visible_child(reload);
-        });
-        addressbar = new Odysseus.AddressBar();
-        addressbar.tooltip_text = _("Current web address");
-        tabs.bind_property("uri", addressbar, "text", BindingFlags.SYNC_CREATE);
-        tabs.bind_property("favicon", addressbar, "primary-icon-gicon",
-                BindingFlags.SYNC_CREATE);
-        tabs.bind_property("progress", addressbar, "progress-fraction",
-                BindingFlags.SYNC_CREATE);
-
-        Gtk.HeaderBar header = new Gtk.HeaderBar();
-        header.show_close_button = true;
-        header.pack_start(back);
-        header.pack_start(forward);
-        header.pack_start(reload_stop);
-        header.set_custom_title(addressbar);
-        var appmenu = new Granite.Widgets.AppMenu(create_appmenu());
-        header.pack_end(appmenu);
-        header.set_has_subtitle(false);
+        var header = new HeaderBarWithMenus();
+        build_toolbar(header);
         set_titlebar(header);
+        add_accel_group(header.accel_group);
         tabs.bind_property("title", this, "title");
 
         var container = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
@@ -105,233 +66,108 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             return false;
         });
         container.pack_start(tabs);
-        
+
         downloads = new DownloadsBar();
         downloads.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
         container.pack_end(downloads, false);
     }
-    
-    private async void viewsource_activated() {
-        var tab = new WebTab.with_new_entry(tabs, web, yield Traits.view_source(web));
-        tabs.insert_tab(tab, -1);
-    }
 
-    private Gtk.Menu create_appmenu() {
-        var accel = new Gtk.AccelGroup();
-        var menu = new Gtk.Menu();
+    private void build_toolbar(HeaderBarWithMenus tools) {
+        var back = tools.add_item_left("go-previous-symbolic", _("Go to previously viewed page"),
+                Gdk.Key.Left, () => web.go_back(), (menu) => {
+            web.get_back_forward_list().get_back_list().@foreach((item) => {
+                var opt = menu.add(item.get_title(), () =>
+                        web.go_to_back_forward_list_item(item));
+                favicon_for_menuitem.begin(opt, item);
+            });
+        }, true);
+        tabs.bind_property("can-go-back", back, "sensitive", BindingFlags.SYNC_CREATE);
+        var forward = tools.add_item_left("go-next-symbolic", _("Go to next viewed page"),
+                Gdk.Key.Right, () => web.go_forward(), (menu) => {
+            web.get_back_forward_list().get_forward_list().@foreach((item) => {
+                var opt = menu.add(item.get_title(), () =>
+                        web.go_to_back_forward_list_item(item));
+                favicon_for_menuitem.begin(opt, item);
+            });
+        }, true);
+        tabs.bind_property("can-go-forward", forward, "sensitive", BindingFlags.SYNC_CREATE);
 
-        accel.connect(Gdk.Key.T, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            new_tab();
-            return true;
+        var reload = tools.build_tool_item("view-refresh-symbolic", _("Load this page from the website again"),
+                Gdk.Key.r, () => web.reload(), (menu) => {
+            menu.add(_("Ignore cache"), () => web.reload_bypass_cache(), Gdk.Key.r,
+                    Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK);
         });
+        var stop = tools.build_tool_item("process-stop-symbolic", _("Stop loading this page"),
+                Gdk.Key.Escape, () => web.stop_loading(), (menu) => {}, 0);
+        reload_stop = new Gtk.Stack();
+        reload_stop.add_named (reload, "reload");
+        reload_stop.add_named (stop, "stop");
+        tabs.notify["is-loading"].connect((pspec) => {
+            if (tabs.is_loading) reload_stop.set_visible_child(stop);
+            else reload_stop.set_visible_child(reload);
+        });
+        tools.pack_start(reload_stop);
 
-        // TRANSLATORS _ precedes the keyboard shortcut
-        var new_window = new Gtk.MenuItem.with_mnemonic(_("_New Window"));
-        new_window.activate.connect(() => {
-            var window = new BrowserWindow.from_new_entry();
-            window.show_all();
-        });
-        menu.add(new_window);
-        accel.connect(Gdk.Key.N, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            new_window.activate();
-            return true;
-        });
-
-        // TRANSLATORS _ precedes the keyboard shortcut
-        var open = new Gtk.MenuItem.with_mnemonic(_("_Open..."));
-        open.activate.connect(() => {
-            var chooser = new Gtk.FileChooserDialog(
-                                _("Open Local Webpage"),
-                                this,
-                                Gtk.FileChooserAction.OPEN,
-                                _("_Cancel"), Gtk.ResponseType.CANCEL,
-                                _("_Open"), Gtk.ResponseType.OK);
-            chooser.filter.add_mime_type("text/html");
-            chooser.filter.add_mime_type("application/xhtml+xml");
-            chooser.filter.add_pattern("*.html");
-            chooser.filter.add_pattern("*.htm");
-            chooser.filter.add_pattern("*.xhtml");
-
-            if (chooser.run() == Gtk.ResponseType.OK) {
-                foreach (string uri in chooser.get_uris()) {
-                    new_tab(uri);
-                }
-            }
-            chooser.destroy();
-        });
-        menu.add(open);
-        accel.connect(Gdk.Key.O, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            open.activate();
-            return true;
-        });
-
-        // TRANSLATORS _ precedes the keyboard shortcut
-        var save = new Gtk.MenuItem.with_mnemonic(_("_Save..."));
-        save.activate.connect(() => {
-            var chooser = new Gtk.FileChooserDialog(
-                                _("Save Page as"),
-                                this,
-                                Gtk.FileChooserAction.SAVE,
-                                _("_Cancel"), Gtk.ResponseType.CANCEL,
-                                _("_Save As"), Gtk.ResponseType.OK);
-
-            if (chooser.run() == Gtk.ResponseType.OK) {
-                web.save_to_file.begin(File.new_for_uri(chooser.get_uri()),
-                                                    WebKit.SaveMode.MHTML, null);
-            }
-            chooser.destroy();
-        });
-        menu.add(save);
-        accel.connect(Gdk.Key.S, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            save.activate();
-            return true;
-        });
-
-        // TRANSLATORS _ precedes the keyboard shortcut
-        var view_source = new Gtk.MenuItem.with_mnemonic(_("_View Source"));
-        view_source.activate.connect(() => {
-            viewsource_activated.begin();
-        });
-        menu.add(view_source);
-        accel.connect(Gdk.Key.U, Gdk.ModifierType.CONTROL_MASK,
-                Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                (group, acceleratable, key, modifier) => {
-            view_source.activate();
-            return true;
-        });
-
-        menu.add(new Gtk.SeparatorMenuItem());
-
-        var zoomin = new Gtk.MenuItem.with_mnemonic(_("Zoom in"));
-        zoomin.activate.connect(() => {
-            web.zoom_level += 0.1;
-        });
-        menu.add(zoomin);
-        accel.connect(Gdk.Key.plus, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            zoomin.activate();
-            return true;
-        });
-        accel.connect(Gdk.Key.equal, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            // So users can press ctrl-= instead of ctrl-shift-=
-            zoomin.activate();
-            return true;
-        });
-
-        var zoomout = new Gtk.MenuItem.with_mnemonic(_("Zoom out"));
-        zoomout.activate.connect(() => {
-            web.zoom_level -= 0.1;
-        });
-        menu.add(zoomout);
-        accel.connect(Gdk.Key.minus, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            zoomout.activate();
-            return true;
-        });
-
-        accel.connect(Gdk.Key.@0, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            web.zoom_level = 1.0;
-            return true;
-        });
-
-        menu.add(new Gtk.SeparatorMenuItem());
-
-        // TRANSLATORS _ precedes the keyboard shortcut
-        var find_in_page = new Gtk.MenuItem.with_mnemonic(_("_Find In Page..."));
-        find_in_page.activate.connect(find_in_page_cb);
-        menu.add(find_in_page);
-        accel.connect(Gdk.Key.F, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            find_in_page.activate();
-            return true;
-        });
-
-        // TRANSLATORS _ precedes the keyboard shortcut
-        var print = new Gtk.MenuItem.with_mnemonic(_("_Print..."));
-        print.activate.connect(() => {
-            var printer = new WebKit.PrintOperation(web);
-            printer.run_dialog(this);
-        });
-        menu.add(print);
-        accel.connect(Gdk.Key.P, Gdk.ModifierType.CONTROL_MASK,
-                        Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-                        (group, acceleratable, key, modifier) => {
-            print.activate();
-            return true;
-        });
-        
-        add_accel_group(accel);
-        menu.show_all();
-        return menu;
-    }
-
-    private void register_events() {
-        back.button_release_event.connect((e) => {
-            web.go_back();
-            return false;
-        });
-        forward.button_release_event.connect((e) => {
-            web.go_forward();
-            return false;
-        });
-        back.fetcher = () => {
-            var history = web.get_back_forward_list();
-            return build_history_menu(history.get_back_list());
-        };
-        forward.fetcher = () => {
-            var history = web.get_back_forward_list();
-            return build_history_menu(history.get_forward_list());
-        };
-        reload.clicked.connect(() => {web.reload();});
-        stop.clicked.connect(() => {web.stop_loading();});
+        addressbar = new Odysseus.AddressBar();
+        addressbar.tooltip_text = _("Current web address");
         addressbar.navigate_to.connect((url) => {
             web.load_uri(url);
         });
+        tabs.bind_property("uri", addressbar, "text", BindingFlags.SYNC_CREATE);
+        tabs.bind_property("favicon", addressbar, "primary-icon-gicon", BindingFlags.SYNC_CREATE);
+        tabs.bind_property("progress", addressbar, "progress-fraction", BindingFlags.SYNC_CREATE);
+        tools.set_custom_title(addressbar);
 
-        Persist.register_notebook_events(this);
-    }
-    
-    private void find_in_page_cb() {
-        var current_tab = (WebTab) tabs.current;
-        current_tab.find_in_page();
-    }
-
-    private Gtk.Menu build_history_menu(
-                List<weak WebKit.BackForwardListItem> items) {
-        var menu = new Gtk.Menu();
-
-        items.@foreach((item) => {
-            var menuItem = new Gtk.ImageMenuItem.with_label(item.get_title());
-            menuItem.activate.connect(() => {
-                web.go_to_back_forward_list_item(item);
-            });
-            favicon_for_menuitem.begin(menuItem, item);
-            menuItem.always_show_image = true;
-
-            menu.add(menuItem);
+        tools.add_item_right("open-menu", _("Menu"), 0, null, (menu) => {
+            menu.add(_("_New Window"), () => {
+                    var win = new BrowserWindow.from_new_entry();
+                    win.new_tab();
+                    win.show_all();
+                }, Gdk.Key.N);
+            menu.add(_("_Open"), () => {
+                    foreach (var uri in prompt_file(Gtk.FileChooserAction.OPEN, _("_Open"))) new_tab(uri);
+                }, Gdk.Key.O);
+            menu.add(_("_Save"), () => {
+                    foreach (var uri in prompt_file(Gtk.FileChooserAction.SAVE, _("_Save As")))
+                        web.save_to_file.begin(File.new_for_uri(uri), WebKit.SaveMode.MHTML, null);
+                }, Gdk.Key.S);
+            menu.add(_("_View Source"), () => viewsource_activated.begin(), Gdk.Key.U);
+            menu.separate();
+            var zoom_in = menu.add(_("Zoom In"), () => web.zoom_level += 0.1, Gdk.Key.plus);
+            tools.shortcut(Gdk.Key.equal, () => web.zoom_level += 0.1);
+            menu.add(_("Zoom Out"), () => web.zoom_level -= 0.1, Gdk.Key.minus);
+            menu.separate();
+            menu.add(_("_Find In Page"), () => (tabs.current as WebTab).find_in_page(), Gdk.Key.F);
+            menu.add(_("_Print"), () => new WebKit.PrintOperation(web).run_dialog(this), Gdk.Key.P);
         });
-        
-        menu.show_all();
-        return menu;
+        tools.shortcut(Gdk.Key.T, () => new_tab());
+    }
+
+    /* Implemented down here so it can be async */
+    private async void viewsource_activated() {
+        new_tab(yield Traits.view_source(web));
+    }
+
+    private SList<string> prompt_file(Gtk.FileChooserAction type, string ok_text) {
+        var chooser = new Gtk.FileChooserDialog(ok_text, this, type,
+                _("_Cancel"), Gtk.ResponseType.CANCEL,
+                ok_text, Gtk.ResponseType.OK);
+
+        var ret = new SList<string>();
+        if (chooser.run() == Gtk.ResponseType.OK) {
+            ret = chooser.get_uris();
+        }
+        chooser.destroy();
+        return ret;
+    }
+
+    private void register_events() {
+        Persist.register_notebook_events(this);
     }
 
     private async void favicon_for_menuitem(Gtk.ImageMenuItem menuitem,
                 WebKit.BackForwardListItem item) {
+        menuitem.always_show_image = true;
         try {
             var favicon_db = web.web_context.get_favicon_database();
             var favicon = yield favicon_db.get_favicon(item.get_uri(), null);

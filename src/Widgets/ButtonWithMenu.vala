@@ -213,7 +213,7 @@ namespace Odysseus {
             return true;
         }
 
-        protected new void popup_menu (Gdk.EventButton? ev = null) {
+        /*protected*/ public new void popup_menu (Gdk.EventButton? ev = null) {
             if (has_fetcher)
                 fetch_menu ();
 
