@@ -20,9 +20,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     public WebNotebook tabs;
     private DownloadsBar downloads;
 
-    private Gtk.Stack reload_stop;
-    private AddressBar addressbar;
-
     private Gtk.MenuItem restore_windows;
     public bool closing = false;
 
@@ -32,7 +29,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         this.title = "";
 
         init_layout();
-        register_events();
+        Persist.register_notebook_events(this);
         Persist.restore_window_state(this);
     }
 
@@ -99,7 +96,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         var stop = tools.build_tool_item("process-stop-symbolic", _("Stop loading this page"),
                 Gdk.Key.Escape, () => web.stop_loading(), (menu) => {}, 0);
-        reload_stop = new Gtk.Stack();
+        var reload_stop = new Gtk.Stack();
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
         tabs.notify["is-loading"].connect((pspec) => {
@@ -108,7 +105,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         tools.pack_start(reload_stop);
 
-        addressbar = new Odysseus.AddressBar();
+        var addressbar = new Odysseus.AddressBar();
         addressbar.tooltip_text = _("Current web address");
         addressbar.navigate_to.connect((url) => {
             web.load_uri(url);
@@ -161,10 +158,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         return ret;
     }
 
-    private void register_events() {
-        Persist.register_notebook_events(this);
-    }
-
     private async void favicon_for_menuitem(Gtk.ImageMenuItem menuitem,
                 WebKit.BackForwardListItem item) {
         menuitem.always_show_image = true;
@@ -204,6 +197,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             return null;
         }
     }
+
 
     public override void grab_focus() {
         web.grab_focus();
