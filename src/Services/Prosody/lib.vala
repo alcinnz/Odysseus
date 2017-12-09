@@ -637,12 +637,8 @@ namespace Odysseus.Templating.Std {
 			yield output.writes("/");
 			yield output.writes(TestTag.count.to_string());
 			yield output.writes(" passed</aside>\n<script>document.title = '");
-			yield output.writes(passed ? "Tests PASSED" : "Tests FAILED");
-			yield output.writes("';\n\t");
-			yield output.writes("document.querySelector");
-			yield output.writes("(\"link[rel*='icon']\").href = ");
-			yield output.writes("'odysseus:debugging/");
-			yield output.writes(passed ? "passed.ico" : "failed.ico");
+			yield output.writes(passed ? "[process-completed] Tests PASSED" :
+					"[process-stop] Tests FAILED");
 			yield output.writes("';</script>");
 		}
 	}

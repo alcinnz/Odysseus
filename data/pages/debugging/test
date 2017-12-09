@@ -36,7 +36,7 @@
     var parsedEnd = false
     function assertFinished() {
       if (!parsedEnd) alert("Failed to run all tests & parse last chunk")
-      if (emeSupported) document.querySelector("link[rel*='icon']").href = 'odysseus:debugging/failed.ico'
+      if (emeSupported) document.title = "[process-stop] I Am Complicit";
     }
   </script>
 </head>
