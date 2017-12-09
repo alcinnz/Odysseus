@@ -63,7 +63,6 @@ public class Odysseus.FindToolbar : Gtk.Toolbar {
             if (evt.state == Gdk.ModifierType.SHIFT_MASK) {
                 key = "<Shift>" + key;
             }
-            stdout.printf(key);
 
             switch (key) {
             case "<Shift>Return":

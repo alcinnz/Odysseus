@@ -97,7 +97,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
                     Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK);
         });
         var stop = tools.build_tool_item("process-stop-symbolic", _("Stop loading this page"),
-                Gdk.Key.Escape, () => web.stop_loading(), (menu) => {}, 0);
+                Gdk.Key.q, () => web.stop_loading(), (menu) => {});
         var reload_stop = new Gtk.Stack();
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
@@ -135,6 +135,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("Zoom Out"), () => web.zoom_level -= 0.1, Gdk.Key.minus);
             menu.separate();
             menu.add(_("_Find In Page"), () => (tabs.current as WebTab).find_in_page(), Gdk.Key.F);
+            tools.shortcut(Gdk.Key.Escape, () => (tabs.current as WebTab).close_find(), 0);
             menu.add(_("_Print"), () => new WebKit.PrintOperation(web).run_dialog(this), Gdk.Key.P);
         });
         tools.shortcut(Gdk.Key.T, () => new_tab());

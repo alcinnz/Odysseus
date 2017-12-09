@@ -170,12 +170,12 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     }
 
     public void find_in_page() {
-        if (!find.has_focus || !find.child_revealed) {
-            find.set_reveal_child(true);
-            find.get_child().grab_focus();
-        } else {
-            find.set_reveal_child(false);
-            web.grab_focus();
-        }
+        find.reveal_child = true;
+        find.get_child().grab_focus();
+    }
+
+    public void close_find() {
+        find.reveal_child = false;
+        status = "";
     }
 }
