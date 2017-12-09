@@ -88,10 +88,9 @@ public class Odysseus.HeaderBarWithMenus : Gtk.HeaderBar {
     }
     public ButtonWithMenu add_item_right(string icon, string tooltip,
             int key, owned Action? action, owned BuildMenu build_menu,
-            Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK,
             bool dynamic_menu = false) {
         var item = build_tool_item(icon, tooltip, key, action, build_menu,
-                modifier, dynamic_menu);
+                Gdk.ModifierType.CONTROL_MASK, dynamic_menu);
         pack_end(item);
         return item;
     }
