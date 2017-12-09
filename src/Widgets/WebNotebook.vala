@@ -147,6 +147,7 @@ public class Odysseus.WebNotebook : DynamicNotebook {
 
         can_go_back = web.can_go_back();
         can_go_forward = web.can_go_forward();
+        if (progress == 1.0) progress = 0.0;
     }
 
     private void disconnect_webview(WebTab tab) {
