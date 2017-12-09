@@ -14,6 +14,13 @@
 * You should have received a copy of the GNU General Public License
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
+/** A small little toolbar providing full access to WebKit's search capabilities
+    without taking much screen realestate away from webpages or appearing too
+    complex. To be added to a Gtk.Overlay.
+
+Sure this doesn't look elementary's typical find bars, which appear above the
+    tabbar, but I didn't like my experience with full-width findbars in
+    Epiphany or FireFox. */
 public class Odysseus.FindToolbar : Gtk.Toolbar {
     private WebKit.FindController controller;
     private bool smartcase;
@@ -56,6 +63,7 @@ public class Odysseus.FindToolbar : Gtk.Toolbar {
             if (evt.state == Gdk.ModifierType.SHIFT_MASK) {
                 key = "<Shift>" + key;
             }
+            stdout.printf(key);
 
             switch (key) {
             case "<Shift>Return":

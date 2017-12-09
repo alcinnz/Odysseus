@@ -54,38 +54,45 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         info.add(container);
 
 
-        // Avoid taking too much screen realestate away from the page.
-        // That's why we're using an overlay
-        var find_toolbar = new FindToolbar(web.get_find_controller());
-        find_toolbar.counted_matches.connect((search, count) => {
-            if (find.child_revealed && search != "")
-                /// Translators. "%u" will be replaced with the number of matches
-                /// while %s will be replaced with the text being searched for.
-                this.status = _("%u matches of \"%s\" found").printf(
-                        count, search);
-            else this.status = "";
-        });
-        find_toolbar.escape_pressed.connect(() => {
-            find.reveal_child = false;
-        });
-        find = new Gtk.Revealer();
-        find.notify["reveal-child"].connect((pspec) => {
-            if (!find.reveal_child) {
-                this.status = "";
-                web.get_find_controller().search_finish();
-            } else find_toolbar.grab_focus();
-        });
-        find.add(find_toolbar);
-        find.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
-        find.halign = Gtk.Align.END;
-        find.valign = Gtk.Align.START;
-        container.add_overlay(find);
-        find.show_all();
-
+        container.add_overlay(build_findbar());
         status_bar = new Granite.Widgets.OverlayBar(container);
-        status_bar.visible = false;
-        status_bar.no_show_all = true;
 
+
+        this.page.show_all();
+
+        connect_webview(parent);
+        Traits.setup_webview(this);
+        Persist.setup_tab(this, parent);
+    }
+
+    private Gtk.Widget build_findbar() {
+        var revealer = new Gtk.Revealer();
+        var find = new FindToolbar(web.get_find_controller());
+        revealer.add(find);
+
+        find.counted_matches.connect((search, count) => {
+            if (revealer.child_revealed && search != "")
+                status = _("%u matches of \"%s\" found").printf(count, search);
+            else status = "";
+        });
+        find.escape_pressed.connect(() => revealer.reveal_child = false);
+
+        revealer.notify["reveal_child"].connect((pspec) => {
+            if (!revealer.reveal_child) {
+                status = "";
+                web.get_find_controller().search_finish();
+            } else find.grab_focus();
+        });
+        revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_DOWN;
+        revealer.halign = Gtk.Align.END;
+        revealer.valign = Gtk.Align.START;
+        revealer.show_all();
+
+        this.find = revealer;
+        return revealer;
+    }
+
+    private void connect_webview(Granite.Widgets.DynamicNotebook parent) {
         web.bind_property("title", this, "label");
         web.notify["favicon"].connect((sender, property) => {
             restore_favicon();
