@@ -168,6 +168,72 @@ namespace Odysseus.Persist {
             Qsave_index.bind_int(1, i);
             Qsave_index.bind_int64(2, tab.tab_id);
             Qsave_index.step();
+            tab.order = i;
+        }
+    }
+
+    /* Tab persistance */
+    private void setup_tab(WebTab tab, Granite.Widgets.DynamicNotebook tabs) {
+        ulong on_add_registration = 0;
+        on_add_registration = tabs.tab_added.connect((added) => {
+            if (added != tab) return;
+            Idle.add(() => {
+                restore_tab_state(tab); register_tab_events(tab);
+                return false;
+            });
+            tabs.disconnect(on_add_registration);
+        });
+    }
+
+    private static Sqlite.Statement? Qsave_pinned;
+    private void register_tab_events(WebTab tab) {
+        if (Qsave_pinned == null)
+            Qsave_pinned = Database.parse(
+                    "UPDATE tab SET pinned = ? WHERE ROWID = ?;");
+        tab.notify["pinned"].connect((pspec) => {
+            var window = tab.get_toplevel() as BrowserWindow;
+            if (window == null || window.closing) return;
+            Qsave_pinned.reset();
+            Qsave_pinned.bind_int(1, tab.pinned ? 1 : 0);
+            Qsave_pinned.bind_int64(2, tab.tab_id);
+            Qsave_pinned.step();
+        });
+    }
+
+    private static Sqlite.Statement? Qsave_restore_data;
+    // Called by persist-tab-history trait.
+    public void save_restore_data(WebTab tab) {
+        if (Qsave_restore_data == null)
+            Qsave_restore_data = Database.parse(
+                    "UPDATE tab SET history = ? WHERE ROWID = ?;");
+
+        Qsave_restore_data.reset();
+        Qsave_restore_data.bind_text(1, tab.restore_data);
+        Qsave_restore_data.bind_int64(2, tab.tab_id);
+        Qsave_restore_data.step();
+    }
+
+    private static Sqlite.Statement? Qload_state;
+    private void restore_tab_state(WebTab tab) {
+        if (Qload_state == null)
+            Qload_state = Database.parse(
+                    "SELECT pinned, history, order_ FROM tab WHERE ROWID = ?");
+        Qload_state.reset();
+        Qload_state.bind_int64(1, tab.tab_id);
+        var resp = Qload_state.step();
+        assert(resp == Sqlite.ROW);
+
+        tab.pinned = Qload_state.column_int(0) != 0;
+        tab.restore_data = Qload_state.column_text(1);
+        tab.order = Qload_state.column_int(2);
+
+        var parser = new Json.Parser();
+        try {
+            parser.load_from_data(tab.restore_data);
+            var root = parser.get_root();
+            tab.web.load_uri(root.get_object().get_string_member("current"));
+        } catch (Error err) {
+            tab.web.load_uri("odysseus:errors/crashed");
         }
     }
 }

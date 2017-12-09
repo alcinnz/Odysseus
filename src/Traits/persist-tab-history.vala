@@ -21,6 +21,7 @@ namespace Odysseus.Traits {
 
         web.load_changed.connect((evt) => {
             var history = web.get_back_forward_list();
+            if (history.get_current_item() == null) return;
             var json = new Json.Builder();
 
             json.begin_object();
@@ -55,7 +56,7 @@ namespace Odysseus.Traits {
             var generator = new Json.Generator();
             generator.set_root(json.get_root());
             tab.restore_data = generator.to_data(null);
-            tab.save_restore_data();
+            Persist.save_restore_data(tab);
         });
     }
 }

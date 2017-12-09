@@ -126,17 +126,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         this.page.show_all();
 
         Traits.setup_webview(this);
-
-        ulong on_add_registration = 0;
-        on_add_registration = parent.tab_added.connect((added) => {
-            if (added != this) return;
-            Idle.add(() => {
-                restore_state(); setup_persist();
-                return false;
-            });
-
-            parent.disconnect(on_add_registration);
-        });
+        Persist.setup_tab(this, parent);
     }
 
     private static Sqlite.Statement? Qinsert_new;
@@ -188,59 +178,6 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         } else {
             find.set_reveal_child(false);
             web.grab_focus();
-        }
-    }
-
-    private static Sqlite.Statement? Qsave_pinned;
-    private void setup_persist() {
-        if (Qsave_pinned == null)
-            Qsave_pinned = Database.parse(
-                    "UPDATE tab SET pinned = ? WHERE ROWID = ?;");
-        notify["pinned"].connect((pspec) => {
-            var window = get_toplevel() as BrowserWindow;
-            if (window == null || window.closing) return;
-            Qsave_pinned.reset();
-            Qsave_pinned.bind_int(1, pinned ? 1 : 0);
-            Qsave_pinned.bind_int64(2, tab_id);
-            Qsave_pinned.step();
-        });
-    }
-
-    private static Sqlite.Statement? Qsave_restore_data;
-    // This method is here because the notify signal
-    //      isn't triggered for restore_data.
-    public void save_restore_data() {
-        if (Qsave_restore_data == null)
-            Qsave_restore_data = Database.parse(
-                    "UPDATE tab SET history = ? WHERE ROWID = ?;");
-
-        Qsave_restore_data.reset();
-        Qsave_restore_data.bind_text(1, restore_data);
-        Qsave_restore_data.bind_int64(2, tab_id);
-        Qsave_restore_data.step();
-    }
-
-    private static Sqlite.Statement? Qload_state;
-    private void restore_state() {
-        if (Qload_state == null)
-            Qload_state = Database.parse(
-                    "SELECT pinned, history, order_ FROM tab WHERE ROWID = ?");
-        Qload_state.reset();
-        Qload_state.bind_int64(1, tab_id);
-        var resp = Qload_state.step();
-        assert(resp == Sqlite.ROW);
-
-        pinned = Qload_state.column_int(0) != 0;
-        restore_data = Qload_state.column_text(1);
-        order = Qload_state.column_int(2);
-
-        var parser = new Json.Parser();
-        try {
-            parser.load_from_data(restore_data);
-            var root = parser.get_root();
-            web.load_uri(root.get_object().get_string_member("current"));
-        } catch (Error err) {
-            web.load_uri("odysseus:errors/crashed");
         }
     }
 }
