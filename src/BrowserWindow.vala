@@ -52,7 +52,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         add_accel_group(header.accel_group);
         tabs.bind_property("title", this, "title");
 
-        var container = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+        var container = new Gtk.Grid();
+        container.orientation = Gtk.Orientation.VERTICAL;
         add(container);
 
         // Don't show tabbar when fullscreen
@@ -62,11 +63,12 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
             return false;
         });
-        container.pack_start(tabs);
+        container.add(tabs);
 
         downloads = new DownloadsBar();
+        downloads.expand = false;
         downloads.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
-        container.pack_end(downloads, false);
+        container.add(downloads);
     }
 
     private void build_toolbar(HeaderBarWithMenus tools) {
