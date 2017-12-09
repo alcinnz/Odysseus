@@ -37,14 +37,6 @@ namespace Odysseus.Traits {
         }
 
         render_alternate_html.begin(tab, "errors/" + error, uri);
-        try {
-            var path = "/" + Path.build_path("/",
-                    "io", "github", "alcinnz", "Odysseus", "odysseus:",
-                    "errors", error + ".icon");
-            var res = resources_lookup_data(path, 0);
-            var icon = Templating.ByteUtils.to_string(res).chomp();
-            tab.icon = new ThemedIcon.with_default_fallbacks(icon + "-symbolic");
-        } catch (Error e) { /* pass */ }
     }
 
     // Utility to handle a form submit on an error page. 

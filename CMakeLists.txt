@@ -62,7 +62,6 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Widgets/HeaderBarWithMenus.vala
 
     src/Services/pages.vala
-    src/Services/icons.vala
     src/Services/Prosody/byteutils.vala
     src/Services/Prosody/data.vala
     src/Services/Prosody/diff.vala
