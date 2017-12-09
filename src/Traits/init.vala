@@ -34,6 +34,7 @@ namespace Odysseus.Traits {
     }
 
     public void setup_webview(WebTab tab) {
+        setup_settings(tab.web);
         setup_report_errors(tab);
         setup_autodownload(tab.web);
         setup_alerts(tab);
