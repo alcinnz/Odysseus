@@ -34,9 +34,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         }
     }
 
-    public WebTab(Granite.Widgets.DynamicNotebook parent,
-                  WebKit.WebView? related = null,
-                  int64 tab_id) {
+    public WebTab(Granite.Widgets.DynamicNotebook parent, int64 tab_id) {
         this.tab_id = tab_id;
 
         var user_content = new WebKit.UserContentManager();
@@ -100,7 +98,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         web.bind_property("is-loading", this, "working");
 
         web.create.connect((nav_action) => {
-            var tab = new WebTab.with_new_entry(parent, web, nav_action.get_request().uri);
+            var tab = new WebTab.with_new_entry(parent, nav_action.get_request().uri);
             parent.insert_tab(tab, -1);
             parent.current = tab;
             return tab.web;
@@ -129,16 +127,10 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         web.load_changed.connect((load_evt) => {
             Persist.on_browse();
         });
-
-        this.page.show_all();
-
-        Traits.setup_webview(this);
-        Persist.setup_tab(this, parent);
     }
 
     private static Sqlite.Statement? Qinsert_new;
     public WebTab.with_new_entry(Granite.Widgets.DynamicNotebook parent,
-                  WebKit.WebView? related = null,
                   string uri = "odysseus:home") {
         var history_json = @"{\"current\": \"$(uri.escape())\"}";
         if (Qinsert_new == null)
@@ -151,12 +143,11 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         Qinsert_new.bind_text(2, history_json);
 
         var resp = Qinsert_new.step();
-        this(parent, related, Database.get_database().last_insert_rowid());
+        this(parent, Database.get_database().last_insert_rowid());
     }
 
     public WebTab.rebuild_existing(Granite.Widgets.DynamicNotebook parent,
-                    string title, Icon? icon, string history_json,
-                    WebKit.WebView? related = null) {
+                    string title, Icon? icon, string history_json) {
         if (Qinsert_new == null)
             Qinsert_new = Database.parse("""INSERT
                     INTO tab(window_id, order_, pinned, history)
@@ -167,7 +158,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         Qinsert_new.bind_text(2, history_json);
 
         var resp = Qinsert_new.step();
-        this(parent, related, Database.get_database().last_insert_rowid());
+        this(parent, Database.get_database().last_insert_rowid());
 
         this.label = title;
         if (icon != null) this.icon = icon;

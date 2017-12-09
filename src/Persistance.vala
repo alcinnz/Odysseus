@@ -110,7 +110,7 @@ namespace Odysseus.Persist {
                 "SELECT ROWID FROM tab WHERE window_id = ? ORDER BY order_ ASC;");
         Qtabs.bind_int64(1, win.window_id);
         while (Qtabs.step() == Sqlite.ROW) {
-            win.tabs.insert_tab(new WebTab(win.tabs, null, Qtabs.column_int64(0)), -1);
+            win.tabs.insert_tab(new WebTab(win.tabs, Qtabs.column_int64(0)), -1);
         }
 
         win.tabs.current = win.tabs.get_tab_by_index(stmt.column_int(5));
