@@ -185,8 +185,10 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     }
 
     public void restore_favicon() {
-        var fav = surface_to_pixbuf(web.get_favicon());
-        icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
+        if (web.get_favicon() != null) {
+            var fav = surface_to_pixbuf(web.get_favicon());
+            icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
+        } else icon = new ThemedIcon("web-browser-symbolic");
     }
 
     public void find_in_page() {
