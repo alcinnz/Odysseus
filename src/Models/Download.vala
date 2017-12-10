@@ -34,9 +34,11 @@ public class Odysseus.Download : Object {
     }
     
     public signal void received_data();
+    public signal void finished();
     
     public Download(WebKit.Download download) {
         this.download = download;
+        download.decide_destination.connect(decide_destination);
         
         download.received_data.connect((len) => received_data());
         download.finished.connect(() => {
@@ -46,6 +48,7 @@ public class Odysseus.Download : Object {
                 move(download.destination, destination);
 
             received_data();
+            finished();
             completed = true;
             if (auto_open) open();
         });
@@ -94,6 +97,9 @@ public class Odysseus.Download : Object {
     }
 
     // Downloads collection
+    public static File folder = File.new_for_path(
+            Environment.get_user_special_dir(UserDirectory.DOWNLOAD));
+
     private static DownloadSet? downloads;
     public static DownloadSet get_downloads() {
         if (downloads == null) downloads = new DownloadSet();
@@ -109,5 +115,16 @@ public class Odysseus.Download : Object {
     
     public virtual signal void cancel() {
         download.cancel();
+    }
+
+    public bool decide_destination(string filename) {
+        var path = folder.get_child(filename);
+        var i = 0;
+        while (path.query_exists())
+            path = folder.get_child("%s%i".printf(filename, i++));
+
+        // This method only works before the download is in operation.
+        download.set_destination(path.get_path());
+        return true;
     }
 }

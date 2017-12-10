@@ -16,9 +16,10 @@
 */
 public class Odysseus.DownloadsBar : Gtk.Revealer {
     private Gtk.FlowBox mainbox;
+    private Gtk.Box box;
 
     public DownloadsBar() {
-        var box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 5);
+        box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 5);
         this.add(box);
 
         mainbox = new Gtk.FlowBox();
@@ -27,17 +28,22 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         mainbox.row_spacing = 10;
         box.pack_start(mainbox);
 
-        var close_button = new Gtk.Button.from_icon_name("window-close");
-        close_button.clicked.connect(() => {
-            set_reveal_child(false);
-        });
-        close_button.relief = Gtk.ReliefStyle.NONE;
-        close_button.tooltip_text = _("Close downloads bar");
-        box.pack_end(close_button, false, false);
+        add_action("folder-download", _("View all downloads"),
+                () => Granite.Services.System.open(Download.folder));
+        add_action("window-close", _("Close downloads bar"), () => set_reveal_child(false));
 
         set_reveal_child(false);
 
         populate_downloads();
+    }
+
+    private delegate void Action();
+    private void add_action(string icon, string help, owned Action action) {
+        var button = new Gtk.Button.from_icon_name(icon);
+        button.clicked.connect(() => action());
+        button.relief = Gtk.ReliefStyle.NONE;
+        button.tooltip_text = help;
+        box.pack_end(button, false, false);
     }
 
     public void add_entry(Gtk.Widget widget) {
