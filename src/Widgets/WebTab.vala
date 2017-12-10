@@ -81,7 +81,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         });
         find.escape_pressed.connect(() => revealer.reveal_child = false);
 
-        revealer.notify["reveal_child"].connect((pspec) => {
+        revealer.notify["reveal-child"].connect((pspec) => {
             if (!revealer.reveal_child) {
                 default_status = status = "";
                 web.get_find_controller().search_finish();

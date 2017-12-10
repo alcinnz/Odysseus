@@ -118,6 +118,12 @@ public class Odysseus.Download : Object {
     }
 
     public bool decide_destination(string filename) {
+        var Downloads = File.new_for_path(
+                Environment.get_user_special_dir(UserDirectory.DOWNLOAD));
+        // THIS IS NOT Y10K COMPLIANT! (http://longnow.org/clock/)
+        // Well in the unlikely event this is relevant, it's unlikely to cause serious problems.
+        folder = Downloads.get_child(new DateTime.now_local().format("%Y-%m-%d"));
+
         var path = folder.get_child(filename);
         var i = 0;
         while (path.query_exists())

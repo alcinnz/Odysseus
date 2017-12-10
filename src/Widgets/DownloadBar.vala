@@ -32,8 +32,14 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
                 () => Granite.Services.System.open(Download.folder));
         add_action("window-close", _("Close downloads bar"), () => set_reveal_child(false));
 
-        set_reveal_child(false);
-
+        reveal_child = false;
+        notify["child-revealed"].connect((pspec) => {
+            if (child_revealed) populate_downloads();
+            else {
+                mainbox.@foreach((widget) => widget.destroy);
+                Download.get_downloads().disconnect(on_add);
+            }
+        });
         populate_downloads();
     }
 
@@ -51,11 +57,12 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         mainbox.add(widget);
     }
 
+    private ulong on_add = 0;
     public void populate_downloads() {
         foreach (var download in Download.get_downloads().downloads) {
             add_entry(new DownloadButton(download));
         }
-        Download.get_downloads().add.connect((download) => {
+        on_add = Download.get_downloads().add.connect((download) => {
             add_entry(new DownloadButton(download));
         });
     }
