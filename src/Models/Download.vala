@@ -108,9 +108,7 @@ public class Odysseus.Download : Object {
 
     public static void setup_ctx(WebKit.WebContext ctx) {
         var downloads = get_downloads();
-        ctx.download_started.connect((download) => {
-            downloads.add(new Download(download));
-        });
+        ctx.download_started.connect((download) => downloads.add(new Download(download)));
     }
     
     public virtual signal void cancel() {

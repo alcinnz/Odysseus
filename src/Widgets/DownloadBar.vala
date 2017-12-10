@@ -16,17 +16,20 @@
 */
 public class Odysseus.DownloadsBar : Gtk.Revealer {
     private Gtk.FlowBox mainbox;
-    private Gtk.Box box;
+    private Gtk.Grid box;
 
     public DownloadsBar() {
-        box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 5);
+        box = new Gtk.Grid();
+        box.orientation = Gtk.Orientation.HORIZONTAL;
+        box.column_spacing = 5;
         this.add(box);
 
         mainbox = new Gtk.FlowBox();
         mainbox.margin = 5;
         mainbox.column_spacing = 10;
         mainbox.row_spacing = 10;
-        box.pack_start(mainbox);
+        mainbox.expand = true;
+        box.add(mainbox);
 
         add_action("folder-download", _("View all downloads"),
                 () => Granite.Services.System.open(Download.folder));
@@ -49,7 +52,7 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         button.clicked.connect(() => action());
         button.relief = Gtk.ReliefStyle.NONE;
         button.tooltip_text = help;
-        box.pack_end(button, false, false);
+        box.add(button);
     }
 
     public void add_entry(Gtk.Widget widget) {

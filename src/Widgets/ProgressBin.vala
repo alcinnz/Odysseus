@@ -32,10 +32,6 @@ public class Odysseus.ProgressBin : Gtk.Bin {
         child_ctx.render_background(cr, 0, 0, width, height);
 
         child_ctx.save();
-        // TODO Works, at the moment, on elementary OS without this,
-        //      but needs fixing.
-        //      The goal: set a transparent background before rendering child.
-        //child_ctx.set_background(?);
         
         // Render progress
         cr.rectangle(0, 0, width * progress, height);

@@ -65,9 +65,7 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
     }
     
     private void connect_events() {
-        download.received_data.connect(() => {
-            update_data();
-        });
+        download.received_data.connect(() =>  update_data());
 
         button.activate.connect(() => {
             if (download.completed) download.open();
