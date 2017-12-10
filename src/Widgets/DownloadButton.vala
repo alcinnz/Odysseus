@@ -113,20 +113,11 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
         // TRANSLATORS _ precedes shortcut key
         var save_item = new Gtk.MenuItem.with_mnemonic(_("_Save As"));
         save_item.activate.connect(() => {
-            var chooser = new Gtk.FileChooserDialog(
-                        _("Save Download to:"),
-                        (Gtk.Window) get_toplevel(),
-                        Gtk.FileChooserAction.SAVE,
-                        // TRANSLATORS _ precedes the shortcut key
-                        _("_Cancel"), Gtk.ResponseType.CANCEL,
-                        // TRANSLATORS _ precedes the shortcut key
-                        _("_Save As"), Gtk.ResponseType.OK);
-            chooser.set_filename(download.destination);
-
-            if (chooser.run() == Gtk.ResponseType.OK) {
-                download.destination = chooser.get_uri();
-            }
-            chooser.destroy();
+            var win = get_toplevel() as BrowserWindow;
+            if (win == null) return;
+            foreach (var uri in win.prompt_file(Gtk.FileChooserAction.SAVE, _("_Save As"),
+                    download.destination))
+                download.destination = uri;
         });
         menu.add(save_item);
         
