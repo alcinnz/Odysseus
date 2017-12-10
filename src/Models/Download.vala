@@ -65,8 +65,6 @@ public class Odysseus.Download : Object {
                     Gtk.DialogFlags.DESTROY_WITH_PARENT,
                     Gtk.MessageType.ERROR,
                     Gtk.ButtonsType.CLOSE,
-                    // TRANSLATORS "%s is replaced with the filepath
-                    // the user specified they wanted their download to be at
                     _("Error moving download to %s.\nIt has been left in your Downloads folder") + "\n\n%s",
                     new_path, e.message);
             dlg.run();
@@ -76,24 +74,22 @@ public class Odysseus.Download : Object {
 
     public string estimate() {
         var progress = download.estimated_progress;
-        var estimate = (download.get_elapsed_time()/progress) * (1-progress);
+        int estimate = (int) ((download.get_elapsed_time()/progress) * (1-progress));
 
         if (estimate < 60) {
-            /// TRANSLATORS: "%s" seconds, shown in download button.
-            /// "%s" will be replaced with a whole number of seconds.
-            return _("%ss").printf("%.0f".printf(estimate));
-        } else if (estimate < 120) {
-            /// TRANSLATORS: "%s" minutes, shown in download button.
-            /// "%s" will be replaced with a whole number of minutes.
-            return _("%sm").printf("%.0f".printf(estimate / 60));
+            /// TRANSLATORS: "%i" seconds
+            return _("%is").printf((int) estimate);
         } else {
-            /// TRANSLATORS: "%s" hours and "%s" minutes,
-            /// shown in download button.
-            /// The first %s will be replaced with a whole number of hours,
-            /// and the second will be replaced with a whole number of minutes.
-            return _("%sh %sm").printf(
-                    "%.0f".printf(estimate / 120),
-                    "%.0f".printf(estimate / 60));
+            int minutes = (int) estimate / 60;
+            if (minutes < 60) {
+                /// TRANSLATORS: "%i" minutes
+                return _("%im").printf((int) minutes);
+            } else {
+                var hours = (int) minutes / 60;
+                minutes = (int) minutes % 60;
+                /// TRANSLATORS: "%i" hours and "%i" minutes,
+                return _("%ih %im").printf(hours, minutes);
+            }
         }
     }
 

@@ -99,13 +99,11 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
     private void create_menu() {
         menu = new Gtk.Menu();
 
-        // TRANSLATORS _ precedes shortcut key
         open_item = new Gtk.MenuItem.with_mnemonic(_("_Open"));
         open_item.activate.connect(() => download.open());
         open_item.sensitive = false;
         menu.add(open_item);
 
-        // TRANSLATORS _ precedes shortcut key
         open_automatic_item = new Gtk.CheckMenuItem.with_mnemonic(_("Open _Automatically"));
         open_automatic_item.active = true;
         menu.add(open_automatic_item);
@@ -123,7 +121,6 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
         
         menu.add(new Gtk.SeparatorMenuItem());
 
-        // TRANSLATORS _ precedes shortcut key
         var cancel_item = new Gtk.MenuItem.with_mnemonic(_("_Cancel"));
         cancel_item.activate.connect(() => download.cancel());
         menu.add(cancel_item);
