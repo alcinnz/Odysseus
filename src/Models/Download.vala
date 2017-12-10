@@ -99,17 +99,6 @@ public class Odysseus.Download : Object {
     // Downloads collection
     public static File folder = File.new_for_path(
             Environment.get_user_special_dir(UserDirectory.DOWNLOAD));
-
-    private static DownloadSet? downloads;
-    public static DownloadSet get_downloads() {
-        if (downloads == null) downloads = new DownloadSet();
-        return downloads;
-    }
-
-    public static void setup_ctx(WebKit.WebContext ctx) {
-        var downloads = get_downloads();
-        ctx.download_started.connect((download) => downloads.add(new Download(download)));
-    }
     
     public virtual signal void cancel() {
         download.cancel();

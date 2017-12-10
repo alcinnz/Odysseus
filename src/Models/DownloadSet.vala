@@ -26,4 +26,15 @@ public class Odysseus.DownloadSet : Object {
         item.cancel.connect(() => downloads.remove(item));
         item.finished.connect(() => downloads.remove(item));
     }
+
+    private static DownloadSet? instance;
+    public static DownloadSet get_downloads() {
+        if (instance == null) instance = new DownloadSet();
+        return instance;
+    }
+
+    public static void setup_ctx(WebKit.WebContext ctx) {
+        var downloads = get_downloads();
+        ctx.download_started.connect((download) => downloads.add(new Download(download)));
+    }
 }

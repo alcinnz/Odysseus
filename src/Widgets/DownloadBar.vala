@@ -40,7 +40,7 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
             if (child_revealed) populate_downloads();
             else {
                 mainbox.@foreach((widget) => widget.destroy);
-                Download.get_downloads().disconnect(on_add);
+                DownloadSet.get_downloads().disconnect(on_add);
             }
         });
         populate_downloads();
@@ -62,15 +62,11 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
 
     private ulong on_add = 0;
     public void populate_downloads() {
-        foreach (var download in Download.get_downloads().downloads) {
+        foreach (var download in DownloadSet.get_downloads().downloads) {
             add_entry(new DownloadButton(download));
         }
-        on_add = Download.get_downloads().add.connect((download) => {
+        on_add = DownloadSet.get_downloads().add.connect((download) => {
             add_entry(new DownloadButton(download));
         });
-    }
-
-    public static void setup_context(WebKit.WebContext ctx) {
-        Download.setup_ctx(ctx);
     }
 }
