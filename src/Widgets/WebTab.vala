@@ -17,7 +17,7 @@
 public class Odysseus.WebTab : Granite.Widgets.Tab {
     public WebKit.WebView web; // To allow it to be wrapped in layout views.
     private Gtk.Revealer find;
-    public InfoContainer info; // for prompts.
+    public Overlay.InfoContainer info; // for prompts.
 
     public int64 tab_id;
     public int order = -1;
@@ -48,7 +48,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
                 "web-context", get_web_context(),
                 "user-content-manager", user_content);
 
-        this.info = new InfoContainer();
+        this.info = new Overlay.InfoContainer();
         info.expand = true;
         this.page = info;
 
@@ -71,7 +71,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     private Gtk.Widget build_findbar() {
         var revealer = new Gtk.Revealer();
-        var find = new FindToolbar(web.get_find_controller());
+        var find = new Overlay.FindToolbar(web.get_find_controller());
         revealer.add(find);
 
         find.counted_matches.connect((search, count) => {

@@ -18,7 +18,7 @@
     above some other content.
 
 Used by select traits (Alert & Permit). */
-public class Odysseus.InfoContainer : Gtk.Grid {
+public class Odysseus.Overlay.InfoContainer : Gtk.Grid {
     private Gtk.InfoBar info;
     private Gtk.Revealer revealer;
     private Gtk.Label body;

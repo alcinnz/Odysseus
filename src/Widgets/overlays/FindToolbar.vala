@@ -21,7 +21,7 @@
 Sure this doesn't look elementary's typical find bars, which appear above the
     tabbar, but I didn't like my experience with full-width findbars in
     Epiphany or FireFox. */
-public class Odysseus.FindToolbar : Gtk.Toolbar {
+public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
     private WebKit.FindController controller;
     private bool smartcase;
     private WebKit.FindOptions options;

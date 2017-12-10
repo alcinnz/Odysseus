@@ -24,7 +24,7 @@ namespace Odysseus.Traits {
         // TODO Communicate page-level modality.
 
         var msg = dlg.get_message();
-        var opts = new InfoContainer.MessageOptions();
+        var opts = new Overlay.InfoContainer.MessageOptions();
         switch (dlg.get_dialog_type()) {
             case WebKit.ScriptDialogType.ALERT:
                 opts.type = Gtk.MessageType.INFO; opts.show_cancel = false;

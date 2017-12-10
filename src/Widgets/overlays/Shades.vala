@@ -18,7 +18,7 @@
     Used to indicate that window.alert(), etc JavaScript calls are synchronous.
 
 This modality ofcourse isn't ideal, but it's there whether we like it or not.*/
-public class Odysseus.Shades : Gtk.Widget {
+public class Odysseus.Overlay.Shades : Gtk.Widget {
     construct {
         expand = true;
         events = Gdk.EventMask.ALL_EVENTS_MASK;

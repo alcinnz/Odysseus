@@ -25,7 +25,7 @@ As such this UI will be reimplemented later. */
 namespace Odysseus.Traits {
     private async bool confirm_permit(WebTab tab, WebKit.PermissionRequest req) {
         var msg = "";
-        var opts = new InfoContainer.MessageOptions();
+        var opts = new Overlay.InfoContainer.MessageOptions();
         opts.type = Gtk.MessageType.WARNING;
         opts.ok_text = "Allow"; opts.cancel_text = "Deny";
 
