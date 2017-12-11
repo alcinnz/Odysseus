@@ -20,7 +20,8 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
     private Gtk.ListBox list;
     private int selected = 0;
 
-    public int max_width = 840; // Something large, so it fills all available space
+    public int max_width {get; set;
+            default = 840;} // Something large, so it fills all available space
 
     public signal void navigate_to(string url);
 
@@ -34,6 +35,7 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
 
         build_dropdown();
         connect_events();
+        notify["max-width"].connect(queue_resize);
     }
 
     /* This approximates the expand to fill effect. */
