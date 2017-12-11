@@ -45,14 +45,11 @@ namespace Odysseus.Traits {
             sources.unset(request.get_uri());
 
             var data = Templating.ByteUtils.create_map<Templating.Data.Data>();
-            data[Templating.ByteUtils.from_string("source")] =
-                    new Templating.Data.Substr(resource.code);
-            data[Templating.ByteUtils.from_string("title")] =
-                    new Templating.Data.Literal(resource.title);
+            data[Templating.ByteUtils.from_string("source")] = new Templating.Data.Substr(resource.code);
+            data[Templating.ByteUtils.from_string("title")] = new Templating.Data.Literal(resource.title);
             var url = request.get_uri();
             url = url["source:".length:url.length];
-            data[Templating.ByteUtils.from_string("url")] =
-                    new Templating.Data.Literal(url);
+            data[Templating.ByteUtils.from_string("url")] = new Templating.Data.Literal(url);
 
             try {
                 Templating.ErrorData? ignored = null;
@@ -62,27 +59,16 @@ namespace Odysseus.Traits {
                 // This is the reason for the hack: InputStreamWriter
                 var stream = new Templating.InputStreamWriter();
                 request.finish(stream, -1, "text/html");
-                template.exec.begin(new Templating.Data.Mapping(data), stream,
-                        (obj, res) => {
-                    stream.close_write();
-                });
+                template.exec.begin(new Templating.Data.Mapping(data), stream, (obj, res) => stream.close_write());
             } catch (Error err) {
                // Don't bother reporting errors better
                request.finish_error(err); 
-            }
-        } else if (request.get_uri() == "source:favicon.ico") {
-            try {
-                var stream = resources_open_stream("/io/github/alcinnz/Odysseus/odysseus:/special/viewsource.ico", 0);
-                request.finish(stream, -1, "image/x-icon");
-            } catch (Error e) {
-                request.finish_error(e);
             }
         } else {
             // If we're not viewing alternate HTML under this schema,
             //      close any tabs that have persisted. 
             var response = _("Please go through the \"View Source\" menu item.");
-            var stream = new MemoryInputStream.from_bytes(
-                    Templating.ByteUtils.from_string(response));
+            var stream = new MemoryInputStream.from_bytes(Templating.ByteUtils.from_string(response));
             request.finish(stream, response.length, "text/html");
         }
     }

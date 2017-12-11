@@ -24,7 +24,7 @@ namespace Odysseus.Traits {
 
                 if (!response_decision.is_mime_type_supported() ||
                         /* Show videos in Audience */
-                        mime_type.has_prefix("video/")) {
+                        mime_type.has_prefix("video/") || mime_type == "application/ogg") {
                     var appinfo = AppInfo.get_default_for_type(mime_type, false);
                     if (appinfo.supports_uris()) {
                         // Probably means it supports HTTP URIs.

@@ -30,6 +30,8 @@ namespace Odysseus.Traits {
         sec.register_uri_scheme_as_secure("odysseus");
         sec.register_uri_scheme_as_no_access("odysseus");
         ctx.register_uri_scheme("source", handle_source_uri);
+
+        configure_context(ctx);
         DownloadSet.setup_ctx(ctx);
     }
 

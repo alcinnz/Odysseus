@@ -92,7 +92,7 @@ namespace Odysseus.Traits {
             string error = "protocol";
             if (!netman.network_available) error = "network";
             else if (uri.has_prefix("https://")) {
-                // Try falling back to HTTP
+                // Try falling back to HTTP. This is vital because we load HTTPS by default.
                 web.load_uri("http" + uri["https".length:uri.length]);
                 return true;
             } else {

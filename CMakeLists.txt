@@ -71,6 +71,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/Prosody/loader.vala
     src/Services/Prosody/i18n.vala
     src/Services/Completer.vala
+    src/Services/globals.vala
     src/Services/database/database.vala
     src/Services/database/util.vala
 
