@@ -20,6 +20,8 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
     private Gtk.ListBox list;
     private int selected = 0;
 
+    public int max_width = 840; // Something large, so it fills all available space
+
     public signal void navigate_to(string url);
 
     construct {
@@ -37,7 +39,7 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
     /* This approximates the expand to fill effect. */
     public override void get_preferred_width(out int min_width, out int nat_width) {
         min_width = 20; // Meh
-        nat_width = 848; // Something large, so it fills this space if possible
+        nat_width = max_width;
     }
     
     private void connect_events() {
@@ -67,14 +69,6 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
             case Gdk.Key.KP_Down:
                 selected++;
                 break;
-            /*case Gdk.Key.Page_Up:
-                list.move_cursor(Gtk.MovementStep.PAGES, -1);
-                stdout.printf("\tPage up was pressed!\n");
-                return true;
-            case Gdk.Key.Page_Down:
-                list.move_cursor(Gtk.MovementStep.PAGES, 1);
-                stdout.printf("\tPage down was pressed!\n"); 
-                return true;*/
             default:
                 return false;
             }
@@ -97,7 +91,6 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
         });
         
         list.row_activated.connect((row) => {
-            stdout.printf("\tRow clicked!\n");
             string url;
             row.@get("url", out url);
             navigate_to(url);
@@ -132,9 +125,7 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
         popover.modal = false;
         popover.position = Gtk.PositionType.BOTTOM;
 
-        this.size_allocate.connect((box) => {
-            scrolled.width_request = box.width;
-        });
+        this.size_allocate.connect((box) => scrolled.width_request = box.width);
     }
     
     public Gtk.Widget build_dropdown_row(string url, string label) {

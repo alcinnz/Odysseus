@@ -108,6 +108,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         tools.pack_start(reload_stop);
 
         var addressbar = new Odysseus.Header.AddressBar();
+        tools.size_allocate.connect((box) => addressbar.max_width = box.width);
         addressbar.tooltip_text = _("Current web address");
         addressbar.navigate_to.connect((url) => web.load_uri(url));
         tabs.bind_property("uri", addressbar, "text", BindingFlags.SYNC_CREATE);
