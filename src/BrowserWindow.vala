@@ -75,8 +75,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         var back = tools.add_item_left("go-previous-symbolic", _("Go to previously viewed page"),
                 Gdk.Key.Left, () => web.go_back(), (menu) => {
             web.get_back_forward_list().get_back_list().@foreach((item) => {
-                var opt = menu.add(item.get_title(), () =>
-                        web.go_to_back_forward_list_item(item));
+                var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
                 favicon_for_menuitem.begin(opt, item);
             });
         }, true);
@@ -84,8 +83,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         var forward = tools.add_item_left("go-next-symbolic", _("Go to next viewed page"),
                 Gdk.Key.Right, () => web.go_forward(), (menu) => {
             web.get_back_forward_list().get_forward_list().@foreach((item) => {
-                var opt = menu.add(item.get_title(), () =>
-                        web.go_to_back_forward_list_item(item));
+                var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
                 favicon_for_menuitem.begin(opt, item);
             });
         }, true);
@@ -97,7 +95,9 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
                     Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK);
         });
         var stop = tools.build_tool_item("process-stop-symbolic", _("Stop loading this page"),
-                Gdk.Key.q, () => web.stop_loading(), (menu) => {});
+                Gdk.Key.q, () => web.stop_loading(), (menu) => {
+            menu.add(_("Stop And Reload"), () => {web.stop_loading(); web.reload();});
+        });
         var reload_stop = new Gtk.Stack();
         reload_stop.add_named (reload, "reload");
         reload_stop.add_named (stop, "stop");
