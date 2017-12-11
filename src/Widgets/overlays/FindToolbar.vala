@@ -133,16 +133,14 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
             find_in_page();
         });
         options_menu.add(match_case);
-        var ignore_case = new Gtk.RadioMenuItem.with_label(
-                                match_case.get_group(), _("Ignore Uppercase"));
+        var ignore_case = new Gtk.RadioMenuItem.with_label(match_case.get_group(), _("Ignore Uppercase"));
         ignore_case.activate.connect(() => {
             smartcase = false;
             options |= WebKit.FindOptions.CASE_INSENSITIVE;
             find_in_page();
         });
         options_menu.add(ignore_case);
-        var auto_case = new Gtk.RadioMenuItem.with_label(
-                                ignore_case.get_group(), _("Auto"));
+        var auto_case = new Gtk.RadioMenuItem.with_label(ignore_case.get_group(), _("Auto"));
         auto_case.active = true;
         auto_case.activate.connect(() => {
             smartcase = true;
@@ -170,8 +168,7 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
         var camelCase = new Gtk.CheckMenuItem.with_label(_("Match CamelCase"));
         camelCase.active = false;
         camelCase.toggled.connect(() => {
-            toggle_option(WebKit.FindOptions.TREAT_MEDIAL_CAPITAL_AS_WORD_START,
-                            camelCase.active);
+            toggle_option(WebKit.FindOptions.TREAT_MEDIAL_CAPITAL_AS_WORD_START, camelCase.active);
         });
         options_menu.add(camelCase);
 
@@ -209,8 +206,7 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
         var flags = options;
         if (smartcase) {
             // AKA match case if it's mixed.
-            if (search.text.down() == search.text
-                    || search.text.up() == search.text) {
+            if (search.text.down() == search.text || search.text.up() == search.text) {
                 flags |= WebKit.FindOptions.CASE_INSENSITIVE;
             }
         }
@@ -220,11 +216,8 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
     }
 
     private void toggle_option(WebKit.FindOptions opt, bool active) {
-        if (active) {
-            options |= opt;
-        } else {
-            options &= ~opt;
-        }
+        if (active) options |= opt;
+        else options &= ~opt;
 
         find_in_page();
     }
