@@ -94,15 +94,15 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
         add_widget(next);
 
         // TODO handle case where this nonstandard icon doesn't exist
-        var options = new Gtk.ToolButton(null, "");
-        options.icon_name = "open-menu-symbolic";
+        var options = new Header.ButtonWithMenu.from_icon_name(
+                "open-menu-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         options.tooltip_text = _("View search options");
-        var options_menu = build_options_menu();
-        options.clicked.connect(() => {
-            options_menu.popup(null, null, position_menu_below, 0,
-                                Gtk.get_current_event_time());
+        options.menu = build_options_menu();
+        options.button_release_event.connect(() => {
+            options.popup_menu();
+            return true;
         });
-        menu_button = options;
+        options.relief = Gtk.ReliefStyle.NONE;
         add_widget(options);
         smartcase = true;
 
@@ -174,30 +174,6 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
 
         options_menu.show_all();
         return options_menu;
-    }
-
-    private void position_menu_below(Gtk.Menu menu,
-                                    out int x, out int y, out bool push_in) {
-        Gtk.Allocation menu_allocation;
-        menu.get_allocation (out menu_allocation);
-
-        menu_button.get_window ().get_origin (out x, out y);
-
-        Gtk.Allocation allocation;
-        menu.get_allocation (out allocation);
-
-        /* position center */
-        x += allocation.x;
-        x += menu_allocation.width / 2;
-        x += allocation.width / 2;
-
-        int width, height;
-        menu.get_size_request (out width, out height);
-
-        y += allocation.y;
-        y += 16;
-
-        push_in = true;
     }
 
     public void find_in_page() {

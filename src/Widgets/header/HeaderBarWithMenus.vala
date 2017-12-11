@@ -44,7 +44,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
         var item = new ButtonWithMenu.from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR);
         item.tooltip_text = tooltip;
 
-        Action normalized_action = () => {item.popup_menu();};
+        Action normalized_action = () => item.popup_menu();
         if (action != null) normalized_action = action;
         item.button_release_event.connect(() => {
             normalized_action();
