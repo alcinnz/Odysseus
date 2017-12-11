@@ -27,8 +27,9 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
     private WebKit.FindOptions options;
 
     private Gtk.Entry search;
-    private Gdk.RGBA normal_color;
     private Gtk.ToolButton menu_button;
+    private Gtk.ToolButton next;
+    private Gtk.ToolButton prev;
 
     public signal void counted_matches(string search, uint matche_count);
     public signal void escape_pressed();
@@ -42,7 +43,6 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
         search = new Gtk.Entry();
         search.primary_icon_name = "edit-find";
         search.placeholder_text = _("Find in page...");
-        find_normal_color();
         search.changed.connect(() => {
             find_in_page();
             search.secondary_icon_name = search.text_length > 0 ?
@@ -82,12 +82,12 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
         });
         add_widget(search);
 
-        var prev = new Gtk.ToolButton(null, "");
+        prev = new Gtk.ToolButton(null, "");
         prev.icon_name = "go-up-symbolic";
         prev.tooltip_text = _("Find previous match");
         prev.clicked.connect(controller.search_previous);
         add_widget(prev);
-        var next = new Gtk.ToolButton(null, "");
+        next = new Gtk.ToolButton(null, "");
         next.icon_name = "go-down-symbolic";
         next.tooltip_text = "Find next match";
         next.clicked.connect(controller.search_next);
@@ -229,22 +229,15 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
         find_in_page();
     }
 
-    private void find_normal_color() {
-        var entry_context = new Gtk.StyleContext();
-        var entry_path = new Gtk.WidgetPath();
-        entry_path.append_type(typeof (Gtk.Widget));
-        entry_context.set_path(entry_path);
-        entry_context.add_class("entry");
-        this.normal_color = entry_context.get_color(Gtk.StateFlags.FOCUSED);
-    }
-
     private void found_text_cb(uint match_count) {
-        search.override_color(Gtk.StateFlags.NORMAL, normal_color);
+        search.get_style_context().remove_class(Gtk.STYLE_CLASS_ERROR);
+        prev.sensitive = next.sensitive = true;
     }
 
     private void failed_to_find_text_cb() {
         if (search.text != "")
-            search.override_color(Gtk.StateFlags.NORMAL, {1.0, 0.0, 0.0, 1.0});
+            search.get_style_context().add_class(Gtk.STYLE_CLASS_ERROR);
+        prev.sensitive = next.sensitive = false;
     }
 
     /* Without this event handler, pressing next & prev gives counts of 1 */
