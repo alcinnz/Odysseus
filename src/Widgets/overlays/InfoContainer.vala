@@ -43,7 +43,7 @@ public class Odysseus.Overlay.InfoContainer : Gtk.Grid {
         this.info = new Gtk.InfoBar();
         this.info.get_content_area().add(container);
         this.info.show_close_button = false;
-        this.info.close.connect(() => {this.revealer.reveal_child = false;});
+        this.info.close.connect(() => this.revealer.reveal_child = false);
 
         this.ok_button = this.info.add_button("OK", 1);
         this.cancel_button = this.info.add_button("Cancel", 0);
