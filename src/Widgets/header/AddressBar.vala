@@ -32,8 +32,8 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
         this.hexpand = true;
         this.halign = Gtk.Align.FILL;
 
-        connect_events();
         build_dropdown();
+        connect_events();
     }
 
     /* This approximates the expand to fill effect. */
@@ -132,10 +132,8 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
         var row = new Gtk.Grid();
         row.row_spacing = 3;
         row.margin = 5;
-        row.attach(build_label("font_size='large' font_weight='bold'", label),
-                0, 0);
-        row.attach(build_label(
-                "font_size='small' color='blue' underline='single'", url),
+        row.attach(build_label("font_size='large' font_weight='bold'", label), 0, 0);
+        row.attach(build_label("font_size='small' color='blue' underline='single'", url),
                 0, 1);
         return new CompletionRow(row, url);
     }
