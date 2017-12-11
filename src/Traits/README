@@ -1,3 +1,22 @@
-Various behaviours added ontop of WebKit.WebView's. 
+Various independant behaviours added ontop of webviews. 
 
-These take the infrastructure offered by Services and register event handlers on the WebView to add useful behaviours. 
+These build ontop of Webkit.WebView, the Services modules, and/or possibly WebTab
+to add various useful behaviours. They all (with the exception of
+navigate/view-source) run some code (through the init.vala module) for every
+new WebView and/or WebContext and are not called into in any other way.
+
+They are essentially plugins with a very limitted but capable API to build on. 
+
+## Groupings
+
+These traits are organized by how the extend the webview or other UIs:
+
+<dl>
+  <dt>autocomplete</dt>
+  <dd>These extend the Completer service rather than a WebView.</dd>
+  <dt>navigate</dt>
+  <dd>These handle page loads via a range of signals on the WebView.</dd>
+  <dd>These may include custom protocols, decide_policy, load_failed, & load_changed.</dd>
+  <dt>decorate</dt>
+  <dd>These respond to other signals on the webview and may trigger changes to the WebTab.</dd>
+</dl>

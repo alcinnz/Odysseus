@@ -75,18 +75,18 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/database/database.vala
     src/Services/database/util.vala
 
-    src/Traits/viewsource.vala
-    src/Traits/errors.vala
+    src/Traits/navigate/viewsource.vala
+    src/Traits/navigate/errors.vala
     src/Traits/init.vala
-    src/Traits/autodownload.vala
-    src/Traits/alert.vala
-    src/Traits/permit.vala
-    src/Traits/imply-http.vala
-    src/Traits/search/duckduckgo.vala
-    src/Traits/search/ddg-autocomplete.vala
-    src/Traits/persist-tab-history.vala
-    src/Traits/settings.vala
-    src/Traits/internal-favicons.vala
+    src/Traits/navigate/autodownload.vala
+    src/Traits/decorate/alert.vala
+    src/Traits/decorate/permit.vala
+    src/Traits/autocomplete/imply-http.vala
+    src/Traits/autocomplete/duckduckgo.vala
+    src/Traits/autocomplete/ddg-autocomplete.vala
+    src/Traits/navigate/persist-tab-history.vala
+    src/Traits/decorate/settings.vala
+    src/Traits/decorate/internal-favicons.vala
 
     src/Models/Download.vala
     src/Models/DownloadSet.vala
