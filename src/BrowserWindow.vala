@@ -134,6 +134,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             var zoom_in = menu.add(_("Zoom In"), () => web.zoom_level += 0.1, Gdk.Key.plus);
             tools.shortcut(Gdk.Key.equal, () => web.zoom_level += 0.1);
             menu.add(_("Zoom Out"), () => web.zoom_level -= 0.1, Gdk.Key.minus);
+            tools.shortcut(Gdk.Key.@0, () => web.zoom_level = 1.0);
             menu.separate();
             menu.add(_("_Find In Page"), () => (tabs.current as WebTab).find_in_page(), Gdk.Key.F);
             tools.shortcut(Gdk.Key.Escape, () => (tabs.current as WebTab).close_find(), 0);
