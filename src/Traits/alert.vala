@@ -54,11 +54,20 @@ namespace Odysseus.Traits {
             var loop = new MainLoop();
             bool ret = true;
             bool confirm = true; bool prompt = false;
+
+            // Disallow interacting with the page while dialog is active.
+            tab.web.sensitive = false;
+            tab.status = _("Close the message to continue interacting with this page");
+
             show_alert.begin(tab, dlg, (obj, res) => {
                 ret = show_alert.end(res, out confirm, out prompt);
                 loop.quit();
             });
             loop.run();
+
+            // Dialog disappeared, reenable page.
+            tab.web.sensitive = true;
+            tab.status = tab.default_status;
 
             if (confirm) dlg.confirm_set_confirmed(ret);
             if (prompt && ret) dlg.prompt_set_text(tab.info.response);
