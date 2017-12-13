@@ -36,9 +36,9 @@ namespace Odysseus.Traits {
     }
 
     public void setup_webview(WebTab tab) {
+        setup_autodownload(tab.web); // This most come first, so as to cancel errors.
         setup_settings(tab.web);
         setup_report_errors(tab);
-        setup_autodownload(tab.web);
         setup_alerts(tab);
         setup_permits(tab);
         setup_persist_tab_history(tab);

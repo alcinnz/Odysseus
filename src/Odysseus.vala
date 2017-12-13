@@ -38,15 +38,15 @@ public class Odysseus.Application : Granite.Application {
 
     public void initialize() {
         // Setup application-unique resources.
-        Odysseus.Database.setup_database();
+        var is_first_start = Odysseus.Database.setup_database();
         Odysseus.Traits.setup_autosuggest();
 
         // Create main application window, upon restore failure.
-        if (!Persist.restore_application()) {
+        if (is_first_start) {
             var window = new BrowserWindow.from_new_entry();
             window.new_tab("https://alcinnz.github.io/Odysseus-recommendations/");
             window.show_all();
-        }
+        } else Persist.restore_application();
     }
 
     public override void open(File[] files, string hint) {

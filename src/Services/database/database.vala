@@ -35,8 +35,8 @@ namespace Odysseus.Database {
         }
     }
 
-    public void setup_database() {
-        if (main_db != null) return; // Doesn't need initialization.
+    public bool setup_database() {
+        if (main_db != null) return false; // Doesn't need initialization.
 
         var db_path = Path.build_path(Path.DIR_SEPARATOR_S,
                 Environment.get_user_config_dir(), "odysseus", "ui.sqlite");
@@ -46,8 +46,9 @@ namespace Odysseus.Database {
 
         // Upgrade the database from whatever version it was
         var errmsg = "";
+        int version = 0;
         err = main_db.exec("PRAGMA user_version;", (n, values, columns) => {
-            var version = int.parse(values[0]);
+            version = int.parse(values[0]);
             stdout.printf("%i\n", version);
             var raw_data = Templating.ByteUtils.create_map<Templating.Data.Data>();
             raw_data[Templating.ByteUtils.from_string("v")] =
@@ -69,5 +70,6 @@ namespace Odysseus.Database {
         }, out errmsg);
         if (err != Sqlite.OK)
             error("Failed to read UI database version! " + errmsg);
+        return version == 0;
     }
 }
