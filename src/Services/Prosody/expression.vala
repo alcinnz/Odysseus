@@ -32,14 +32,14 @@ namespace Odysseus.Templating.Expression {
         public int index;
         public virtual Expression nud() throws SyntaxError {
             throw new SyntaxError.INVALID_ARGS(
-                "[Argument #%i] Expected 'not', '(', or some value, not '%s'.",
-                index, name);
+                    "[Argument #%i] Expected 'not', '(', or some value, not '%s'.",
+                    index, name);
         }
 
         public virtual Expression led(Expression left) throws SyntaxError {
             throw new SyntaxError.INVALID_ARGS(
-                "[Argument #%i] Expected an infix operator, not '%s'.",
-                index, name);
+                    "[Argument #%i] Expected an infix operator, not '%s'.",
+                    index, name);
         }
 
         /* Evaluation */
@@ -61,9 +61,7 @@ namespace Odysseus.Templating.Expression {
             context = ctx;
             return eval();
         }
-        public virtual double eval() {
-            return 0.0;
-        }
+        public virtual double eval() {return 0.0;}
     }
 
     public abstract class Infix : Expression {
@@ -108,9 +106,7 @@ namespace Odysseus.Templating.Expression {
                 if (arg.length == 0)
                     throw new SyntaxError.INVALID_ARGS(
                             "Somehow got nil argument at index %i.", index);
-                if (arg.length >= 1) {
-                    packed |= arg[0];
-                }
+                if (arg.length >= 1) packed |= arg[0];
                 if (arg.length >= 2) {
                     packed <<= 8;
                     packed |= arg[1];
@@ -123,9 +119,7 @@ namespace Odysseus.Templating.Expression {
                     packed <<= 8;
                     packed |= arg[3];
                 }
-                if (arg.length >= 5) {
-                    packed = 0; // Flag for couldn't fit
-                }
+                if (arg.length >= 5) packed = 0; // Flag for couldn't fit
 
                 // Now comparisons are done by matching the ASCII hexcode.
                 if (packed == 0x6F72) /* "or" */
@@ -310,9 +304,7 @@ namespace Odysseus.Templating.Expression {
         public override int lbp {get {return 200;}}
         public override string name {get {return "[variable]";}}
 
-        public override Expression nud() {
-            return this;
-        }
+        public override Expression nud() {return this;}
 
         public override double eval_type(TypePreference type, Data.Data ctx) {
             var val = exp.eval(ctx);
@@ -322,23 +314,26 @@ namespace Odysseus.Templating.Expression {
         }
     }
 
-    // The following are largely only useful for use in plural forms, but other templates may use it
+    /* The following are largely only useful for use in plural forms, but other templates may use it */
     private class Modulo : Infix {
         public override int lbp {get {return 120;}}
         public override string name {get {return "%";}}
-        // Vala doesn't link to the appropriate libraries to implement fmod,
-        // So implement it ourselves, hoping that GCC optimizes this to the CPU's modulo instruction where it exists.
-        public override double eval() {return x - (x/y)*y;}
+        public override double eval() {
+            var X = (int) x, Y = (int) y;
+            return X % Y;
+        }
     }
 
     private class Ternary : Expression {
         public override int lbp {get {return 5;}}
         public override string name {get {return "if";}}
         public override Expression led(Expression left) throws SyntaxError {
-            this.right = parser.expression(lbp);
-            if (this.right.name != "else") throw new SyntaxError.INVALID_ARGS("Expected 'else' operator not found");
-            this.left = this.right.left;
-            this.right.left = left;
+            right = parser.expression(lbp);
+            if (right.name != "else")
+                throw new SyntaxError.INVALID_ARGS("Expected 'else' operator not found");
+            var cond = right.left;
+            right.left = left;
+            left = cond;
             return this;
         }
 

@@ -23,8 +23,7 @@ namespace Odysseus.Templating {
 
     public Template get_for_resource(string resource, ref ErrorData? error_data)
             throws SyntaxError, Error {
-        if (template_cache == null)
-            template_cache = new Gee.HashMap<string, Template>();
+        if (template_cache == null) template_cache = new Gee.HashMap<string, Template>();
         if (cached_keys == null) {
             var array = new string[CACHE_SIZE];
             cached_keys = new Gee.ArrayList<string>.wrap(array);
@@ -45,10 +44,8 @@ namespace Odysseus.Templating {
                 cached_keys.insert(0, resource);
             } catch (SyntaxError err) {
                 int line_number; int line_offset; int err_start; int err_end;
-                parser.get_current_token(out line_number, out line_offset, 
-                        out err_start, out err_end);
-                error_data = new ErrorData(err, line_number, line_offset,
-                        err_start, err_end, bytes);
+                parser.get_current_token(out line_number, out line_offset, out err_start, out err_end);
+                error_data = new ErrorData(err, line_number, line_offset, err_start, err_end, bytes);
                 throw err;
             }
         } else {
@@ -60,6 +57,7 @@ namespace Odysseus.Templating {
         return template_cache[resource];
     }
 
+    private static Bytes b(string text) {return ByteUtils.from_string(text);}
     public class ErrorData : Data.Mapping {
         public TagBuilder tag;
         public string[] error_types = {"Unclosed String",
@@ -67,22 +65,17 @@ namespace Odysseus.Templating {
                 "Unknown Tag", "Unknown Filter",
                 "Invalid Arguments for Tag", "Unclosed Block Tag"};
         public ErrorData(SyntaxError err, int line_number, int line_offset,
-                int error_start, int error_end, Bytes source)
-                throws SyntaxError {
-            data[ByteUtils.from_string("err-code")] =
-                    new Data.Literal(error_types[err.code]);
-
-            data[ByteUtils.from_string("err-text")] =
-                    new Data.Literal(err.message);
+                int error_start, int error_end, Bytes source) throws SyntaxError {
+            data[b("err-code")] = new Data.Literal(error_types[err.code]);
+            data[b("err-text")] = new Data.Literal(err.message);
 
             var err_token = source.slice(error_start, error_end);
             if (Token.get_type(err_token) == TokenType.TAG) {
                 var err_tag = new Data.Substr(Token.get_args(err_token).next());
-                data[ByteUtils.from_string("err-tag")] = err_tag;
+                data[b("err-tag")] = err_tag;
             }
 
-            data[ByteUtils.from_string("line-number")] =
-                    new Data.Literal(line_number);
+            data[b("line-number")] = new Data.Literal(line_number);
 
             var tag = new ErrorTag(line_offset, error_start, error_end, source);
             this.tag = new ErrorTagBuilder(tag);
@@ -105,8 +98,7 @@ namespace Odysseus.Templating {
         private int err_end;
         private Bytes source;
 
-        public ErrorTag(int line_offset, int error_start, int error_end,
-                Bytes source) {
+        public ErrorTag(int line_offset, int error_start, int error_end, Bytes source) {
             this.line_start = line_offset;
             this.line_end = line_offset;
             ByteUtils.find_next(source, {'\n'}, ref this.line_end);
@@ -120,7 +112,7 @@ namespace Odysseus.Templating {
             var err_ranges = new Gee.ArrayList<Diff.Duo>();
             err_ranges.add(new Diff.Duo(err_start, err_end));
             // FIXME segfaults
-            yield Diff.render_ranges(source.slice(line_start, line_end),
+            yield Diff.render_ranges(source[line_start:line_end],
                     err_ranges, "strong", stream);
         }
     }

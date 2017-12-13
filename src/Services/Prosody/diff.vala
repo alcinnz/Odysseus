@@ -119,16 +119,13 @@ namespace Odysseus.Templating.Diff {
 		var last_end = 0;
 		foreach (var range in ranges) {
 			if (last_end != range.first)
-				yield ByteUtils.write_escaped_html(
-				        source.slice(last_end, range.first), output);
+				yield ByteUtils.write_escaped_html(source[last_end:range.first], output);
 			last_end = range.last;
 
 			yield output.writes(@"<$tagname>");
-			yield ByteUtils.write_escaped_html(
-			        source.slice(range.first, range.last), output);
+			yield ByteUtils.write_escaped_html(source[range.first:range.last], output);
 			yield output.writes(@"</$tagname>");
 		}
-		yield ByteUtils.write_escaped_html(
-		        source.slice(last_end, source.length), output);
+		yield ByteUtils.write_escaped_html(source[last_end:source.length], output);
 	}
 }

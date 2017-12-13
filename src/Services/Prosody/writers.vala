@@ -77,10 +77,9 @@ namespace Odysseus.Templating {
                 data.append(text);
 
                 // Encourage read & write cycles to alternate
-                // Adjust the priority to keep only a few steps ahead of
-                //      read_async().
-                Idle.add(write.callback, data.length() > 4 ?
-                        Priority.LOW : Priority.DEFAULT_IDLE);
+                // Adjust the priority to keep only a few steps ahead of read_async().
+                Idle.add(write.callback,
+                        data.length() > 4 ? Priority.LOW : Priority.DEFAULT_IDLE);
                 yield;
             }
             else error("Wrote to closed InputStreamWriter");
@@ -92,8 +91,7 @@ namespace Odysseus.Templating {
             closed = true;
         }
 
-        public override bool close(Cancellable? cancellable = null)
-                throws IOError {
+        public override bool close(Cancellable? cancellable = null) throws IOError {
             closed = true;
             return true;
         }
@@ -102,8 +100,7 @@ namespace Odysseus.Templating {
                 Cancellable? cancellable = null) throws IOError{
             var loop = new MainLoop();
             AsyncResult? result = null;
-            read_async.begin(buffer, Priority.DEFAULT, cancellable,
-                    (obj, res) => {
+            read_async.begin(buffer, Priority.DEFAULT, cancellable, (obj, res) => {
                 result = res;
                 loop.quit();
             });
@@ -134,11 +131,9 @@ namespace Odysseus.Templating {
                 var chunk = data.data;
                 var remaining = buffer.length - bytes_read;
                 if (chunk.length > remaining) {
-                    data.data = chunk.slice(remaining, chunk.length);
-                    chunk = chunk.slice(0, remaining);
-                } else {
-                    data.remove_link(data);
-                }
+                    data.data = chunk[remaining:chunk.length];
+                    chunk = chunk[0:remaining];
+                } else data.remove_link(data);
 
                 // Read the data to the buffer
                 builder.append(chunk.get_data());
@@ -154,9 +149,7 @@ namespace Odysseus.Templating {
             calling Posix.memcpy(). */
     private struct ArrayBuilder {
         int write_head;
-        public ArrayBuilder(uint8[] target) {
-            write_head = (int) target;
-        }
+        public ArrayBuilder(uint8[] target) {write_head = (int) target;}
 
         // NOTE caller should ensure we don't write past the end of the array.
         //      or the program may segfault.

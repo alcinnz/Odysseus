@@ -49,8 +49,7 @@ namespace Odysseus.Services {
         
         construct {
             foreach (var cls in delegate_classes) {
-                var completer = Object.@new(cls, "completer", this)
-                        as CompleterDelegate;
+                var completer = Object.@new(cls, "completer", this) as CompleterDelegate;
                 if (completer != null) delegates.add(completer);
             }
         }
