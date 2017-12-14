@@ -313,7 +313,6 @@ namespace Odysseus.Templating {
             Gee.List<Template> template_nodes = new ArrayList<Template>();
             foreach (var token in lex) {
                 Template node = null;
-                bool exit = false;
                 switch (Token.get_type(token)) {
                 case TokenType.TEXT:
                     node = new Echo(token);
@@ -334,11 +333,9 @@ namespace Odysseus.Templating {
                             ended_on = Token.get_args(token);
                             source_text = lex.text.slice(start, lex.last_start);
 
-                            exit = true;
-                            break;
+                            return new Block(template_nodes.to_array(), startline);
                         }
                     }
-                    if (exit) break;
 
                     if (tag_lib != null && !local_tag_lib.has_key(name) &&
                             tag_lib.has_key(name))
@@ -352,7 +349,6 @@ namespace Odysseus.Templating {
                 case TokenType.COMMENT:
                     continue;
                 }
-                if (exit) break;
 
                 template_nodes.add(node);
             }
@@ -394,7 +390,6 @@ namespace Odysseus.Templating {
     }
     public abstract class Template : Object {
         // Used to help the user debug unbalanced tags
-        public virtual Block[] get_blocks() {return new Block[0];}
         public virtual string get_name() {return "";}
 
         // main method

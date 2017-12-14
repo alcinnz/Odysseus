@@ -31,12 +31,23 @@ namespace Odysseus.Services {
         raw_url[b("password")] = new Templating.Data.Literal(parser.password);
         raw_url[b("path")] = new Templating.Data.Literal(parser.path);
         raw_url[b("port")] = new Templating.Data.Literal(parser.port);
-        // TODO parse this into a map
-        // In doing so each key should be exposed as both a collection
-        // and singular string.
-        raw_url[b("query")] = new Templating.Data.Literal(parser.query);
         raw_url[b("scheme")] = new Templating.Data.Literal(parser.scheme);
         raw_url[b("user")] = new Templating.Data.Literal(parser.user);
+
+        var query = Templating.ByteUtils.create_map<Templating.Data.Data>();
+        raw_url[b("query")] = new Templating.Data.Mapping(query, parser.query);
+        foreach (var keyvalue in parser.query.split("&")) {
+            var segments = keyvalue.split("=", 2);
+            if (segments.length == 0) {
+                warning("Malformed query string '%s'", parser.query);
+                continue;
+            }
+            var key = segments[0];
+            var val = new Templating.Data.Literal(true);
+            if (segments.length > 1) val = new Templating.Data.Literal(segments[1]);
+            /* TODO handle multi-valued keys. */
+            query[b(key)] = val;
+        }
 
         // Predominantly used by the bad-certificate error page.
         if (url.has_prefix("https://")) {
