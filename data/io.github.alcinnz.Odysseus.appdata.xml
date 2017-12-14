@@ -3,18 +3,46 @@
   <id>io.github.alcinnz.Odysseus</id>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0+</project_license>
+  <name>Odysseus</name>
+  <_summary>elementary OS's very own web browser</summary>
 
   <description>
-    <_p>Surf the knowledge, entertainment, and services on the Web — in total elementary style.</_p>
+    <_p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</_p>
+    <_p>Features:</_p>
+    <ul>
+      <_li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</_li>
+      <_li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</_li>
+      <_li>Quickly jump to any page in your tab history.</_li>
+      <_li>Videos, PDFs, and more open in their respective apps.</_li>
+      <_li>Keeps your downloads folder organized by date.</_li>
+      <_li>Quickly and flexibly find text in webpages.</_li>
+      <_li>DuckDuckGo integration with search autocompletion.</_li>
+      <_li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</_li>
+      <_li>And more to come…</_li>
+    </ul>
   </description>
   <screenshots>
     <screenshot type="default">
+      <_caption>Open to http://www.in2greece.com/english/historymyth/mythology/names/odysseus.htm</_caption>
       <image>
         https://raw.githubusercontent.com/alcinnz/Odysseus/master/data/screenshot.png
       </image>
     </screenshot>
   </screenshots>
+
+  <developer_name>Adrian Cochrane</developer_name>
   <url type="homepage">https://github.io/alcinnz/Odysseus</url>
   <url type="help">https://github.io/alcinnz/Odysseus-support</url>
   <url type="bugtracker">https://github.com/alcinnz/Odysseus/issues</url>
+  <update_contact>alcinnz@lavabit.com</update_contact>
+
+  <custom>
+    <value key="x-appcenter-color-primary">#f7785b</value>
+    <value key="x-appcenter-color-primary-text">#000</value>
+    <value key="x-appcenter-suggested-price">1</value>
+  </custom>
+
+  <provides>
+    <binary>io.github.alcinnz.odysseus</binary>
+  </provides>
 </component>
