@@ -825,13 +825,6 @@ namespace Odysseus.Templating.Std {
         }
     }
 
-    private class IRIEncodeFilter : Filter {
-        public override Data.Data filter0(Data.Data a) {
-            // TODO Call into libsoup
-            return a;
-        }
-    }
-
     private class JoinFilter : Filter {
         public override Data.Data filter(Data.Data list, Data.Data sep) {
             var sep_str = sep.to_string();
