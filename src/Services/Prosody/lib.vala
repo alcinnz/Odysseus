@@ -39,8 +39,8 @@ namespace Odysseus.Templating.Std {
     }
 
     private class AutoescapeBuilder : TagBuilder, Object {
-        public static Gee.Map<Bytes,Gee.Map<char,string>>? _modes;
-        public static Gee.Map<Bytes,Gee.Map<char,string>> modes {
+        public static Gee.Map<Bytes,Gee.Map<uint8,string>>? _modes;
+        public static Gee.Map<Bytes,Gee.Map<uint8,string>> modes {
             get {
                 if (_modes == null)
                     _modes = ByteUtils.create_map<Gee.Map<char,string>>();
@@ -818,7 +818,7 @@ namespace Odysseus.Templating.Std {
             return new Data.Substr(escape.end(result));
         }
 
-        private async Bytes escape(Bytes text, Gee.Map<char,string> escapes) {
+        private async Bytes escape(Bytes text, Gee.Map<uint8,string> escapes) {
             var capture = new CaptureWriter();
             yield ByteUtils.write_escaped(text, escapes, capture);
             return capture.grab_data();
@@ -959,10 +959,10 @@ namespace Odysseus.Templating.Std {
 
 
 
-    public Gee.Map<char,string> escape_html;
-    public Gee.Map<char,string> escape_csv;
-    public Gee.Map<char,string> escape_js_string;
-    public Gee.Map<char,string> escape_uri;
+    public Gee.Map<uint8,string> escape_html;
+    public Gee.Map<uint8,string> escape_csv;
+    public Gee.Map<uint8,string> escape_js_string;
+    public Gee.Map<uint8,string> escape_uri;
 
     public void register_standard_library() {
         var autoescape = new AutoescapeBuilder();
@@ -1000,35 +1000,22 @@ namespace Odysseus.Templating.Std {
 
         AutoescapeBuilder.modes[ByteUtils.from_string("off")] =
                 Gee.Map.empty<char,string>();
-        escape_html = new Gee.HashMap<char,string>();
-        escape_html['<'] = "&lt;";
-        escape_html['>'] = "&gt;";
-        escape_html['&'] = "&amp;";
+        escape_html = ByteUtils.build_escapes("<>&'\"",
+                "&lt;", "&gt;", "&amp;", "&apos;", "&quot");
         AutoescapeBuilder.modes[ByteUtils.from_string("html")] = escape_html;
-        escape_csv = new Gee.HashMap<char,string>();
-        escape_csv['\''] = "\\'";
-        escape_csv['"'] = "\\\"";
+        escape_csv = ByteUtils.build_escapes("'\"", "\\'", "\\\"");
         AutoescapeBuilder.modes[ByteUtils.from_string("csv")] = escape_csv;
         // These escape codes taken from Django
         // https://github.com/django/django/blob/9718fa2e8abe430c3526a9278dd976443d4ae3c6/django/utils/html.py#L51
-        escape_js_string = new Gee.HashMap<char,string>();
-        escape_js_string['\\'] = "\\u005C";
-        escape_js_string['\''] = "\\u0027";
-        escape_js_string['"'] = "\\u0022";
-        escape_js_string['>'] = "\\u003E";
-        escape_js_string['<'] = "\\u003C";
-        escape_js_string['&'] = "\\u0026";
-        escape_js_string['='] = "\\u003D";
-        escape_js_string['-'] = "\\u002D";
-        escape_js_string[';'] = "\\u003B";
-        escape_js_string['\x2028'] = "\\u2028";
-        escape_js_string['\x2029'] = "\\u2029";
+        escape_js_string = ByteUtils.build_escapes("\\'\"><&=-;\x2028\x2029'",
+                "\\u005C", "\\u0027", "\\u0022", "\\u003E", "\\u003C", "\\u0026",
+                "\\u003D", "\\u002D", "\\u003B", "\\u2028", "\\u2029");
         // Escape every ASCII character with a value less than 32.
         for (char z = 0; z < 32; z++)
             escape_js_string[z] = "\\u%04X".printf(z);
         AutoescapeBuilder.modes[ByteUtils.from_string("js-string")] = escape_js_string;
-        escape_uri = new Gee.HashMap<char,string>();
-        escape_uri['\0'] = "iriencode"; // forwards to filter for special logic.
+        escape_uri = ByteUtils.build_escapes(":/?&=#",
+                "%3A", "%2F", "%3F", "%26", "%3D", "%23");
         AutoescapeBuilder.modes[ByteUtils.from_string("url")] = escape_uri;
         AutoescapeBuilder.modes[ByteUtils.from_string("uri")] = escape_uri;
 

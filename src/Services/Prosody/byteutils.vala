@@ -100,12 +100,15 @@ namespace Odysseus.Templating.ByteUtils {
     }
 
     async void write_escaped_html(Bytes text, Writer output) {
-        var mappings = new Gee.HashMap<char, string>();
-        mappings['<'] = "&lt;";
-        mappings['>'] = "&gt;";
-        mappings['&'] = "&amp;";
-
+        var mappings = build_escapes("<>&", "&lt;", "&gt;", "&amp;");
         yield write_escaped(text, mappings, output);
+    }
+
+    Gee.Map<uint8, string> build_escapes(string needles, ...) {
+        var subs = va_list();
+        var escapes = new Gee.HashMap<uint8, string>();
+        foreach (var needle in needles.data) escapes[needle] = subs.arg();
+        return escapes;
     }
 
     bool equals_str(Bytes? bytes, string chars) {

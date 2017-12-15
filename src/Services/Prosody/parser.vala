@@ -279,7 +279,7 @@ namespace Odysseus.Templating {
 
     public class Parser : Object {
         public Lexer lex;
-        public Map<char,string> escapes;
+        public Map<uint8,string> escapes;
         public Map<Bytes, TagBuilder> local_tag_lib;
 
         public Parser(Bytes source) {
@@ -407,7 +407,7 @@ namespace Odysseus.Templating {
     public class Variable : Template {
         private Bytes[] path;
         private Data.Data? literal;
-        public Map<char,string> escapes; // public so firstOf can apply it.
+        public Map<uint8,string> escapes; // public so firstOf can apply it.
 
         /* Useful global constants to be lazily compiled */
         // Placeholder filter argument when non's specified.
@@ -447,18 +447,18 @@ namespace Odysseus.Templating {
         }
         private FilterCall[] filters;
 
-        public Variable.from_args(WordIter args, Map<char,string> escapes) throws SyntaxError {
+        public Variable.from_args(WordIter args, Map<uint8,string> escapes) throws SyntaxError {
             this(args.next(), escapes);
         }
 
         public Variable.with(Data.Data d) {
             this.literal = d;
             this.path = new Bytes[0];
-            this.escapes = new Gee.HashMap<char,string>();
+            this.escapes = new Gee.HashMap<uint8,string>();
             filters = new FilterCall[0];
         }
 
-        public Variable(Bytes text, Map<char,string>? escapes = null) throws SyntaxError {
+        public Variable(Bytes text, Map<uint8,string>? escapes = null) throws SyntaxError {
             var filters = smart_split(text, "|");
             var base_text = filters.next_value();
 
@@ -506,10 +506,7 @@ namespace Odysseus.Templating {
 
                 Variable filter_arg;
                 if (arg_text != null) filter_arg = new Variable(arg_text, escapes);
-                else if (name.compare(force_escape) == 0) {
-                    // Special case |force-escape to apply the given escapes.
-                    filter_arg = new Variable.with(new Data.Literal(escapes));
-                } else filter_arg = nilvar;
+                else filter_arg = nilvar;
 
                 compiled_filters.add(new FilterCall(cb, filter_arg));
             }
