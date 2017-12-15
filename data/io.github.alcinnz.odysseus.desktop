@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Odysseus
-_Comment=Browse knowledge, entertainment, and services on The Web
+_Comment=Surf knowledge, entertainment, and services on The Web
 Exec=io.github.alcinnz.odysseus %U
 Icon=odysseus-web
 Terminal=false

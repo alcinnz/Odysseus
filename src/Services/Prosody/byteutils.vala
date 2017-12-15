@@ -22,19 +22,6 @@
         in place of strings. In doing so it allocates and
         copies around significantly less data for the performance win. */
 namespace Odysseus.Templating.ByteUtils {
-    public bool re_match(Regex re, Bytes text, out MatchInfo matches)
-            throws RegexError {
-        return re.match_full((string) text.get_data(), text.length, 0, 0, out matches);
-    }
-
-    public Bytes? re_fetch(MatchInfo matches, Bytes text) {
-        int start;
-        int end;
-        if (matches.fetch_pos(0, out start, out end))
-            return text.slice(start, end);
-        return null;
-    }
-
     private StringBuilder? to_string__builder = null;
     public unowned string to_string(Bytes? text) {
         if (text == null) return "";
@@ -52,19 +39,6 @@ namespace Odysseus.Templating.ByteUtils {
     
     public Bytes from_string(string text) {
         return new Bytes(text.data);
-    }
-
-    // TODO remove...
-    public int count(Bytes text, char split, out int last_offset = null) {
-        var count = 0;
-        last_offset = 0;
-        for (var index = 0; index < text.length; index++) {
-            if (text[index] == split) {
-                count++;
-                last_offset = index;
-            }
-        }
-        return count;
     }
     
     public Bytes[] split(Bytes? text, char split) {
