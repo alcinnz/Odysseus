@@ -71,7 +71,7 @@ namespace Odysseus.Templating.Data.JSON {
 
         public override void @foreach(Data.Foreach cb) {
             foreach (var key in inner.get_members())
-                if (cb(ByteUtils.from_string(key))) break;
+                if (cb(b(key))) break;
         }
 
         public override int to_int(out bool is_length = null) {

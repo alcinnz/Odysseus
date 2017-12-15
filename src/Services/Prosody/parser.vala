@@ -242,7 +242,7 @@ namespace Odysseus.Templating {
             warning("Failed to register tag. Name '%s' cannot start with a quote.", name);
             return false;
         }
-        var key = ByteUtils.from_string(name);
+        var key = b(name);
         if (tag_lib.has_key(key)) {
             warning("Failed to register tag. Tag '%s' already exists.", name);
             return false;
@@ -263,7 +263,7 @@ namespace Odysseus.Templating {
     public bool register_filter(string name, Filter filter) {
         if (filter_lib == null) filter_lib = ByteUtils.create_map();
 
-        var key = ByteUtils.from_string(name);
+        var key = b(name);
         if (filter_lib.has_key(key)) {
             warning("Failed to register filter. Filter '|%s' already exists.", name);
             return false;
@@ -304,7 +304,7 @@ namespace Odysseus.Templating {
 
         public Template parse(string endtags_str = "", out WordIter? ended_on = null,
                 out Bytes? source_text = null) throws SyntaxError {
-            var endtags = ByteUtils.split(ByteUtils.from_string(endtags_str), ' ');
+            var endtags = ByteUtils.split(b(endtags_str), ' ');
             ended_on = null; // default out value
             source_text = null; // default out value
             var start = lex.last_end;
@@ -358,7 +358,7 @@ namespace Odysseus.Templating {
 
         public Bytes scan_until(string endtags_str, out WordIter? ended_on)
                 throws SyntaxError {
-            var endtags = ByteUtils.split(ByteUtils.from_string(endtags_str), ' ');
+            var endtags = ByteUtils.split(b(endtags_str), ' ');
             var start = lex.last_end;
             ended_on = null; // Default out value
 
@@ -385,7 +385,7 @@ namespace Odysseus.Templating {
     public interface Writer : Object {
         public abstract async void write(Bytes text);
         public virtual async void writes(string text) {
-            yield write(ByteUtils.from_string(text));
+            yield write(b(text));
         }
     }
     public abstract class Template : Object {
@@ -418,7 +418,7 @@ namespace Odysseus.Templating {
                     try {
                         _nilvar = new Variable(
                                 // undefined probably won't be defined...
-                                ByteUtils.from_string("undefined"),
+                                b("undefined"),
                                 new Gee.HashMap<char,string>());
                     } catch (SyntaxError e) {
                         error("Failed to initialize placeholder variable: %s", e.message);
@@ -432,7 +432,7 @@ namespace Odysseus.Templating {
         private static Bytes force_escape {
             get {
                 if (_force_escape == null)
-                    _force_escape = ByteUtils.from_string("force-escape");
+                    _force_escape = b("force-escape");
                 return _force_escape;
             }
         }

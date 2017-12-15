@@ -57,7 +57,6 @@ namespace Odysseus.Templating {
         return template_cache[resource];
     }
 
-    private static Bytes b(string text) {return ByteUtils.from_string(text);}
     public class ErrorData : Data.Mapping {
         public TagBuilder tag;
         public string[] error_types = {"Unclosed String",

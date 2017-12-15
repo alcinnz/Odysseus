@@ -30,7 +30,7 @@ namespace Odysseus.Templating.Std {
 
             if (val == null) {
                 val = key;
-                key = ByteUtils.from_string("$%i".printf(count++));
+                key = b("$%i".printf(count++));
             }
 
             parameters[key] = new Variable(val);
@@ -53,11 +53,11 @@ namespace Odysseus.Templating.Std {
             args.assert_end();
             if (!modes.has_key(mode)) throw new SyntaxError.INVALID_ARGS(
                     "Invalid {%% autoescape %%} mode: '%s'",
-                    ByteUtils.to_string(mode));
+                ByteUtils.to_string(mode));
 
             var prev = parser.escapes;
             parser.escapes = modes[mode];
-            modes[ByteUtils.from_string("end")] = prev;
+            modes[b("end")] = prev;
             return null;
         }
     }
@@ -81,7 +81,7 @@ namespace Odysseus.Templating.Std {
             var body = parser.parse("endblock", out endtoken);
             if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS(
                     "{%% block %s %%} must be closed with a {%% endblock %%} tag",
-                    ByteUtils.to_string(name));
+                ByteUtils.to_string(name));
             // Let the programmer add a note to the end tag, so don't check it.
 
             macro.body = body;
@@ -114,7 +114,7 @@ namespace Odysseus.Templating.Std {
             args.assert_end();
 
             var filter = "body|" + ByteUtils.to_string(filter_tail);
-            var variable = new Variable(ByteUtils.from_string(filter));
+            var variable = new Variable(b(filter));
 
             WordIter? endtoken;
             var body = parser.parse("endfilter", out endtoken);
@@ -138,7 +138,7 @@ namespace Odysseus.Templating.Std {
             var text = capture.grab_data();
 
             var fake_ctx = ByteUtils.create_map<Data.Data>();
-            fake_ctx[ByteUtils.from_string("body")] = new Data.Substr(text);
+            fake_ctx[b("body")] = new Data.Substr(text);
             yield filter.exec(new Data.Mapping(fake_ctx), output);
         }
     }
@@ -163,7 +163,7 @@ namespace Odysseus.Templating.Std {
                 var val = candidate.eval(ctx);
                 if (val.exists) {
                     yield candidate.exec(ctx, output);
-                    break;
+                break;
                 }
             }
         }
@@ -171,8 +171,8 @@ namespace Odysseus.Templating.Std {
 
     private class ForBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args_iter) throws SyntaxError {
-            Bytes[] args = args_iter.collect();
-            var keyvar = ByteUtils.from_string("");
+        Bytes[] args = args_iter.collect();
+            var keyvar = b("");
             if (args.length == 4) {
                 // Extract he key variable and normalize
                 //         the {% for (key) (value) in (var) %} syntactic variant.
@@ -187,7 +187,7 @@ namespace Odysseus.Templating.Std {
                 throw new SyntaxError.INVALID_ARGS(
                         "{%% for %%} expects the second to lTemplate argument to be "
                         + "the word 'in', got '%s'",
-                        ByteUtils.to_string(args[1]));
+                    ByteUtils.to_string(args[1]));
 
             var target_var = args[0];
             var collection = new Variable(args[2]);
@@ -196,7 +196,7 @@ namespace Odysseus.Templating.Std {
             var body = parser.parse("endfor empty", out endtoken);
             var endtag = endtoken.next();
 
-            Template empty_block = new Echo(ByteUtils.from_string(""));
+            Template empty_block = new Echo(b(""));
             if (ByteUtils.equals_str(endtag, "empty")) {
                 endtoken.assert_end();
 
@@ -230,7 +230,7 @@ namespace Odysseus.Templating.Std {
 
         public override async void exec(Data.Data ctx, Writer output) {
             Gee.Map<Bytes, Data.Data> local_vars =
-                    ByteUtils.create_map<Data.Data>();
+                ByteUtils.create_map<Data.Data>();
             Data.Data local_context = new Data.Stack.with_map(ctx, local_vars);
             var isempty = true;
 
@@ -261,7 +261,7 @@ namespace Odysseus.Templating.Std {
             var true_branch = parser.parse("elif else endif", out endtoken);
             var end_tag = endtoken.next();
 
-            Template false_branch = new Echo(ByteUtils.from_string(""));
+            Template false_branch = new Echo(b(""));
             if (ByteUtils.equals_str(end_tag, "elif")) {
                 false_branch = build(parser, endtoken);
             } else if (ByteUtils.equals_str(end_tag, "else")) {
@@ -309,7 +309,7 @@ namespace Odysseus.Templating.Std {
             var true_branch = parser.parse("endif else", out endtoken);
             var endtag = endtoken.next();
 
-            Template false_branch = new Echo(ByteUtils.from_string(""));
+            Template false_branch = new Echo(b(""));
             if (ByteUtils.equals_str(endtag, "else")) {
                 endtoken.assert_end();
                 false_branch = parser.parse("endif", out endtoken);
@@ -433,8 +433,8 @@ namespace Odysseus.Templating.Std {
             var flag = args.next_value();
             args.assert_end();
 
-            bool reset = false;
-            bool ignore = false;
+        bool reset = false;
+        bool ignore = false;
             if (flag == null) {/* ignore */}
             else if (ByteUtils.equals_str(flag, "reset")) reset = true;
             else if (ByteUtils.equals_str(flag, "ignore")) ignore = true;
@@ -443,7 +443,7 @@ namespace Odysseus.Templating.Std {
                     "'reset' or 'ignore', got '%s'", ByteUtils.to_string(flag));
 
             WordIter? endtoken;
-            Bytes test_source;
+        Bytes test_source;
             Template testcase;
             try {
                 testcase = parser.parse("input output", out endtoken,
@@ -465,11 +465,11 @@ namespace Odysseus.Templating.Std {
 
                 return new TestSyntaxError(caption, failed_token, ignore, e);
             }
-            Bytes endtag = endtoken.next();
+        Bytes endtag = endtoken.next();
             endtoken.assert_end();
 
             Data.Data input = new Data.Empty();
-            Bytes input_text = new Bytes("".data);
+        Bytes input_text = new Bytes("".data);
             if (ByteUtils.equals_str(endtag, "input")) {
                 input_text = parser.scan_until("output", out endtoken);
                 endtag = endtoken.next();
@@ -490,7 +490,7 @@ namespace Odysseus.Templating.Std {
             if (endtag == null)
                 throw new SyntaxError.UNBALANCED_TAGS(
                         "{%% test %%} expects an {%% output %%} branch");
-            Bytes output = parser.scan_until("endtest", out endtoken);
+        Bytes output = parser.scan_until("endtest", out endtoken);
 
             if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS(
@@ -511,10 +511,10 @@ namespace Odysseus.Templating.Std {
         private Bytes output;
         public TestTag(bool reset, bool ignore, string caption,
                 Template testcase, Bytes test_source, Data.Data input,
-                Bytes input_text, Bytes output) {
+            Bytes input_text, Bytes output) {
             this.reset = reset;
             this.ignore = ignore;
-            this.caption = ByteUtils.from_string(caption);
+            this.caption = b(caption);
             this.testcase = testcase;
             this.test_source = test_source;
             this.input = input;
@@ -533,10 +533,10 @@ namespace Odysseus.Templating.Std {
 
             var capture = new CaptureWriter();
             yield testcase.exec(input, capture);
-            Bytes computed = capture.grab_data();
+        Bytes computed = capture.grab_data();
 
             Diff.Ranges diff;
-            bool passed;
+        bool passed;
             if (computed.compare(output) == 0) {
                 // Fast & thankfully common case
                 passed = true;
@@ -555,7 +555,7 @@ namespace Odysseus.Templating.Std {
         }
 
         private async void format_results(bool passed, Writer stream,
-                Bytes computed, Diff.Ranges diff)  {
+            Bytes computed, Diff.Ranges diff)  {
             yield stream.writes("<details");
             if (ignore) yield stream.writes(" style='opacity: 75%;'");
             yield stream.writes(">\n\t<summary style='background: ");
@@ -592,10 +592,10 @@ namespace Odysseus.Templating.Std {
         private Bytes caption;
         private Bytes failed_tag;
         public TestSyntaxError(string caption, Bytes failed_tag,
-                bool ignore, SyntaxError e) {
+            bool ignore, SyntaxError e) {
             this.error = e;
             this.ignore = ignore;
-            this.caption = ByteUtils.from_string(caption);
+            this.caption = b(caption);
             this.failed_tag = failed_tag;
         }
 
@@ -612,7 +612,7 @@ namespace Odysseus.Templating.Std {
             yield stream.write(failed_tag);
             yield stream.writes("</code></h3>\n\t<p>");
             yield ByteUtils.write_escaped_html(
-                    ByteUtils.from_string(error.message), stream);
+                    b(error.message), stream);
             yield stream.writes("</p>\n</details>");
 
             // Report as failure to the stats
@@ -647,7 +647,7 @@ namespace Odysseus.Templating.Std {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             args.assert_end();
             WordIter? endtoken;
-            Bytes bodytext = parser.scan_until("endverbatim", out endtoken);
+        Bytes bodytext = parser.scan_until("endverbatim", out endtoken);
             if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS(
                     "{%% verbatim %%} must be closed with a balanced " +
                     "{%% endverbatim %%} tag.");
@@ -756,8 +756,8 @@ namespace Odysseus.Templating.Std {
             double TB = 1 << 40;
             double PB = 1 << 50;
 
-            // Doesn't make much sense to be able to handle partial bytes,
-            //         but doubles make the formatting nicer.
+            // Doesn't make much sense to be able to handle partial Bytes,
+            //     but doubles make the formatting nicer.
             var bytes = a.to_double();
             var ret = "";
             // Handle negative numbers
@@ -781,7 +781,7 @@ namespace Odysseus.Templating.Std {
     private class FirstFilter : Filter {
         private Bytes key;
         construct {
-            key = ByteUtils.from_string("$0");
+            key = b("$0");
         }
 
         public override Data.Data filter0(Data.Data a) {
@@ -843,7 +843,7 @@ namespace Odysseus.Templating.Std {
     private class LastFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
             // This is more inneficient than is often needed,
-            //         But avoids complicating the datamodel further.
+            //     but avoids complicating the datamodel further.
             Data.Data ret = new Data.Empty();
             a.foreach_map((key, val) => {ret = val; return false;});
             return ret;
@@ -852,7 +852,7 @@ namespace Odysseus.Templating.Std {
 
     private class LengthFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
-            bool is_length;
+        bool is_length;
             int ret = a.to_int(out is_length);
 
             if (!is_length) {
@@ -934,7 +934,7 @@ namespace Odysseus.Templating.Std {
             var text = a.to_string();
             int index = 0;
             unichar c;
-            bool capitalize = true;
+        bool capitalize = true;
             while (text.get_next_char(ref index, out c)) {
                 if (capitalize) {
                     c = c.totitle();
@@ -943,7 +943,7 @@ namespace Odysseus.Templating.Std {
                     c = c.tolower();
                     capitalize = c.isspace();
                 }
-                builder.append_unichar(c);
+            builder.append_unichar(c);
             }
             return new Data.Literal(builder.str);
         }
@@ -969,7 +969,7 @@ namespace Odysseus.Templating.Std {
         register_tag("templatetag", new TemplateTagBuilder());
         register_tag("test", new TestBuilder()); // *
         register_tag("test-report", new TestReportBuilder()); // *
-        register_tag("trans", new I18n.TransTagBuilder());
+        register_tag("trans", new WithBuilder());
         register_tag("verbatim", new VerbatimBuilder());
         register_tag("with", new WithBuilder());
 
@@ -991,13 +991,13 @@ namespace Odysseus.Templating.Std {
         register_filter("safe", new SafeFilter());
         register_filter("title", new TitleFilter());
 
-        AutoescapeBuilder.modes[ByteUtils.from_string("off")] =
+        AutoescapeBuilder.modes[b("off")] =
                 Gee.Map.empty<char,string>();
         escape_html = ByteUtils.build_escapes("<>&'\"",
                 "&lt;", "&gt;", "&amp;", "&apos;", "&quot");
-        AutoescapeBuilder.modes[ByteUtils.from_string("html")] = escape_html;
+        AutoescapeBuilder.modes[b("html")] = escape_html;
         escape_csv = ByteUtils.build_escapes("'\"", "\\'", "\\\"");
-        AutoescapeBuilder.modes[ByteUtils.from_string("csv")] = escape_csv;
+        AutoescapeBuilder.modes[b("csv")] = escape_csv;
         // These escape codes taken from Django
         // https://github.com/django/django/blob/9718fa2e8abe430c3526a9278dd976443d4ae3c6/django/utils/html.py#L51
         escape_js_string = ByteUtils.build_escapes("\\'\"><&=-;\x2028\x2029'",
@@ -1006,11 +1006,11 @@ namespace Odysseus.Templating.Std {
         // Escape every ASCII character with a value less than 32.
         for (char z = 0; z < 32; z++)
             escape_js_string[z] = "\\u%04X".printf(z);
-        AutoescapeBuilder.modes[ByteUtils.from_string("js-string")] = escape_js_string;
+        AutoescapeBuilder.modes[b("js-string")] = escape_js_string;
         escape_uri = ByteUtils.build_escapes(":/?&=#",
                 "%3A", "%2F", "%3F", "%26", "%3D", "%23");
-        AutoescapeBuilder.modes[ByteUtils.from_string("url")] = escape_uri;
-        AutoescapeBuilder.modes[ByteUtils.from_string("uri")] = escape_uri;
+        AutoescapeBuilder.modes[b("url")] = escape_uri;
+        AutoescapeBuilder.modes[b("uri")] = escape_uri;
 
         // * indicates the tag or filter was added for use by the testrunner.
     }

@@ -56,7 +56,7 @@ namespace Odysseus.Templating.Data {
             return builder.str;
         }
         public virtual Bytes to_bytes() {
-            return ByteUtils.from_string(this.to_string());
+            return b(this.to_string());
         }
 
         /* These methods/properties are used by important tags,
@@ -86,7 +86,7 @@ namespace Odysseus.Templating.Data {
         // Defaults to using our Variable syntax.
         public virtual Data lookup(string query) {
             try {
-                return new Variable(ByteUtils.from_string(query)).eval(this);
+                return new Variable(b(query)).eval(this);
             } catch (SyntaxError e) {
                 warning("Invalid syntax expression: %s", e.message);
                 return new Empty();
@@ -98,7 +98,7 @@ namespace Odysseus.Templating.Data {
     public bool range(Data.Foreach cb, uint end, uint start = 0) {
         for (var index = start; index < end; index++) {
             var key = "$%u".printf(index);
-            if (cb(ByteUtils.from_string(key))) return true;
+            if (cb(b(key))) return true;
         }
         return false;
     }
@@ -126,7 +126,7 @@ namespace Odysseus.Templating.Data {
             unichar c;
             while (text.get_next_char(ref index, out c)) {
                 var key = "$%u".printf(unichar_count++);
-                cb(ByteUtils.from_string(key), new Literal(c));
+                cb(b(key), new Literal(c));
             }
         }
 
@@ -190,7 +190,7 @@ namespace Odysseus.Templating.Data {
                     return;
                 }
                 var key = "$%u".printf(char_count++);
-                cb(ByteUtils.from_string(key), new Literal(c));
+                cb(b(key), new Literal(c));
             }
         }
 

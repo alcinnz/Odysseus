@@ -125,3 +125,6 @@ namespace Odysseus.Templating.ByteUtils {
         return text[start:end+1];
     }
 }
+namespace Odysseus.Templating {
+    public Bytes b(string text) {return ByteUtils.from_string(text);}
+}
