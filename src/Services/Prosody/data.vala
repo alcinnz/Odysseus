@@ -71,7 +71,9 @@ namespace Odysseus.Templating.Data {
         }
         // Possibly easier way to implement foreach_map
         public delegate bool Foreach(Bytes key);
-        protected virtual void @foreach(Foreach cb) {}
+        protected virtual void @foreach(Foreach cb) {
+            @foreach_map((key, val) => cb(key));
+        }
 
         /* These methods are used by a variety of filters */
         public virtual double to_double() {return (double) to_int(); }
@@ -287,6 +289,21 @@ namespace Odysseus.Templating.Data {
         public override int to_int(out bool is_length = null) {
             is_length = true; // Won't get a better answer...
             return 0;
+        }
+
+        public override void @foreach(Data.Foreach cb) {
+            var lazy_keys = vars.keys;
+            lazy_keys.add_all(evaluated.keys);
+
+            var exit = false;
+            ctx.@foreach((key) => {
+                if (key in lazy_keys) return false;
+                return exit = cb(key);
+            });
+            if (exit) return;
+
+            foreach (var key in lazy_keys)
+                if (cb(key)) break;
         }
     }
 }
