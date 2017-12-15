@@ -508,9 +508,7 @@ namespace Odysseus.Templating {
                 if (arg_text != null) filter_arg = new Variable(arg_text, escapes);
                 else if (name.compare(force_escape) == 0) {
                     // Special case |force-escape to apply the given escapes.
-                    var generic = Value(typeof(Gee.Map));
-                    generic.set_object(escapes);
-                    filter_arg = new Variable.with(new Data.Literal(generic));
+                    filter_arg = new Variable.with(new Data.Literal(escapes));
                 } else filter_arg = nilvar;
 
                 compiled_filters.add(new FilterCall(cb, filter_arg));
