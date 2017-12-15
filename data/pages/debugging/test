@@ -802,7 +802,7 @@ and can be called at 212 555-1234.
 {% test "|cut" %}
 {{"Stanly Kubrik's 2001: A Space Oddyssey"|cut:" "}}
 {% output %}
-StanlyKubrik's2001:ASpaceOddyssey
+StanlyKubrik&apos;s2001:ASpaceOddyssey
 {% endtest %}
 {% test "|date" %}
 {{ 1487913154|date:"%e %B %Y %H:%M" }}

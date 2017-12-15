@@ -484,7 +484,7 @@ namespace Odysseus.Templating.Std {
                             "{%% test %%}: Content of the {%% input %%} block " +
                             "must be valid JSON: %s", e.message);
                 }
-                input = new Data.JSON(json_parser.get_root());
+                input = Data.JSON.build(json_parser.get_root());
             }
 
             if (endtag == null)

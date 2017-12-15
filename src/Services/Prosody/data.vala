@@ -93,94 +93,12 @@ namespace Odysseus.Templating.Data {
     }
 
     // Utility callback-iterator for numeric ranges
-    private bool range(Data.Foreach cb, uint end, uint start = 0) {
+    public bool range(Data.Foreach cb, uint end, uint start = 0) {
         for (var index = start; index < end; index++) {
             var key = "$%u".printf(index);
             if (cb(ByteUtils.from_string(key))) return true;
         }
         return false;
-    }
-
-    public class JSON : Data {
-        private Json.Node data;
-
-        public JSON(Json.Node node) {
-            this.data = node;
-        }
-
-        public override Data get(Bytes property_bytes) {
-            var property = ByteUtils.to_string(property_bytes);
-            switch (data.get_node_type()) {
-            case Json.NodeType.OBJECT:
-                Json.Node? ret = data.get_object().get_member(property);
-                if (ret != null) return new JSON(ret);
-                else return new Empty();
-            case Json.NodeType.ARRAY:
-                uint64 index = 0;
-                if (uint64.try_parse(property[1:property.length], out index) &&
-                        index < data.get_array().get_length()) {
-                    return new JSON(data.get_array().get_element((uint) index));
-                }
-                break;
-            case Json.NodeType.VALUE:
-                return new Literal(data.get_value())[property_bytes];
-            }
-            return new Empty();
-        }
-
-        public override void @foreach(Data.Foreach cb) {
-            switch (data.get_node_type()) {
-            case Json.NodeType.OBJECT:
-                foreach (var key in data.get_object().get_members())
-                    if (cb(ByteUtils.from_string(key))) break;
-                break;
-            case Json.NodeType.ARRAY:
-                range(cb, data.get_array().get_length());
-                break;
-            }
-        }
-
-        public override void foreach_map(Data.ForeachMap cb) {
-            if (data.get_node_type() == Json.NodeType.VALUE)
-                new Literal(data.get_value()).@foreach_map(cb);
-            else
-                @foreach((key) => cb(key, this[key]));
-        }
-        
-        public override string to_string() {
-            if (data.get_node_type() == Json.NodeType.VALUE) {
-                var target = Value(typeof(string));
-                if (data.get_value().transform(ref target))
-                    return target.dup_string();
-            }
-            return "";
-        }
-
-        public override int to_int(out bool is_length = null) {
-            is_length = true;
-            switch (data.get_node_type()) {
-            case Json.NodeType.OBJECT:
-                return (int) data.get_object().get_size();
-            case Json.NodeType.ARRAY:
-                return (int) data.get_array().get_length();
-            case Json.NodeType.VALUE:
-                is_length = false;
-                return new Literal(data.get_value()).to_int();
-            case Json.NodeType.NULL:
-            default:
-                return 0;
-            }
-        }
-
-        public override double to_double() {
-            if (data.get_node_type() == Json.NodeType.VALUE) {
-                var target = Value(typeof(string));
-                if (data.get_value().transform(ref target))
-                    return target.get_double();
-                else
-                    return 0.0;
-            } else return (double) to_int();
-        }
     }
 
     public class Empty : Data {

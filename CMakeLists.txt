@@ -63,6 +63,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Services/pages.vala
     src/Services/Prosody/byteutils.vala
     src/Services/Prosody/data.vala
+    src/Services/Prosody/jsondata.vala
     src/Services/Prosody/diff.vala
     src/Services/Prosody/expression.vala
     src/Services/Prosody/lib.vala
