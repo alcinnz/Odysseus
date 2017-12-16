@@ -143,32 +143,6 @@ namespace Odysseus.Templating.Std {
         }
     }
 
-    private class FirstOfBuilder : TagBuilder, Object {
-        public Template? build(Parser parse, WordIter args) throws SyntaxError {
-            var variables = new Gee.ArrayList<Variable>();
-            foreach (var arg in args) {
-                variables.add(new Variable(arg));
-            }
-            return new FirstOfTag(variables.to_array());
-        }
-    }
-    private class FirstOfTag : Template {
-        private Variable[] candidates;
-        public FirstOfTag(Variable[] vars) {
-            this.candidates = vars;
-        }
-
-        public override async void exec(Data.Data ctx, Writer output) {
-            foreach (var candidate in candidates) {
-                var val = candidate.eval(ctx);
-                if (val.exists) {
-                    yield candidate.exec(ctx, output);
-                    break;
-                }
-            }
-        }
-    }
-
     private class ForBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             //Bytes[] args = args_iter.collect();
@@ -369,24 +343,6 @@ namespace Odysseus.Templating.Std {
                     parser.local_tag_lib[tag] = lib.local_tag_lib[tag];
             }
             return null;
-        }
-    }
-
-    private class NowBuilder : TagBuilder, Object {
-        public Template? build(Parser parse, WordIter args) throws SyntaxError {
-            var format = args.next();
-            args.assert_end();
-            return new NowTag(ByteUtils.parse_string(format));
-        }
-    }
-    private class NowTag : Template {
-        private string format;
-        public NowTag(string arg) {
-            this.format = arg;
-        }
-
-        public override async void exec(Data.Data ctx, Writer output) {
-            yield output.writes(new DateTime.now_local().format(format));
         }
     }
 
@@ -630,19 +586,6 @@ namespace Odysseus.Templating.Std {
         }
     }
 
-    private class VerbatimBuilder : TagBuilder, Object {
-        public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            args.assert_end();
-            WordIter? endtoken;
-            Bytes bodytext = parser.scan_until("endverbatim", out endtoken);
-            if (endtoken == null)
-                throw new SyntaxError.UNBALANCED_TAGS(
-                        "{%% verbatim %%} must be closed with a balanced " +
-                        "{%% endverbatim %%} tag.");
-            return new Echo(bodytext);
-        }
-    }
-
     private class WithBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var parameters = parse_params(args);
@@ -786,15 +729,15 @@ namespace Odysseus.Templating.Std {
     private class JoinFilter : Filter {
         public override Data.Data filter(Data.Data list, Data.Data sep) {
             var sep_str = sep.to_string();
-            var ret = "";
+            var builder = new StringBuilder();
             var first = true;
             list.foreach_map((key, val) => {
-                if (!first) ret += sep_str;
+                if (!first) builder.append(sep_str);
                 else first = false;
-                ret += val.to_string();
+                builder.append(val.to_string());
                 return false; // AKA continue;
             });
-            return new Data.Literal(ret);
+            return new Data.Literal(builder.str);
         }
     }
 
@@ -834,28 +777,29 @@ namespace Odysseus.Templating.Std {
     private class LineBreaksFilter : Filter {
         public override Data.Data filter0(Data.Data text) {
             var paragraphs = text.to_string().split("\n\n");
+            var builder = new StringBuilder();
             var ret = "";
             foreach (var paragraph in paragraphs) {
-                ret += "<p>";
-                ret += paragraph.strip().replace("\n", "<br />");
-                ret += "</p>\n";
+                builder.append("<p>");
+                builder.append(paragraph.strip().replace("\n", "<br />"));
+                builder.append("</p>\n");
             }
-            return new Data.Literal(ret);
+            return new Data.Literal(builder.str);
         }
     }
 
     private class LineNumbersFilter : Filter {
         public override Data.Data filter0(Data.Data text) {
             var lines = text.to_string().split("\n");
-            var ret = "";
+            var builder = new StringBuilder();
             for (var i = 0; i < lines.length; i++) {
-                ret += "%i. ".printf(i + 1);
-                ret += lines[i];
+                builder.printf("%i. ", i + 1);
+                builder.append(lines[i]);
 
                 // Replace newlines on all but the first & last lines.
-                if (i < lines.length - 1) ret += "\n";
+                if (i < lines.length - 1) builder.append_c('\n');
             }
-            return new Data.Literal(ret);
+            return new Data.Literal(builder.str);
         }
     }
 
@@ -913,16 +857,13 @@ namespace Odysseus.Templating.Std {
     public void register_standard_library() {
         register_tag("autoescape", new AutoescapeBuilder());
         register_tag("filter", new FilterBuilder());
-        register_tag("firstof", new FirstOfBuilder());
         register_tag("for", new ForBuilder());
         register_tag("if", new IfBuilder());
         register_tag("ifchanged", new IfChangedBuilder());
-        register_tag("now", new NowBuilder());
         register_tag("templatetag", new TemplateTagBuilder());
         register_tag("test", new TestBuilder()); // *
         register_tag("test-report", new TestReportBuilder()); // *
         register_tag("trans", new WithBuilder());
-        register_tag("verbatim", new VerbatimBuilder());
         register_tag("with", new WithBuilder());
 
         register_filter("add", new AddFilter());

@@ -178,8 +178,6 @@ and can be called at 212 555-1234.
 &lt;b&gt;O&lt;/b&gt;&lt;i&gt;ddyssey&lt;/i&gt;
 {% endtest %}
 
-  <p>Is this the date &amp; time? {% now "%e %B %Y %H:%M" %}</p>
-
   <h2>Major tags</h2>
   <p>Many of these templates are based on those from the 
     <a href="https://docs.djangoproject.com/en/1.10/intro/tutorial03/">
@@ -410,14 +408,6 @@ and can be called at 212 555-1234.
 
     this text will be &lt;strong&gt;html&lt;/strong&gt;-&lt;em&gt;escaped&lt;/em&gt;, and will appear in all lowercase.
 
-{% endtest %}
-
-{% test "{% firstof %}" %}
-  {% firstof undefined 0 "" answer 0.0 23 none %}
-{% input %}
-{"answer": 42}
-{% output %}
-  42
 {% endtest %}
 
 {% test "{% if %}/{% elif %}/{% else %} variant 1" %}
@@ -774,16 +764,6 @@ and can be called at 212 555-1234.
 {{now}}
 {now}
 {#now#}
-{% endtest %}
-
-{% test "{% verbatim %}" %}
-{% verbatim %}
-  {% if now %}The time is {% now "" %}{% endif %}
-{% endverbatim %}
-{% output %}
-
-  {% if now %}The time is {% now "" %}{% endif %}
-
 {% endtest %}
 
 {% test "{% with %}" %}
