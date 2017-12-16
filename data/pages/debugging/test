@@ -834,7 +834,7 @@ dr
 {% test "|filesize" %}
 {{ 8|filesize }}|{{2345|filesize }}
 {% output %}
-8 bytes|2.3KB
+8 bytes|2.3 kB
 {% endtest %}
 {% test "|first" %}{{ "Oddyssey"|first }}{% output %}O{% endtest %}
 {% test "|last" %}{{ "Oddyssey"|last }}{% output %}y{% endtest %}

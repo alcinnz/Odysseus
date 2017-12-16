@@ -18,8 +18,7 @@
 /* Standard "tags" and "filters" to use in templates.
     Beware that these may differ subtly from Django's implementation. */
 namespace Odysseus.Templating.Std {
-    public Gee.Map<Bytes, Variable> parse_params(WordIter args)
-            throws SyntaxError {
+    public Gee.Map<Bytes, Variable> parse_params(WordIter args) throws SyntaxError {
         var parameters = ByteUtils.create_map<Variable>();
         var count = 0;
         foreach (var arg in args) {
@@ -171,27 +170,22 @@ namespace Odysseus.Templating.Std {
     }
 
     private class ForBuilder : TagBuilder, Object {
-        public Template? build(Parser parser, WordIter args_iter) throws SyntaxError {
-            Bytes[] args = args_iter.collect();
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            //Bytes[] args = args_iter.collect();
+            var targetvar = args.next();
+            var sep = args.next();
             var keyvar = b("");
-            if (args.length == 4) {
-                // Extract he key variable and normalize
-                //         the {% for (key) (value) in (var) %} syntactic variant.
-                keyvar = args[0];
-                args = {args[1], args[2], args[3]};
+            if (!ByteUtils.equals_str(sep, "in")) {
+                keyvar = targetvar;
+                targetvar = sep;
+                sep = args.next();
             }
+            if (!ByteUtils.equals_str(sep, "in"))
+                throw new SyntaxError.INVALID_ARGS("{%% for %%} expects the second to last " +
+                        "template argument to be 'in', got '%s'", ByteUtils.to_string(sep));
 
-            if (args.length != 3)
-                throw new SyntaxError.INVALID_ARGS(
-                        "{%% for  %%} expects either 3 or 4 arguments, got %i", args.length);
-            if (!ByteUtils.equals_str(args[1], "in"))
-                throw new SyntaxError.INVALID_ARGS(
-                        "{%% for %%} expects the second to lTemplate argument to be "
-                        + "the word 'in', got '%s'",
-                    ByteUtils.to_string(args[1]));
-
-            var target_var = args[0];
-            var collection = new Variable(args[2]);
+            var collection = new Variable(args.next());
+            args.assert_end();
 
             WordIter? endtoken;
             var body = parser.parse("endfor empty", out endtoken);
@@ -209,7 +203,7 @@ namespace Odysseus.Templating.Std {
                 throw new SyntaxError.UNBALANCED_TAGS(
                         "{%% for %%} must be closed with a {%% endfor %%} tag");
             endtoken.assert_end();
-            return new ForTag(keyvar, target_var, collection, body, empty_block);
+            return new ForTag(keyvar, targetvar, collection, body, empty_block);
         }
     }
     private class ForTag : Template {
@@ -356,28 +350,27 @@ namespace Odysseus.Templating.Std {
 
     // Includes custom tags from another template
     // Requires a loading engine to work
-    /*private class IncludeBuilder : TagBuilder, Object {
-        public AST? build(Parser parser, WordIter args_iter) throws SyntaxError {
-            var args = args_iter.collect();
-            if (ByteUtils.equals_str(args[args.length - 2], "from")) {
-                ext_lib = *load(args[args.length - 1]);
-                for (var name in args[0:args.length - 2]) {
-                    parser.local_tag_lib[name] = ext_lib.local_tag_lib[name];
-                }
+    private class IncludeBuilder : TagBuilder, Object {
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            var path = File.new_for_path(parser.path);
+            path = path.resolve_relative_path(ByteUtils.to_string(args.next()));
+
+            var lib = new Parser(resources_lookup_data(path.get_path(), 0));
+            var sep = args.next_value();
+
+            if (sep != null) {
+                if (!ByteUtils.equals_str(sep, ":"))
+                    throw new SyntaxError.INVALID_ARGS(
+                            "Second arg must be ':' if it exists, got '%s'", ByteUtils.to_string(sep));
+                foreach (var tag in args)
+                    parser.local_tag_lib[tag] = lib.local_tag_lib[tag];
             } else {
-                for (var arg in args) {
-                    ext_lib = *load(arg);
-                    for (var entry in ext_lib.local_tag_lib) {
-                        parser.local_tag_lib[name] = ext_lib.local_tag_lib[name];
-                    }
-                }
+                foreach (var tag in lib.local_tag_lib.keys)
+                    parser.local_tag_lib[tag] = lib.local_tag_lib[tag];
             }
             return null;
         }
     }
-    * indicates the missing piece. */
-
-    // {% lorem [count] [w|p|*b] random? %} could be useful
 
     private class NowBuilder : TagBuilder, Object {
         public Template? build(Parser parse, WordIter args) throws SyntaxError {
@@ -745,31 +738,7 @@ namespace Odysseus.Templating.Std {
 
     private class FileSizeFormatFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
-            double KB = 1 << 10;
-            double MB = 1 << 20;
-            double GB = 1 << 30;
-            double TB = 1 << 40;
-            double PB = 1 << 50;
-
-            // Doesn't make much sense to be able to handle partial Bytes,
-            //     but doubles make the formatting nicer.
-            var bytes = a.to_double();
-            var ret = "";
-            // Handle negative numbers
-            var negative = bytes < 0;
-            if (negative) bytes = -bytes;
-
-            // TODO i18n
-            if (bytes == 1) ret = "1 byte";
-            else if (bytes < KB) ret = @"$bytes bytes";
-            else if (bytes < MB) ret = "%.1fKB".printf(bytes/KB);
-            else if (bytes < GB) ret = "%.1fMB".printf(bytes/MB);
-            else if (bytes < TB) ret = "%.1fGB".printf(bytes/GB);
-            else if (bytes < PB) ret = "%.1fTB".printf(bytes/TB);
-            else ret = "%.1fPB".printf(bytes/PB);
-
-            if (negative) ret = @"-$ret";
-            return new Data.Literal(ret);
+            return new Data.Literal(format_size(a.to_int()));
         }
     }
 

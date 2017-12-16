@@ -22,7 +22,8 @@ namespace Odysseus.Services {
 
     private Templating.Data.Data parse_url_to_prosody(string url_text) {
         var ctx = new Templating.Data.Mapping();
-        var url = ctx["url"] = new Templating.Data.Mapping(null, url_text);
+        var url = new Templating.Data.Mapping(null, url_text);
+        ctx["url"] = url;
 
         var parser = new Soup.URI(url_text);
         url["fragment"] = new Templating.Data.Literal(parser.fragment);
@@ -62,7 +63,7 @@ namespace Odysseus.Services {
 
         // Predominantly used by the bad-certificate error page.
         if (url_text.has_prefix("https://")) {
-            var http_url = "http" + url["https".length:url.length];
+            var http_url = "http" + url_text["https".length:url_text.length];
             url["http"] = new Templating.Data.Literal(http_url);
         }
 
@@ -76,11 +77,11 @@ namespace Odysseus.Services {
             var path = "/" + Path.build_path("/",
                     "io", "github", "alcinnz", "Odysseus", "odysseus:", error);
 
-            var data_ = Templating.Data.Mapping();
+            var data = new Templating.Data.Mapping();
             data["url"] = new Templating.Data.Literal(request.get_uri());
             data["path"] = new Templating.Data.Literal(request.get_path());
-            Templating.Data.Data = data_
-            if (base_data != null) data = new Templating.Data.Stack(data, base_data);
+            Templating.Data.Data data_ = data;
+            if (base_data != null) data_ = new Templating.Data.Stack(data, base_data);
 
             Templating.ErrorData? error_data = null;
             Templating.Template template;
@@ -97,7 +98,7 @@ namespace Odysseus.Services {
 
             var stream = new Templating.InputStreamWriter();
             request.finish(stream, -1, "text/html");
-            template.exec.begin(data, stream, (obj, res) => stream.close_write());
+            template.exec.begin(data_, stream, (obj, res) => stream.close_write());
         } catch (Error err) {
             warning("Error reporting errors.");
             request.finish_error(err);

@@ -281,6 +281,7 @@ namespace Odysseus.Templating {
         public Lexer lex;
         public Map<uint8,string> escapes;
         public Map<Bytes, TagBuilder> local_tag_lib;
+        public string path;
 
         public Parser(Bytes source) {
             this.lex = new Lexer(source);

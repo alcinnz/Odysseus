@@ -39,6 +39,7 @@ namespace Odysseus.Templating {
             if (!lib_initialized()) Std.register_standard_library();
             var bytes = resources_lookup_data(resource, 0);
             var parser = new Parser(bytes);
+            parser.path = resource;
             try {
                 template_cache[resource] = parser.parse();
                 cached_keys.insert(0, resource);
