@@ -133,7 +133,7 @@ He lives at {{
 address.streetAddress }}
 {{	 address.city
 }}
-and can be called at {{ phoneNumbers.0.number }}.
+and can be called at {{ phoneNumbers.$0.number }}.
 {{ nonexisting }}{{ non.existing }}{{age.years}}{# Should output exactly nothing #}
 {% input %}
 {
@@ -226,7 +226,7 @@ and can be called at 212 555-1234.
       
           <li><a href="/polls/1/">Doctor ...</a></li>
       
-          <li><a href="/polls/2/">Who's fictional?</a></li>
+          <li><a href="/polls/2/">Who&apos;s fictional?</a></li>
       
       </ul>
   
@@ -337,7 +337,7 @@ and can be called at 212 555-1234.
         "Alan Turing", "Charles Babbage"]
   }}
 {% output %}
-  <h1>Who's fictional?</h1>
+  <h1>Who&apos;s fictional?</h1>
   <form method="post" target="submit">
   <ul>
   

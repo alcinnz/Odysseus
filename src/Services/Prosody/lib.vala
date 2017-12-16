@@ -982,13 +982,14 @@ namespace Odysseus.Templating.Std {
         AutoescapeBuilder.modes[b("csv")] = ByteUtils.build_escapes("'\"", "\\'", "\\\"");
         // These escape codes taken from Django
         // https://github.com/django/django/blob/9718fa2e8abe430c3526a9278dd976443d4ae3c6/django/utils/html.py#L51
-        var escape_js_string = ByteUtils.build_escapes("\\'\"><&=-;\x2028\x2029'",
-                "\\u005C", "\\u0027", "\\u0022", "\\u003E", "\\u003C", "\\u0026",
+        var escape_js_string = ByteUtils.build_escapes("\\\"><&=-;\x2028\x2029'",
+                "\\u005C", "\\u0022", "\\u003E", "\\u003C", "\\u0026",
                 "\\u003D", "\\u002D", "\\u003B", "\\u2028", "\\u2029");
         // Escape every ASCII character with a value less than 32.
+        escape_js_string['\''] = "\\u0027";
         for (char z = 0; z < 32; z++)
             escape_js_string[z] = "\\u%04X".printf(z);
-        AutoescapeBuilder.modes[b("js-string")] = escape_js_string;
+        modes[b("js-string")] = escape_js_string;
         modes[b("uri")] = ByteUtils.build_escapes(":/?&=#", "%3A", "%2F", "%3F", "%26", "%3D", "%23");
         modes[b("url")] = modes[b("uri")];
 

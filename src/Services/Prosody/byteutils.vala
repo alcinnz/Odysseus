@@ -37,8 +37,8 @@ namespace Odysseus.Templating.ByteUtils {
         return to_string(text.slice(1, text.length - 1)).compress();
     }
     
-    public Bytes from_string(string text) {
-        return new Bytes(text.data);
+    public Bytes from_string(string? text) {
+        return text == null ? new Bytes(new uint8[0]) : new Bytes(text.data);
     }
     
     public Bytes[] split(Bytes? text, char split) {
@@ -125,5 +125,5 @@ namespace Odysseus.Templating.ByteUtils {
     }
 }
 namespace Odysseus.Templating {
-    public Bytes b(string text) {return ByteUtils.from_string(text);}
+    public Bytes b(string? text) {return ByteUtils.from_string(text);}
 }

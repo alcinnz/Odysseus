@@ -23,7 +23,7 @@ namespace Odysseus.Templating.Data.JSON {
         if (node == null) return new Empty();
         switch (node.get_node_type()) {
         case Json.NodeType.OBJECT:
-            //return new Object(node.dup_object());
+            return new Object(node.dup_object());
         case Json.NodeType.ARRAY:
             return new Array(node.dup_array());
         case Json.NodeType.VALUE:
@@ -65,7 +65,7 @@ namespace Odysseus.Templating.Data.JSON {
         public Object(Json.Object o) {this.inner = o;}
 
         public override Data get(Bytes property) {
-            return build(inner.get_member(ByteUtils.to_string(property)));
+            return build(inner.dup_member(ByteUtils.to_string(property)));
         }
 
         public override void @foreach(Data.Foreach cb) {

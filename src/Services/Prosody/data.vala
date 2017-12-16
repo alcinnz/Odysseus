@@ -208,8 +208,8 @@ namespace Odysseus.Templating.Data {
 
     public class Mapping : Data {
         public Gee.Map<Bytes, Data> data;
-        public string text;
-        public Mapping(Gee.Map<Bytes, Data>? m = null, string s = "") {
+        public string? text;
+        public Mapping(Gee.Map<Bytes, Data>? m = null, string? s = "") {
             if (m != null) this.data = m;
             else this.data = ByteUtils.create_map<Data>();
             this.text = s;
@@ -226,7 +226,7 @@ namespace Odysseus.Templating.Data {
             data.map_iterator().@foreach((k, v) => cb(k, v));
         }
 
-        public override string to_string() {return text;}
+        public override string to_string() {return text == null ? "" : text;}
         public override int to_int(out bool is_length = null) {
             is_length = true; return data.size;
         }
