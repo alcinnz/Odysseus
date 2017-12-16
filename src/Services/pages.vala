@@ -42,11 +42,23 @@ namespace Odysseus.Services {
                 warning("Malformed query string '%s'", parser.query);
                 continue;
             }
-            var key = segments[0];
-            var val = new Templating.Data.Literal(true);
+            var key = b(segments[0]);
+            Templating.Data.Data val = new Templating.Data.Literal(true);
             if (segments.length > 1) val = new Templating.Data.Literal(segments[1]);
-            /* TODO handle multi-valued keys. */
-            query[b(key)] = val;
+
+            if (key in query) {
+                var vals = query[key];
+                if (vals is Templating.Data.Literal) {
+                    vals = new Templating.Data.Mapping(null, query[key].to_string());
+                    vals["$0"] = query[key];
+                }
+
+                assert(vals is Templating.Data.Mapping);
+                var val_list = vals as Templating.Data.Mapping;
+                val_list["$%i".printf(val_list.to_int())] = val;
+                val = vals;
+            }
+            query[key] = val;
         }
 
         // Predominantly used by the bad-certificate error page.

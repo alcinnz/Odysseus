@@ -110,9 +110,7 @@ namespace Odysseus.Templating {
             // Utilize diff rendering for this. 
             var err_ranges = new Gee.ArrayList<Diff.Duo>();
             err_ranges.add(new Diff.Duo(err_start, err_end));
-            // FIXME segfaults
-            yield Diff.render_ranges(source[line_start:line_end],
-                    err_ranges, "strong", stream);
+            yield Diff.render_ranges(source[line_start:line_end], err_ranges, "strong", stream);
         }
     }
 }

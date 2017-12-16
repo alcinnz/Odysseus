@@ -72,9 +72,8 @@ namespace Odysseus.Templating.ByteUtils {
     }
 
     uint8 find_next(Bytes text, uint8[] needles, ref int index) {
-        for (; index < text.length; index++) {
+        for (; index < text.length; index++)
             if (text[index] in needles) return text[index];
-        }
         return 0;
     }
 

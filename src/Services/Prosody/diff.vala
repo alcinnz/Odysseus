@@ -108,9 +108,9 @@ namespace Odysseus.Templating.Diff {
     }
 
     public Ranges diff(Bytes a, Bytes b) {
-         var ranges = longest_common_subsequence(a.get_data(), b.get_data());
-         // Ensure get_ranges captures trailing text that was added.
-         ranges.append(new Duo(a.length, b.length));
+        var ranges = longest_common_subsequence(a.get_data(), b.get_data());
+        // Ensure get_ranges captures trailing text that was added.
+        ranges.append(new Duo(a.length, b.length));
         return get_ranges(ranges);
     }
 

@@ -33,7 +33,6 @@ namespace Odysseus.Templating.Data.JSON {
         default:
             return new Empty();
         }
-        error("UNREACHABLE!");
     }
 
     private class Array : Data {
