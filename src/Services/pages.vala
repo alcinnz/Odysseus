@@ -20,22 +20,21 @@ namespace Odysseus.Services {
     /* shortname for Templating.ByteUtils.from_string */
     private Bytes b(string s) {return Templating.ByteUtils.from_string(s);}
 
-    private Templating.Data.Data parse_url_to_prosody(string url) {
-        var raw = Templating.ByteUtils.create_map<Templating.Data.Data>();
-        var raw_url = Templating.ByteUtils.create_map<Templating.Data.Data>();
-        raw[b("url")] = new Templating.Data.Mapping(raw_url, url);
+    private Templating.Data.Data parse_url_to_prosody(string url_text) {
+        var ctx = new Templating.Data.Mapping();
+        var url = ctx["url"] = new Templating.Data.Mapping(null, url_text);
 
-        var parser = new Soup.URI(url);
-        raw_url[b("fragment")] = new Templating.Data.Literal(parser.fragment);
-        raw_url[b("host")] = new Templating.Data.Literal(parser.host);
-        raw_url[b("password")] = new Templating.Data.Literal(parser.password);
-        raw_url[b("path")] = new Templating.Data.Literal(parser.path);
-        raw_url[b("port")] = new Templating.Data.Literal(parser.port);
-        raw_url[b("scheme")] = new Templating.Data.Literal(parser.scheme);
-        raw_url[b("user")] = new Templating.Data.Literal(parser.user);
+        var parser = new Soup.URI(url_text);
+        url["fragment"] = new Templating.Data.Literal(parser.fragment);
+        url["host"] = new Templating.Data.Literal(parser.host);
+        url["password"] = new Templating.Data.Literal(parser.password);
+        url["path"] = new Templating.Data.Literal(parser.path);
+        url["port"] = new Templating.Data.Literal(parser.port);
+        url["scheme"] = new Templating.Data.Literal(parser.scheme);
+        url["user"] = new Templating.Data.Literal(parser.user);
 
         var query = Templating.ByteUtils.create_map<Templating.Data.Data>();
-        raw_url[b("query")] = new Templating.Data.Mapping(query, parser.query);
+        url["query"] = new Templating.Data.Mapping(query, parser.query);
         foreach (var keyvalue in parser.query.split("&")) {
             var segments = keyvalue.split("=", 2);
             if (segments.length == 0) {
@@ -62,13 +61,12 @@ namespace Odysseus.Services {
         }
 
         // Predominantly used by the bad-certificate error page.
-        if (url.has_prefix("https://")) {
+        if (url_text.has_prefix("https://")) {
             var http_url = "http" + url["https".length:url.length];
-            raw_url[b("http")] = new Templating.Data.Literal(http_url);
+            url["http"] = new Templating.Data.Literal(http_url);
         }
 
-
-        return new Templating.Data.Mapping(raw);
+        return ctx;
     }
 
     private void render_error(WebKit.URISchemeRequest request, string error,
@@ -78,10 +76,10 @@ namespace Odysseus.Services {
             var path = "/" + Path.build_path("/",
                     "io", "github", "alcinnz", "Odysseus", "odysseus:", error);
 
-            var raw_data = Templating.ByteUtils.create_map<Templating.Data.Data>();
-            raw_data[b("url")] = new Templating.Data.Literal(request.get_uri());
-            raw_data[b("path")] = new Templating.Data.Literal(request.get_path());
-            Templating.Data.Data data = new Templating.Data.Mapping(raw_data);
+            var data_ = Templating.Data.Mapping();
+            data["url"] = new Templating.Data.Literal(request.get_uri());
+            data["path"] = new Templating.Data.Literal(request.get_path());
+            Templating.Data.Data = data_
             if (base_data != null) data = new Templating.Data.Stack(data, base_data);
 
             Templating.ErrorData? error_data = null;
