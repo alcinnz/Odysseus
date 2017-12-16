@@ -942,8 +942,7 @@ namespace Odysseus.Templating.Std {
     public Gee.Map<uint8,string> escape_html;
 
     public void register_standard_library() {
-        var autoescape = new AutoescapeBuilder();
-        register_tag("autoescape", autoescape);
+        register_tag("autoescape", new AutoescapeBuilder());
         register_tag("filter", new FilterBuilder());
         register_tag("firstof", new FirstOfBuilder());
         register_tag("for", new ForBuilder());
