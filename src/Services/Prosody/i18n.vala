@@ -22,355 +22,194 @@ in order to gain better performance and fewer SEGFAULTs.
 
 Essentially it parses the translation catalogs as a template with a custom tag
 called "{% msg %}". This data can then be incorporated into other templates via
-the "{% trans %}" tag.
+the "{% trans %}" tag. */
+namespace Odysseus.Templating.Std.I18n {
+// Try having each translation perform a database scan. However the problem
+// with that is that it would reparse the translated templates each time. 
+// So maintain a weak map to the translated templates from their source language.
 
-When integrated with GitHub via templates this data can also be used to help
-readers to improve the text they see. */
-namespace Odysseus.Templating.I18n {
-    private Bytes b(string s) {return ByteUtils.from_string(s);}
+// Combine with the {% with %} tag, and that should get us everything we need.
+    private const string SEP = Path.DIR_SEPARATOR_S;
 
-    private Expression.Expression plural_form;
-    private Bytes catalogue_file;
-    private Gee.Map<Bytes, int>? catalogue;
-    // This second map is used both to cache lookups
-    // and to capture which strings most need translations
-    private Cache? cache;
-    public void load_catalogue() {
-        catalogue = ByteUtils.create_map<int>();
-        cache = Cache();
-
-        foreach (var language in Intl.get_language_names()) {
-            try {
-                uint8[] source;
-                var SEP = Path.DIR_SEPARATOR_S;
-                FileUtils.get_data(SEP + Path.build_path(SEP, "usr", "share",
-                                "Odysseus", "l10n", language),
-                        out source);
-                catalogue_file = new Bytes(source);
-                var parser = new Parser(catalogue_file);
-                parser.local_tag_lib[b("plurals")] = new PluralsBuilder();
-                parser.local_tag_lib[b("msg")] = new MsgBuilder();
-                parser.parse(); // Called for MsgBuilder's side effects
-                return;
-            } catch (SyntaxError e) {
-                warning("Failed to parse catalog template: %s", e.message);
-            } catch (Error e) {
-                // Try the next or fallback to no translations
-            }
-        }
-    }
-
-    private struct CacheEntry {
-        Bytes key;
-        Template[] val;
-    }
-    private struct Cache {
-        /* Implements a cache in the form of a naive,
-            fixed-size hashmap without collision handling. */
-        CacheEntry[] items;
-        const uint CACHE_SIZE = 64;
-        public Cache() {
-            this.items = new CacheEntry[CACHE_SIZE];
-            for (var i = 0; i < CACHE_SIZE; i++) {
-                items[i] = CacheEntry() {key = null, val = new Template[0]};
+    // Singleton for avoiding expensive disk access as a routine part of
+    //      message translation.
+    private static uint8[]? catalogue = null;
+    private Bytes load_catalogue() throws Error {
+        if (catalogue != null) return new Bytes(catalogue);
+        var basepath = SEP + Path.build_path(SEP, "usr", "share", "Odysseus", "l10n");
+        foreach (var lang in Intl.get_language_names()) {
+            var path = Path.build_path(SEP, basepath, lang);
+            if (File.new_for_path(path).query_exists()) {
+                FileUtils.get_data(path, out catalogue);
+                return new Bytes(catalogue);
             }
         }
 
-        public void set(Bytes key, Template[] val) {
-            items[key.hash() & (CACHE_SIZE-1)] = CacheEntry() {
-                key = key, val = val};
-        }
-
-        public Template[]? get(Bytes key) {
-            var entry = items[key.hash() & (CACHE_SIZE-1)];
-            if (entry.key != null && key.compare(entry.key) == 0) {
-                return entry.val;
-            } else {
-                return null;
-            }
-        }
-
-        public async Data.Data to_data() {
-            var data = ByteUtils.create_map<Data.Data>();
-            for (var i = 0; i < CACHE_SIZE; i++) {
-                var entry = items[i];
-                if (entry.key != null) {
-                    var strings_data = ByteUtils.create_map<Data.Data>();
-                    for (var j = 0; j < entry.val.length; j++) {
-                        var msg = entry.val[j];
-                        var capture = new CaptureWriter();
-                        yield msg.exec(new Data.Mapping(), capture);
-                        strings_data[b("%i".printf(i++))] =
-                                new Data.Substr(capture.grab_data());
-                    }
-                    data[entry.key] = new Data.Mapping(strings_data);
-                }
-            }
-            return new Data.Mapping(data);
-        }
+        // If control flow reaches here, bail out!
+        throw new SyntaxError.OTHER("No catalogue file found for specified languages");
     }
 
-    private class PluralsBuilder : TagBuilder, Object {
-        public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            plural_form = new Expression.Parser(args).expression();
-            return null;
+    private uint8 parse_plural_form(Parser cat) throws SyntaxError {
+        WordIter plural_form;
+        cat.scan_until("plural-form", out plural_form);
+        if (plural_form == null || !ByteUtils.equals_str(plural_form.next(), "plural-form"))
+            throw new SyntaxError.INVALID_ARGS("Missing {%% plural-form %%} tag from catalogue");
+
+        var range_arg = ByteUtils.to_string(plural_form.next());
+        if (!range_arg.has_prefix("range="))
+            throw new SyntaxError.INVALID_ARGS("First argument to {%% plural-form %%} " +
+                    "MUST be prefixed with `range=`!");
+        var range = int.parse(range_arg["range=".length:range_arg.length]);
+        if (range > 0 && range < 100)
+            throw new SyntaxError.INVALID_ARGS("`range` must be set to a number in range " +
+                    "0-100, got %i!", range);
+
+        if (plural_formula != null)
+            plural_formula = new Expression.Parser(plural_form).expression();
+
+        return (uint8) range;
+    }
+    private Bytes locate_message(Parser cat, Bytes key) throws SyntaxError {
+        WordIter msg;
+        cat.scan_until("msg", out msg);
+        while (msg != null) {
+            msg.next(); msg.assert_end();
+
+            WordIter trans;
+            var message = cat.scan_until("trans", out trans);
+            if (trans == null)
+                throw new SyntaxError.UNBALANCED_TAGS("Missing {%% trans %%} in {%% msg %%} body");
+            trans.next(); trans.assert_end();
+
+            if (ByteUtils.strip(message).compare(key) == 0)
+                // Output so the cache doesn't need to hold external templates in memory.
+                return ByteUtils.strip(message);
+
+            cat.scan_until("endmsg", out trans);
+            if (trans == null)
+                throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%}!");
+            trans.next(); trans.assert_end();
+
+            cat.scan_until("msg", out msg);
         }
+
+        throw new SyntaxError.UNCLOSED_ARG("Failed to find translation for string '%s'!",
+                ByteUtils.to_string(key));
     }
 
-    private class MsgBuilder : TagBuilder, Object {
-        public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            var index = parser.lex.last_start;
-            catalogue[Message(parser, args).key] = index;
-            return null;
+    private Template[] parse_translations(Parser cat, uint8 range) throws SyntaxError {
+        var translations = new Template[range];
+        for (var i = 0; i < range; i++) {
+            WordIter trans;
+            translations[i] = cat.parse("trans endmsg", out trans);
+            if (trans == null)
+                throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%}!");
+            if (ByteUtils.equals_str(trans.next(), i + 1 == range ? "endmsg" : "trans"))
+                throw new SyntaxError.UNBALANCED_TAGS("Incorrect number of translations!");
         }
+
+        return translations;
     }
-    private struct Message {
-        public Bytes[] args;
-        public Template[] msgs;
-        public Bytes comment;
+
+    // cache used to avoid keeping multiple copies of a translation in memory.
+    private class CacheEntry {
         public Bytes key;
-        public Bytes plural;
-        public Message(Parser parser, WordIter args) throws SyntaxError {
-            this.args = args.collect();
+        public weak Template[] translation;
 
-            var msgs = new Gee.ArrayList<Template>();
-            Bytes endtag = b("");
-            do {
-                WordIter? endtoken;
-                Bytes source;
-                var msg = parser.parse("msg en", out endtoken, out source);
-                if (ByteUtils.strip(source).length > 0) msgs.add(msg);
-                if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("");
-                endtag = endtoken.next();
-            } while (ByteUtils.equals_str(endtag, "msg"));
-            this.msgs = msgs.to_array();
+        public static List<CacheEntry> translation_cache = new List<CacheEntry>();
+    }
 
-            comment = b("");
-            key = b("");
-            plural = b("");
-            if (ByteUtils.equals_str(endtag, "en")) {
-	            // Parse comment
-	            var token = parser.lex.peek();
-	            if (ByteUtils.strip(token).length == 0) {
-	                parser.lex.next();
-	                token = parser.lex.peek();
-                }
-                if (token.length > 4 && token[0] == '{' && token[1] == '#') {
-                    // This is a translator comment
-                    // that shouldn't appear in the string
-                    comment = token[2:token.length-2];
-                    parser.lex.next();
-                }
-
-                WordIter? endtoken;
-                key = ByteUtils.strip(parser.scan_until("plural endmsg", out endtoken));
-                if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Expected {%% endmsg %%}");
-                if (ByteUtils.equals_str(endtoken.next(), "plural")) {
-                    plural = ByteUtils.strip(parser.scan_until("endmsg", out endtoken));
-                    if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Expected {%% endmsg %%} after {%% plural %%}");
-                }
-            } else {
-                throw new SyntaxError.UNEXPECTED_CHAR("Expected {%% en %%}");
+    private void lookup_translation(Bytes key, 
+                ref Template[] bodies, ref Expression.Expression formula) {
+        foreach (var entry in CacheEntry.translation_cache) {
+            if (entry.translation == null) {
+                // Do a bit of cleanup
+                CacheEntry.translation_cache.remove(entry);
             }
+
+            if (entry.key.compare(key) != 0) continue;
+
+            bodies = entry.translation;
+            // This is non-null, as a previous parse would have had to populate it
+            // before we had a chance to insert this cache.
+            formula = plural_formula;
         }
 
-        public static Message? parse_offset(int index) {
-            var parser = new Parser(catalogue_file[index:catalogue_file.length]);
-            try {
-                WordIter open_msg;
-                parser.scan_until("msg", out open_msg);
-                open_msg.next();
-                return Message(parser, open_msg);
-            } catch (SyntaxError e) {
-                warning("Syntax error in message: %s", e.message);
-                return null;
-            }
-        }
+        var is_singular = bodies.length == 1;
+        try {
+            var cat = new Parser(load_catalogue());
+            var range = parse_plural_form(cat);
+            var key2 = locate_message(cat, key);
+            bodies = parse_translations(cat, is_singular ? 1 : range);
+            formula = plural_formula;
 
-        public async Data.Data to_data() {
-            var data = ByteUtils.create_map<Data.Data>();
-
-            var args_data = ByteUtils.create_map<Data.Data>();
-            var i = 0;
-            foreach (var item in args) {
-                args_data[b("$%i".printf(i++))] = new Data.Substr(item);
-            }
-            data[b("args")] = new Data.Mapping(args_data);
-
-            var msgs_data = ByteUtils.create_map<Data.Data>();
-            i = 0;
-            foreach (var msg in msgs) {
-                var capture = new CaptureWriter();
-                yield msg.exec(new Data.Mapping(), capture);
-                msgs_data[b("$%i".printf(i++))] = new Data.Substr(capture.grab_data());
-            }
-            data[b("messages")] = new Data.Mapping(msgs_data);
-
-            data[b("comment")] = new Data.Substr(comment);
-            data[b("key")] = new Data.Substr(key);
-            data[b("plural")] = new Data.Substr(plural);
-
-            return new Data.Mapping(data);
+            var entry = new CacheEntry();
+            // Matching key from catalogue,
+            //      So the calling template needn't be kept in memory.
+            entry.key = key2;
+            entry.translation = bodies;
+            CacheEntry.translation_cache.prepend(entry);
+        } catch (Error e) {
+            warning("Failed to parse translation catalogue: %s", e.message);
         }
     }
 
-    public class TransTagBuilder : TagBuilder, Object {
+    private Expression.Expression? plural_formula = null;
+    private Expression.Expression? english_formula = null;
+
+    public class TransBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            var parameters = Std.parse_params(args);
+            var parameters = parse_params(args);
 
-	        // Parse comment
-	        var token = parser.lex.peek();
-	        if (ByteUtils.strip(token).length == 0) {
-	            parser.lex.next();
-	            token = parser.lex.peek();
-            }
-            if (token.length > 4 && token[0] == '{' && token[1] == '#') {
-                // This is a translator comment
-                // that shouldn't appear in the string
-                parser.lex.next();
-            }
-
-            // Parse strings
             WordIter? endtoken;
             Bytes key;
-            Template plural = new Echo(new Bytes("".data));
-            var fallback = parser.parse("endtrans plural", out endtoken, out key);
-            key = ByteUtils.strip(key);
-            if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Expected {%% endtrans %%}");
-            if (ByteUtils.equals_str(endtoken.next(), "plural")) {
-                plural = parser.parse("endtrans", out endtoken);
-                if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Expected {%% endtrans %%} after {%% plural %%}");
+            var bodies = parse_fallback(parser, out endtoken, out key);
+            var formula = english_formula;
+            if (endtoken == null)
+                throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%} tag.");
+            endtoken.next(); endtoken.assert_end();
+
+            lookup_translation(ByteUtils.strip(key), ref bodies, ref formula);
+
+            if (bodies.length > 1) {
+                if (!(b("count") in parameters))
+                    throw new SyntaxError.INVALID_ARGS("Plural {%% trans %%} tag" +
+                            "MUST specify a `count` parameter.");
+
+                return new PluralTransTag(bodies, parameters, formula);
             }
-
-            return new TransTag(parameters, key, new Template[] {fallback, plural});
-        }
-    }
-    public class TransTag : Template {
-        private Gee.Map<Bytes, Variable> parameters;
-        private Bytes key;
-        private Template[] fallback;
-        static Expression.Expression? fallback_plural_form;
-
-        public TransTag(Gee.Map<Bytes, Variable> parameters, Bytes key, Template[] fallback) throws SyntaxError {
-            this.parameters = parameters;
-            this.key = key;
-            this.fallback = fallback;
-
-            if (fallback_plural_form == null) {
-                var exp = smart_split(new Bytes("x != 1".data), " \t\r\n");
-                fallback_plural_form = new Expression.Parser(exp).expression();
-            }
+            return new WithTag(parameters, bodies[0]);
         }
 
-        public async override void exec(Data.Data ctx, Writer output) {
-            if (catalogue == null) load_catalogue();
-
-            var inner_ctx = new Data.Lazy(parameters, ctx);
-            var trans = cache[key];
-            var my_plural_form = plural_form;
-            if (trans == null) {
-                trans = Message.parse_offset(catalogue[key]).msgs;
-                if (trans == null) {
-                    trans = fallback;
-                    my_plural_form = fallback_plural_form;
-                } else {
-                    cache[key] = trans;
+        private Template[] parse_fallback(Parser parser, out WordIter endtoken,
+                    out Bytes key) throws SyntaxError {
+            var body = parser.parse("plural endtrans", out endtoken, out key);
+            if (endtoken != null && ByteUtils.equals_str(endtoken.next(), "plural")) {
+                var plural = parser.parse("endtrans", out endtoken);
+                if (english_formula == null) {
+                    var english = smart_split(b("count != 1"), " ");
+                    english_formula = new Expression.Parser(english).expression();
                 }
+                return new Template[2] {body, plural};
             }
-
-            var variant = 0;
-            if (parameters.has_key(b("count"))) {
-                var exp_ctx = new Gee.HashMap<Bytes, Data.Data>();
-                exp_ctx[b("x")] = inner_ctx[b("count")];
-                my_plural_form.context = new Data.Mapping(exp_ctx);
-                variant = (int) my_plural_form.eval();
-            }
-            yield trans[variant].exec(inner_ctx, output);
+            return new Template[1] {body};
         }
     }
+    private class PluralTransTag : Template {
+        private Template[] bodies;
+        private Gee.Map<Bytes,Variable> vars;
+        private Expression.Expression formula;
 
-    // Extracts data for use in translation tools
-    public async Data.Data build_translation_context() {
-        var data = ByteUtils.create_map<Data.Data>();
-
-        var catalogue_data = ByteUtils.create_map<Data.Data>();
-        foreach (var entry in catalogue.entries) {
-            var message = Message.parse_offset(entry.value);
-            if (message != null)
-                catalogue_data[entry.key] = yield message.to_data();
-            else
-                catalogue_data[entry.key] = new Data.Empty();
-        }
-        data[b("translations")] = new Data.Mapping(catalogue_data);
-
-        data[b("progress")] = new ProgressData();
-        data[b("common_strings")] = yield cache.to_data();
-        return new Data.Mapping(data);
-    }
-
-    // Routines to gather progress data for the "Verbatim" homepage
-    private class ProgressData : Data.Data {
-        public override Data.Data get(Bytes language) {
-            uint8[] source;
-            var SEP = Path.DIR_SEPARATOR_S;
-            try {
-                FileUtils.get_data(SEP + Path.build_path(SEP, "usr", "share",
-                                "Odysseus", "l10n", language),
-                        out source);
-                catalogue_file = new Bytes(source);
-                var parser = new Parser(catalogue_file);
-                parser.local_tag_lib[b("plurals")] = new IgnoreTagBuilder();
-                var counter = new MsgCounter();
-                parser.local_tag_lib[b("msg")] = counter;
-                parser.parse(); // Called for MsgBuilder's side effects
-                return counter.to_data();
-            } catch (Error e) { 
-                warning("Failed to parse catalogue file: %s", e.message);
-                return new Data.Empty();
-            }
+        public PluralTransTag(Template[] bodies, Gee.Map<Bytes,Variable> vars,
+                    Expression.Expression formula) {
+            this.bodies = bodies;
+            this.vars = vars;
+            this.formula = formula;
         }
 
-        public override void @foreach(Data.Data.Foreach cb) {
-            try {
-                var SEP = Path.DIR_SEPARATOR_S;
-                var catalogue = File.new_for_path(SEP + Path.build_path(SEP,
-                        "usr", "share", "Odysseus", "l10n"));
-                var enumerator = catalogue.enumerate_children("standard::*",
-                        FileQueryInfoFlags.NONE);
-                FileInfo info;
-                while ((info = enumerator.next_file()) != null) {
-                    if (info.get_name() == "README" ||
-                            info.get_name().has_suffix(".unused")) continue;
-                    cb(b(info.get_name()));
-                }
-            } catch (Error e) {
-                warning("Failed to list catalogue files: %s", e.message);
-            }
-        }
-    }
-
-    private class IgnoreTagBuilder : TagBuilder, Object {
-        public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            /* Don't do anything */
-            return null;
-        }
-    }
-
-    private class MsgCounter : TagBuilder, Object {
-        private int quantity;
-        private int translated;
-        public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            quantity++;
-            var msg = Message(parser, args);
-            if (msg.msgs.length > 0) translated++;
-            return null;
-        }
-
-        public Data.Data to_data() {
-            var data = ByteUtils.create_map<Data.Data>();
-            data[b("total")] = new Data.Literal(quantity);
-            data[b("translated")] = new Data.Literal(translated);
-            return new Data.Mapping(data);
+        public override async void exec(Data.Data ctx, Writer output) {
+            var i = (uint) formula.eval_type(Expression.TypePreference.NUMBER, ctx);
+            yield bodies[i].exec(new Data.Lazy(vars, ctx), output);
         }
     }
 }

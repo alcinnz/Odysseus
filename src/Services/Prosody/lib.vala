@@ -863,7 +863,7 @@ namespace Odysseus.Templating.Std {
         register_tag("templatetag", new TemplateTagBuilder());
         register_tag("test", new TestBuilder()); // *
         register_tag("test-report", new TestReportBuilder()); // *
-        register_tag("trans", new WithBuilder());
+        register_tag("trans", new I18n.TransBuilder());
         register_tag("with", new WithBuilder());
 
         register_filter("add", new AddFilter());

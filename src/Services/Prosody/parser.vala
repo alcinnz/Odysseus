@@ -206,7 +206,7 @@ namespace Odysseus.Templating {
         UNCLOSED_STRING, UNCLOSED_ARG, UNEXPECTED_CHAR,
         UNKNOWN_TAG, UNKNOWN_FILTER,
         // Thrown by tags
-        INVALID_ARGS, UNBALANCED_TAGS
+        INVALID_ARGS, UNBALANCED_TAGS, OTHER
     }
 
     public enum TokenType {
