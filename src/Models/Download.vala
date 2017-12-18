@@ -32,6 +32,9 @@ public class Odysseus.Download : Object {
             _destination = value;
         }
     }
+    public int size {
+        get {return download.response.content_length;}
+    }
     
     public signal void received_data();
     public signal void finished();
