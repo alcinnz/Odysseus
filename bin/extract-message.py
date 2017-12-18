@@ -74,7 +74,7 @@ if __name__ == "__main__":
     repo_root = argv[1] if len(argv) > 1 else "."
     l10n_root = os.path.join(repo_root, "data", "page-l10n")
 
-    with open(os.path.join(l10n_root, "Odysseus.messages")) as out:
+    with open(os.path.join(l10n_root, "Odysseus.messages"), 'w') as out:
         for msg in set(parse_templates(repo_root)):
             print("{% msg %}", msg, "{% trans %}{% endmsg %}", file=out)
 

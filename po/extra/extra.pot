@@ -1,40 +1,82 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the extra package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-01 11:57+1300\n"
+"POT-Creation-Date: 2017-12-18 19:34+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Browse knowledge, entertainment, and services on The Web"
+#: data/io.github.alcinnz.odysseus.desktop:4
+#: data/io.github.alcinnz.Odysseus.appdata.xml:6
+msgid "Odysseus"
 msgstr ""
 
-msgid "WWW;Web;Internet;Browser;"
+#: data/io.github.alcinnz.odysseus.desktop:7
+msgid "odysseus-web"
 msgstr ""
 
-msgid "New Window"
-msgstr ""
-
-msgid "New Tab"
-msgstr ""
-
-msgid "About Odysseus"
-msgstr ""
-
+#: data/io.github.alcinnz.Odysseus.appdata.xml:10
 msgid ""
-"A rudimentary Web Browser designed to fit in with elementary OS. Supports "
-"tabbed browsing, per-tab history, find-in-page, downloads, stop/reload, and "
-"the navigation to user specified Web Addresses. Works with nearly every site "
-"you care to use."
+"Surf the Web with the controls you’re already familiar with from apps like "
+"Files and Scratch. With everything where you already expect them it is "
+"seamless to switch between Odysseus and other apps."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:11
+msgid "Features:"
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:13
+msgid "Can present any webpage Apple's Safari or GNOME's Epiphany can handle."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:14
+msgid ""
+"Full elementary-style tabbar complete with tab pinning, duplicating, "
+"restoring, moving tabs, and more."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:15
+msgid "Quickly jump to any page in your tab history."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:16
+msgid "Videos, PDFs, and more open in their respective apps."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:17
+msgid "Keeps your downloads folder organized by date."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:18
+msgid "Quickly and flexibly find text in webpages."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:19
+msgid "DuckDuckGo integration with search autocompletion."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:20
+msgid ""
+"Takes security seriously by defaulting to HTTPS and not uploading the web "
+"addresses you type anywhere."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:21
+msgid "And more to come…"
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:33
+msgid "Adrian Cochrane"
 msgstr ""

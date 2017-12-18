@@ -1,0 +1,8 @@
+src/BrowserWindow.vala
+src/Models/Download.vala
+src/Traits/decorate/alert.vala
+src/Widgets/DownloadBar.vala
+src/Widgets/DownloadButton.vala
+src/Widgets/WebTab.vala
+src/Widgets/overlays/FindToolbar.vala
+
