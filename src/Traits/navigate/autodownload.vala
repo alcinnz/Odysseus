@@ -20,7 +20,7 @@ namespace Odysseus.Traits {
         web.decide_policy.connect((decision, type) => {
             if (type == WebKit.PolicyDecisionType.RESPONSE) {
                 var response_decision = (WebKit.ResponsePolicyDecision) decision;
-                var mime_type = response_decision.response.mime_type;
+                var mime_type = Download.normalize_mimetype(response_decision.response);
 
                 if (!response_decision.is_mime_type_supported() ||
                         /* Show videos in Audience */

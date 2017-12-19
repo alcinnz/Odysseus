@@ -20,46 +20,32 @@
 Specifially it renders download progress onto the app icon
     and it notifies users of download completion. */
 namespace Odysseus.Traits {
-    private class IconProgressManager : Object {
-        private static weak IconProgressManager _instance;
-        public static IconProgressManager get_instance() {
-            if (_instance == null) {
-                var ret = new IconProgressManager();
-                _instance = ret;
-                return ret;
-            }
-            return _instance;
-        }
-
-        private Unity.LauncherEntry launcher = Unity.LauncherEntry.get_for_desktop_file(
+    public void show_download_progress_on_icon(Download dl) {
+        var launcher = Unity.LauncherEntry.get_for_desktop_file(
                 "io.github.alcinnz.odysseus.desktop");
-        public void update_progress() {
+        dl.received_data.connect(() => {
             Idle.add(() => {
                 var downloads = DownloadSet.get_downloads().downloads;
-                if (downloads.size == 0) return true;
-                var largest_download = downloads[0];
-                foreach (var download in downloads) {
-                    if (download.size > largest_download.size)
-                        largest_download = download;
+                if (downloads.size == 0) {
+                    launcher.progress_visible = false;
+                    return false;
                 }
 
-                launcher.progress_visible = largest_download.completed;
-                launcher.progress = largest_download.download.estimated_progress;
+                var progress = 1.0;
+                foreach (var download in downloads)
+                    progress *= download.download.estimated_progress;
+
+                launcher.progress_visible = true;
+                launcher.progress = progress;
 
                 return false;
             }, Priority.LOW);
-        }
-    }
-
-    public void show_download_progress_on_icon(Download dl) {
-        dl.received_data.connect(() => {
-            IconProgressManager.get_instance().update_progress();
         });
         dl.finished.connect(() => {
             var notify = new Notification(_("Web Download Completed"));
             var response = dl.download.response;
             notify.set_body(response.uri);
-            notify.set_icon(ContentType.get_icon(response.mime_type));
+            notify.set_icon(dl.icon);
             Odysseus.Application.instance.send_notification(null, notify);
         });
     }

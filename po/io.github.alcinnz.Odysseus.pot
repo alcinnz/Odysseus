@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.alcinnz.Odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 09:20+1300\n"
+"POT-Creation-Date: 2017-12-19 16:05+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,6 +185,6 @@ msgstr ""
 msgid "Match CamelCase"
 msgstr ""
 
-#: src/Traits/download-progress.vala:54
+#: src/Traits/download-progress.vala:59
 msgid "Web Download Completed"
 msgstr ""

@@ -41,7 +41,7 @@ public class Odysseus.Download : Object {
     
     public Download(WebKit.Download download) {
         this.download = download;
-        download.decide_destination.connect(decide_destination);
+        //download.decide_destination.connect(decide_destination);
         
         download.received_data.connect((len) => received_data());
         download.finished.connect(() => {
@@ -122,5 +122,27 @@ public class Odysseus.Download : Object {
         // This method only works before the download is in operation.
         download.set_destination(path.get_path());
         return true;
+    }
+
+    private string _mimetype = "";
+    public string mimetype {
+        get {
+            if (_mimetype == "") _mimetype = normalize_mimetype(download.response);
+            return _mimetype;
+        }
+    }
+    private Icon? _icon = null;
+    public Icon icon {
+        get {
+            if (_icon == null) _icon = ContentType.get_icon(mimetype);
+            return _icon;
+        }
+    }
+
+    public static string normalize_mimetype(WebKit.URIResponse dl) {
+        if (dl.mime_type == "application/octet-stream")
+            return ContentType.guess(dl.uri, null, null);
+        else
+            return ContentType.from_mime_type(dl.mime_type);
     }
 }
