@@ -5,4 +5,4 @@ src/Widgets/DownloadBar.vala
 src/Widgets/DownloadButton.vala
 src/Widgets/WebTab.vala
 src/Widgets/overlays/FindToolbar.vala
-
+src/Traits/download-progress.vala

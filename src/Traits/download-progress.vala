@@ -19,40 +19,48 @@
 
 Specifially it renders download progress onto the app icon
     and it notifies users of download completion. */
-namespace Odysseus.Services {
+namespace Odysseus.Traits {
     private class IconProgressManager : Object {
-        private weak IconProgressManager _instance;
-        public IconProgressManager instance {
-            get {
-                if (_instance == null) {
-                    var ret = new IconProgressManager();
-                    _instance = ret;
-                    return ret;
-                }
-                return _instance;
+        private static weak IconProgressManager _instance;
+        public static IconProgressManager get_instance() {
+            if (_instance == null) {
+                var ret = new IconProgressManager();
+                _instance = ret;
+                return ret;
             }
+            return _instance;
         }
 
+        private Unity.LauncherEntry launcher = Unity.LauncherEntry.get_for_desktop_file(
+                "io.github.alcinnz.odysseus.desktop");
         public void update_progress() {
-            var downloads = DownloadSet.get_downloads().downloads;
-            var largest_download = downloads[0];
-            foreach (var download : downloads) {
-                if (download.size > largest_download.size)
-                    largest_download = download;
-            }
+            Idle.add(() => {
+                var downloads = DownloadSet.get_downloads().downloads;
+                if (downloads.size == 0) return true;
+                var largest_download = downloads[0];
+                foreach (var download in downloads) {
+                    if (download.size > largest_download.size)
+                        largest_download = download;
+                }
 
-            launcher.progress_visible = download.completed;
-            launcher.progress = download.download.estimated_progress;
+                launcher.progress_visible = largest_download.completed;
+                launcher.progress = largest_download.download.estimated_progress;
+
+                return false;
+            }, Priority.LOW);
         }
     }
 
-    public show_download_progress_on_icon(Download dl) {
-        dl.received_data.connect(Icon.ProgressManager.instance.update_progress);
+    public void show_download_progress_on_icon(Download dl) {
+        dl.received_data.connect(() => {
+            IconProgressManager.get_instance().update_progress();
+        });
         dl.finished.connect(() => {
             var notify = new Notification(_("Web Download Completed"));
-            notify.set_body(dl.response.uri);
-            notify.set_icon(ContentType.get_icon(dl.response.mime_type));
-            Odysseus.Application.send_notification(null, notify);
+            var response = dl.download.response;
+            notify.set_body(response.uri);
+            notify.set_icon(ContentType.get_icon(response.mime_type));
+            Odysseus.Application.instance.send_notification(null, notify);
         });
     }
 }

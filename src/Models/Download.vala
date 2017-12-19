@@ -32,7 +32,7 @@ public class Odysseus.Download : Object {
             _destination = value;
         }
     }
-    public int size {
+    public uint64 size {
         get {return download.response.content_length;}
     }
     

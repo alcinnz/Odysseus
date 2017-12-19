@@ -3,7 +3,7 @@ widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar']
 header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
         'HeaderBarWithMenus']
 overlay_widgets = ['FindToolbar', 'InfoContainer']
-traits = ['init']
+traits = ['init', 'download-progress']
 nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history']
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete']
@@ -71,6 +71,7 @@ executable('io.github.alcinnz.Odysseus',
         dependency('gee-0.8'),
         dependency('libsoup-2.4'),
         dependency('sqlite3'),
+        dependency('unity'),
         posix_dep
     ],
     install: true

@@ -49,5 +49,7 @@ namespace Odysseus.Traits {
         Services.Completer.register(typeof(ImplyHTTP));
         Services.Completer.register(typeof(Search.DuckDuckGo));
         Services.Completer.register(typeof(Search.DDGOnlineCompletions));
+
+        DownloadSet.get_downloads().add.connect(show_download_progress_on_icon);
     }
 }

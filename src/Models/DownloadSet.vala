@@ -20,7 +20,7 @@
 The maintained set does not include successfully downloaded files, because if those
     are kept in the downloads bar the UI may become cluttered. */
 public class Odysseus.DownloadSet : Object {
-    public Gee.ArrayList<Download> downloads;
+    public Gee.ArrayList<Download> downloads = new Gee.ArrayList<Download>();
     public virtual signal void add(Download item) {
         downloads.add(item);
         item.cancel.connect(() => downloads.remove(item));

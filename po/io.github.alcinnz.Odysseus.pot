@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.alcinnz.Odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-18 19:34+1300\n"
+"POT-Creation-Date: 2017-12-19 09:20+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,7 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
-#: src/Models/Download.vala:71
+#: src/Models/Download.vala:74
 #, c-format
 msgid ""
 "Error moving download to %s.\n"
@@ -100,19 +100,19 @@ msgid ""
 msgstr ""
 
 #. / TRANSLATORS: "%i" seconds
-#: src/Models/Download.vala:84
+#: src/Models/Download.vala:87
 #, c-format
 msgid "%is"
 msgstr ""
 
 #. / TRANSLATORS: "%i" minutes
-#: src/Models/Download.vala:89
+#: src/Models/Download.vala:92
 #, c-format
 msgid "%im"
 msgstr ""
 
 #. / TRANSLATORS: "%i" hours and "%i" minutes,
-#: src/Models/Download.vala:94
+#: src/Models/Download.vala:97
 #, c-format
 msgid "%ih %im"
 msgstr ""
@@ -183,4 +183,8 @@ msgstr ""
 #. they probably don't want this option. (note the hint in it's name)
 #: src/Widgets/overlays/FindToolbar.vala:168
 msgid "Match CamelCase"
+msgstr ""
+
+#: src/Traits/download-progress.vala:54
+msgid "Web Download Completed"
 msgstr ""
