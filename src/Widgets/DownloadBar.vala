@@ -56,7 +56,6 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
     }
 
     public void add_entry(Gtk.Widget widget) {
-        set_reveal_child(true);
         mainbox.add(widget);
     }
 
@@ -65,8 +64,11 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         foreach (var download in DownloadSet.get_downloads().downloads) {
             add_entry(new DownloadButton(download));
         }
-        on_add = DownloadSet.get_downloads().add.connect((download) => {
-            add_entry(new DownloadButton(download));
+        Idle.add(() => {
+            on_add = DownloadSet.get_downloads().add.connect((download) => {
+                add_entry(new DownloadButton(download));
+            });
+            return false;
         });
     }
 }
