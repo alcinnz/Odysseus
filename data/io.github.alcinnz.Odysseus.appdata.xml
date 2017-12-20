@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <component type="desktop-application">
   <id>io.github.alcinnz.Odysseus</id>
-  <metadata_license>CC0</metadata_license>
-  <project_license>GPL-3.0+</project_license>
+  <metadatalicense>CC0</metadatalicense>
+  <projectlicense>GPL-3.0+</projectlicense>
   <name>Odysseus</name>
-  <_summary>elementary OS's very own web browser</_summary>
+  <summary>elementary OS's very own web browser</summary>
 
   <description>
-    <_p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</_p>
-    <_p>Features:</_p>
+    <p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</p>
+    <p>Features:</p>
     <ul>
-      <_li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</_li>
-      <_li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</_li>
-      <_li>Quickly jump to any page in your tab history.</_li>
-      <_li>Videos, PDFs, and more open in their respective apps.</_li>
-      <_li>Keeps your downloads folder organized by date.</_li>
-      <_li>Quickly and flexibly find text in webpages.</_li>
-      <_li>DuckDuckGo integration with search autocompletion.</_li>
-      <_li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</_li>
-      <_li>And more to come…</_li>
+      <li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</li>
+      <li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</li>
+      <li>Quickly jump to any page in your tab history.</li>
+      <li>Videos, PDFs, and more open in their respective apps.</li>
+      <li>Keeps your downloads folder organized by date.</li>
+      <li>Quickly and flexibly find text in webpages.</li>
+      <li>DuckDuckGo integration with search autocompletion.</li>
+      <li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</li>
+      <li>And more to come…</li>
     </ul>
   </description>
   <screenshots>
     <screenshot type="default">
-      <_caption>Open to http://www.in2greece.com/english/historymyth/mythology/names/odysseus.htm</_caption>
+      <caption>Open to http://www.in2greece.com/english/historymyth/mythology/names/odysseus.htm</caption>
       <image>
         https://raw.githubusercontent.com/alcinnz/Odysseus/master/data/screenshot.png
       </image>
     </screenshot>
   </screenshots>
 
-  <developer_name>Adrian Cochrane</developer_name>
+  <developername>Adrian Cochrane</developername>
   <url type="homepage">https://github.io/alcinnz/Odysseus</url>
   <url type="help">https://github.io/alcinnz/Odysseus-support</url>
   <url type="bugtracker">https://github.com/alcinnz/Odysseus/issues</url>
-  <update_contact>alcinnz@lavabit.com</update_contact>
+  <updatecontact>alcinnz@lavabit.com</updatecontact>
 
   <custom>
     <value key="x-appcenter-color-primary">#f7785b</value>

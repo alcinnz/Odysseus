@@ -16,6 +16,7 @@ foreach lang : languages
 endforeach
 
 
+TODO = 'Apply internationalization to these'
 install_data(
     'io.github.alcinnz.odysseus.desktop',
     install_dir: join_paths(get_option('datadir'), 'applications')
