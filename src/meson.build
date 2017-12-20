@@ -3,7 +3,7 @@ widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar']
 header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
         'HeaderBarWithMenus']
 overlay_widgets = ['FindToolbar', 'InfoContainer']
-traits = ['init', 'download-progress']
+traits = ['init', 'download-progress', 'download-window']
 nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history']
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete']

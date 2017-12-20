@@ -41,7 +41,7 @@ public class Odysseus.Download : Object {
     
     public Download(WebKit.Download download) {
         this.download = download;
-        //download.decide_destination.connect(decide_destination);
+        download.decide_destination.connect(decide_destination);
         
         download.received_data.connect((len) => received_data());
         download.finished.connect(() => {
@@ -103,7 +103,9 @@ public class Odysseus.Download : Object {
     public static File folder = File.new_for_path(
             Environment.get_user_special_dir(UserDirectory.DOWNLOAD));
     
+    public bool cancelled = false;
     public virtual signal void cancel() {
+        cancelled = true;
         download.cancel();
     }
 
@@ -113,6 +115,10 @@ public class Odysseus.Download : Object {
         // THIS IS NOT Y10K COMPLIANT! (http://longnow.org/clock/)
         // Well in the unlikely event this is relevant, it's unlikely to cause serious problems.
         folder = Downloads.get_child(new DateTime.now_local().format("%Y-%m-%d"));
+        if (!folder.query_exists()) {
+            try {folder.make_directory();}
+            catch (Error e) {folder = Downloads;}
+        }
 
         var path = folder.get_child(filename);
         var i = 0;
@@ -120,7 +126,7 @@ public class Odysseus.Download : Object {
             path = folder.get_child("%s%i".printf(filename, i++));
 
         // This method only works before the download is in operation.
-        download.set_destination(path.get_path());
+        download.set_destination(path.get_uri());
         return true;
     }
 

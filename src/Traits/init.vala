@@ -51,5 +51,6 @@ namespace Odysseus.Traits {
         Services.Completer.register(typeof(Search.DDGOnlineCompletions));
 
         DownloadSet.get_downloads().add.connect(show_download_progress_on_icon);
+        DownloadSet.get_downloads().add.connect(download_window_handle_download);
     }
 }

@@ -15,6 +15,11 @@ sql_scripts = gnome.compile_resources(
     source_dir: 'data/db',
     c_name: 'sqlscripts')
 
+conf = configuration_data()
+conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
+configure_file(output: 'config.h', configuration: conf)
+config_h_dir = include_directories('.')
+
 subdir('data')
 subdir('po')
 subdir('src')

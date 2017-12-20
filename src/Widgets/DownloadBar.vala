@@ -39,11 +39,11 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         notify["child-revealed"].connect((pspec) => {
             if (child_revealed) populate_downloads();
             else {
-                mainbox.@foreach((widget) => widget.destroy);
+                mainbox.@foreach((widget) => widget.destroy());
                 DownloadSet.get_downloads().disconnect(on_add);
             }
         });
-        populate_downloads();
+        DownloadSet.get_downloads().add.connect((dl) => reveal_child = true);
     }
 
     private delegate void Action();
@@ -55,20 +55,20 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         box.add(button);
     }
 
-    public void add_entry(Gtk.Widget widget) {
-        mainbox.add(widget);
+    public void add_download(Odysseus.Download dl) {
+        dl.finished.connect(() => {
+            if (DownloadSet.get_downloads().downloads.size == 0) reveal_child = false;
+        });
+        mainbox.add(new DownloadButton(dl));
     }
 
     private ulong on_add = 0;
     public void populate_downloads() {
         foreach (var download in DownloadSet.get_downloads().downloads) {
-            add_entry(new DownloadButton(download));
+            add_download(download);
         }
-        Idle.add(() => {
-            on_add = DownloadSet.get_downloads().add.connect((download) => {
-                add_entry(new DownloadButton(download));
-            });
-            return false;
+        on_add = DownloadSet.get_downloads().add.connect((download) => {
+            add_download(download);
         });
     }
 }

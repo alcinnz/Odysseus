@@ -42,6 +42,8 @@ namespace Odysseus.Traits {
             }, Priority.LOW);
         });
         dl.finished.connect(() => {
+            if (dl.cancelled) return;
+
             var notify = new Notification(_("Web Download Completed"));
             var response = dl.download.response;
             notify.set_body(response.uri);
