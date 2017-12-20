@@ -134,12 +134,12 @@ namespace Odysseus.Services {
             if (render_errors)
                 yield render_alternate_html(tab, "SERVER-ERROR",
                         alt_uri, false, error_data, error_data.tag);
-            else webview.load_alternate_html(@"<h1>$(e.domain)</h1><p>$(e.message)</p>",
+            else webview.load_alternate_html(@"<h1>$(e.domain) @ $(subpath)</h1><p>$(e.message)</p>",
                     alternative_uri, null);
             return;
         } catch (Error e) {
             if (render_errors) yield render_alternate_html(tab, "NOT-FOUND", alt_uri, false);
-            else webview.load_alternate_html(@"<h1>$(e.domain)</h1><p>$(e.message)</p>",
+            else webview.load_alternate_html(@"<h1>$(e.domain) @ $(subpath)</h1><p>$(e.message)</p>",
                     alternative_uri, null);
             return;
         }

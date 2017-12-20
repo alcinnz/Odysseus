@@ -1,0 +1,15 @@
+{# Startup performance optimization to tell WebKit to delay loading this page
+    until it is clear that the user wants it to load #}
+<html>
+<head>
+  <style>body {font-family: sans-serif;}</style>
+</head>
+<body>
+  <h1>This page will load shortly…</h1>
+  <p>If not, <a href="{{ url }}">click here</a>.</p>
+  <script>
+    window.onfocus = () => location.reload()
+    if (document.visibilityState == 'visible') location.reload()
+  </script>
+</body>
+</html>

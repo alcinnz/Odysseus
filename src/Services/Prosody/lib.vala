@@ -591,7 +591,7 @@ namespace Odysseus.Templating.Std {
             var parameters = parse_params(args);
 
             WordIter? endtoken;
-            var body = parser.parse("endwith endtrans", out endtoken);
+            var body = parser.parse("endwith", out endtoken);
             if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS(
                     "{%% with %%} must be closed with a {%% endwith %%} tag.");
 
