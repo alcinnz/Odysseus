@@ -5,8 +5,8 @@
   <style>body {font-family: sans-serif;}</style>
 </head>
 <body>
-  <h1>This page will load shortly…</h1>
-  <p>If not, <a href="{{ url }}">click here</a>.</p>
+  <h1>{% trasn %}This page will load shortly…{% endtrans %}</h1>
+  <p>{% trans %}If not, <a href="{{ url }}">click here</a>.{% endtrans %}</p>
   <script>
     window.onfocus = () => location.reload()
     if (document.visibilityState == 'visible') location.reload()

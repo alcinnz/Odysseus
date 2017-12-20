@@ -167,7 +167,7 @@ namespace Odysseus.Templating.Std.I18n {
             var formula = english_formula;
             if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%} tag.");
-            endtoken.next(); endtoken.assert_end();
+            endtoken.assert_end();
 
             lookup_translation(ByteUtils.strip(key), ref bodies, ref formula);
 
