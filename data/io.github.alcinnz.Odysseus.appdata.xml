@@ -13,11 +13,13 @@
       <li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</li>
       <li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</li>
       <li>Quickly jump to any page in your tab history.</li>
-      <li>Videos, PDFs, and more open in their respective apps.</li>
+      <li>Videos, PDFs, and more open and stream into their respective apps.</li>
       <li>Keeps your downloads folder organized by date.</li>
       <li>Quickly and flexibly find text in webpages.</li>
       <li>DuckDuckGo integration with search autocompletion.</li>
       <li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</li>
+      <li>Shows combined download progress in the dock for a quick glance.</li>
+      <li>Quick to start as it holds off on loading pages from your previous browsing session.</li>
       <li>And more to come…</li>
     </ul>
   </description>
