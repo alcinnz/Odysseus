@@ -26,15 +26,19 @@
   </description>
   <screenshots>
     <screenshot type="default">
+      <caption>Browser controls, find-in-page, and downloads progress.</caption>
       <image>https://alcinnz.github.io/Odysseus/screenshot.png</image>
     </screenshot>
     <screenshot>
+      <caption>Autocompletion</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot2.png</image>
     </screenshot>
     <screenshot>
+      <caption>Jump to any spot in tab history</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot3.png</image>
     </screenshot>
     <screenshot>
+      <caption>The Application menu.</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot4.png</image>
     </screenshot>
   </screenshots>
