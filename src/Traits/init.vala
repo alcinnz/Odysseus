@@ -29,7 +29,10 @@ namespace Odysseus.Traits {
         sec.register_uri_scheme_as_no_access("oddysseus"); // Forces us to not rely on the Internet
         sec.register_uri_scheme_as_secure("odysseus");
         sec.register_uri_scheme_as_no_access("odysseus");
+
         ctx.register_uri_scheme("source", handle_source_uri);
+        ctx.register_uri_scheme("gtk-icon", Services.handle_sysicon_uri);
+        sec.register_uri_scheme_as_secure("gtk-icon");
 
         configure_context(ctx);
         DownloadSet.setup_ctx(ctx);

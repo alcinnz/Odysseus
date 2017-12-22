@@ -9,7 +9,7 @@
   <main>
     <h1>{% trans %}Could Not Connect To The Internet{% endtrans %}</h1>
     <p><a href="settings://network/" title="Open network preferences">
-      <img src="odysseus:icon/128/preferences-system-network" 
+      <img src="gtk-icon:128/preferences-system-network" 
             alt="{% trans %}Network{% endtrans %}" /></a></p>
   </main>
   <script>
