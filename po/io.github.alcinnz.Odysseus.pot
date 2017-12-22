@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.alcinnz.Odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-20 14:14+1300\n"
+"POT-Creation-Date: 2017-12-23 08:14+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,7 +88,11 @@ msgstr ""
 msgid "_Print"
 msgstr ""
 
-#: src/BrowserWindow.vala:154 src/Widgets/DownloadButton.vala:122
+#: src/BrowserWindow.vala:143
+msgid "Show Downloads"
+msgstr ""
+
+#: src/BrowserWindow.vala:156 src/Widgets/DownloadButton.vala:122
 msgid "_Cancel"
 msgstr ""
 
@@ -185,7 +189,7 @@ msgstr ""
 msgid "Match CamelCase"
 msgstr ""
 
-#: src/Traits/download-progress.vala:45
+#: src/Traits/download-progress.vala:47
 msgid "Web Download Completed"
 msgstr ""
 
@@ -193,6 +197,6 @@ msgstr ""
 msgid "Downloads Are In Progress…"
 msgstr ""
 
-#: src/Traits/download-window.vala:33
+#: src/Traits/download-window.vala:34
 msgid "Click a download to cancel or alter it"
 msgstr ""

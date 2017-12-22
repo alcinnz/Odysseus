@@ -1,9 +1,0 @@
-These pages expose data parsed from the Prosody i18n engine in order to solicit contributions.
-
-They provide a fairly smooth workflow from an intent to help translate, to language selection, to updating translations, before finally submitting the translations. All the UI is presented in English to reduce the effort translators have to put in, and because I present the source text in English anyways.
-
-Currently there are some subpar aspects to this experience: notably it requires a sign-up step and links to a seperate translation experience for translating the chrome. Also it would be nice for translators to communicate better without going through commit messages on GitHub (which is all my infrastructure supports right now). Largely these are problems with a lack of a dedicated service to back these translations.
-
-However we can improve the editting experience itself by incorporating [Prose Mirror](http://prosemirror.net/examples/dino/). It's currently in Beta but it appears to have everything I need (and things I don't yet). 
-
-The language data was provided by julianromera, instine, and Skip Jack on Stack Overflow: http://stackoverflow.com/questions/3217492/list-of-language-codes-in-yaml-or-json

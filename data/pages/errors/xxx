@@ -1,4 +1,4 @@
 <title>[dialog-error]UNKNOWN ERROR!</title>
 <p>{% trans %}Something went wrong!{% endtrans %}</p>
 
-<p>{% trans %}But I don't understand what it was.{% endtrans %}</p>
+<p>{% trans %}But <span title="The Odysseus browser">I</span> don't understand what it was.{% endtrans %}</p>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-20 14:14+1300\n"
+"POT-Creation-Date: 2017-12-23 08:14+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,8 +22,25 @@ msgstr ""
 msgid "Odysseus"
 msgstr ""
 
+#: data/io.github.alcinnz.odysseus.desktop:5
+#: data/io.github.alcinnz.Odysseus.appdata.xml:7
+msgid "Surf knowledge, entertainment, and services on The Web"
+msgstr ""
+
 #: data/io.github.alcinnz.odysseus.desktop:7
 msgid "odysseus-web"
+msgstr ""
+
+#: data/io.github.alcinnz.odysseus.desktop:11
+msgid "WWW;Web;Internet;Browser;"
+msgstr ""
+
+#: data/io.github.alcinnz.odysseus.desktop:18
+msgid "New Window"
+msgstr ""
+
+#: data/io.github.alcinnz.odysseus.desktop:22
+msgid "New Tab"
 msgstr ""
 
 #: data/io.github.alcinnz.Odysseus.appdata.xml:10
@@ -52,7 +69,7 @@ msgid "Quickly jump to any page in your tab history."
 msgstr ""
 
 #: data/io.github.alcinnz.Odysseus.appdata.xml:16
-msgid "Videos, PDFs, and more open in their respective apps."
+msgid "Videos, PDFs, and more open and stream into their respective apps."
 msgstr ""
 
 #: data/io.github.alcinnz.Odysseus.appdata.xml:17
@@ -74,9 +91,35 @@ msgid ""
 msgstr ""
 
 #: data/io.github.alcinnz.Odysseus.appdata.xml:21
+msgid "Shows combined download progress in the dock for a quick glance."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:22
+msgid ""
+"Quick to start as it holds off on loading pages from your previous browsing "
+"session."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:23
 msgid "And more to come…"
 msgstr ""
 
+#: data/io.github.alcinnz.Odysseus.appdata.xml:25
+msgid "Install Odysseus for links to the depicted pages from the screenshots."
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:29
+msgid "Browser controls, find-in-page, and downloads progress."
+msgstr ""
+
 #: data/io.github.alcinnz.Odysseus.appdata.xml:33
-msgid "Adrian Cochrane"
+msgid "Autocompletion"
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:37
+msgid "Jump to any spot in tab history"
+msgstr ""
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:41
+msgid "The Application menu."
 msgstr ""

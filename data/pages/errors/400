@@ -7,8 +7,8 @@
 </head>
 <body>
   <main>
-    <h1>{% trans %}This Is Apparently Our Fault{% endtrans %}</h1>
-    <p>{% trans %}Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and we'll see what we can do about it.{% endtrans %}</p>
+    <h1>{% trans %}This Is Apparently <span title="Odysseus Browser">Our</span> Fault{% endtrans %}</h1>
+    <p>{% trans %}Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and <span title="Odysseus developers">we'll</span> see what we can do about it.{% endtrans %}</p>
   </main>
 </body>
 </html>

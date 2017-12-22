@@ -7,7 +7,7 @@
 </head>
 <body>
   <main>
-    <h1>{% trans %}Failed To Decide on a Format{% endtrans %}</h1>
+    <h1>{% trans %}Failed To Decide on a File Format{% endtrans %}</h1>
   </main>
 </body>
 </html>

@@ -50,3 +50,8 @@ h4 {
     padding-bottom: 6px;
     padding-top: 6px;
 }
+
+span[title] {
+    border-bottom: thin dotted gray;
+    cursor: help;
+}

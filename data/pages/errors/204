@@ -8,7 +8,7 @@
 <body>
   <main>
     <h2>{% trans %}This Page Has Been Intentionally Left Empty{% endtrans %}</h2>
-    <p>{% trans %}Until I added this content to let you know so.{% endtrans %}</p>
+    <p>{% trans %}Until <span title="Odysseus browser">I</a> added this content to let you know so.{% endtrans %}</p>
   </main>
 </body>
 </html>
