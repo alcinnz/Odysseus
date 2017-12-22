@@ -4,7 +4,7 @@
   <metadatalicense>CC0</metadatalicense>
   <projectlicense>GPL-3.0+</projectlicense>
   <name>Odysseus</name>
-  <summary>elementary OS's very own web browser</summary>
+  <summary>Surf knowledge, entertainment, and services on The Web</summary>
 
   <description>
     <p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</p>
@@ -22,13 +22,20 @@
       <li>Quick to start as it holds off on loading pages from your previous browsing session.</li>
       <li>And more to come…</li>
     </ul>
+    <p>Install Odysseus for links to the depicted pages from the screenshots.</p>
   </description>
   <screenshots>
     <screenshot type="default">
-      <caption>Open to http://www.in2greece.com/english/historymyth/mythology/names/odysseus.htm</caption>
-      <image>
-        https://raw.githubusercontent.com/alcinnz/Odysseus/master/data/screenshot.png
-      </image>
+      <image>https://alcinnz.github.io/Odysseus/screenshot.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://alcinnz.github.io/Odysseus/Screenshot2.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://alcinnz.github.io/Odysseus/Screenshot3.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://alcinnz.github.io/Odysseus/Screenshot4.png</image>
     </screenshot>
   </screenshots>
 
