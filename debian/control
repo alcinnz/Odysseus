@@ -1,0 +1,18 @@
+Source: io.github.alcinnz.Odysseus
+Section: x11
+Priority: extra
+Maintainer: Adrian Cochrane <alcinnz@lavabit.com>
+Build-Depends: cmake (>= 2.8),
+               cmake-elementary,
+               debhelper (>= 8.0.0),
+               valac-0.26 | valac (>= 0.26)
+Standards-Version: 3.9.3
+
+Package: io.github.alcinnz.Odysseus
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: The Web Browser designed specifically for elementary OS!
+ Designed in accordance to the elementary HIG Odysseus boasts unique desktop
+ integrations, chrome that's instantly familiar to users of elementary's
+ Scratch and Files applications, recommend links on first start, and fast
+ restoration of your previous browsing sessions with delayed loading of pages.
