@@ -2,8 +2,8 @@
 Type=Application
 Name=Odysseus
 Comment=Surf knowledge, entertainment, and services on The Web
-Exec=io.github.alcinnz.Odysseus %U
-Icon=odysseus-web
+Exec=com.github.alcinnz.odysseus-web %U
+Icon=com.github.alcinnz.odysseus-web
 Terminal=false
 Categories=Network;WebBrowser;GTK;GNOME;
 # TRANSLATORS This is a semicolon list of keywords for this application
@@ -15,8 +15,8 @@ X-GNOME-UsesNotifications=true
 
 [Desktop Action NewWindow]
 Name=New Window
-Exec=io.github.alcinnz.Odysseus odysseus:NewWindow
+Exec=com.github.alcinnz.odysseus-web odysseus:NewWindow
 
 [Desktop Action NewTab]
 Name=New Tab
-Exec=io.github.alcinnz.Odysseus odysseus:home
+Exec=com.github.alcinnz.odysseus-web odysseus:home
