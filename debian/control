@@ -1,4 +1,4 @@
-Source: io.github.alcinnz.odysseus
+Source: com.github.alcinnz.oddysseus
 Section: x11
 Priority: extra
 Maintainer: Adrian Cochrane <alcinnz@lavabit.com>
@@ -9,7 +9,7 @@ Build-Depends: meson,
                valac (>= 0.26)
 Standards-Version: 3.9.3
 
-Package: io.github.alcinnz.odysseus
+Package: com.github.alcinnz.oddysseus
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: The Web Browser designed specifically for elementary OS!
