@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <component type="desktop-application">
-  <id>io.github.alcinnz.Odysseus</id>
+  <id>com.github.alcinnz.odysseus-web</id>
   <metadatalicense>CC0</metadatalicense>
   <projectlicense>GPL-3.0+</projectlicense>
   <name>Odysseus</name>
@@ -56,6 +56,6 @@
   </custom>
 
   <provides>
-    <binary>io.github.alcinnz.odysseus</binary>
+    <binary>com.github.alcinnz.odysseus-web</binary>
   </provides>
 </component>
