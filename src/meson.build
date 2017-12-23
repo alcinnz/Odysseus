@@ -58,25 +58,7 @@ endforeach
 c_args = ['-include', 'config.h']
 posix_dep = meson.get_compiler('vala').find_library('posix')
 
-executable('io.github.alcinnz.Odysseus',
-    source_files,
-
-    c_args: c_args,
-    link_args: ['-lm'],
-    dependencies: [
-        dependency('gtk+-3.0'),
-        dependency('granite'),
-        dependency('webkit2gtk-4.0'),
-        dependency('json-glib-1.0'),
-        dependency('gee-0.8'),
-        dependency('libsoup-2.4'),
-        dependency('sqlite3'),
-        dependency('unity'),
-        posix_dep
-    ],
-    install: true
-)
-executable('com.github.alcinnz.oddysseus',
+executable('com.github.alcinnz.odysseus-web',
     source_files,
 
     c_args: c_args,

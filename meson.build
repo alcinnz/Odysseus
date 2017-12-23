@@ -1,4 +1,4 @@
-project('io.github.alcinnz.Odysseus', ['vala', 'c'],
+project('com.github.alcinnz.odysseus-web', ['vala', 'c'],
     version: '1.0.0',
     license: 'GNU',
     meson_version: '>=0.40.1')

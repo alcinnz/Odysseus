@@ -1,4 +1,4 @@
-Source: com.github.alcinnz.oddysseus
+Source: com.github.alcinnz.odysseus-web
 Section: x11
 Priority: extra
 Maintainer: Adrian Cochrane <alcinnz@lavabit.com>
@@ -14,7 +14,7 @@ Build-Depends: meson,
                libunity-dev (>= 7.1.4)
 Standards-Version: 3.9.3
 
-Package: com.github.alcinnz.oddysseus
+Package: com.github.alcinnz.odysseus-web
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: The Web Browser designed specifically for elementary OS!
