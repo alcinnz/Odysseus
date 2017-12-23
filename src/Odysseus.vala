@@ -21,10 +21,10 @@ public class Odysseus.Application : Granite.Application {
         Intl.setlocale (LocaleCategory.ALL, "");
         Intl.textdomain ("odysseus");
 
-        app_launcher = "io.github.alcinnz.odysseus.desktop";
+        app_launcher = "com.github.alcinnz.odysseus-web.desktop";
         program_name = "Odysseus";
         build_version = "0.3";
-        exec_name = application_id = "io.github.alcinnz.odysseus";
+        exec_name = application_id = "com.github.alcinnz.odysseus-web";
     }
 
     private static Odysseus.Application _instance = null;
