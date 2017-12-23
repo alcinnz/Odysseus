@@ -1,14 +1,15 @@
-Source: io.github.alcinnz.Odysseus
+Source: io.github.alcinnz.odysseus
 Section: x11
 Priority: extra
 Maintainer: Adrian Cochrane <alcinnz@lavabit.com>
-Build-Depends: cmake (>= 2.8),
-               cmake-elementary,
-               debhelper (>= 8.0.0),
-               valac-0.26 | valac (>= 0.26)
+Build-Depends: meson,
+               debhelper (>= 9),
+               libgtk-3-dev,
+               libgranite-dev (>= 0.3.0),
+               valac (>= 0.26)
 Standards-Version: 3.9.3
 
-Package: io.github.alcinnz.Odysseus
+Package: io.github.alcinnz.odysseus
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: The Web Browser designed specifically for elementary OS!
