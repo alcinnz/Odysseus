@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <component type="desktop-application">
   <id>com.github.alcinnz.odysseus-web</id>
-  <metadata_license>CC0</metadatalicense>
-  <project_license>GPL-3.0+</projectlicense>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
   <name>Odysseus</name>
   <summary>Surf knowledge, entertainment, and services on The Web</summary>
 
@@ -43,11 +43,11 @@
     </screenshot>
   </screenshots>
 
-  <developer_name>Adrian Cochrane</developername>
+  <developer_name>Adrian Cochrane</developer_name>
   <url type="homepage">https://github.io/alcinnz/Odysseus</url>
   <url type="help">https://github.io/alcinnz/Odysseus-support</url>
   <url type="bugtracker">https://github.com/alcinnz/Odysseus/issues</url>
-  <update_contact>alcinnz@lavabit.com</updatecontact>
+  <update_contact>alcinnz@lavabit.com</update_contact>
 
   <custom>
     <value key="x-appcenter-color-primary">#f7785b</value>
