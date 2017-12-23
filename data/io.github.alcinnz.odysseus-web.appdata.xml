@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <component type="desktop-application">
-  <id>com.github.alcinnz.odysseus-web</id>
+  <id>com.github.alcinnz.odysseus-web.desktop</id>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>Odysseus</name>
@@ -58,4 +58,13 @@
   <provides>
     <binary>com.github.alcinnz.odysseus-web</binary>
   </provides>
+
+  <releases>
+    <release version="1.0.4" date="3017-12-23">
+      <description>
+        <p>Offers a very smooth browsing and downloads experience.</p>
+        <p>First AppCenter release, so Merry Christmas!</p>
+      </description>
+    </release>
+  </releases>
 </component>

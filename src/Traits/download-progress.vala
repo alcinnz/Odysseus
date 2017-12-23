@@ -22,7 +22,7 @@ Specifially it renders download progress onto the app icon
 namespace Odysseus.Traits {
     public void show_download_progress_on_icon(Download dl) {
         var launcher = Unity.LauncherEntry.get_for_desktop_file(
-                "io.github.alcinnz.odysseus.desktop");
+                "com.github.alcinnz.odysseus-web.desktop");
         dl.received_data.connect(() => {
             Idle.add(() => {
                 var downloads = DownloadSet.get_downloads().downloads;
