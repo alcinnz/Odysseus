@@ -172,7 +172,7 @@ namespace Odysseus.Templating.Std.I18n {
             lookup_translation(ByteUtils.strip(key), ref bodies, ref formula);
 
             if (bodies.length > 1) {
-                if (!(b("count") in parameters))
+                if (!parameters.has_key(b("count")))
                     throw new SyntaxError.INVALID_ARGS("Plural {%% trans %%} tag" +
                             "MUST specify a `count` parameter.");
 

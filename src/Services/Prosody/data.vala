@@ -219,7 +219,7 @@ namespace Odysseus.Templating.Data {
             if (data.has_key(property)) return data[property];
             else return new Empty();
         }
-        public void set(string property, Data val) {
+        public new void set(string property, Data val) {
             data[b(property)] = val;
         }
         public override void foreach_map(Data.ForeachMap cb) {

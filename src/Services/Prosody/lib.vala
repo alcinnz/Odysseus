@@ -329,7 +329,13 @@ namespace Odysseus.Templating.Std {
             var path = File.new_for_path(parser.path);
             path = path.resolve_relative_path(ByteUtils.to_string(args.next()));
 
-            var lib = new Parser(resources_lookup_data(path.get_path(), 0));
+            Parser lib;
+            try {
+                lib = new Parser(resources_lookup_data(path.get_path(), 0));
+            } catch (SyntaxError err) {throw err;}
+            catch (Error err) {
+                throw new SyntaxError.INVALID_ARGS("Imported template is invalid! %s", err.message);
+            }
             var sep = args.next_value();
 
             if (sep != null) {
@@ -778,7 +784,6 @@ namespace Odysseus.Templating.Std {
         public override Data.Data filter0(Data.Data text) {
             var paragraphs = text.to_string().split("\n\n");
             var builder = new StringBuilder();
-            var ret = "";
             foreach (var paragraph in paragraphs) {
                 builder.append("<p>");
                 builder.append(paragraph.strip().replace("\n", "<br />"));

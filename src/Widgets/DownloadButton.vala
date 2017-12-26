@@ -83,7 +83,6 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
     private void update_data() {
         var inner_d = download.download;
         this.progress = inner_d.estimated_progress;
-        var mime = inner_d.response.mime_type;
         fileicon.gicon = download.icon;
         filename.label = Filename.display_basename(download.destination);
         filesize.label = format_size(inner_d.response.content_length);

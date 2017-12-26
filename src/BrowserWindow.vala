@@ -20,7 +20,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     public WebNotebook tabs;
     private DownloadsBar downloads;
 
-    private Gtk.MenuItem restore_windows;
     public bool closing = false;
 
     public BrowserWindow(int64 window_id) {
@@ -131,7 +130,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
                 }, Gdk.Key.S);
             menu.add(_("_View Source"), () => viewsource_activated.begin(), Gdk.Key.U);
             menu.separate();
-            var zoom_in = menu.add(_("Zoom In"), () => web.zoom_level += 0.1, Gdk.Key.plus);
+            menu.add(_("Zoom In"), () => web.zoom_level += 0.1, Gdk.Key.plus);
             tools.shortcut(Gdk.Key.equal, () => web.zoom_level += 0.1);
             menu.add(_("Zoom Out"), () => web.zoom_level -= 0.1, Gdk.Key.minus);
             tools.shortcut(Gdk.Key.@0, () => web.zoom_level = 1.0);

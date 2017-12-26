@@ -46,7 +46,7 @@ namespace Odysseus.Services {
             Templating.Data.Data val = new Templating.Data.Literal(true);
             if (segments.length > 1) val = new Templating.Data.Literal(segments[1]);
 
-            if (key in query) {
+            if (query.has_key(key)) {
                 var vals = query[key];
                 if (vals is Templating.Data.Literal) {
                     vals = new Templating.Data.Mapping(null, query[key].to_string());

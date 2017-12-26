@@ -57,9 +57,12 @@ namespace Odysseus.Database {
 
             var upgrade_path = "/io/github/alcinnz/Odysseus/database/init.sql";
             Templating.ErrorData? error_data = null;
-            var template = Templating.get_for_resource(upgrade_path, ref error_data);
-            if (error_data != null)
+            Templating.Template template;
+            try {
+                template = Templating.get_for_resource(upgrade_path, ref error_data);
+            } catch (Error err) {
                 error("Failed to parse init script's templating!");
+            }
 
             var writer = new ProsodyPipeSQLite();
             var loop = new MainLoop();

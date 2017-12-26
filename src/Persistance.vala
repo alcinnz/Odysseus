@@ -232,7 +232,7 @@ namespace Odysseus.Persist {
             parser.load_from_data(tab.restore_data);
             var root = parser.get_root();
             //tab.web.load_uri(root.get_object().get_string_member("current"));
-            Services.render_alternate_html(tab, "restore",
+            Services.render_alternate_html.begin(tab, "restore",
                     root.get_object().get_string_member("current"));
         } catch (Error err) {
             tab.web.load_uri("odysseus:errors/crashed");

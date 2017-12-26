@@ -38,9 +38,14 @@ public class Odysseus.Application : Granite.Application {
 
     public void initialize() {
         // Ensure configuration folder exists
-        var config = File.new_for_path(Environment.get_user_config_dir());
-        config = config.get_child("com.github.alcinnz.odysseus");
-        if (!config.query_exists()) config.make_directory_with_parents();
+        try {
+            var config = File.new_for_path(Environment.get_user_config_dir());
+            config = config.get_child("com.github.alcinnz.odysseus");
+            if (!config.query_exists()) config.make_directory_with_parents();
+        } catch (Error err) {
+            error("Failed to setup configuration directory!\n" +
+                "Is ~/.config readonly?");
+        }
 
         // Setup application-unique resources.
         var is_first_start = Odysseus.Database.setup_database();

@@ -27,7 +27,6 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
     private WebKit.FindOptions options;
 
     private Gtk.Entry search;
-    private Gtk.ToolButton menu_button;
     private Gtk.ToolButton next;
     private Gtk.ToolButton prev;
 

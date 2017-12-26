@@ -18,7 +18,6 @@
 using Odysseus.Services;
 namespace Odysseus.Traits {
     private void report_error(string error_, string uri, WebTab tab) {
-        var web = tab.web;
         string error = error_;
 
         var test_path = "/" + Path.build_path("/",

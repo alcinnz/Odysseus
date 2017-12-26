@@ -28,13 +28,13 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     }
     private Granite.Widgets.OverlayBar status_bar;
     public string status {
-        get {return status_bar.status;}
+        get {return status_bar.label;}
         set {
             if (value == "" || value == null) {
                 status_bar.visible = false;
             } else {
                 status_bar.visible = true;
-                status_bar.status = value;
+                status_bar.label = value;
             }
         }
     }
@@ -143,6 +143,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         Qinsert_new.bind_text(2, history_json);
 
         var resp = Qinsert_new.step();
+        assert(resp == Sqlite.ROW || resp == Sqlite.DONE);
         this(parent, Database.get_database().last_insert_rowid());
     }
 
@@ -158,6 +159,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         Qinsert_new.bind_text(2, history_json);
 
         var resp = Qinsert_new.step();
+        assert(resp == Sqlite.ROW || resp == Sqlite.DONE);
         this(parent, Database.get_database().last_insert_rowid());
 
         this.label = title;
