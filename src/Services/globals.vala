@@ -19,7 +19,7 @@
 namespace Odysseus {
     private static string build_config_path(string subdir) {
         return Path.build_path(Path.DIR_SEPARATOR_S,
-                Environment.get_user_config_dir(), "odysseus", subdir);
+                Environment.get_user_config_dir(), "com.github.alcinnz.odysseus", subdir);
     }
 
     private static WebKit.WebContext web_ctxt = null;

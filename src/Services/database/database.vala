@@ -39,7 +39,7 @@ namespace Odysseus.Database {
         if (main_db != null) return false; // Doesn't need initialization.
 
         var db_path = Path.build_path(Path.DIR_SEPARATOR_S,
-                Environment.get_user_config_dir(), "odysseus", "ui.sqlite");
+                Environment.get_user_config_dir(), "com.github.alcinnz.odysseus", "ui.sqlite");
         var err = Sqlite.Database.open(db_path, out main_db);
         if (err != Sqlite.OK)
             error("Failed to load UI state! " + main_db.errmsg());
