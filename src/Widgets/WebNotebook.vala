@@ -89,7 +89,7 @@ public class Odysseus.WebNotebook : DynamicNotebook {
     }
 
     public void on_tab_removed(Tab tab) {
-        var window = get_parent_window() as BrowserWindow;
+        var window = get_toplevel() as BrowserWindow;
         if (n_tabs == 0 && window != null && !window.closing)
             new_tab_requested();
     }
