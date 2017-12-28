@@ -77,5 +77,10 @@
         <p>Bugfix: a tab always remains open in each window.</p>
       </description>
     </release>
+    <release version="1.0.10" date="2017-12-29">
+      <description>
+        <p>Hopefully this makes it display better in AppCenter.</p>
+      </description>
+    </release>
   </releases>
 </component>

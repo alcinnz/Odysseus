@@ -18,11 +18,11 @@ endforeach
 
 TODO = 'Apply internationalization to these'
 install_data(
-    'io.github.alcinnz.odysseus-web.desktop',
+    'com.github.alcinnz.odysseus-web.desktop',
     install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
 install_data(
-    'io.github.alcinnz.odysseus-web.appdata.xml',
+    'com.github.alcinnz.odysseus-web.appdata.xml',
     install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
