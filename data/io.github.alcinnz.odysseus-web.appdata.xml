@@ -60,10 +60,16 @@
   </provides>
 
   <releases>
-    <release version="1.0.4" date="3017-12-23">
+    <release version="1.0.4" date="2017-12-23">
       <description>
         <p>Offers a very smooth browsing and downloads experience.</p>
         <p>First AppCenter release, so Merry Christmas!</p>
+      </description>
+    </release>
+    <release version="1.0.7" date="2017-12-29">
+      <description>
+        <p>Disable broken WebInspector for now.</p>
+        <p>If you have the know-how to fix https://github.com/alcinnz/Odysseus/issues/54, please help.</p>
       </description>
     </release>
   </releases>
