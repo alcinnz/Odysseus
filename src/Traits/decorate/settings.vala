@@ -30,7 +30,7 @@ namespace Odysseus.Traits {
         settings.auto_load_images = true;
         settings.default_font_family = Gtk.Settings.get_default().gtk_font_name;
         settings.enable_caret_browsing = false;
-        settings.enable_developer_extras = true;
+        settings.enable_developer_extras = false; // true; // FIXME Won't undock or move to new window.
         settings.enable_dns_prefetching = true;
         settings.enable_frame_flattening = false;
         settings.enable_fullscreen = true;
