@@ -72,5 +72,10 @@
         <p>If you have the know-how to fix https://github.com/alcinnz/Odysseus/issues/54, please help.</p>
       </description>
     </release>
+    <release version="1.0.8" date="2017-12-29">
+      <description>
+        <p>Bugfix: a tab always remains open in each window.</p>
+      </description>
+    </release>
   </releases>
 </component>
