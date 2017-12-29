@@ -70,6 +70,7 @@ public class Odysseus.Overlay.InfoContainer : Gtk.Grid {
         info.message_type = opts.type;
         cancel_button.visible = opts.show_cancel;
         entry.visible = opts.show_entry;
+        entry.no_show_all = !opts.show_entry;
         ok_button.label = opts.ok_text;
         cancel_button.label = opts.cancel_text;
 

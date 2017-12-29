@@ -10,7 +10,7 @@ Categories=Network;WebBrowser;GTK;GNOME;
 Keywords=WWW;Web;Internet;Browser;
 StartupNotify=true
 Actions=NewWindow;NewTab;
-MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtml+xml;
+MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtml+xml;application/x-extension-htm;application/x-extension-html;application/x-extension-shtml;application/x-extension-xht;application/x-extension-mhtml;
 X-GNOME-UsesNotifications=true
 
 [Desktop Action NewWindow]

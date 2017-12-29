@@ -43,6 +43,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         this(db.last_insert_rowid());
     }
 
+    const string app_id = "com.github.alcinnz.odysseus.desktop";
     private void init_layout() {
         tabs = new WebNotebook();
         var header = new Header.HeaderBarWithMenus();
@@ -51,9 +52,11 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         add_accel_group(header.accel_group);
         tabs.bind_property("title", this, "title");
 
-        var container = new Gtk.Grid();
-        container.orientation = Gtk.Orientation.VERTICAL;
+        var container = new Overlay.InfoContainer();
         add(container);
+
+        if (AppInfo.get_default_for_uri_scheme("http").get_id() != app_id)
+            prompt_make_default.begin(container);
 
         // Don't show tabbar when fullscreen
         window_state_event.connect((evt) => {
@@ -68,6 +71,24 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         downloads.expand = false;
         downloads.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
         container.add(downloads);
+    }
+
+    private async void prompt_make_default(Overlay.InfoContainer prompt) throws Error {
+        var options = new Overlay.InfoContainer.MessageOptions();
+        options.ok_text = _("Make Default");
+        options.type = Gtk.MessageType.INFO;
+        if (!yield prompt.message(_("Odysseus is not your default browser."), options)) return;
+
+        // These are the same things Switchboard would register Odysseus for.
+        var app_info = new DesktopAppInfo(app_id);
+        app_info.set_as_default_for_type("x-scheme-handler/http");
+        app_info.set_as_default_for_type("x-scheme-handler/https");
+        app_info.set_as_default_for_type("text/html");
+        app_info.set_as_default_for_extension("htm");
+        app_info.set_as_default_for_extension("html");
+        app_info.set_as_default_for_extension("shtml");
+        app_info.set_as_default_for_type("application/xhtml+xml");
+        app_info.set_as_default_for_extension("xht");
     }
 
     private void build_toolbar(Header.HeaderBarWithMenus tools) {
