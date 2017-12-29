@@ -58,7 +58,7 @@ endforeach
 c_args = ['-include', 'config.h']
 posix_dep = meson.get_compiler('vala').find_library('posix')
 
-executable('com.github.alcinnz.odysseus-web',
+executable('com.github.alcinnz.odysseus',
     source_files,
 
     c_args: c_args,

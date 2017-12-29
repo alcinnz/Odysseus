@@ -28,4 +28,4 @@ override_dh_auto_test:
 	cd debian/build && ninja test
 
 override_dh_auto_install:
-	cd debian/build && DESTDIR=${CURDIR}/debian/com.github.alcinnz.odysseus-web ninja install
+	cd debian/build && DESTDIR=${CURDIR}/debian/com.github.alcinnz.odysseus ninja install
