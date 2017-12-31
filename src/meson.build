@@ -8,7 +8,7 @@ nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history']
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete']
 services = ['pages', 'Completer', 'globals', 'icons']
-db_services = ['database', 'util']
+db_services = ['database', 'util', 'prosody']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'byteutils', 'jsondata', 'diff', 'i18n']
 models = ['Download', 'DownloadSet']

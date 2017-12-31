@@ -398,7 +398,7 @@ namespace Odysseus.Templating {
     }
 
     public class Echo : Template {
-        private Bytes text;
+        public Bytes text;
         public Echo(Bytes source) {this.text = source;}
         public override async void exec(Data.Data data, Writer output) {
             yield output.write(text);
