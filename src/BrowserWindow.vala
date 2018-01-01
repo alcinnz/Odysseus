@@ -72,7 +72,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
     private void build_toolbar(Header.HeaderBarWithMenus tools) {
         var back = tools.add_item_left("go-previous-symbolic", _("Go to previously viewed page"),
-                Gdk.Key.Left, () => web.go_back(), (menu) => {
+                Gdk.Key.comma, () => web.go_back(), (menu) => {
             web.get_back_forward_list().get_back_list().@foreach((item) => {
                 var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
                 favicon_for_menuitem.begin(opt, item);
@@ -80,7 +80,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         }, true);
         tabs.bind_property("can-go-back", back, "sensitive", BindingFlags.SYNC_CREATE);
         var forward = tools.add_item_left("go-next-symbolic", _("Go to next viewed page"),
-                Gdk.Key.Right, () => web.go_forward(), (menu) => {
+                Gdk.Key.period, () => web.go_forward(), (menu) => {
             web.get_back_forward_list().get_forward_list().@foreach((item) => {
                 var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
                 favicon_for_menuitem.begin(opt, item);
@@ -114,6 +114,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         tabs.bind_property("favicon", addressbar, "primary-icon-gicon", BindingFlags.SYNC_CREATE);
         tabs.bind_property("progress", addressbar, "progress-fraction", BindingFlags.SYNC_CREATE);
         tools.set_custom_title(addressbar);
+        tools.shortcut(Gdk.Key.L, () => addressbar.grab_focus());
 
         tools.add_item_right("open-menu", _("Menu"), 0, null, (menu) => {
             menu.add(_("_New Window"), () => {
