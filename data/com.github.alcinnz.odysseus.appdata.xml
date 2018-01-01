@@ -44,8 +44,8 @@
   </screenshots>
 
   <developer_name>Adrian Cochrane</developer_name>
-  <url type="homepage">https://github.io/alcinnz/Odysseus</url>
-  <url type="help">https://github.io/alcinnz/Odysseus-support</url>
+  <url type="homepage">https://alcinnz.github.io/Odysseus</url>
+  <url type="help">https://alcinnz.github.io/Odysseus-support</url>
   <url type="bugtracker">https://github.com/alcinnz/Odysseus/issues</url>
   <update_contact>alcinnz@lavabit.com</update_contact>
 
@@ -80,6 +80,12 @@
     <release version="1.0.10" date="2017-12-29">
       <description>
         <p>Hopefully this makes it display better in AppCenter.</p>
+      </description>
+    </release>
+    <release version="1.0.11" date="2018-01-02">
+      <description>
+        <p>Adds more keyboard and middle click shortcuts.</p>
+        <p>Fixes links displayed in AppCenter.</p>
       </description>
     </release>
   </releases>
