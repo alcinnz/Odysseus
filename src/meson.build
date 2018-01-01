@@ -6,7 +6,7 @@ overlay_widgets = ['FindToolbar', 'InfoContainer']
 traits = ['init', 'download-progress', 'download-window']
 nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history',
         'newtab']
-decor_traits = ['alert', 'permit', 'settings', 'internal-favicons']
+decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete']
 services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util']

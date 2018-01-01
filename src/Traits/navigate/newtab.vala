@@ -23,7 +23,7 @@ namespace Odysseus.Traits {
 
             var nav = (decision as WebKit.NavigationPolicyDecision).navigation_action;
             var use_new = (Gdk.ModifierType.CONTROL_MASK & nav.get_modifiers()) != 0
-                    || nav.get_mouse_button() == 3;
+                    || nav.get_mouse_button() == 2;
             if (!use_new) return false;
 
             decision.ignore();
