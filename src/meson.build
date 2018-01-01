@@ -4,7 +4,8 @@ header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
         'HeaderBarWithMenus']
 overlay_widgets = ['FindToolbar', 'InfoContainer']
 traits = ['init', 'download-progress', 'download-window']
-nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history']
+nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history',
+        'newtab']
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete']
 services = ['pages', 'Completer', 'globals', 'icons']

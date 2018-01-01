@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2018).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
