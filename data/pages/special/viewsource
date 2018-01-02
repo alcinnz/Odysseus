@@ -36,7 +36,7 @@ Line numbers aren't included as the developer of our syntax highlighting library
     var linkedCode = code.innerHTML.replace(
         /((?:url\(|&lt;(?:a|link|script|img)[^&]+(?:src|href)\s*=\s*)['"]?)(.*?)('|"|\)|\s|&gt;)/g,
         (match, prefix, url, suffix) => {
-          url = url.replace("&amp;", "&"); // Don't know how those are getting in
+          url = url.replace("&amp;", "&"); // Undo HTML auto-escaping so these links work. 
           return prefix + url.link(url) + suffix
         })
     code.innerHTML = linkedCode
