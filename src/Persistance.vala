@@ -173,12 +173,13 @@ namespace Odysseus.Persist {
     }
 
     /* Tab persistance */
-    private void setup_tab(WebTab tab, Granite.Widgets.DynamicNotebook tabs) {
+    private void setup_tab(WebTab tab, Granite.Widgets.DynamicNotebook tabs,
+            bool restore_uri) {
         ulong on_add_registration = 0;
         on_add_registration = tabs.tab_added.connect((added) => {
             if (added != tab) return;
             Idle.add(() => {
-                restore_tab_state(tab); register_tab_events(tab);
+                restore_tab_state(tab, restore_uri); register_tab_events(tab);
                 return false;
             });
             tabs.disconnect(on_add_registration);
@@ -214,7 +215,7 @@ namespace Odysseus.Persist {
     }
 
     private static Sqlite.Statement? Qload_state;
-    private void restore_tab_state(WebTab tab) {
+    private void restore_tab_state(WebTab tab, bool restore_uri) {
         if (Qload_state == null)
             Qload_state = Database.parse(
                     "SELECT pinned, history, order_ FROM tab WHERE ROWID = ?");
@@ -227,6 +228,7 @@ namespace Odysseus.Persist {
         tab.restore_data = Qload_state.column_text(1);
         tab.order = Qload_state.column_int(2);
 
+        if (!restore_uri) return;
         var parser = new Json.Parser();
         try {
             parser.load_from_data(tab.restore_data);
