@@ -37,7 +37,7 @@ namespace Odysseus.Traits {
                 web.run_javascript.begin(js, null);
                 return autoscroll_active;
             }); 
-            return true;
+            return false;
         });
 
         web.motion_notify_event.connect((evt) => {
@@ -52,7 +52,7 @@ namespace Odysseus.Traits {
 
             web.get_window().set_cursor(null);
             autoscroll_active = false;
-            return true;
+            return false;
         });
     }
 }
