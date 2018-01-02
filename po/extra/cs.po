@@ -1,0 +1,131 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extra package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: extra\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-23 08:14+1300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Daniel Zvir <zvir.daniel@seznam.cz>, 2018\n"
+"Language-Team: Czech (https://www.transifex.com/none-483/teams/75521/cs/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: data/io.github.alcinnz.odysseus.desktop:4
+#: data/io.github.alcinnz.Odysseus.appdata.xml:6
+msgid "Odysseus"
+msgstr "Odysseus"
+
+#: data/io.github.alcinnz.odysseus.desktop:5
+#: data/io.github.alcinnz.Odysseus.appdata.xml:7
+msgid "Surf knowledge, entertainment, and services on The Web"
+msgstr "Prohlížejte libovolný obsah na internetu"
+
+#: data/io.github.alcinnz.odysseus.desktop:7
+msgid "odysseus-web"
+msgstr "odysseus-web"
+
+#: data/io.github.alcinnz.odysseus.desktop:11
+msgid "WWW;Web;Internet;Browser;"
+msgstr "WWW;Web;Internet;Prohlížeč"
+
+#: data/io.github.alcinnz.odysseus.desktop:18
+msgid "New Window"
+msgstr "Nové okno"
+
+#: data/io.github.alcinnz.odysseus.desktop:22
+msgid "New Tab"
+msgstr "Nový panel"
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:10
+msgid ""
+"Surf the Web with the controls you’re already familiar with from apps like "
+"Files and Scratch. With everything where you already expect them it is "
+"seamless to switch between Odysseus and other apps."
+msgstr ""
+"Prohlížejte internet s ovládáním na které jste zvyklí z ostatních aplikací, "
+"jako Soubory nebo Scratch. Se stejně navrženými ovládacími prvky jako v "
+"ostatních aplikacích bude přechod na tento prohlížeč bez obtíží."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:11
+msgid "Features:"
+msgstr "Funkce:"
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:13
+msgid "Can present any webpage Apple's Safari or GNOME's Epiphany can handle."
+msgstr "Zobrazí stejné webové stránky jako Apple Safari nebo GNOME Epiphany."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:14
+msgid ""
+"Full elementary-style tabbar complete with tab pinning, duplicating, "
+"restoring, moving tabs, and more."
+msgstr "Panel stránek ve stejném stylu jako elementary se vší funkčností."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:15
+msgid "Quickly jump to any page in your tab history."
+msgstr "Rychle přeskočí na jakoukoli stránku v historii panelu"
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:16
+msgid "Videos, PDFs, and more open and stream into their respective apps."
+msgstr "Otevírá videa, PDF a další soubory ve výchozích aplikacích."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:17
+msgid "Keeps your downloads folder organized by date."
+msgstr "Udržuje Stažené soubory zorganizované dle data."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:18
+msgid "Quickly and flexibly find text in webpages."
+msgstr "Rychle a flexibilně vyhledá text na jakémkoli webu."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:19
+msgid "DuckDuckGo integration with search autocompletion."
+msgstr "Integrace DuckDuckGo s doplňováním vyhledávaného textu."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:20
+msgid ""
+"Takes security seriously by defaulting to HTTPS and not uploading the web "
+"addresses you type anywhere."
+msgstr ""
+"Bere zabezpečení vážně používáním HTTPS kde je to možné, nenahrává historii "
+"vyhledávání nikam na internet."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:21
+msgid "Shows combined download progress in the dock for a quick glance."
+msgstr "Zobrazuje kombinovaný stav stahování v docku pro rychlý náhled."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:22
+msgid ""
+"Quick to start as it holds off on loading pages from your previous browsing "
+"session."
+msgstr "Rychle startuje protože weby se načítají až po zobrazení prohlížeče."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:23
+msgid "And more to come…"
+msgstr "A ještě více..."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:25
+msgid "Install Odysseus for links to the depicted pages from the screenshots."
+msgstr "Nainstalujte si Odysseus nyní!"
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:29
+msgid "Browser controls, find-in-page, and downloads progress."
+msgstr "Ovládání prohlížeče, vyhledávání na stránce a stav stahování."
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:33
+msgid "Autocompletion"
+msgstr "Automatické dokončování"
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:37
+msgid "Jump to any spot in tab history"
+msgstr "Přeskočte na jakýkoli web v historii panelu"
+
+#: data/io.github.alcinnz.Odysseus.appdata.xml:41
+msgid "The Application menu."
+msgstr "Menu aplikace"
