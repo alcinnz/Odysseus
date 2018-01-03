@@ -99,12 +99,12 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="33.25"
-     inkscape:cx="8"
+     inkscape:cx="3.8045113"
      inkscape:cy="8"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g4269"
+     inkscape:current-layer="g4149"
      showguides="false" />
   <g
      id="g4269"
@@ -118,13 +118,15 @@
         <path
            inkscape:connector-curvature="0"
            id="path4287-1"
-           d="m 195.67547,204.53139 -88.27559,-60.47002 27.50374,-25.75482 z"
-           style="fill:#60d7ae;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+           d="M 195.67547,204.53139 94.843111,151.30825 142.03044,111.8225 Z"
+           style="fill:#60d7ae;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           sodipodi:nodetypes="cccc" />
         <path
            inkscape:connector-curvature="0"
            id="path4287"
-           d="m 47.5,57.5 88,60.87037 L 107.87956,144 Z"
-           style="fill:#24916b;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+           d="m 47.5,57.5 94.78744,54.76773 -46.964649,39.74198 z"
+           style="fill:#24916b;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           sodipodi:nodetypes="cccc" />
       </g>
       <path
          sodipodi:nodetypes="cccccccsc"

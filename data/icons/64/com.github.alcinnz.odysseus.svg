@@ -124,9 +124,9 @@
      inkscape:window-height="705"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="40.747028"
-     inkscape:cx="38.087325"
-     inkscape:cy="6.4766663"
+     inkscape:zoom="20.373514"
+     inkscape:cx="29.755429"
+     inkscape:cy="26.11"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -151,14 +151,16 @@
        id="g4304">
       <path
          style="fill:#60d7ae;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 195.67547,204.53139 -88.27559,-60.47002 27.50374,-25.75482 z"
+         d="M 195.67547,204.53139 97.396052,152.19767 141.95177,111.30029 Z"
          id="path4287-1"
-         inkscape:connector-curvature="0" />
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
       <path
          style="fill:#24916b;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 47.5,57.5 88,60.87037 L 107.87956,144 Z"
+         d="m 47.5,57.5 94.59343,53.86411 -45.127137,40.9982 z"
          id="path4287"
-         inkscape:connector-curvature="0" />
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
     </g>
     <path
        style="fill:#000000;fill-opacity:0.6;fill-rule:evenodd;stroke:none;stroke-width:3.83999991px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
