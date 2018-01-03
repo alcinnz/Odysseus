@@ -1,5 +1,3 @@
-{% plural-form range=3 0 if count == 1 else (1 if count >= 2 and count <= 4 else 2) %}
-
 {% msg %} NOT FOUND {% trans %}{% endmsg %}
 {% msg %} Maybe you meant one of these other internal pages? {% trans %}{% endmsg %}
 {% msg %} Could Not Connect To The Internet {% trans %}{% endmsg %}
