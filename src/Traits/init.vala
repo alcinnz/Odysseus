@@ -49,6 +49,7 @@ namespace Odysseus.Traits {
         setup_persist_tab_history(tab);
         setup_internal_favicons(tab);
         setup_autoscroll(tab.web);
+        fix_google_plus(tab.web);
     }
 
     public void setup_autosuggest() {
