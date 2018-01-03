@@ -22,9 +22,9 @@ Not really something I want to build into Odysseus as I'd rather focus it should
 namespace Odysseus.Traits {
     public void fix_google_plus(WebKit.WebView web) {
         var css = new WebKit.UserStyleSheet("* {-webkit-font-smoothing: subpixel-anialiased;}",
-                WebKit.UserContentInjectedFrames.TOP_FRAME,
+                WebKit.UserContentInjectedFrames.ALL_FRAMES,
                 WebKit.UserStyleLevel.USER,
-                new string[] {"https://plus.google.com/*"}, new string[0]);
+                new string[] {"*"}, new string[0]);
         web.user_content_manager.add_style_sheet(css);
     }
 }
