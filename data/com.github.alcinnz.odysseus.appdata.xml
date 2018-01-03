@@ -88,5 +88,13 @@
         <p>Fixes links displayed in AppCenter.</p>
       </description>
     </release>
+    <release version="1.0.12" date="2018-01-03">
+      <description>
+        <p>Now speaks Czech.</p>
+        <p>Tabs now open in background.</p>
+        <p>Short-term style fix for plus.google.com.</p>
+        <p>Preparations for more localization.</p>
+      </description>
+    </release>
   </releases>
 </component>
