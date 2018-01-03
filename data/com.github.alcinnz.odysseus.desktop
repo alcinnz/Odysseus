@@ -9,7 +9,7 @@ Terminal=false
 Categories=Network;WebBrowser;GTK;GNOME;
 # TRANSLATORS This is a semicolon list of keywords for this application
 Keywords=WWW;Web;Internet;Browser;
-Keywords[cs]=WWW;Web;Internet;Prohlížeč
+Keywords[cs]=WWW;Web;Internet;Prohlížeč;
 StartupNotify=true
 Actions=NewWindow;NewTab;
 MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtml+xml;
