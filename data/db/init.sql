@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017-2018).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,4 +33,20 @@
   );
 {% endif %}
 
-PRAGMA user_version = 1;
+{% if v < 2 %}
+  CREATE TABLE page_visit(
+    tab,
+    uri,
+    title,
+    favicon,
+    visited_at,
+    referrer
+  );
+
+  CREATE TABLE screenshot(uri, image);
+
+  -- Used to allocate colours for odysseus:history. 
+  ALTER TABLE tab ADD COLUMN historical_id;
+{% endif %}
+
+PRAGMA user_version = 2;
