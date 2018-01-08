@@ -25,10 +25,24 @@ namespace Odysseus.Traits {
         web.load_changed.connect((evt) => {
             if (evt != WebKit.LoadEvent.COMMITTED) return;
 
-            """INSERT INTO page_visit(?, ?, ?, datetime('now'), (SELECT rowid FROM page_visit WHERE tab = ? AND uri = ?));"""
+            var stmt = Database.parse("""INSERT INTO page_visit
+                    (tab, uri, title, favicon, visited_at, referrer)
+                VALUES (
+                    ?, ?, ?, ?, datetime('now'),
+                    (SELECT rowid FROM page_visit WHERE tab = ? AND uri = ?)
+            );""");
+            stmt.bind_int(1, tab.historical_id);
+            stmt.bind_text(2, web.uri);
+            stmt.bind_text(3, web.title);
+            stmt.bind_text(4, ""); // TODO
+            stmt.bind_int(5, tab.historical_id);
+            stmt.bind_text(6, prev_uri);
+
+            stmt.step();
             prev_uri = web.uri;
         });
         /* NOTE: It'd be nice to save any URI changes to history,
-            but on sites like OSM 
+            but on sites like OSM this can crowd out the other history entries
+            unless we can distinguish between navigate and replace. */
     }
 }
