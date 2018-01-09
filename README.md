@@ -3,7 +3,7 @@ Odysseus Web Browser
 
 **Designed for elementary OS**
 
-At the moment Odysseus is quite rudimentary and does not yet support browser history or bookmarks. That said it's still quite comfortable for normal browsing. 
+At the moment Odysseus is quite rudimentary and does not yet support browser history or bookmarks. It however does include several subtle features to make basic web surfing very nice, and support for browser history is being implemented. 
 
 Design Principles
 -----------------
