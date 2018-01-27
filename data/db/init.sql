@@ -46,7 +46,8 @@
   CREATE TABLE screenshot(uri, image);
 
   -- Used to allocate colours for odysseus:history. 
-  ALTER TABLE tab ADD COLUMN historical_id;
+  -- Note: The default is very naive, but normal browsing should fix it over time.
+  ALTER TABLE tab ADD COLUMN historical_id DEFAULT 0;
 {% endif %}
 
 PRAGMA user_version = 2;
