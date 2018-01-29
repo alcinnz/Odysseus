@@ -12,19 +12,20 @@ and to visually communicate the paths surfers took through this history. #}
   <h1>{% trans %}Browser History{% endtrans %}</h1>
   <dl>{% query %}SELECT rowid, tab, uri, title, favicon, visited_at, referrer
         FROM page_visit ORDER BY visited_at DESC;
-  {% each-row as visit %}
-    {% with date=visit.visited_at %}
-      {% ifchanged date|date:"YMd" %}<dt>
-        {% ifchanged date|date:"d" %}<strong>{{date|date:"d"}}</strong>{% else %}{{date|date:"d"}}{% endifchanged %}
-        {% ifchanged date|date:"M" %}<strong>{{date|date:"M"}}</strong>{% else %}{{date|date:"M"}}{% endifchanged %}
-        {% ifchanged date|date:"Y" %}<strong>{{date|date:"Y"}}</strong>{% else %}{{date|date:"Y"}}{% endifchanged %}
+  {% each-row %}
+    {% with date=visited_at %}
+      {% ifchanged date|date:"%Y%B%e" %}<dt>
+        {% ifchanged date|date:"%e" %}<strong>{{date|date:"%e"}}</strong>{% else %}{{date|date:"%e"}}{% endifchanged %}
+        {% ifchanged date|date:"%B" %}<strong>{{date|date:"%B"}}</strong>{% else %}{{date|date:"%B"}}{% endifchanged %}
+        {% ifchanged date|date:"%Y" %}<strong>{{date|date:"%Y"}}</strong>{% else %}{{date|date:"%Y"}}{% endifchanged %}
       </dt>{% endichanged %}
     {% endwith %}
-    <dd data-tab="{{visit.tab}}" data-date="{{visit.visited_at}}"
-            id="visit-{{visit.rowid}}" aria-flow-from="visit-{{visit.referrer}}">
-      <em>{% ifchanged visit.visited_at|date:"H" %}<strong>{{visit.visited_at|date:"H"}}</strong>
-        {% else %}{{visit.visited_at|date:"H"}}{% endifchanged %}:{{visit.visited_at|date:"m"}}</em>
-      <a href="{{ visit.uri }}">{{visit.title}}</a>
+    <dd data-tab="{{tab}}" data-date="{{visited_at}}"
+            id="visit-{{rowid}}" aria-flowto="visit-{{referrer}}">
+      <em>
+        {% ifchanged visited_at|date:"%k" %}<strong>{{visited_at|date:"%k"}}</strong>{% else %}
+          {{visited_at|date:"%k"}}{% endifchanged %}:{{visited_at|date:"%M"}}</em>
+      <a href="{{ uri }}">{{title}}</a>
     </dd>
   {% endquery %}</dl>
 </body>
