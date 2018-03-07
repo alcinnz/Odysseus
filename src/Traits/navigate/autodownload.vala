@@ -25,7 +25,10 @@ namespace Odysseus.Traits {
                 if (!response_decision.is_mime_type_supported() ||
                         /* Show videos in Audience */
                         mime_type.has_prefix("video/") || mime_type == "application/ogg") {
-                    var appinfo = AppInfo.get_default_for_type(mime_type, false);
+                    // TODO This commented would be a nice experience, if only it
+                    //      worked well in combination with cookies.
+                    //      (I tried, and ended up with libSoup being unwilling to synchronize)
+                    /*var appinfo = AppInfo.get_default_for_type(mime_type, false);
                     if (appinfo.supports_uris()) {
                         // Probably means it supports HTTP URIs.
                         var uris = new List<string>();
@@ -34,8 +37,10 @@ namespace Odysseus.Traits {
                             appinfo.launch_uris(uris, null);
                             decision.ignore();
                             return true;
-                        } catch (Error e) {/* Fallback to download */}
-                    }
+                        } catch (Error e) {
+                            // Fallback to download
+                        }
+                    }*/
 
                     // Didn't work, download it first.
                     decision.download();
