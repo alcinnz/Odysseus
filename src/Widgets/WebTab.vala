@@ -48,6 +48,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
                 "web-context", get_web_context(),
                 "user-content-manager", user_content);
         if (url != null) web.load_uri(url);
+        // Ugly WebKitGTK fix to ensure the inspector is properly initialized.
+        web.get_inspector();
 
         this.info = new Overlay.InfoContainer();
         info.expand = true;
