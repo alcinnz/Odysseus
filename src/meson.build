@@ -13,7 +13,7 @@ services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'byteutils', 'jsondata', 'diff', 'i18n']
-models = ['Download', 'DownloadSet']
+models = ['Download', 'DownloadSet', 'ImageUtil']
 
 foreach f : header_widgets
     widgets += ['header/' + f]
