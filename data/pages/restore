@@ -3,6 +3,7 @@
 <html>
 <head>
   <style>body {font-family: sans-serif;}</style>
+  <!-- TODO keep the title of the page we're restoring -->
 </head>
 <body>
   <p><a href="{{ url }}">{% trans %}Loading…{% endtrans %}</a></p>

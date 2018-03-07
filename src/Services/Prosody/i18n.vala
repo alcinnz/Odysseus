@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017-2018).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -49,26 +49,6 @@ namespace Odysseus.Templating.Std.I18n {
         throw new SyntaxError.OTHER("No catalogue file found for specified languages");
     }
 
-    private uint8 parse_plural_form(Parser cat) throws SyntaxError {
-        WordIter plural_form;
-        cat.scan_until("plural-form", out plural_form);
-        if (plural_form == null || !ByteUtils.equals_str(plural_form.next(), "plural-form"))
-            throw new SyntaxError.INVALID_ARGS("Missing {%% plural-form %%} tag from catalogue");
-
-        var range_arg = ByteUtils.to_string(plural_form.next());
-        if (!range_arg.has_prefix("range="))
-            throw new SyntaxError.INVALID_ARGS("First argument to {%% plural-form %%} " +
-                    "MUST be prefixed with `range=`!");
-        var range = int.parse(range_arg["range=".length:range_arg.length]);
-        if (range > 0 && range < 100)
-            throw new SyntaxError.INVALID_ARGS("`range` must be set to a number in range " +
-                    "0-100, got %i!", range);
-
-        if (plural_formula != null)
-            plural_formula = new Expression.Parser(plural_form).expression();
-
-        return (uint8) range;
-    }
     private Bytes locate_message(Parser cat, Bytes key) throws SyntaxError {
         WordIter msg;
         cat.scan_until("msg", out msg);
@@ -97,65 +77,62 @@ namespace Odysseus.Templating.Std.I18n {
                 ByteUtils.to_string(key));
     }
 
-    private Template[] parse_translations(Parser cat, uint8 range) throws SyntaxError {
-        var translations = new Template[range];
-        for (var i = 0; i < range; i++) {
-            WordIter trans;
-            translations[i] = cat.parse("trans endmsg", out trans);
-            if (trans == null)
-                throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%}!");
-            if (ByteUtils.equals_str(trans.next(), i + 1 == range ? "endmsg" : "trans"))
-                throw new SyntaxError.UNBALANCED_TAGS("Incorrect number of translations!");
-        }
+    private Template parse_translations(Parser cat) throws SyntaxError {
+        // Essentially this is just a cat.parse call with extra verification.
 
-        return translations;
+        WordIter endtrans;
+        var ret = cat.parse("endmsg", out endtrans);
+        if (endtrans == null)
+            throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%}!");
+        endtrans.next(); endtrans.assert_end();
+
+        return ret;
     }
 
     // cache used to avoid keeping multiple copies of a translation in memory.
     private class CacheEntry {
         public Bytes key;
-        public weak Template[] translation;
+        public weak Template translation;
+        public CacheEntry? next;
 
-        public static List<CacheEntry> translation_cache = new List<CacheEntry>();
+        public static CacheEntry translation_cache = new CacheEntry();
     }
 
-    private void lookup_translation(Bytes key, 
-                ref Template[] bodies, ref Expression.Expression formula) {
-        foreach (var entry in CacheEntry.translation_cache) {
+    private void lookup_translation(Bytes key,  ref Template body) {
+        // Look it up in the cache of translations already in memory...
+        CacheEntry? prev = null;
+        CacheEntry? entry = CacheEntry.translation_cache;
+        for (; entry != null; prev = entry, entry = entry.next) {
             if (entry.translation == null) {
                 // Do a bit of cleanup
-                CacheEntry.translation_cache.remove(entry);
+                if (prev == null) CacheEntry.translation_cache = entry.next;
+                else prev.next = entry.next;
+                continue;
             }
 
             if (entry.key.compare(key) != 0) continue;
 
-            bodies = entry.translation;
-            // This is non-null, as a previous parse would have had to populate it
-            // before we had a chance to insert this cache.
-            formula = plural_formula;
+            body = entry.translation;
         }
 
-        var is_singular = bodies.length == 1;
+        // Failing that, scan the catalog file. 
         try {
             var cat = new Parser(load_catalogue());
-            var range = parse_plural_form(cat);
             var key2 = locate_message(cat, key);
-            bodies = parse_translations(cat, is_singular ? 1 : range);
-            formula = plural_formula;
+            body = parse_translations(cat);
 
-            var entry = new CacheEntry();
+            entry = new CacheEntry();
             // Matching key from catalogue,
             //      So the calling template needn't be kept in memory.
             entry.key = key2;
-            entry.translation = bodies;
-            CacheEntry.translation_cache.prepend(entry);
+            entry.translation = body;
+            entry.next = CacheEntry.translation_cache;
+            CacheEntry.translation_cache = entry;
         } catch (Error e) {
             warning("Failed to parse translation catalogue: %s", e.message);
         }
     }
 
-    private Expression.Expression? plural_formula = null;
-    private Expression.Expression? english_formula = null;
 
     public class TransBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
@@ -163,53 +140,13 @@ namespace Odysseus.Templating.Std.I18n {
 
             WordIter? endtoken;
             Bytes key;
-            var bodies = parse_fallback(parser, out endtoken, out key);
-            var formula = english_formula;
+            var body = parser.parse("endtrans", out endtoken, out key);
             if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%} tag.");
-            endtoken.assert_end();
+            endtoken.next(); endtoken.assert_end();
 
-            lookup_translation(ByteUtils.strip(key), ref bodies, ref formula);
-
-            if (bodies.length > 1) {
-                if (!parameters.has_key(b("count")))
-                    throw new SyntaxError.INVALID_ARGS("Plural {%% trans %%} tag" +
-                            "MUST specify a `count` parameter.");
-
-                return new PluralTransTag(bodies, parameters, formula);
-            }
-            return new WithTag(parameters, bodies[0]);
-        }
-
-        private Template[] parse_fallback(Parser parser, out WordIter endtoken,
-                    out Bytes key) throws SyntaxError {
-            var body = parser.parse("plural endtrans", out endtoken, out key);
-            if (endtoken != null && ByteUtils.equals_str(endtoken.next(), "plural")) {
-                var plural = parser.parse("endtrans", out endtoken);
-                if (english_formula == null) {
-                    var english = smart_split(b("count != 1"), " ");
-                    english_formula = new Expression.Parser(english).expression();
-                }
-                return new Template[2] {body, plural};
-            }
-            return new Template[1] {body};
-        }
-    }
-    private class PluralTransTag : Template {
-        private Template[] bodies;
-        private Gee.Map<Bytes,Variable> vars;
-        private Expression.Expression formula;
-
-        public PluralTransTag(Template[] bodies, Gee.Map<Bytes,Variable> vars,
-                    Expression.Expression formula) {
-            this.bodies = bodies;
-            this.vars = vars;
-            this.formula = formula;
-        }
-
-        public override async void exec(Data.Data ctx, Writer output) {
-            var i = (uint) formula.eval_type(Expression.TypePreference.NUMBER, ctx);
-            yield bodies[i].exec(new Data.Lazy(vars, ctx), output);
+            lookup_translation(ByteUtils.strip(key), ref body);
+            return new WithTag(parameters, body);
         }
     }
 }

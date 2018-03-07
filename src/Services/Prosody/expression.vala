@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017-2018).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -142,16 +142,6 @@ namespace Odysseus.Templating.Expression {
                     token = new NotEqual();
                 else if (packed == 0x696E) /* "in" */
                     token = new In();
-                else if (packed == 0x25) /* "%" */
-                    token = new Modulo();
-                else if (packed == 0x6966) /* "if" */
-                    token = new Ternary();
-                else if (packed == 0x656C7365) /* "else" */
-                    token = new TernaryElse();
-                else if (packed == 0x28) /* "(" */
-                    token = new Parenthesized();
-                else if (packed == 0x29) /* ")" */
-                    token = new CloseParen();
                 else
                     token = new Value(arg);
             }
@@ -312,49 +302,5 @@ namespace Odysseus.Templating.Expression {
                 return val.exists ? 1 : 0;
             else return val.to_double();
         }
-    }
-
-    /* The following are largely only useful for use in plural forms, but other templates may use it */
-    private class Modulo : Infix {
-        public override int lbp {get {return 120;}}
-        public override string name {get {return "%";}}
-        public override double eval() {
-            var X = (int) x, Y = (int) y;
-            return X % Y;
-        }
-    }
-
-    private class Ternary : Expression {
-        public override int lbp {get {return 5;}}
-        public override string name {get {return "if";}}
-        public override Expression led(Expression left) throws SyntaxError {
-            right = parser.expression(lbp);
-            if (right.name != "else")
-                throw new SyntaxError.INVALID_ARGS("Expected 'else' operator not found");
-            var cond = right.left;
-            right.left = left;
-            left = cond;
-            return this;
-        }
-
-        public override double eval() {return a ? right.x : right.y;}
-    }
-    private class TernaryElse : Infix {
-        public override int lbp {get {return 6;}}
-        public override string name {get {return "else";}}
-    }
-
-    private class Parenthesized : Expression {
-        public override int lbp {get {return 150;}}
-        public override string name {get {return "(";}}
-        public override Expression nud() throws SyntaxError {
-            var expr = parser.expression();
-            parser.advance(")");
-            return expr;
-        }
-    }
-    private class CloseParen : Expression {
-        public override int lbp {get {return 0;}}
-        public override string name {get {return ")";}}
     }
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[user-home-symbolic] New Tab</title>
+  <title>[user-home-symbolic] {% trans %}New Tab{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
     body {color: #ddd; text-align: center;}
@@ -10,10 +10,10 @@
 </head>
 <body>
   <main>
-    <h1>Watch This Space</h1>
-    <p>It, and the addressbar, are going to get alot more helpful.</p>
+    <h1>{% trans %}Watch This Space{% endtrans %}</h1>
+    <p>{% trans %}It, and the addressbar, are going to get alot more helpful.{% endtrans %}</p>
     <hr />
-    <p>Don't worry, Odysseus will maintain it's elementary simplicity.</p>
+    <p>{% trans %}Don't worry, Odysseus will maintain it's elementary simplicity.{% endtrans %}</p>
   </main>
 </body>
 </html>

@@ -2,12 +2,14 @@
 Type=Application
 Name=Odysseus
 Comment=Surf knowledge, entertainment, and services on The Web
+Comment[cs]=Prohlížejte libovolný obsah na internetu
 Exec=com.github.alcinnz.odysseus %U
 Icon=com.github.alcinnz.odysseus
 Terminal=false
 Categories=Network;WebBrowser;GTK;GNOME;
 # TRANSLATORS This is a semicolon list of keywords for this application
 Keywords=WWW;Web;Internet;Browser;
+Keywords[cs]=WWW;Web;Internet;Prohlížeč;
 StartupNotify=true
 Actions=NewWindow;NewTab;
 MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtml+xml;application/x-extension-htm;application/x-extension-html;application/x-extension-shtml;application/x-extension-xht;application/x-extension-mhtml;
@@ -15,8 +17,10 @@ X-GNOME-UsesNotifications=true
 
 [Desktop Action NewWindow]
 Name=New Window
+Name[cs]=Nové okno
 Exec=com.github.alcinnz.odysseus odysseus:NewWindow
 
 [Desktop Action NewTab]
 Name=New Tab
+Name[cs]=Nový panel
 Exec=com.github.alcinnz.odysseus odysseus:home

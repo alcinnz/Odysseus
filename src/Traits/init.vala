@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017-2018).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -40,12 +40,16 @@ namespace Odysseus.Traits {
 
     public void setup_webview(WebTab tab) {
         setup_autodownload(tab.web); // This most come first, so as to cancel errors.
+        setup_newtab_shortcuts(tab.web);
+
         setup_settings(tab.web);
         setup_report_errors(tab);
         setup_alerts(tab);
         setup_permits(tab);
         setup_persist_tab_history(tab);
         setup_internal_favicons(tab);
+        setup_autoscroll(tab.web);
+        fix_google_plus(tab.web);
     }
 
     public void setup_autosuggest() {

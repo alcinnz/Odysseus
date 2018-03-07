@@ -4,14 +4,16 @@ header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
         'HeaderBarWithMenus']
 overlay_widgets = ['FindToolbar', 'InfoContainer']
 traits = ['init', 'download-progress', 'download-window']
-nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history']
-decor_traits = ['alert', 'permit', 'settings', 'internal-favicons']
+nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history',
+        'newtab']
+decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll',
+        'fix-plus.google.com']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete']
 services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'byteutils', 'jsondata', 'diff', 'i18n']
-models = ['Download', 'DownloadSet']
+models = ['Download', 'DownloadSet', 'ImageUtil']
 
 foreach f : header_widgets
     widgets += ['header/' + f]

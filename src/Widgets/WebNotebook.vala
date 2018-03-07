@@ -140,7 +140,7 @@ public class Odysseus.WebNotebook : DynamicNotebook {
             web.bind_property("estimated-load-progress", this, "progress",
                 BindingFlags.SYNC_CREATE));
         bindings.add(
-            tab.bind_property("icon", this, "favicon", BindingFlags.SYNC_CREATE));
+            tab.bind_property("coloured_icon", this, "favicon", BindingFlags.SYNC_CREATE));
         bindings.add(
             web.bind_property("is-loading", this, "is-loading",
                 BindingFlags.SYNC_CREATE));

@@ -5,47 +5,67 @@
   <project_license>GPL-3.0+</project_license>
   <name>Odysseus</name>
   <summary>Surf knowledge, entertainment, and services on The Web</summary>
+  <summary lang="cs">Prohlížejte libovolný obsah na internetu</summary>
 
   <description>
     <p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</p>
+    <p lang="cs">Prohlížejte internet s ovládáním na které jste zvyklí z ostatních aplikací, jako Soubory nebo Scratch. Se stejně navrženými ovládacími prvky jako v ostatních aplikacích bude přechod na tento prohlížeč bez obtíží.</p>
     <p>Features:</p>
+    <p lang="cs">Funkce:</p>
     <ul>
       <li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</li>
+      <li lang="cs">Zobrazí stejné webové stránky jako Apple Safari nebo GNOME Epiphany</li>
       <li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</li>
+      <li lang="cs">Panel stránek ve stejném stylu jako elementary se vší funkčností.</li>
       <li>Quickly jump to any page in your tab history.</li>
+      <li lang="cs">Rychle přeskočí na jakoukoli stránku v historii panelu</li>
       <li>Videos, PDFs, and more open and stream into their respective apps.</li>
+      <li lang="cs">Otevírá videa, PDF a další soubory ve výchozích aplikacích.</li>
       <li>Keeps your downloads folder organized by date.</li>
+      <li lang="cs">Udržuje Stažené soubory zorganizované dle data.</li>
       <li>Quickly and flexibly find text in webpages.</li>
+      <li lang="cs">Rychle a flexibilně vyhledá text na jakémkoli webu.</li>
       <li>DuckDuckGo integration with search autocompletion.</li>
+      <li lang="cs">Integrace DuckDuckGo s doplňováním vyhledávaného textu.</li>
       <li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</li>
+      <li lang="cs">Bere zabezpečení vážně používáním HTTPS kde je to možné, nenahrává historii vyhledávání nikam na internet.</li>
       <li>Shows combined download progress in the dock for a quick glance.</li>
+      <li lang="cs">Zobrazuje kombinovaný stav stahování v docku pro rychlý náhled.</li>
       <li>Quick to start as it holds off on loading pages from your previous browsing session.</li>
+      <li lang="cs">Rychle startuje protože weby se načítají až po zobrazení prohlížeče.</li>
       <li>And more to come…</li>
+      <li lang="cs">A ještě více...</li>
     </ul>
     <p>Install Odysseus for links to the depicted pages from the screenshots.</p>
+    <p lang="cs">Nainstalujte si Odysseus nyní!</p>
   </description>
+
   <screenshots>
     <screenshot type="default">
       <caption>Browser controls, find-in-page, and downloads progress.</caption>
+      <caption lang="cs">Ovládání prohlížeče, vyhledávání na stránce a stav stahování.</caption>
       <image>https://alcinnz.github.io/Odysseus/screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Autocompletion</caption>
+      <caption lang="cs">Automatické dokončování</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot2.png</image>
     </screenshot>
     <screenshot>
       <caption>Jump to any spot in tab history</caption>
+      <caption lang="cs">Přeskočte na jakýkoli web v historii panelu</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot3.png</image>
     </screenshot>
     <screenshot>
-      <caption>The Application menu.</caption>
+      <caption>The Application menu</caption>
+      <caption lang="cs">Menu aplikace</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot4.png</image>
     </screenshot>
   </screenshots>
 
   <developer_name>Adrian Cochrane</developer_name>
-  <url type="homepage">https://github.io/alcinnz/Odysseus</url>
-  <url type="help">https://github.io/alcinnz/Odysseus-support</url>
+  <url type="homepage">https://alcinnz.github.io/Odysseus</url>
+  <url type="help">https://alcinnz.github.io/Odysseus-support</url>
   <url type="bugtracker">https://github.com/alcinnz/Odysseus/issues</url>
   <update_contact>alcinnz@lavabit.com</update_contact>
 
@@ -80,6 +100,20 @@
     <release version="1.0.10" date="2017-12-29">
       <description>
         <p>Hopefully this makes it display better in AppCenter.</p>
+      </description>
+    </release>
+    <release version="1.0.11" date="2018-01-02">
+      <description>
+        <p>Adds more keyboard and middle click shortcuts.</p>
+        <p>Fixes links displayed in AppCenter.</p>
+      </description>
+    </release>
+    <release version="1.0.12" date="2018-01-03">
+      <description>
+        <p>Now speaks Czech.</p>
+        <p>Tabs now open in background.</p>
+        <p>Short-term style fix for plus.google.com.</p>
+        <p>Preparations for more localization.</p>
       </description>
     </release>
   </releases>

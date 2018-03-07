@@ -3,7 +3,7 @@ Odysseus Web Browser
 
 **Designed for elementary OS**
 
-At the moment Odysseus is quite rudimentary and does not yet support browser history or bookmarks. That said it's still quite comfortable for normal browsing. 
+At the moment Odysseus is quite rudimentary and does not yet support browser history or bookmarks. It however does include several subtle features to make basic web surfing very nice, and support for browser history is being implemented. 
 
 Design Principles
 -----------------
@@ -21,6 +21,10 @@ Design Principles
 
 <dd>Odysseus's behaviour towards this end should be trivial to understand, as a set of independant "tools"/"traits". </dd>
 
+<dt>Make the web as a whole better, not particular sites.</dt>
+
+<dd>Odysseus has no idea which sites you'll want to use with it, and it's developers wish to avoid giving an extra leg up to the already dominant sites. So Odysseus should avoid specially integrating any websites, and when it does the sites it integrates should similar aim to make the whole Web better.</dd>
+
 <dt>Give users control over their privacy, no matter their skills.</dt>
 
 <dd>Odysseus is a "User Agent", it serves it's users not webmasters. Give them the control over what's uploaded to the SEC (Someone Elses' Computers).</dd>
@@ -35,7 +39,7 @@ Technical Architecture
 
 At the moment Odysseus is simply some GTK/Granite chrome around WebKitGTK. For internal and error pages Odysseus incorporates a simple internal templating language based on Django's. 
 
-Autocompletion of URIs are implemented by dispatching the entry's change event through a number of different sources, for their results to be loaded into a Gtk.ListStore and displayed in a Gtk.EntryCompletion. Work is ongoing to change the look and behaviour of the completion popup to be more appropriate to this usecase. 
+Autocompletion of URIs are implemented by dispatching the entry's change event through a number of different sources, for their results to be added as widgets to a Gtk.ListBox presented within a scrolled popover. 
 
 INSTALLING
 ----------
@@ -47,8 +51,13 @@ I'd like elementary's AppHub to make this less technical, but to install:
 
 :
 
-    cmake .
-    sudo make install
+    mkdir build
+    cd build
+    meson ..
+    ninja
+    sudo ninja install
+    
+(you will need to install Meson). 
 
 Contributing
 ------------

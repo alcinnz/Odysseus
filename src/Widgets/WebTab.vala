@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2017).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2018).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -40,13 +40,16 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     }
     public string default_status;
 
-    public WebTab(Granite.Widgets.DynamicNotebook parent, int64 tab_id) {
+    public WebTab(Granite.Widgets.DynamicNotebook parent, int64 tab_id, string? url = null) {
         this.tab_id = tab_id;
 
         var user_content = new WebKit.UserContentManager();
         this.web = (WebKit.WebView) Object.@new(typeof(WebKit.WebView),
                 "web-context", get_web_context(),
                 "user-content-manager", user_content);
+        if (url != null) web.load_uri(url);
+        // Ugly WebKitGTK fix to ensure the inspector is properly initialized.
+        web.get_inspector();
 
         this.info = new Overlay.InfoContainer();
         info.expand = true;
@@ -66,7 +69,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
         connect_webview(parent);
         Traits.setup_webview(this);
-        Persist.setup_tab(this, parent);
+        Persist.setup_tab(this, parent, url == null);
     }
 
     private Gtk.Widget build_findbar() {
@@ -105,9 +108,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         web.bind_property("is-loading", this, "working");
 
         web.create.connect((nav_action) => {
-            var tab = new WebTab.with_new_entry(parent, nav_action.get_request().uri);
+            var tab = new WebTab.with_new_entry(parent, nav_action.get_request().uri, true);
             parent.insert_tab(tab, -1);
-            parent.current = tab;
             return tab.web;
         });
         web.button_press_event.connect((evt) => {
@@ -131,7 +133,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     private static Sqlite.Statement? Qinsert_new;
     public WebTab.with_new_entry(Granite.Widgets.DynamicNotebook parent,
-                  string uri = "odysseus:home") {
+                  string uri_ = "odysseus:home", bool load_immediate = false) {
+        var uri = uri_ == "" ? "about:blank" : uri_;
         var history_json = @"{\"current\": \"$(uri.escape())\"}";
         if (Qinsert_new == null)
             Qinsert_new = Database.parse("""INSERT
@@ -144,7 +147,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
         var resp = Qinsert_new.step();
         assert(resp == Sqlite.ROW || resp == Sqlite.DONE);
-        this(parent, Database.get_database().last_insert_rowid());
+        this(parent, Database.get_database().last_insert_rowid(),
+                load_immediate ? uri : null);
     }
 
     public WebTab.rebuild_existing(Granite.Widgets.DynamicNotebook parent,
@@ -187,11 +191,17 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         }
     }
 
+    public Icon coloured_icon {get; set; default = new ThemedIcon("web-browser-symbolic");}
+
     public void restore_favicon() {
         if (web.get_favicon() != null) {
             var fav = surface_to_pixbuf(web.get_favicon());
-            icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
-        } else icon = new ThemedIcon("web-browser-symbolic");
+            coloured_icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
+            // Has to be recoloured first, or we'll loose important details.
+            // This colour was chosen to a) be amongst the elementary colour pallette
+            //      & b) blend in with text (#333) despite heavier digital ink usage
+            icon = ImageUtil.recolour(fav, "#666").scale_simple(16, 16, Gdk.InterpType.BILINEAR);
+        } else icon = coloured_icon = new ThemedIcon("web-browser-symbolic");
     }
 
     public void find_in_page() {
