@@ -191,11 +191,17 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         }
     }
 
+    public Icon coloured_icon {get; set; default = new ThemedIcon("web-browser-symbolic");}
+
     public void restore_favicon() {
         if (web.get_favicon() != null) {
             var fav = surface_to_pixbuf(web.get_favicon());
-            icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
-        } else icon = new ThemedIcon("web-browser-symbolic");
+            coloured_icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
+            // Has to be recoloured first, or we'll loose important details.
+            // This colour was chosen to a) be amongst the elementary colour pallette
+            //      & b) blend in with text (#333) despite heavier digital ink usage
+            icon = ImageUtil.recolour(fav, "#666").scale_simple(16, 16, Gdk.InterpType.BILINEAR);
+        } else icon = coloured_icon = new ThemedIcon("web-browser-symbolic");
     }
 
     public void find_in_page() {
