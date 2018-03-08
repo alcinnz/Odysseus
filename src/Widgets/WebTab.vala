@@ -134,16 +134,23 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     private static Sqlite.Statement? Qinsert_new;
     public WebTab.with_new_entry(Granite.Widgets.DynamicNotebook parent,
                   string uri_ = "odysseus:home", bool load_immediate = false) {
+        // Allocate a historical_id for odysseus:history
+        var stmt = Database.parse("""SELECT historical_id FROM tab ORDER BY historical_id;""");
+        int h_id = 0;
+        for (; stmt.step() == Sqlite.ROW; h_id++)
+            if (stmt.column_int(0) != h_id) break;
+
         var uri = uri_ == "" ? "about:blank" : uri_;
         var history_json = @"{\"current\": \"$(uri.escape())\"}";
         if (Qinsert_new == null)
             Qinsert_new = Database.parse("""INSERT
-                    INTO tab(window_id, order_, pinned, history)
-                    VALUES (?, -1, 0, ?);""");
+                    INTO tab(window_id, order_, pinned, history, historical_id)
+                    VALUES (?, -1, 0, ?, ?);""");
         Qinsert_new.reset();
         var window = parent.get_toplevel() as BrowserWindow;
         Qinsert_new.bind_int64(1, window.window_id);
         Qinsert_new.bind_text(2, history_json);
+        Qinsert_new.bind_int(3, h_id);
 
         var resp = Qinsert_new.step();
         assert(resp == Sqlite.ROW || resp == Sqlite.DONE);

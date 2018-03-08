@@ -36,16 +36,10 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         string errmsg;
         unowned Sqlite.Database db = Database.get_database();
 
-        // Allocate a historical ID
-        var stmt = Database.parse("""SELECT historical_id FROM tab ORDER BY historical_id;""");
-        int h_id = 0;
-        for (; stmt.step() == Sqlite.ROW; h_id++)
-            if (stmt.column_int(0) != h_id) break;
-
         // Create DB record
         var err = db.exec("""INSERT INTO window
                     (x, y, width, height, state, focused_index)
-                VALUES (-1, -1, 1200, 800, 'N', 0, %i);""".format(h_id), null, out errmsg);
+                VALUES (-1, -1, 1200, 800, 'N', 0);""", null, out errmsg);
         if (err != Sqlite.OK || db.last_insert_rowid() == 0)
             error("Failed to INSERT new window into database: %s", errmsg);
 
