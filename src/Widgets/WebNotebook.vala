@@ -27,7 +27,7 @@ public class Odysseus.WebNotebook : DynamicNotebook {
     public bool is_loading {get; set;}
     public double progress {get; set;}
     public string uri {get; set;}
-    public Icon? favicon {get; set;}
+    public Icon favicon {get; set;}
     public string title {get; set;}
 
     public WebKit.WebView? web {
@@ -140,7 +140,7 @@ public class Odysseus.WebNotebook : DynamicNotebook {
             web.bind_property("estimated-load-progress", this, "progress",
                 BindingFlags.SYNC_CREATE));
         bindings.add(
-            tab.bind_property("coloured_icon", this, "favicon", BindingFlags.SYNC_CREATE));
+            tab.bind_property("coloured-icon", this, "favicon", BindingFlags.SYNC_CREATE));
         bindings.add(
             web.bind_property("is-loading", this, "is-loading",
                 BindingFlags.SYNC_CREATE));
