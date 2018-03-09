@@ -1,5 +1,5 @@
 sources = ['Odysseus', 'BrowserWindow', 'Persistance']
-widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar']
+widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar', 'Chromeless']
 header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
         'HeaderBarWithMenus']
 overlay_widgets = ['FindToolbar', 'InfoContainer']

@@ -48,8 +48,12 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
                 "web-context", get_web_context(),
                 "user-content-manager", user_content);
         if (url != null) web.load_uri(url);
-        // Ugly WebKitGTK fix to ensure the inspector is properly initialized.
-        web.get_inspector();
+
+        var inspector = web.get_inspector();
+        inspector.open_window.connect(() => {
+            new Chromeless(inspector).show_all();
+            return true;
+        });
 
         this.info = new Overlay.InfoContainer();
         info.expand = true;
