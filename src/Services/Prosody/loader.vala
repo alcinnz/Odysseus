@@ -100,8 +100,13 @@ namespace Odysseus.Templating {
 
         public ErrorTag(int line_offset, int error_start, int error_end, Bytes source) {
             this.line_start = line_offset;
-            this.line_end = line_offset;
+            this.line_end = line_offset + 1;
             ByteUtils.find_next(source, {'\n'}, ref this.line_end);
+            while (this.line_end <= error_start) {
+                this.line_start = line_end;
+                this.line_end = this.line_start + 1;
+                ByteUtils.find_next(source, {'\n'}, ref this.line_end);
+            }
             this.err_start = error_start - line_start;
             this.err_end = int.min(error_end, line_end) - line_start;
             this.source = source;
