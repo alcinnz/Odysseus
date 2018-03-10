@@ -218,7 +218,7 @@ namespace Odysseus.Persist {
     private void restore_tab_state(WebTab tab, bool restore_uri) {
         if (Qload_state == null)
             Qload_state = Database.parse(
-                    "SELECT pinned, history, order_ FROM tab WHERE ROWID = ?");
+                    "SELECT pinned, history, order_, historical_id FROM tab WHERE ROWID = ?");
         Qload_state.reset();
         Qload_state.bind_int64(1, tab.tab_id);
         var resp = Qload_state.step();
@@ -227,13 +227,14 @@ namespace Odysseus.Persist {
         tab.pinned = Qload_state.column_int(0) != 0;
         tab.restore_data = Qload_state.column_text(1);
         tab.order = Qload_state.column_int(2);
+        tab.historical_id = Qload_state.column_int(3);
 
         if (!restore_uri) return;
         var parser = new Json.Parser();
         try {
             parser.load_from_data(tab.restore_data);
             var root = parser.get_root();
-            //tab.web.load_uri(root.get_object().get_string_member("current"));
+
             Services.render_alternate_html.begin(tab, "restore",
                     root.get_object().get_string_member("current"));
         } catch (Error err) {

@@ -85,7 +85,7 @@ namespace Odysseus.Database.Prosody {
                     row[b(query.column_name(i))] = new DataSQLite(query.column_value(i));
                 }
 
-                loopBody.exec(new Data.Stack.with_map(ctx, row), output);    
+                yield loopBody.exec(new Data.Stack.with_map(ctx, row), output);
             }
         }
     }

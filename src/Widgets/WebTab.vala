@@ -40,6 +40,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     }
     public string default_status;
 
+    public int historical_id = 0;
+
     public WebTab(Granite.Widgets.DynamicNotebook parent, int64 tab_id, string? url = null) {
         this.tab_id = tab_id;
 
