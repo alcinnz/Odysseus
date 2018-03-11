@@ -22,8 +22,14 @@ namespace Odysseus.Traits {
     public void setup_history_tracker(WebTab tab) {
         var web = tab.web;
         var prev_uri = web.uri;
+        var first = true; // Don't log session restoration!
         web.load_changed.connect((evt) => {
-            if (evt != WebKit.LoadEvent.COMMITTED) return;
+            if (evt != WebKit.LoadEvent.FINISHED ||
+                    web.uri.has_prefix("odysseus:") || web.uri.has_prefix("source:") ||
+                    prev_uri == web.uri) return;
+            if (evt == WebKit.LoadEvent.FINISHED && first) {
+                prev_uri = web.uri; first = false; return;
+            }
 
             var stmt = Database.parse("""INSERT INTO page_visit
                     (tab, uri, title, favicon, visited_at, referrer)

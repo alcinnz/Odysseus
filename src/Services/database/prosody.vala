@@ -31,12 +31,22 @@ namespace Odysseus.Database.Prosody {
             each_tag.next();each_tag.assert_end();
 
             WordIter endtoken;
-            var loop_body = parser.parse("endquery", out endtoken);
-            if (endtoken == null || !ByteUtils.equals_str(endtoken.next(), "endquery"))
+            var loop_body = parser.parse("endquery empty", out endtoken);
+            var endtag = endtoken.next();
+
+            Template emptyblock = new Echo(b(""));
+            if (ByteUtils.equals_str(endtag, "empty")) {
+                endtoken.assert_end();
+
+                emptyblock = parser.parse("endquery", out endtoken);
+                endtag = endtoken.next();
+            }
+
+            if (endtoken == null || !ByteUtils.equals_str(endtag, "endquery"))
                 throw new SyntaxError.UNBALANCED_TAGS("{%% query %%} must be balanced with an {%% endquery %%}");
             endtoken.assert_end();
 
-            return new QueryTag(query, queryParams, loop_body);
+            return new QueryTag(query, queryParams, loop_body, emptyblock);
         }
 
         private string compile_block(Template ast, Gee.ArrayList<Variable> queryParams) throws SyntaxError {
@@ -59,14 +69,16 @@ namespace Odysseus.Database.Prosody {
         private Sqlite.Statement query;
         private Gee.List<Variable> qParams;
         private Template loopBody;
+        private Template emptyblock;
 
-        public QueryTag(string query, Gee.List<Variable> qParams, Template loopBody) throws SyntaxError {
+        public QueryTag(string query, Gee.List<Variable> qParams, Template loopBody, Template emptyblock) throws SyntaxError {
             unowned Sqlite.Database db = get_database();
             if (db.prepare_v2(query, query.length, out this.query) != Sqlite.OK)
                 throw new SyntaxError.OTHER("Invalid query %d: %s", db.errcode(), db.errmsg());
 
             this.qParams = qParams;
             this.loopBody = loopBody;
+            this.emptyblock = emptyblock;
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
@@ -78,10 +90,14 @@ namespace Odysseus.Database.Prosody {
                 ix++;
             }
 
+            var empty = true;
             while (query.step() == Sqlite.ROW) {
                 var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
                 yield loopBody.exec(loopParams, output);
+                empty = false;
             }
+
+            if (empty) yield emptyblock.exec(ctx, output);
         }
     }
 
