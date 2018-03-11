@@ -24,13 +24,13 @@ namespace Odysseus.Traits {
         var prev_uri = web.uri;
         var first = true; // Don't log session restoration!
         web.load_changed.connect((evt) => {
+            if (evt == WebKit.LoadEvent.FINISHED && first) {
+                prev_uri = web.uri; first = false; return;
+            }
             if (evt != WebKit.LoadEvent.FINISHED ||
                     web.uri.has_prefix("odysseus:") || web.uri.has_prefix("source:") ||
                     prev_uri == web.uri ||
                     web.title == "") return;
-            if (evt == WebKit.LoadEvent.FINISHED && first) {
-                prev_uri = web.uri; first = false; return;
-            }
 
             var stmt = Database.parse("""INSERT INTO page_visit
                     (tab, uri, title, favicon, visited_at, referrer)
