@@ -79,13 +79,21 @@ namespace Odysseus.Database.Prosody {
             }
 
             while (query.step() == Sqlite.ROW) {
-                var row = new Gee.HashMap<Bytes, Data.Data>();
-                var n_columns = query.column_count();
-                for (var i = 0; i < n_columns; i++) {
-                    row[b(query.column_name(i))] = new DataSQLite(query.column_value(i));
-                }
+                var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
+                yield loopBody.exec(loopParams, output);
+            }
+        }
+    }
 
-                yield loopBody.exec(new Data.Stack.with_map(ctx, row), output);
+    private class DataSQLiteRow : Data.Data {
+        private unowned Sqlite.Statement query;
+        public DataSQLiteRow(Sqlite.Statement q) {this.query = q;}
+        public override void foreach_map(Data.Data.ForeachMap cb) {
+            for (var i = 0; i < query.column_count(); i++) {
+                var key = b(query.column_name(i));
+                var val = new DataSQLite(query.column_value(i));
+                if (cb(key, val))
+                    break;
             }
         }
     }
