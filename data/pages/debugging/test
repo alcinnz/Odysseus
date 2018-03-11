@@ -119,6 +119,62 @@ ABCDGH - AEDFHR = A&lt;-&gt;BC&lt;/-&gt;D&lt;-&gt;G&lt;/-&gt;H	A&lt;+&gt;E&lt;/+
 AGGTAB - GXTXAYB = &lt;-&gt;AG&lt;/-&gt;GTAB	G&lt;+&gt;X&lt;/+&gt;T&lt;+&gt;X&lt;/+&gt;A&lt;+&gt;Y&lt;/+&gt;B
 {% endtest %}
 
+{% test "Debugging tag" %}
+  {% debug %}
+{% input %}
+  {
+    "firstName": "John",
+    "lastName": "Smith",
+    "isAlive": true,
+    "age": 25,
+    "address": {
+      "streetAddress": "21 2nd Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10021-3100"
+    },
+    "phoneNumbers": [
+      {
+        "type": "home",
+        "number": "212 555-1234"
+      },
+      {
+        "type": "office",
+        "number": "646 555-4567"
+      },
+      {
+        "type": "mobile",
+        "number": "123 456-7890"
+      }
+    ],
+    "children": [],
+    "spouse": null
+  }
+{% output %}
+  <dl><dt>firstName</dt><dd>John</dd>
+<dt>lastName</dt><dd>Smith</dd>
+<dt>isAlive</dt><dd>TRUE</dd>
+<dt>age</dt><dd>25</dd>
+<dt>address</dt><dd>{
+	streetAddress => 21 2nd Street
+	city => New York
+	state => NY
+	postalCode => 10021-3100}</dd>
+<dt>phoneNumbers</dt><dd>{
+	$0 => {
+		type => home
+		number => 212 555-1234}
+	$1 => {
+		type => office
+		number => 646 555-4567}
+	$2 => {
+		type => mobile
+		number => 123 456-7890}}</dd>
+<dt>children</dt><dd>{}</dd>
+<dt>spouse</dt><dd></dd>
+</dl>
+{% endtest %}
+
   <h2>Syntax</h2>
 {% test "Plain variables" %}
 My first name is {{ first_name }}. My last name is {{ last_name }}.

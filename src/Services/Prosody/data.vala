@@ -126,7 +126,7 @@ namespace Odysseus.Templating.Data {
             unichar c;
             while (text.get_next_char(ref index, out c)) {
                 var key = "$%u".printf(unichar_count++);
-                cb(b(key), new Literal(c));
+                if (cb(b(key), new Literal(c))) break;
             }
         }
 
@@ -190,7 +190,7 @@ namespace Odysseus.Templating.Data {
                     return;
                 }
                 var key = "$%u".printf(char_count++);
-                cb(b(key), new Literal(c));
+                if (cb(b(key), new Literal(c))) break;
             }
         }
 
@@ -223,7 +223,7 @@ namespace Odysseus.Templating.Data {
             data[b(property)] = val;
         }
         public override void foreach_map(Data.ForeachMap cb) {
-            data.map_iterator().@foreach((k, v) => cb(k, v));
+            data.map_iterator().@foreach((k, v) => !cb(k, v));
         }
 
         public override string to_string() {return text == null ? "" : text;}
@@ -253,11 +253,12 @@ namespace Odysseus.Templating.Data {
         public override bool exists {get {return first.exists || last.exists;}}
 
         public override void foreach_map(Data.ForeachMap cb) {
-            warning("Trying to iterate over a stack. " +
-                    "This may not give the results you expect.");
-            // This is probably fine as Stacks should be used as a root context,
-            //        where it's inaccessible by tags and filters.
-            first.foreach_map(cb);
+            var exit = false;
+            first.foreach_map((key, val) => {
+                return exit = cb(key, val);
+            });
+            if (exit) return;
+            last.foreach_map(cb);
         }
 
         public override int to_int(out bool is_length = null) {

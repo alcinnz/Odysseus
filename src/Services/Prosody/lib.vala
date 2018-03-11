@@ -107,6 +107,37 @@ namespace Odysseus.Templating.Std {
         }
     }
 
+    private class DebugBuilder : TagBuilder, Object {
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            args.assert_end();
+            return new DebugTag();
+        }
+    }
+    private class DebugTag : Template {
+        public override async void exec(Data.Data ctx, Writer output) {
+            // This step ensures we can yield from inside the loop body.
+            var keys = new Gee.ArrayList<Bytes>();
+            ctx.@foreach_map((key, val) => {
+                keys.add(key);
+                keys.add(val.to_bytes());
+                return false;
+            });
+
+            // The real work!
+            yield output.writes("<dl>");
+            for (var i = 0; i < keys.size; i++) {
+              yield output.writes("<dt>");
+              yield output.write(keys[i]);
+              yield output.writes("</dt>");
+              i++;
+              yield output.writes("<dd>");
+              yield output.write(keys[i]);
+              yield output.writes("</dd>\n");
+            }
+            yield output.writes("</dl>");
+        }
+    }
+
     private class FilterBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var filter_tail = args.next();
@@ -861,6 +892,7 @@ namespace Odysseus.Templating.Std {
 
     public void register_standard_library() {
         register_tag("autoescape", new AutoescapeBuilder());
+        register_tag("debug", new DebugBuilder());
         register_tag("filter", new FilterBuilder());
         register_tag("for", new ForBuilder());
         register_tag("if", new IfBuilder());
