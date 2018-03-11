@@ -9,6 +9,10 @@
   </style>
 </head>
 <body>
+  <aside style="float: right"><a href="odysseus:history">
+    <img src="gtk-icon:16/document-open-recent" />{% trans %}Browser History{% endtrans %}
+  </a></aside>
+
   <main>
     <h1>{% trans %}Watch This Space{% endtrans %}</h1>
     <p>{% trans %}It, and the addressbar, are going to get alot more helpful.{% endtrans %}</p>

@@ -25,7 +25,7 @@ and to visually communicate the paths surfers took through this history. #}
       <em>
         {% ifchanged visited_at|date:"%k" %}<strong>{{visited_at|date:"%k"}}</strong>{% else %}
           {{visited_at|date:"%k"}}{% endif %}:{{visited_at|date:"%M"}}</em>
-      <a href="{{ uri }}">{% if title %}{{title}}{% else %}{{uri}}{% endif %}</a>
+      <a href="{{ uri }}">{{title}}</a>
     </dd>
   {% empty %}
     <dt>{% trans %}<strong>Wow</strong>! You've managed not to have any browser history! I'm impressed.{% endtrans %}</dt>

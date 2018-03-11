@@ -466,6 +466,17 @@ and can be called at 212 555-1234.
 
 {% endtest %}
 
+{% test "{% if %}/{% else %} basics" %}
+  {% if nonempty %}y{% else %}n{% endif %}
+  {% if empty %}y{% else %}n{% endif %}
+  {% if null %}y{% else %}n{% endif %}
+{% input %}
+  {"nonempty": "This, here", "empty": "", "null": null}
+{% output %}
+  y
+  n
+  n
+{% endtest %}
 {% test "{% if %}/{% elif %}/{% else %} variant 1" %}
 {% if now_playing %}
     {{ now_playing|length }} movies now playing!

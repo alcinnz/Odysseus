@@ -26,7 +26,8 @@ namespace Odysseus.Traits {
         web.load_changed.connect((evt) => {
             if (evt != WebKit.LoadEvent.FINISHED ||
                     web.uri.has_prefix("odysseus:") || web.uri.has_prefix("source:") ||
-                    prev_uri == web.uri) return;
+                    prev_uri == web.uri ||
+                    web.title == "") return;
             if (evt == WebKit.LoadEvent.FINISHED && first) {
                 prev_uri = web.uri; first = false; return;
             }
