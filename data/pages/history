@@ -14,10 +14,10 @@ and to visually communicate the paths surfers took through this history. #}
         FROM page_visit ORDER BY visited_at DESC;
   {% each-row %}
     {% with date=visited_at %}
-      {% ifchanged visited_at|date:"%Y%B%e" %}<dt>{{visited_at|add:0}}
-        {% ifchanged visited_at|date:"%e" %}<strong>{{visited_at|date:"%e"}}</strong>{% else %}{{visited_at|date:"%e"}}{% endif %}
-        {% ifchanged visited_at|date:"%B" %}<strong>{{visited_at|date:"%B"}}</strong>{% else %}{{visited_at|date:"%B"}}{% endif %}
-        {% ifchanged visited_at|date:"%Y" %}<strong>{{visited_at|date:"%Y"}}</strong>{% else %}{{visited_at|date:"%Y"}}{% endif %}
+      {% ifchanged date|date:"%Y%B%e" %}<dt>
+        {% ifchanged date|date:"%e" %}<strong>{{date|date:"%e"}}</strong>{% else %}{{date|date:"%e"}}{% endif %}
+        {% ifchanged date|date:"%B" %}<strong>{{date|date:"%B"}}</strong>{% else %}{{date|date:"%B"}}{% endif %}
+        {% ifchanged date|date:"%Y" %}<strong>{{date|date:"%Y"}}</strong>{% else %}{{date|date:"%Y"}}{% endif %}
       </dt>{% endif %}
     {% endwith %}
     <dd data-tab="{{tab}}" data-date="{{visited_at}}"
@@ -25,7 +25,7 @@ and to visually communicate the paths surfers took through this history. #}
       <em>
         {% ifchanged visited_at|date:"%k" %}<strong>{{visited_at|date:"%k"}}</strong>{% else %}
           {{visited_at|date:"%k"}}{% endif %}:{{visited_at|date:"%M"}}</em>
-      <a href="{{ uri }}">{{title}}</a>
+      <a href="{{ uri }}">{% if title %}{{title}}{% else %}{{uri}}{% endif %}</a>
     </dd>
   {% empty %}
     <dt>{% trans %}<strong>Wow</strong>! You've managed not to have any browser history! I'm impressed.{% endtrans %}</dt>

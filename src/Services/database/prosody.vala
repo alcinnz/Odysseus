@@ -121,7 +121,12 @@ namespace Odysseus.Database.Prosody {
         public override string to_string() {return val.to_text();}
         public override void foreach_map(Data.Data.ForeachMap cb) {}
         public override int to_int(out bool is_length = null) {
-            is_length = false; return val.to_int();
+            is_length = false;
+            // Implicitly add correct datetime parsing
+            var date = TimeVal();
+            if (date.from_iso8601(to_string().replace(" ", "T")))
+                return (int) date.tv_sec;
+            return val.to_int();
         }
         public override double to_double() {return val.to_double();}
     }

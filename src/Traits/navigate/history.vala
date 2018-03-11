@@ -34,7 +34,7 @@ namespace Odysseus.Traits {
             var stmt = Database.parse("""INSERT INTO page_visit
                     (tab, uri, title, favicon, visited_at, referrer)
                 VALUES (
-                    ?, ?, ?, ?, datetime('now'),
+                    ?, ?, ?, ?, datetime('now', 'localtime'),
                     (SELECT rowid FROM page_visit WHERE tab = ? AND uri = ?)
             );""");
             stmt.bind_int(1, tab.historical_id);
