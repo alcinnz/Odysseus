@@ -3,7 +3,9 @@ Odysseus Web Browser
 
 **Designed for elementary OS**
 
-At the moment Odysseus is quite rudimentary and does not yet support browser history or bookmarks. It however does include several subtle features to make basic web surfing very nice, and support for browser history is being implemented. 
+Odysseus aims to be a simple yet powerful web browser that makes surfing the web a breeze.
+
+It's not there yet, but work is actively ongoing to ease your surfing with vital navigation aids. 
 
 Design Principles
 -----------------
@@ -37,27 +39,27 @@ Where in doubt, consult elementary's HIG.
 Technical Architecture
 ----------------------
 
-At the moment Odysseus is simply some GTK/Granite chrome around WebKitGTK. For internal and error pages Odysseus incorporates a simple internal templating language based on Django's. 
+At the base Odysseus is a simple GTK/Granite wrapper around WebKitGTK. From there additional conveniences (like middle-click scrolling and the tracking of browser history) are implemented as independant chunks of code enhancing the WebKit WebView.
+
+The state of your open tabs and windows are saved into an SQLite database. This database is further used to save data about pages you may want to revisit, and can be rendered into local webpages using the custom `odysseus:` URI scheme (amongst a few others). These custom URI schemes use a templating language to move data from the database into the webpages they generate. That is currently being used to implement browser history, and soon topsites, bookmarks, extensions, and more.
 
 Autocompletion of URIs are implemented by dispatching the entry's change event through a number of different sources, for their results to be added as widgets to a Gtk.ListBox presented within a scrolled popover. 
 
 INSTALLING
 ----------
 
-I'd like elementary's AppHub to make this less technical, but to install: 
+The simple way is to [use the elementary AppCenter](https://appcenter.elementary.io/com.github.alcinnz.odysseus.desktop).
 
-1. download off http://github.com/alcinnz/Oddysseus
-2. In the untarred directory run:
+But if you're not running elementary OS (and hasn't been packaged for your operating system by a third party), or you simply want to contribute to the project:
 
-:
-
+    git clone https://github.com/alcinnz/Odysseus.git
     mkdir build
     cd build
     meson ..
     ninja
     sudo ninja install
     
-(you will need to install Meson). 
+(you will need to install Meson and Git for this to work). 
 
 Contributing
 ------------
