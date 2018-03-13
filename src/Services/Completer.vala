@@ -46,6 +46,8 @@ namespace Odysseus.Services {
         private static Gee.ArrayList<Type>? delegate_classes = null;
         private Gee.ArrayList<CompleterDelegate> delegates =
                 new Gee.ArrayList<CompleterDelegate>();
+
+        private Gee.Set<string> seen_urls = new Gee.HashSet<string>();
         
         construct {
             foreach (var cls in delegate_classes) {
@@ -63,6 +65,7 @@ namespace Odysseus.Services {
         private YieldCallback yieldCallback;
         public void suggest(string query, owned YieldCallback cb) {
             this.yieldCallback = cb;
+            seen_urls.clear();
 
             foreach (var completer in delegates) {
                 completer.query = query;
@@ -71,6 +74,9 @@ namespace Odysseus.Services {
         }
 
         public void @yield(string url, string label) {
+            if (url in seen_urls) return;
+            seen_urls.add(url);
+
             yieldCallback(url, label);
         }
     }

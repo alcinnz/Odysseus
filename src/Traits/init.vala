@@ -55,6 +55,7 @@ namespace Odysseus.Traits {
 
     public void setup_autosuggest() {
         Services.Completer.register(typeof(ImplyHTTP));
+        Services.Completer.register(typeof(HistoryAutocompleter));
         Services.Completer.register(typeof(Search.DuckDuckGo));
         Services.Completer.register(typeof(Search.DDGOnlineCompletions));
 
