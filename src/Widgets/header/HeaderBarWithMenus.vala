@@ -43,6 +43,8 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
             bool dynamic_menu = false) {
         var item = new ButtonWithMenu.from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR);
         item.tooltip_text = tooltip;
+        if (key != 0) item.tooltip_text += " (%s)".printf(
+                Gtk.accelerator_get_label(key, modifier));
 
         Action normalized_action = () => item.popup_menu();
         if (action != null) normalized_action = action;
@@ -105,13 +107,15 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
             item.activate.connect(() => {action();});
             menu.add(item);
 
-            if (accel_group != null && key != 0)
+            if (accel_group != null && key != 0) {
                 accel_group.connect(key, modifier,
                         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
                         (group, acceleratable, key, modifier) => {
                     action();
                     return true;
                 });
+                item.tooltip_text = Gtk.accelerator_get_label(key, modifier);
+            }
 
             return item;
         }
