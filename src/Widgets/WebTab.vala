@@ -107,6 +107,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     private void connect_webview(Granite.Widgets.DynamicNotebook parent) {
         web.bind_property("title", this, "label");
+        web.bind_property("title", this, "tooltip_text");
         this.icon = new ThemedIcon("web-browser-symbolic");
         web.notify["favicon"].connect((sender, property) => {
             restore_favicon();
