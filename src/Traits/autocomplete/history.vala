@@ -19,7 +19,7 @@ namespace Odysseus.Traits {
     public class HistoryAutocompleter : Services.CompleterQuery {
         public override string sql() {
             return """SELECT title, uri FROM page_visit WHERE INSTR(uri, ?)
-                    ORDER BY length(uri) ASC, visited_at DESC;""";
+                    ORDER BY length(uri) ASC, visited_at DESC LIMIT 1;""";
         }
     }
 }

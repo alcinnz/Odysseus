@@ -28,6 +28,9 @@ namespace Odysseus.Services {
         }
 
         public override void autocomplete() {
+            // These completers will generally be unhelpful in this case
+            if (query == "") return;
+
             compiled.reset();
             compiled.bind_text(1, query);
 
