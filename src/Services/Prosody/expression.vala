@@ -17,13 +17,18 @@
 
 /** Topdown Operator Precedance-based parser for if-tags.
     See http://effbot.org/zone/simple-top-down-parsing.htm,
-    though ofcourse I couldn't use all the same syntactic sugar. */
+    though ofcourse I couldn't use all the same syntactic sugar.
+
+Primarily this syntax is currently just used in the database initialization script. */
 namespace Odysseus.Templating.Expression {
     /* Infrastructure/Public interface */
     public enum TypePreference {BOOL, NUMBER}
     public abstract class Expression : Object {
         public Expression left;
         public Expression right;
+        // Shorthands for eval implementations.
+        public Expression x {get {return left;}}
+        public Expression y {get {return right;}}
 
         /* Parsing */
         public abstract int lbp {get;} // Left Binding Power
@@ -42,26 +47,10 @@ namespace Odysseus.Templating.Expression {
                     index, name);
         }
 
-        /* Evaluation */
-        public Data.Data context;
-        public double x {
-            get {return left.eval_type(preference, context);}
+        public abstract bool eval(Data.Data ctx);
+        public virtual double num(Data.Data ctx) {
+            return eval(ctx) ? 1.0 : 0.0;
         }
-        public double y {
-            get {return right.eval_type(preference, context);}
-        }
-        public bool a {get {return x != 0;}}
-        public bool b {get {return y != 0;}}
-        public virtual TypePreference preference {
-            get {return TypePreference.BOOL;}
-        }
-
-        // One of these two methods must be implemented.
-        public virtual double eval_type(TypePreference type, Data.Data ctx) {
-            context = ctx;
-            return eval();
-        }
-        public virtual double eval() {return 0.0;}
     }
 
     public abstract class Infix : Expression {
@@ -69,12 +58,6 @@ namespace Odysseus.Templating.Expression {
             this.left = left;
             this.right = parser.expression(lbp);
             return this;
-        }
-    }
-
-    public abstract class NumericExpression : Infix {
-        public override TypePreference preference {
-            get {return TypePreference.NUMBER;}
         }
     }
 
@@ -140,8 +123,6 @@ namespace Odysseus.Templating.Expression {
                     token = new EqualTo();
                 else if (packed == 0x213D) /* "!=" */
                     token = new NotEqual();
-                else if (packed == 0x696E) /* "in" */
-                    token = new In();
                 else
                     token = new Value(arg);
             }
@@ -175,20 +156,22 @@ namespace Odysseus.Templating.Expression {
     public class EndToken : Expression {
         public override int lbp {get {return 0;}}
         public override string name {get {return "[EOL]";}}
+
+        public override bool eval(Data.Data d) {return false;}
     }
 
     private class Or : Infix {
         public override int lbp {get {return 10;}}
         public override string name {get {return "or";}}
 
-        public override double eval() {return a || b ? 1 : 0;}
+        public override bool eval(Data.Data d) {return x.eval(d) || y.eval(d);}
     }
 
     private class And : Infix {
         public override int lbp {get {return 20;}}
         public override string name {get {return "and";}}
 
-        public override double eval() {return a && b ? 1 : 0;}
+        public override bool eval(Data.Data d) {return x.eval(d) && y.eval(d);}
     }
 
     private class Not : Expression {
@@ -207,82 +190,49 @@ namespace Odysseus.Templating.Expression {
             return this;
         }
 
-        public override double eval() {return !a ? 1 : 0;}
+        public override bool eval(Data.Data d) {return !x.eval(d);}
     }
 
-    private class LessThan : NumericExpression {
+    private class LessThan : Infix {
         public override int lbp {get {return 40;}}
         public override string name {get {return "<";}}
 
-        public override double eval() {return x < y ? 1 : 0;}
+        public override bool eval(Data.Data d) {return x.num(d) < y.num(d);}
     }
 
-    private class GreaterThan : NumericExpression {
+    private class GreaterThan : Infix {
         public override int lbp {get {return 40;}}
         public override string name {get {return ">";}}
 
-        public override double eval() {return x > y ? 1 : 0;}
+        public override bool eval(Data.Data d) {return x.num(d) > y.num(d);}
     }
 
-    private class LessEqual : NumericExpression {
+    private class LessEqual : Infix {
         public override int lbp {get {return 40;}}
         public override string name {get {return "<=";}}
 
-        public override double eval() {return x <= y ? 1 : 0;}
+        public override bool eval(Data.Data d) {return x.num(d) <= y.num(d);}
     }
 
-    private class GreaterEqual : NumericExpression {
+    private class GreaterEqual : Infix {
         public override int lbp {get {return 40;}}
         public override string name {get {return ">=";}}
 
-        public override double eval() {return x >= y ? 1 : 0;}
+        public override bool eval(Data.Data d) {return x.num(d) >= y.num(d);}
     }
 
-    private class EqualTo : NumericExpression {
+    private class EqualTo : Infix {
         public override int lbp {get {return 40;}}
         public override string name {get {return "==";}}
 
-        public override double eval() {return x == y ? 1 : 0;}
+        public override bool eval(Data.Data d) {return x.num(d) == y.num(d);}
     }
 
-    private class NotEqual : NumericExpression {
+    private class NotEqual : Infix {
         public override int lbp {get {return 40;}}
         public override string name {get {return "!=";}}
 
-        public override double eval() {return x != y ? 1 : 0;}
-    }
-
-    private class In : Infix {
-        public override int lbp {get {return 40;}}
-        public override string name {get {return "in";}}
-
-        public override double eval() {
-            Data.Data haystack;
-            if (right is Value)
-                haystack = (right as Value).exp.eval(context);
-            else return 0;
-            string needle;
-            if (left is Value)
-                needle = (left as Value).exp.eval(context).to_string();
-            else return 0;
-
-            // For textual data:
-            if (haystack.to_string() != "")
-                return needle in haystack.to_string() ? 1 : 0;
-
-            // For object data:
-            var has_key = false;
-            var needle_bytes = ByteUtils.from_string(needle);
-            var search_indices = needle[0] == '$';
-            haystack.foreach_map((key, val) => {
-                if (!search_indices && key.length > 1 && key[0] == '$') {
-                    // This is an array index key
-                    has_key = val.to_bytes().compare(needle_bytes) == 0;
-                } else has_key = key.compare(needle_bytes) == 0;
-                return has_key;
-            });
-            return has_key ? 1 : 0;
-        }
+        public override bool eval(Data.Data d) {return x.num(d) != y.num(d);}
     }
 
     private class Value : Expression {
@@ -293,14 +243,9 @@ namespace Odysseus.Templating.Expression {
 
         public override int lbp {get {return 200;}}
         public override string name {get {return "[variable]";}}
-
         public override Expression nud() {return this;}
 
-        public override double eval_type(TypePreference type, Data.Data ctx) {
-            var val = exp.eval(ctx);
-            if (type == TypePreference.BOOL)
-                return val.exists ? 1 : 0;
-            else return val.to_double();
-        }
+        public override bool eval(Data.Data d) {return exp.eval(d).exists;}
+        public override double num(Data.Data d) {return exp.eval(d).to_double();}
     }
 }

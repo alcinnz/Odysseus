@@ -709,19 +709,7 @@ and can be called at 212 555-1234.
 
 ✓
 {% endtest %}
-{% test "{% if %}'s in operator" %}
-{% if "ere" in "'I am here!' say the whos" %}✓{% endif %}
-{% if "oddyssey" in "'I am here!' say the whos" %}✓{% endif %}
-{% if "clara" in companions %}✓{% endif %}
-{% if "matt" in companions %}✓{% endif %}
-{% input %}
-{"companions": ["rose", "martha", "donna", "amelia", "clara", "nardole"]}
-{% output %}
-✓
 
-✓
-
-{% endtest %}
 {% test "{% if %}'s precedance" %}
 {% if (true or false) and false %}✓{% endif %}
 {% if true or false and false %}✓{% endif %}

@@ -292,8 +292,7 @@ namespace Odysseus.Templating.Std {
         }
 
         public override async void exec(Data.Data ctx, Writer stream) {
-            if (expression.eval_type(Expression.TypePreference.BOOL, ctx) != 0)
-                yield this.true_branch.exec(ctx, stream);
+            if (expression.eval(ctx)) yield this.true_branch.exec(ctx, stream);
             else yield this.false_branch.exec(ctx, stream);
         }
     }
