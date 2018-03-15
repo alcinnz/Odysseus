@@ -91,13 +91,19 @@ namespace Odysseus.Database.Prosody {
             }
 
             var empty = true;
-            while (query.step() == Sqlite.ROW) {
+            int err = 0;
+            while ((err = query.step()) == Sqlite.ROW) {
                 var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
                 yield loopBody.exec(loopParams, output);
                 empty = false;
             }
 
-            if (empty) yield emptyblock.exec(ctx, output);
+            if (err != Sqlite.OK && err != Sqlite.DONE) {
+                // NOTE: If this yields messy markup, WebKit should be able to correct it.
+                output.writes("<h1 style='color: red;'><img src=gtk-icon:64/dialog-error />");
+                output.writes(get_database().errmsg());
+                output.writes("</h1>");
+            } else if (empty) yield emptyblock.exec(ctx, output);
         }
     }
 
