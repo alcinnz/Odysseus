@@ -11,7 +11,6 @@ Line numbers aren't included as the developer of our syntax highlighting library
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>[text-html]{{ title }}</title>
 
   <style>

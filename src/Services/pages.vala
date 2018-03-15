@@ -162,7 +162,7 @@ namespace Odysseus.Services {
         try {
             mime_type = (string) resources_lookup_data(path + ".mime", 0).get_data();
         } catch (Error e) {
-            mime_type = "+text/html";
+            mime_type = "+text/html; charset=UTF-8";
         }
 
         if (mime_type[0] == '+') {
