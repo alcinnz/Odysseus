@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[user-home-symbolic] {% trans %}New Tab{% endtrans %}</title>
+  <title>[user-home] {% trans %}New Tab{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
     body {color: #ddd; text-align: center;}

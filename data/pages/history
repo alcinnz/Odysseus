@@ -5,6 +5,7 @@ and to visually communicate the paths surfers took through this history. #}
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8" />
   <title>[document-open-recent] {% trans %}History{% endtrans %}</title>
   <style>@import url('odysseus:butterick.css');</style>
 </head>

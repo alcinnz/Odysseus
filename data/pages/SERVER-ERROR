@@ -7,7 +7,7 @@ The debugging information is in English in the expectation that any contributors
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>[dialog-error-symbolic]{% trans %}Internal Error{% endtrans %}</title>
+  <title>[dialog-error]{% trans %}Internal Error{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
     @import url(odysseus:ext/hljs-solarized-light.css);
