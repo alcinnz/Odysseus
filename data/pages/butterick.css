@@ -56,6 +56,9 @@ span[title] {
     cursor: help;
 }
 
+/* Style fix, for hr to be visible (at least on odysseus:home) */
+hr {width: 100%;}
+
 /** Technique taken from https://codepen.io/cbracco/pen/zekgx?editors=0100 */
 html {height: 100%; box-sizing: border-box;}
 body {position: relative; box-sizing: border-box; padding-bottom: 2rem; min-height: 97%;}
