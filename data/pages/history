@@ -36,10 +36,11 @@ and to visually communicate the paths surfers took through this history. #}
     {% each-row %}
       {% for i in num_pages %}
         {% if i != url.query.page %}<a href="odysseus:history?page={{i}}"{% else %}<strong {% endif %}
-          {% query %}SELECT min(visited_at) AS earliest, max(visited_at) AS latest FROM page_visit
-                  LIMIT {{pagesize}} OFFSET {{i}}*{{pagesize}};
+          {% query %}SELECT min(visited_at) AS earliest, max(visited_at) AS latest
+                FROM (SELECT visited_at FROM page_visit
+                  ORDER BY visited_at DESC LIMIT {{pagesize}} OFFSET {{i}}*{{pagesize}});
           {% each-row %}
-            title="{{latest}} - {{earliest}}"
+            title="{{latest|date}}–{{earliest|date}}"
           {% endquery %}
         >●</{% if i != url.query.page %}a{% else %}span{% endif %}>
       {% empty %}

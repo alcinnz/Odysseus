@@ -676,7 +676,10 @@ namespace Odysseus.Templating.Std {
     private class DateFilter : Filter {
         public override Data.Data filter(Data.Data date, Data.Data format) {
             var datetime = new DateTime.from_unix_local(date.to_int());
-            var ret = datetime.format(format.to_string());
+            var format_str = format.to_string();
+            if (format_str == "")
+                format_str = @"$(Granite.DateTime.get_default_date_format()) $(Granite.DateTime.get_default_time_format())";
+            var ret = datetime.format(format_str);
             return new Data.Literal(ret);
         }
     }
