@@ -56,4 +56,13 @@ span[title] {
     cursor: help;
 }
 
-footer {text-align: center;}
+/** Technique taken from https://codepen.io/cbracco/pen/zekgx?editors=0100 */
+html {height: 100%; box-sizing: border-box;}
+body {position: relative; box-sizing: border-box; padding-bottom: 2rem; min-height: 97%;}
+
+footer {
+    text-align: center;
+    position: absolute;
+    height: 2rem;
+    right: 0; left: 0; bottom: 0;
+}

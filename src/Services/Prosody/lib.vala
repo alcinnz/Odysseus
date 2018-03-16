@@ -382,6 +382,32 @@ namespace Odysseus.Templating.Std {
         }
     }
 
+    /* This isn't tested, as it's intentionally non-determinate */
+    private class RandomBuilder : TagBuilder, Object {
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            var alts = new Gee.ArrayList<Template>();
+            WordIter endtoken = args;
+            do {
+                endtoken.assert_end();
+                alts.add(parser.parse("alt endrandom", out endtoken));
+            } while (ByteUtils.equals_str(endtoken.next(), "alt"));
+            endtoken.assert_end();
+
+            if (endtoken == null)
+                throw new SyntaxError.UNBALANCED_TAGS("{%% random %%} must be closed with a {%% endrandom %%}");
+
+            return new RandomTag(alts.to_array());
+        }
+    }
+    private class RandomTag : Template {
+        private Template[] alts;
+        public RandomTag(Template[] alts) {this.alts = alts;}
+
+        public override async void exec(Data.Data ctx, Writer output) {
+            yield alts[Random.int_range(0, alts.length)].exec(ctx, output);
+        }
+    }
+
     private class TemplateTagBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var variant = args.next();
@@ -899,6 +925,7 @@ namespace Odysseus.Templating.Std {
         register_tag("for", new ForBuilder());
         register_tag("if", new IfBuilder());
         register_tag("ifchanged", new IfChangedBuilder());
+        register_tag("random", new RandomBuilder());
         register_tag("templatetag", new TemplateTagBuilder());
         register_tag("test", new TestBuilder()); // *
         register_tag("test-report", new TestReportBuilder()); // *

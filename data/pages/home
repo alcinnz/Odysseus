@@ -4,12 +4,12 @@
   <title>[user-home] {% trans %}New Tab{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
-    body {color: #ddd; text-align: center;}
-    hr {border: none; border-bottom: thin solid #eee; }
+    main {color: #ddd; text-align: center;}
+    main hr {border: none; border-bottom: thin solid #eee; }
   </style>
 </head>
 <body>
-  <aside style="float: right"><a href="odysseus:history">
+  <aside style="position: fixed; right: 0; top: 0;"><a href="odysseus:history">
     <img src="gtk-icon:16/document-open-recent" />{% trans %}Browser History{% endtrans %}
   </a></aside>
 
@@ -19,5 +19,25 @@
     <hr />
     <p>{% trans %}Don't worry, Odysseus will maintain it's elementary simplicity.{% endtrans %}</p>
   </main>
+
+  <footer>{% random %}{% alt %}
+      {% trans %}Browse faster with
+        <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
+          keyboard shortcuts</a>!{% endtrans %}
+    {% alt %}
+      {% trans %}{# Translators: Use this entry to sell your translation project! #}
+        Do you know another language? Then do your friends a favour and
+        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">teach Odysseus it</a>!{% endtrans %}
+    {% alt %}
+      {% trans %}Don't know where to go? Here's some
+        <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>.{% endtrans %}
+    {% alt %}
+      {% trans %}Want to help
+        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>?{% endtrans %}
+    {% alt %}
+      {% trans %}Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>.{% endtrans %}
+    {% alt %}
+      {% trans %}Designed and coded with ♥ by Adrian Lyall Cochrane in NZ.{% endtrans %}
+  {% alt %}{% endrandom %}</footer>
 </body>
 </html>
