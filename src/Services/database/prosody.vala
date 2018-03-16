@@ -22,29 +22,26 @@ namespace Odysseus.Database.Prosody {
 
     private class QueryBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            WordIter each_tag;
-            var queryParams = new Gee.ArrayList<Variable>();
-            var query = compile_block(parser.parse("each-row", out each_tag), queryParams);
-
-            if (each_tag == null)
-                throw new SyntaxError.UNBALANCED_TAGS("Missing {%% each-row %%} within {%% query %%}");
-            each_tag.next();each_tag.assert_end();
-
             WordIter endtoken;
-            var loop_body = parser.parse("endquery empty", out endtoken);
-            var endtag = endtoken.next();
+            var queryParams = new Gee.ArrayList<Variable>();
+            var query = compile_block(parser.parse("each-row empty endquery", out endtoken), queryParams);
+
+            Template loop_body = new Echo(b(""));
+            if (ByteUtils.equals_str(endtoken.next(), "each-row")) {
+                endtoken.assert_end();
+
+                loop_body = parser.parse("endquery empty", out endtoken);
+            }
 
             Template emptyblock = new Echo(b(""));
-            if (ByteUtils.equals_str(endtag, "empty")) {
+            if (ByteUtils.equals_str(endtoken.next(), "empty")) {
                 endtoken.assert_end();
 
                 emptyblock = parser.parse("endquery", out endtoken);
-                endtag = endtoken.next();
             }
 
-            if (endtoken == null || !ByteUtils.equals_str(endtag, "endquery"))
+            if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS("{%% query %%} must be balanced with an {%% endquery %%}");
-            endtoken.assert_end();
 
             return new QueryTag(query, queryParams, loop_body, emptyblock);
         }
