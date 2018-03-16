@@ -473,7 +473,7 @@ namespace Odysseus.Templating {
 
                 this.literal = new Data.Literal(ByteUtils.parse_string(base_text));
                 break;
-            case '0': case '1': case '2': case '3': case '4':
+            case '-': case '0': case '1': case '2': case '3': case '4':
             case '5': case '6': case '7': case '8': case '9':
                 double number;
                 if (!double.try_parse(ByteUtils.to_string(base_text), out number))

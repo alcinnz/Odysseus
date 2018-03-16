@@ -115,7 +115,7 @@ namespace Odysseus.Templating {
 
             var builder = ArrayBuilder(buffer);
             var bytes_read = 0;
-            while (bytes_read < buffer.length) {
+            while (bytes_read < int.min(1024, buffer.length)) {
                 // Ensures we have a buffer, and handle close_write() correctly.
                 while (data.length() == 0 && !closed) {
                     // Has to be lower than Priority.DEFAULT_IDLE

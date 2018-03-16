@@ -8,10 +8,11 @@ and to visually communicate the paths surfers took through this history. #}
   <title>[document-open-recent] {% trans %}History{% endtrans %}</title>
   <style>@import url('odysseus:butterick.css');</style>
 </head>
-<body>
+<body>{% with pagesize=400 %}
   <h1>{% trans %}Browser History{% endtrans %}</h1>
   <dl>{% query %}SELECT rowid, tab, uri, title, favicon, visited_at, referrer
-        FROM page_visit ORDER BY visited_at DESC;
+        FROM page_visit ORDER BY visited_at DESC
+        LIMIT {{ pagesize }} OFFSET {{ url.query.page|default:0 }}*{{ pagesize }};
   {% each-row %}
     {% with date=visited_at %}
       {% ifchanged date|date:"%Y%B%e" %}<dt>
@@ -28,8 +29,23 @@ and to visually communicate the paths surfers took through this history. #}
       <a href="{{ uri }}">{{title}}</a>
     </dd>
   {% empty %}
-    <dt>{% trans %}<strong>Wow</strong>! You've managed not to have any browser history! I'm impressed.{% endtrans %}</dt>
-    <dd>{% trans %}Please <a href="https://alcinnz.github.io/Odysseus-recommendations/">go explore</a>, then come back if you want.{% endtrans %}</dd>
+    <dt>{% trans %}Invalid page number!{% endtrans %}</dt>
   {% endquery %}</dl>
+  <footer>
+    {% query %}SELECT count(*)/{{pagesize}} + 1 AS num_pages FROM page_visit;
+    {% each-row %}
+      {% for i in num_pages %}
+        {% if i != url.query.page %}<a href="odysseus:history?page={{i}}"{% else %}<strong {% endif %}
+          {% query %}SELECT min(visited_at) AS earliest, max(visited_at) AS latest FROM page_visit
+                  LIMIT {{pagesize}} OFFSET {{i}}*{{pagesize}};
+          {% each-row %}
+            title="{{latest}} - {{earliest}}"
+          {% endquery %}
+        >●</{% if i != url.query.page %}a{% else %}span{% endif %}>
+      {% empty %}
+        {% trans %}Wow! No history. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Go explore</a>!{% endtrans %}
+      {% endfor %}
+    {% endquery %}
+  </footer>
 </body>
-</html>
+{% endwith %}</html>

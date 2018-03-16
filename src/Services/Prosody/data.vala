@@ -119,6 +119,11 @@ namespace Odysseus.Templating.Data {
         }
 
         public override void foreach_map(Data.ForeachMap cb) {
+            if (data.holds(typeof(int)) || data.holds(typeof(double))) {
+                var to = to_int();
+                for (var i = 0; i < to; i++) if (cb(b(""), new Literal(i))) break;
+                return;
+            }
             var text = to_string();
 
             int index = 0;
@@ -148,12 +153,16 @@ namespace Odysseus.Templating.Data {
 
         public override int to_int(out bool is_length = null) {
             is_length = false;
+            if (data.holds(typeof(string))) return int.parse((string) data);
+
             Value ret = Value(typeof(int));
             if (data.transform(ref ret)) return ret.get_int();
             else return 0;
         }
 
         public override double to_double() {
+            if (data.holds(typeof(string))) return double.parse((string) data);
+
             Value ret = Value(typeof(double));
             if (data.transform(ref ret)) return (double) ret;
             else return 0.0;

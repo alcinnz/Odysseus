@@ -122,7 +122,10 @@ namespace Odysseus.Database.Prosody {
         public DataSQLite(Sqlite.Value val) {this.val = val;}
         public override Data.Data get(Bytes _) {return new Data.Empty();}
         public override string to_string() {return val.to_text();}
-        public override void foreach_map(Data.Data.ForeachMap cb) {}
+        public override void foreach_map(Data.Data.ForeachMap cb) {
+            for (var i = 0; i < val.to_int(); i++)
+                if (cb(b(""), new Data.Literal(i))) break;
+        }
         public override int to_int(out bool is_length = null) {
             is_length = false;
             // Implicitly add correct datetime parsing

@@ -55,3 +55,5 @@ span[title] {
     border-bottom: thin dotted gray;
     cursor: help;
 }
+
+footer {text-align: center;}
