@@ -140,7 +140,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     private static Sqlite.Statement? Qinsert_new;
     public WebTab.with_new_entry(Granite.Widgets.DynamicNotebook parent,
-                  string uri_ = "odysseus:home", bool load_immediate = false) {
+                  string uri_ = "odysseus:home", bool load_immediate = true) {
         // Allocate a historical_id for odysseus:history
         var stmt = Database.parse("""SELECT historical_id FROM tab ORDER BY historical_id;""");
         int h_id = 0;
