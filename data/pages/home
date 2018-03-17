@@ -37,7 +37,7 @@
     {% alt %}
       {% trans %}Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>.{% endtrans %}
     {% alt %}
-      {% trans %}Designed and coded with ♥ by Adrian Lyall Cochrane in NZ.{% endtrans %}
+      {% trans %}Designed and coded with <a href="odysseus:credits">help</a> & ♥ by Adrian Lyall Cochrane in NZ.{% endtrans %}
   {% alt %}{% endrandom %}</footer>
 </body>
 </html>
