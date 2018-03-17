@@ -6,12 +6,35 @@ and to visually communicate the paths surfers took through this history. #}
 <html>
 <head>
   <title>[document-open-recent] {% trans %}History{% endtrans %}</title>
-  <style>@import url('odysseus:butterick.css');</style>
+  <style>
+    @import url('odysseus:butterick.css');
+    input[type=search] {width: 50%;}
+  </style>
 </head>
-<body>{% with pagesize=400 %}
-  <h1>{% trans %}Browser History{% endtrans %}</h1>
+{% if url.query.q %}
+  {# Load up the full-text search index on-demand #}
+  {% query %}INSERT OR IGNORE INTO history_fts(rowid, uri, title)
+    SELECT rowid, uri, title FROM page_visit;{% endquery %}
+{% endif %}
+<body>{% with pagesize=400 q=url.query.q %}
+  <nav>
+    <aside style="float: right;">
+      {% query %}SELECT min(visited_at) AS earliest, max(visited_at) AS latest
+        FROM (SELECT visited_at FROM page_visit
+          ORDER BY visited_at DESC LIMIT {{pagesize}}
+          OFFSET {{url.query.page}}*{{pagesize}});
+      {% each-row %}
+        {{latest|date}}–{{earliest|date}}
+      {% endquery %}
+    </aside>
+    <form>
+      <input type="search" name="q" value="{{q}}" placeholder="{% trans %}History{% endtrans %}" />
+    </form>
+  </nav>
   <dl>{% query %}SELECT rowid, tab, uri, title, favicon, visited_at, referrer
-        FROM page_visit ORDER BY visited_at DESC
+        FROM page_visit
+        WHERE {{q}} = "" OR rowid IN (SELECT rowid FROM history_fts({{q}}))
+        ORDER BY visited_at DESC
         LIMIT {{ pagesize }} OFFSET {{ url.query.page|default:0 }}*{{ pagesize }};
   {% each-row %}
     {% with date=visited_at %}
@@ -35,7 +58,7 @@ and to visually communicate the paths surfers took through this history. #}
     {% query %}SELECT count(*)/{{pagesize}} + 1 AS num_pages FROM page_visit;
     {% each-row %}
       {% for i in num_pages %}
-        {% if i != url.query.page %}<a href="odysseus:history?page={{i}}"{% else %}<strong {% endif %}
+        {% if i != url.query.page %}<a href="odysseus:history?page={{i}}&q={{q}}"{% else %}<strong {% endif %}
           {% query %}SELECT min(visited_at) AS earliest, max(visited_at) AS latest
                 FROM (SELECT visited_at FROM page_visit
                   ORDER BY visited_at DESC LIMIT {{pagesize}} OFFSET {{i}}*{{pagesize}});

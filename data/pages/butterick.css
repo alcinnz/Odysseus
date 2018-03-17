@@ -13,6 +13,11 @@ body {
     color: #333;
 }
 
+nav {
+    border-bottom: thin solid gray;
+    magin: 10px 0; padding: 10px 0;
+}
+
 main {
     max-width: 600px; /* almost 3 uppercase alphabets worth */
     margin: 0 auto;
@@ -24,6 +29,15 @@ main {
 
 main h1, main h2, main h3, main h4 {
     text-align: center;
+}
+
+input[type=search]::-webkit-search-decoration {
+    width: 16px; height: 16px;
+    margin: 0 2px;
+    align-self: center;
+
+    background-image: url(gtk-icon:16/system-search-symbolic);
+    -webkit-appearance: none;
 }
 
 /* These heading sizes are taken from the elementary Gtk theme
