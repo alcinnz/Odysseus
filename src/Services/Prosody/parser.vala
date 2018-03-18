@@ -403,8 +403,8 @@ namespace Odysseus.Templating {
     }
 
     public class Variable : Template {
-        private Bytes[] path;
-        private Data.Data? literal;
+        protected Bytes[] path;
+        protected Data.Data? literal;
         public Map<uint8,string> escapes; // public so firstOf can apply it.
 
         /* Useful global constants to be lazily compiled */
@@ -414,10 +414,7 @@ namespace Odysseus.Templating {
             get {
                 if (_nilvar == null) {
                     try {
-                        _nilvar = new Variable(
-                                // undefined probably won't be defined...
-                                b("undefined"),
-                                new Gee.HashMap<char,string>());
+                        _nilvar = new Variable.with(new Data.Empty());
                     } catch (SyntaxError e) {
                         error("Failed to initialize placeholder variable: %s", e.message);
                     }
@@ -436,20 +433,20 @@ namespace Odysseus.Templating {
         }
         /* end lazily compiled global constants */
 
-        private class FilterCall {
+        protected class FilterCall {
             public Filter cb;
             public Variable arg;
             public FilterCall(Filter cb, Variable arg) {
                 this.cb = cb; this.arg = arg;
             }
         }
-        private FilterCall[] filters;
+        protected FilterCall[] filters;
 
         public Variable.from_args(WordIter args, Map<uint8,string> escapes) throws SyntaxError {
             this(args.next(), escapes);
         }
 
-        public Variable.with(Data.Data d) {
+        public Variable.with(Data.Data? d) {
             this.literal = d;
             this.path = new Bytes[0];
             this.escapes = new Gee.HashMap<uint8,string>();
@@ -528,6 +525,67 @@ namespace Odysseus.Templating {
                 data = filter.cb.filter(data, filter.arg.eval(context));
 
             return data;
+        }
+
+        // Called from external tags
+        // FIXME could really do with some rigid tests.
+        public Variable inlineCtx(Gee.Map<Bytes, Variable> ctx) {
+            // First see if we can get away with returning an existing variable.
+            if (literal != null || (path.length >= 1 && !ctx.has_key(path[0]))) {
+                // Filter arguments may still need inlining, but check first!
+                var needs_inlining = false;
+                foreach (var filter in filters) if (filter.arg.inlineCtx(ctx) != filter.arg) {
+                    needs_inlining = true;
+                    break;
+                }
+                if (!needs_inlining) return this;
+
+                // O.K., we actually need to build a new variable.
+                var ret = new Variable.with(literal);
+                ret.path = path;
+
+                var newFilters = new Gee.ArrayList<FilterCall>();
+                foreach (var filter in filters)
+                    newFilters.add(new FilterCall(filter.cb, filter.arg.inlineCtx(ctx)));
+                ret.filters = newFilters.to_array();
+
+                return ret;
+            }
+            /* From here we know it's not a literal, and the base var is in ctx */
+            // Variables of the form {{ var }}, where var is in the context.
+            if (path.length == 1 && filters.length == 0)
+                return ctx[path[0]];
+            // Invalid vars
+            if (path.length == 0) return this;
+
+            /* Now things get trickier...
+                And may require a custom filter to be inserted
+                between the two filter chains. */
+            var baseVar = ctx[path[0]];
+            var ret = new Variable.with(null);
+
+            ret.literal = baseVar.literal;
+            ret.path = baseVar.path;
+
+            var newFilters = new Gee.ArrayList<FilterCall>();
+            newFilters.add_all(new Gee.ArrayList<FilterCall>.wrap(baseVar.filters));
+            newFilters.add(new FilterCall(new PathFilter(path[1:path.length]), nilvar));
+            foreach (var filter in filters)
+                newFilters.add(new FilterCall(filter.cb, filter.arg.inlineCtx(ctx)));
+            ret.filters = newFilters.to_array();
+
+            return ret;
+        }
+
+        private class PathFilter : Filter {
+            private Bytes[] path;
+            public PathFilter(Bytes[] path) {this.path = path;}
+
+            public override Data.Data filter0(Data.Data a) {
+                var data = a;
+                foreach (var property in path) data = data[property];
+                return data;
+            }
         }
     }
 

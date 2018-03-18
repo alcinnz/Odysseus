@@ -59,6 +59,16 @@ namespace Odysseus.Database.Prosody {
                 return "?";
             } else if (ast is Echo) {
                 return ByteUtils.to_string((ast as Echo).text);
+            } else if (ast is Std.WithTag) {
+                var with = ast as Std.WithTag;
+
+                var innerParams = new Gee.ArrayList<Variable>();
+                var txt = compile_block(with.body, innerParams);
+
+                foreach (var param in innerParams)
+                    queryParams.add(param.inlineCtx(with.vars));
+
+                return txt;
             } else
                 throw new SyntaxError.OTHER("This tag is unsupported in combination with SQL!");
         }

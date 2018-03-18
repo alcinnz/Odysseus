@@ -661,8 +661,9 @@ namespace Odysseus.Templating.Std {
         }
     }
     private class WithTag : Template {
-        private Gee.Map<Bytes,Variable> vars;
-        private Template body;
+        // These fields are public to allow for external code to inline them.
+        public Gee.Map<Bytes,Variable> vars;
+        public Template body;
         public WithTag(Gee.Map<Bytes,Variable> variables, Template bodyblock) {
             this.vars = variables;
             this.body = bodyblock;
