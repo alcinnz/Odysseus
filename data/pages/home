@@ -38,6 +38,9 @@
       {% trans %}Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>.{% endtrans %}
     {% alt %}
       {% trans %}Designed and coded with <a href="odysseus:credits">help</a> & ♥ by Adrian Lyall Cochrane in NZ.{% endtrans %}
+    {% alt %}
+      {% trans %}History search not powerful enough for you?
+        I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>!{% endtrans %}
   {% alt %}{% endrandom %}</footer>
 </body>
 </html>
