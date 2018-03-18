@@ -117,7 +117,7 @@
         <p>Preparations for more localization.</p>
       </description>
     </release>
-    <relase version="1.2.0" date="2018-03-18">
+    <release version="1.2.0" date="2018-03-18">
       <description>
         <p>Natural search of your browser history</p>
         <p>Added useful "hints" to the footer of the newtab page, which may link to a new credits page.</p>
