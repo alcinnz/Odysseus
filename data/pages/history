@@ -3,7 +3,7 @@
 Designed (using typography) to make it quick to locate particular dates
 and to visually communicate the paths surfers took through this history. #}
 <!DOCTYPE html>
-{% macro hl-change %}
+{% macro hl-change fmt %}
   {% ifchanged visited_at|date:fmt %}<strong>{{visited_at|date:fmt}}</strong>{% else %}{{visited_at|date:fmt}}{% endif %}
 {% endmacro %}
 <html>

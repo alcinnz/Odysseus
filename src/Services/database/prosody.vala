@@ -153,6 +153,7 @@ namespace Odysseus.Database.Prosody {
         // Though it *does* require it to handle {% with %}.
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var name = args.next();
+            // Don't assert end, so templates can indicate which args they expect.
 
             WordIter endtoken;
             var body = parser.scan_until("endmacro", out endtoken);
