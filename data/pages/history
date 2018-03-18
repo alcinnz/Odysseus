@@ -3,6 +3,9 @@
 Designed (using typography) to make it quick to locate particular dates
 and to visually communicate the paths surfers took through this history. #}
 <!DOCTYPE html>
+{% macro hl-change %}
+  {% ifchanged visited_at|date:fmt %}<strong>{{visited_at|date:fmt}}</strong>{% else %}{{visited_at|date:fmt}}{% endif %}
+{% endmacro %}
 <html>
 <head>
   <title>[document-open-recent] {% trans %}History{% endtrans %}</title>
@@ -37,18 +40,12 @@ and to visually communicate the paths surfers took through this history. #}
         ORDER BY visited_at DESC
         LIMIT {{ pagesize }} OFFSET {{ url.query.page|default:0 }}*{{ pagesize }};
   {% each-row %}
-    {% with date=visited_at %}
-      {% ifchanged date|date:"%Y%B%e" %}<dt>
-        {% ifchanged date|date:"%e" %}<strong>{{date|date:"%e"}}</strong>{% else %}{{date|date:"%e"}}{% endif %}
-        {% ifchanged date|date:"%B" %}<strong>{{date|date:"%B"}}</strong>{% else %}{{date|date:"%B"}}{% endif %}
-        {% ifchanged date|date:"%Y" %}<strong>{{date|date:"%Y"}}</strong>{% else %}{{date|date:"%Y"}}{% endif %}
-      </dt>{% endif %}
-    {% endwith %}
+    {% ifchanged visited_at|date:"%Y%B%e" %}<dt>
+      {% hl-change fmt="%e" %} {% hl-change fmt="%B" %} {% hl-change fmt="%Y" %}
+    </dt>{% endif %}
     <dd data-tab="{{tab}}" data-date="{{visited_at}}"
             id="visit-{{rowid}}" {% if referrer %}aria-flowto="visit-{{referrer}}"{% endif %}>
-      <em>
-        {% ifchanged visited_at|date:"%k" %}<strong>{{visited_at|date:"%k"}}</strong>{% else %}
-          {{visited_at|date:"%k"}}{% endif %}:{{visited_at|date:"%M"}}</em>
+      <em>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
       <a href="{{ uri }}">{{title}}</a>
     </dd>
   {% empty %}

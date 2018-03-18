@@ -158,7 +158,7 @@ namespace Odysseus.Database.Prosody {
             var body = parser.scan_until("endmacro", out endtoken);
             if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endmacro %%}!");
 
-            parser.local_tag_lib[name] = new MacroBuilder(body);
+            parser.local_tag_lib[name] = new MacroBuilder(ByteUtils.strip(body));
             return null;
         }
     }
