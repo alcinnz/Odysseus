@@ -364,19 +364,16 @@ namespace Odysseus.Templating {
             ended_on = null; // Default out value
 
             foreach (var token in lex) {
-                var exit = false;
                 if (Token.get_type(token) == TokenType.TAG) {
                     var name = Token.get_args(token).next();
 
                     foreach (var endtag in endtags) {
                         if (endtag.compare(name) == 0) {
                             ended_on = Token.get_args(token);
-                            exit = true;
-                            break;
+                            return lex.text[start:lex.last_start];
                         }
                     }
                 }
-                if (exit) break;
             }
 
             return lex.text[start:lex.last_start];
