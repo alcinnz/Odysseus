@@ -6,6 +6,12 @@ and to visually communicate the paths surfers took through this history. #}
 {% macro hl-change fmt %}
   {% ifchanged visited_at|date:fmt %}<strong>{{visited_at|date:fmt}}</strong>{% else %}{{visited_at|date:fmt}}{% endif %}
 {% endmacro %}
+{% macro q-history %}
+  FROM page_visit WHERE {{q}} = "" OR rowid IN (SELECT rowid FROM history_fts({{q}}))
+{% endmacro %}
+{% macro q-paged page %}
+  {% q-history %} ORDER BY visited_at DESC LIMIT {{pagesize}} OFFSET {{page}}*{{pagesize}}
+{% endmacro %}
 <html>
 <head>
   <title>[document-open-recent] {% trans %}History{% endtrans %}</title>
@@ -19,13 +25,11 @@ and to visually communicate the paths surfers took through this history. #}
   {% query %}INSERT OR IGNORE INTO history_fts(rowid, uri, title)
     SELECT rowid, uri, title FROM page_visit;{% endquery %}
 {% endif %}
-<body>{% with pagesize=400 q=url.query.q %}
+<body>{% with pagesize=400 q=url.query.q page=url.query.page|default:0 %}
   <nav>
     <aside style="float: right;">
       {% query %}SELECT min(visited_at) AS earliest, max(visited_at) AS latest
-        FROM (SELECT visited_at FROM page_visit
-          ORDER BY visited_at DESC LIMIT {{pagesize}}
-          OFFSET {{url.query.page}}*{{pagesize}});
+        FROM (SELECT visited_at {% q-paged %});
       {% each-row %}
         {{latest|date}}–{{earliest|date}}
       {% endquery %}
@@ -34,31 +38,26 @@ and to visually communicate the paths surfers took through this history. #}
       <input type="search" name="q" value="{{q}}" placeholder="{% trans %}History{% endtrans %}" />
     </form>
   </nav>
-  <dl>{% query %}SELECT rowid, tab, uri, title, favicon, visited_at, referrer
-        FROM page_visit
-        WHERE {{q}} = "" OR rowid IN (SELECT rowid FROM history_fts({{q}}))
-        ORDER BY visited_at DESC
-        LIMIT {{ pagesize }} OFFSET {{ url.query.page|default:0 }}*{{ pagesize }};
+  <dl>{% query %}SELECT rowid, tab, uri, title, favicon, visited_at, referrer {% q-paged %};
   {% each-row %}
     {% ifchanged visited_at|date:"%Y%B%e" %}<dt>
       {% hl-change fmt="%e" %} {% hl-change fmt="%B" %} {% hl-change fmt="%Y" %}
     </dt>{% endif %}
-    <dd data-tab="{{tab}}" data-date="{{visited_at}}"
+    <dd data-tab="{{tab}}"
             id="visit-{{rowid}}" {% if referrer %}aria-flowto="visit-{{referrer}}"{% endif %}>
       <em>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
       <a href="{{ uri }}">{{title}}</a>
     </dd>
   {% empty %}
-    <dt>{% trans %}Invalid page number!{% endtrans %}</dt>
+    <dt>{% trans %}No results for this search or on this page!{% endtrans %}</dt>
   {% endquery %}</dl>
   <footer>
-    {% query %}SELECT count(*)/{{pagesize}} + 1 AS num_pages FROM page_visit;
+    {% query %}SELECT count(*)/{{pagesize}} + 1 AS num_pages {% q-history %};
     {% each-row %}
       {% for i in num_pages %}
         {% if i != url.query.page %}<a href="odysseus:history?page={{i}}&q={{q}}"{% else %}<strong {% endif %}
           {% query %}SELECT min(visited_at) AS earliest, max(visited_at) AS latest
-                FROM (SELECT visited_at FROM page_visit
-                  ORDER BY visited_at DESC LIMIT {{pagesize}} OFFSET {{i}}*{{pagesize}});
+                FROM (SELECT visited_at {% q-paged page=i %});
           {% each-row %}
             title="{{latest|date}}–{{earliest|date}}"
           {% endquery %}

@@ -163,22 +163,29 @@ namespace Odysseus.Database.Prosody {
         // Though it *does* require it to handle {% with %}.
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var name = args.next();
+            if (tag_lib.has_key(name) || parser.local_tag_lib.has_key(name))
+                throw new SyntaxError.INVALID_ARGS("{%% %s %%} already exists!", ByteUtils.to_string(name));
             // Don't assert end, so templates can indicate which args they expect.
 
             WordIter endtoken;
             var body = parser.scan_until("endmacro", out endtoken);
             if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endmacro %%}!");
 
-            parser.local_tag_lib[name] = new MacroBuilder(ByteUtils.strip(body));
+            parser.local_tag_lib[name] = new MacroBuilder(ByteUtils.strip(body), parser.local_tag_lib);
             return null;
         }
     }
     private class MacroBuilder : TagBuilder, Object {
         private Bytes source;
-        public MacroBuilder(Bytes source) {this.source = source;}
+        private Gee.Map<Bytes, TagBuilder> lib;
+        public MacroBuilder(Bytes source, Gee.Map<Bytes, TagBuilder> lib) {
+            this.source = source; this.lib = lib;
+        }
 
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            return new Std.WithTag(Std.parse_params(args), new Parser(source).parse());
+            var innerParser = new Parser(source);
+            innerParser.local_tag_lib = lib;
+            return new Std.WithTag(Std.parse_params(args), innerParser.parse());
         }
     }
 
