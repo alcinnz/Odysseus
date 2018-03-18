@@ -139,7 +139,40 @@ namespace Odysseus.Database.Prosody {
         public override double to_double() {return val.to_double();}
     }
 
+    /** A tag for defining (non-recursive and indepent) abstractions.as new tags.
+        Designed to work well with the {% ifchanged %} and {% query %} tags.
+
+    Works by inlining the body text elsewhere in the template. */
+    private class MacroMetaBuilder : TagBuilder, Object {
+        // Inlining the source code naturally works with {% ifchanged %} because
+        // that yields new instances of said tag
+        // which track their own previous values.
+
+        // It works well for {% query %} as it keeps the AST nice and simple
+        // for it's compilation into a SQLite statement.
+        // Though it *does* require it to handle {% with %}.
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            var name = args.next();
+
+            WordIter endtoken;
+            var body = parser.scan_until("endmacro", out endtoken);
+            if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endmacro %%}!");
+
+            parser.local_tag_lib[name] = new MacroBuilder(body);
+            return null;
+        }
+    }
+    private class MacroBuilder : TagBuilder, Object {
+        private Bytes source;
+        public MacroBuilder(Bytes source) {this.source = source;}
+
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            return new Std.WithTag(Std.parse_params(args), new Parser(source).parse());
+        }
+    }
+
     public void register_query_tags() {
         register_tag("query", new QueryBuilder());
+        register_tag("macro", new MacroMetaBuilder());
     }
 }
