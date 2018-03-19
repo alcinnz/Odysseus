@@ -51,10 +51,12 @@ namespace Odysseus.Traits {
             return false;
         });
 
-        web.load_failed.connect((load_evt, failing_uri, err) => {
+        web.load_failed.connect((load_evt, uri, err) => {
             // 101 = CANNOT_SHOW_URI
-            if (err.matches(WebKit.PolicyError.quark(), 101)) {
-                Granite.Services.System.open_uri(failing_uri);
+            if (err.matches(WebKit.PolicyError.quark(), 101) &&
+                    // If it's an HTTP(S) URI, it's just going to keep failing.
+                    !uri.has_prefix("http:") && !uri.has_prefix("https:")) {
+                Granite.Services.System.open_uri(uri);
                 return true;
             }
             return false;
