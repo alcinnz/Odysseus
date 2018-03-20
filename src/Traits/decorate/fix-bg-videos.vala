@@ -19,10 +19,8 @@
 
 The fix here is just to pause videos on tab close. */
 namespace Odysseus.Traits {
-    public void pause_bg_videos(WebTab tab) {
+    public void pause_bg_videos(WebKit.WebView web) {
         var js = "for (let vid of document.querySelectorAll('video')) vid.pause()";
-        tab.unmap.connect(() => {
-            tab.web.run_javascript.begin(js, null);
-        });
+        web.close.connect(() => web.run_javascript.begin(js, null));
     }
 }
