@@ -37,7 +37,10 @@ namespace Odysseus.Templating.Std.I18n {
     private Bytes load_catalogue() throws Error {
         if (catalogue != null) return new Bytes(catalogue);
         var basepath = SEP + Path.build_path(SEP, "usr", "share", "Odysseus", "l10n");
+        var accepts_english = false; // Suppresses a spurious warning.
+
         foreach (var lang in Intl.get_language_names()) {
+            if (lang == "en") accepts_english = true;
             var path = Path.build_path(SEP, basepath, lang);
             if (File.new_for_path(path).query_exists()) {
                 FileUtils.get_data(path, out catalogue);
@@ -46,7 +49,9 @@ namespace Odysseus.Templating.Std.I18n {
         }
 
         // If control flow reaches here, bail out!
-        throw new SyntaxError.OTHER("No catalogue file found for specified languages");
+        if (!accepts_english)
+            throw new SyntaxError.OTHER("No catalogue file found for specified languages");
+        else return b("");
     }
 
     private Bytes locate_message(Parser cat, Bytes key) throws SyntaxError {
@@ -113,6 +118,7 @@ namespace Odysseus.Templating.Std.I18n {
             if (entry.key.compare(key) != 0) continue;
 
             body = entry.translation;
+            return;
         }
 
         // Failing that, scan the catalog file. 

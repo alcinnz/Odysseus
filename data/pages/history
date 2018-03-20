@@ -12,6 +12,12 @@ and to visually communicate the paths surfers took through this history. #}
 {% macro q-paged page %}
   {% q-history %} ORDER BY visited_at DESC LIMIT {{pagesize}} OFFSET {{page}}*{{pagesize}}
 {% endmacro %}
+
+{% if url.query.q %}
+  {# Load up the full-text search index on-demand #}
+  {% query %}INSERT OR IGNORE INTO history_fts(rowid, uri, title)
+    SELECT rowid, uri, title FROM page_visit;{% endquery %}
+{% endif %}
 <html>
 <head>
   <title>[document-open-recent] {% trans %}History{% endtrans %}</title>
@@ -20,11 +26,6 @@ and to visually communicate the paths surfers took through this history. #}
     input[type=search] {width: 50%;}
   </style>
 </head>
-{% if url.query.q %}
-  {# Load up the full-text search index on-demand #}
-  {% query %}INSERT OR IGNORE INTO history_fts(rowid, uri, title)
-    SELECT rowid, uri, title FROM page_visit;{% endquery %}
-{% endif %}
 <body>{% with pagesize=400 q=url.query.q page=url.query.page|default:0 %}
   <nav>
     <aside style="float: right;">
@@ -46,7 +47,12 @@ and to visually communicate the paths surfers took through this history. #}
     <dd data-tab="{{tab}}"
             id="visit-{{rowid}}" {% if referrer %}aria-flowto="visit-{{referrer}}"{% endif %}>
       <em>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
-      <a href="{{ uri }}">{{title}}</a>
+      <a href="{{ uri }}"
+        {% query %}SELECT title, uri FROM page_visit WHERE rowid = {{referrer}};
+            {% each-row %}
+title='{% trans %}Visited from:{% endtrans %} "{{ title }}"{# newline #}
+{{ uri }}'
+        {% endquery %}>{{title}}</a>
     </dd>
   {% empty %}
     <dt>{% trans %}No results for this search or on this page!{% endtrans %}</dt>
