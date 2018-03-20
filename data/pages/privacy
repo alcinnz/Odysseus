@@ -12,7 +12,7 @@
 
   <p>Currently the privacy situation of Odysseus is not indifferent from that
     of other browsers, but it's lead developer is keen to improve the situation.
-    But still it's useful for you to be aware of it.</p>
+    And still it's useful for you to be aware of it.</p>
 
   <h2>What information do we share with sites you visit?</h2>
   <ul>
@@ -30,9 +30,9 @@
     <li>Any data ("cookies") it told us to store for it.</li>
   </ul>
 
-  <p>If you connect to the site insecurely (via <code>http</code> rather than <code>https</code>),
-    anyone on the network between you and the site your visiting can also access this information.
-    Odysseus, other browsers, and many others are working on closing this leak.</p>
+  <p>If you connect to the site insecurely (via <code>HTTP</code> rather than <code>HTTPS</code>),
+    anyone on the network between you and the site you're visiting can also see this information.
+    Odysseus, other browsers, the <a href="https://www.eff.org/encrypt-the-web">EFF</a>, and others are working on closing this leak.</p>
 
   <hr />
 
@@ -63,7 +63,7 @@
       <summary>Any searches entered into the addressbar
         are sent to <a href="https://ddg.gg/">DuckDuckGo</a> for your convenience.
         (<a href="https://duckduckgo.com/privacy">Privacy Policy</a>)</summary>
-      <p>A search here is means anything entered into the addressbar that contains
+      <p>A search here means anything entered into the addressbar that contains
         a space. So if you don't want to search DuckDuckGo don't type space there.
       </p>
     </details></li>
@@ -86,13 +86,14 @@
     <li>The tabs and windows you currently have open in Odysseus.</li>
   </ul>
 
-  <p>Odysseus keeps this information any sites you visit, and never share it with
-    any third parties or even the Odysseus developers.</p>
+  <p>Odysseus keeps this information safe from any sites you visit,
+    and never shares it with any third parties or
+    even the Odysseus developers themselves.</p>
 
   <p>However it would be
     <a href="https://www.omgubuntu.co.uk/2012/08/is-zeitgeist-spying-on-you">overly
-    paranoid</a> to try and protect this information from other applications on your
-    computer, especially since they might do useful things with it.</p>
+    paranoid</a> to try and protect this information from any malware on your
+    computer, as who knows what that malware might be doing?</p>
 
   <hr />
   <p>See a correction to make? Please <a href="https://github.com/alcinnz/Odysseus/issues/">report it</a>.</p>
