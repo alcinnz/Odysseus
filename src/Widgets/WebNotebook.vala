@@ -56,6 +56,10 @@ public class Odysseus.WebNotebook : DynamicNotebook {
         tab_moved.connect(on_tab_moved);
         tab_removed.connect(on_tab_removed);
         tab_switched.connect(on_tab_switched);
+
+        // This trait needs to be called specially in order to connect to
+        // the events it needs.
+        Traits.pause_bg_videos(this);
     }
 
     public void on_new_tab_requested() {

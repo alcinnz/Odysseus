@@ -17,10 +17,18 @@
 /** Bandaid fix for WebKitGTK WebViews not cleaning GStreamer threads
     up after themselves.
 
-The fix here is just to pause videos on tab close. */
+The fix here is just to pause videos on tab close.
+    Needs to be given it's own mainloop so the JS runs before
+    the tab actually closes.
+
+Unfortunately this requires events on the DynamicNotebook for proper behaviour,
+    so it needs to be called in from the UI code rather than
+    with the other traits. */
 namespace Odysseus.Traits {
-    public void pause_bg_videos(WebKit.WebView web) {
+    public void pause_bg_videos(Granite.Widgets.DynamicNotebook tabs) {
         var js = "for (let vid of document.querySelectorAll('video')) vid.pause()";
-        web.close.connect(() => web.run_javascript.begin(js, null));
+        tabs.tab_removed.connect((tab) => {
+            (tab as WebTab).web.run_javascript.begin(js, null);
+        });
     }
 }
