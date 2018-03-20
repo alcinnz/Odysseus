@@ -839,6 +839,11 @@ and can be called at 212 555-1234.
 
   <h2>Filters</h2>
 {% test "|add" %}{{ 4|add:2 }} {{"4"|add:2}}{% output %}6 6{% endtest %}
+{% test "|alloc" %}
+  {{ 0|alloc:360 }} {{ 1|alloc:360 }} {{ 2|alloc:360 }} {{3|alloc:360}} {{ 4|alloc:360 }}
+{% output %}
+  0 180 90 270 45
+{% endtest %}
 {% test "|capfirst" %}{{ "oDDitY"|capfirst }}{% output %}ODDitY{% endtest %}
 {% test "|cut" %}
 {{"Stanly Kubrik's 2001: A Space Oddyssey"|cut:" "}}

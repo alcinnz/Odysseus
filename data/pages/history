@@ -18,6 +18,13 @@ and to visually communicate the paths surfers took through this history. #}
   {% query %}INSERT OR IGNORE INTO history_fts(rowid, uri, title)
     SELECT rowid, uri, title FROM page_visit;{% endquery %}
 {% endif %}
+
+{% macro tab-colour tab %}
+  {# The 0th tab is left black, as that currently doubles as the ID for
+    tabs before history tracking started. #}
+  {% if tab != 0 %}style="color: hsl({{ tab|alloc:360 }}, 100%, 25%);"{% endif %}
+{% endmacro %}
+
 <html>
 <head>
   <title>[document-open-recent] {% trans %}History{% endtrans %}</title>
@@ -46,7 +53,7 @@ and to visually communicate the paths surfers took through this history. #}
     </dt>{% endif %}
     <dd data-tab="{{tab}}"
             id="visit-{{rowid}}" {% if referrer %}aria-flowto="visit-{{referrer}}"{% endif %}>
-      <em>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
+      <em {% tab-colour %}>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
       <a href="{{ uri }}"
         {% query %}SELECT title, uri FROM page_visit WHERE rowid = {{referrer}};
             {% each-row %}

@@ -682,6 +682,33 @@ namespace Odysseus.Templating.Std {
         }
     }
 
+    /** This filter is mostly used with CSS hsl() to allocate colours for
+        visualization-type interfaces.
+
+    It takes a number to represent as a colour, which should be roughly
+        evenly spaced out over the range for optimal clarity.
+    But to be effective, the filtered numbers should be kept as small as
+        possible, this just deterministically lays them out. */
+    private class AllocateFilter : Filter {
+        public override Data.Data filter(Data.Data a, Data.Data b) {
+            var x = (uint) a.to_int();
+            var max = (uint) b.to_int();
+
+            /* This works by having each bit subdivide the available space
+                so that 0 means it's on the lower half of the current region,
+                and 1 means it's on the upper half.
+
+            Classic divide-and-conquer. */
+            var ret = 0u;
+            while (x != 0) {
+                max >>= 1;
+                if ((x & 1) == 1) ret += max;
+                x >>= 1;
+            }
+            return new Data.Literal((int) ret);
+        }
+    }
+
     private class CapFirstFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
             var text = a.to_string();
@@ -934,6 +961,7 @@ namespace Odysseus.Templating.Std {
         register_tag("with", new WithBuilder());
 
         register_filter("add", new AddFilter());
+        register_filter("alloc", new AllocateFilter());
         register_filter("capfirst", new CapFirstFilter());
         register_filter("cut", new CutFilter());
         register_filter("date", new DateFilter());
