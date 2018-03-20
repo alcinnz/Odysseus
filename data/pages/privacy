@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% trans %}Privacy Policy{% endtrans %}</title>
+  <style>@import url(odysseus:butterick.css);</style>
+</head>
+<body>
+  <h1>Your Privacy & Odysseus</h1>
+  <p>Your browser history is extremely personal information regarding your interests.
+    And as such you deserve to have full control over who other than you can see it if at all,
+    and what aspects of it they can see.</p>
+
+  <p>Currently the privacy situation of Odysseus is not indifferent from that
+    of other browsers, but it's lead developer is keen to improve the situation.
+    But still it's useful for you to be aware of it.</p>
+
+  <h2>What information do we share with sites you visit?</h2>
+  <ul>
+    <li><details>
+      <summary>The "IP Address" which currently identifies your computer or network on the Internet.</summary>
+      <p>You can hide this information using tools like <a href="https://www.torproject.org/">Tor</a>
+        (though it isn't as effective as originally thought) and
+        <a href="https://www.privateinternetaccess.com/">VPN</a>s.</p>
+    </details></li>
+    <li>The pages on that site you visit.</li>
+    <li>When you visited those pages (implicitly).</li>
+    <li>Which page you came from.</li>
+    <li>The fact you use Odysseus and the Linux kernel.</li>
+    <li>The languages you speak.</li>
+    <li>Any data ("cookies") it told us to store for it.</li>
+  </ul>
+
+  <p>Furthermore sites can provide programs for Odysseus to run,
+    through which it can access:</p>
+  <ul>
+    <li>Any interaction you've had with the site.</li>
+    <li>The screenspace available to it.</li>
+    <li>Whether you're actively connected to the Internet.</li>
+    <li>Further information it tells us to store for it.</li>
+    <li><details>
+      <summary>And with your explicit permission…</summary>
+      <ul>
+        <li>Your current location.</li>
+        <li>Your camera.</li>
+        <li>Your microphone.</li>
+      </ul>
+    </details></li>
+  </ul>
+
+  <p>Furthermore the sites you visit may incorporate third-party resources, all
+    of whom will recieve similar information. However their ability to store
+    data is <a href="https://webkit.org/blog/8142/intelligent-tracking-prevention-1-1/">severely</a> <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">restricted</a>.</p>
+
+  <h2>What information do we store?</h2>
+  <p>The following information is saved locally on your computer
+    (at <code>~/.config/com.github.alcinnz.odysseus</code>) in addition to what
+    websites tell us to store on their behalf:</p>
+  <ul>
+    <li>The icons representing sites you've visited.</li>
+    <li>Copies of visited pages to avoid redownloading them.</li>
+    <li><details>
+      <summary>A list of sites to <em>always</em> download over HTTPS.</summary>
+      <p>There's some
+        <a href="https://webkit.org/blog/8146/protecting-against-hsts-abuse/">interesting compromises</a> made to prevent
+        sites (a.k.a. advertisers) from misusing it as a form of data storage.</p>
+    </details></li>
+    <li>Your browser history.</li>
+    <li>The tabs and windows you currently have open in Odysseus.</li>
+  </ul>
+
+  <p>Odysseus keeps this information any sites you visit, and never share it with
+    any third parties or even the Odysseus developers.</p>
+
+  <p>However it would be
+    <a href="https://www.omgubuntu.co.uk/2012/08/is-zeitgeist-spying-on-you">overly
+    paranoid</a> to try and protect this information from other applications on your
+    computer, especially since they might do useful things with it.</p>
+
+  <hr />
+  <p>See a correction to make? Please <a href="https://github.com/alcinnz/Odysseus/issues/">report it</a>.</p>
+</body>
+</html>

@@ -41,6 +41,9 @@
     {% alt %}
       {% trans %}History search not powerful enough for you?
         I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>!{% endtrans %}
+    {% alt %}
+      {% trans %}While Odysseus does store information about your browsing,
+        but that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you.{% endtrans %}
   {% alt %}{% endrandom %}</footer>
 </body>
 </html>
