@@ -51,6 +51,7 @@ namespace Odysseus.Traits {
         setup_autoscroll(tab.web);
         fix_google_plus(tab.web);
         setup_history_tracker(tab);
+        pause_bg_videos(tab);
     }
 
     public void setup_autosuggest() {

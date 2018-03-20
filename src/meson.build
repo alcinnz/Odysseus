@@ -7,7 +7,7 @@ traits = ['init', 'download-progress', 'download-window']
 nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history',
         'newtab', 'history']
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll',
-        'fix-plus.google.com']
+        'fix-plus.google.com', 'fix-bg-videos']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
 services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer']
