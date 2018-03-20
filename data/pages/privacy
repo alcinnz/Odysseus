@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% trans %}Privacy Policy{% endtrans %}</title>
+  <title>[preferences-system-privacy] Privacy Policy</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
 <body>
@@ -29,6 +29,12 @@
     <li>The languages you speak.</li>
     <li>Any data ("cookies") it told us to store for it.</li>
   </ul>
+
+  <p>If you connect to the site insecurely (via <code>http</code> rather than <code>https</code>),
+    anyone on the network between you and the site your visiting can also access this information.
+    Odysseus, other browsers, and many others are working on closing this leak.</p>
+
+  <hr />
 
   <p>Furthermore sites can provide programs for Odysseus to run,
     through which it can access:</p>
