@@ -42,15 +42,18 @@ and to visually communicate the paths surfers took through this history. #}
         {{latest|date}}–{{earliest|date}}
       {% endquery %}
     </aside>
+
     <form>
       <input type="search" name="q" value="{{q}}" placeholder="{% trans %}History{% endtrans %}" />
     </form>
   </nav>
+
   <dl>{% query %}SELECT rowid, tab, uri, title, favicon, visited_at, referrer {% q-paged %};
   {% each-row %}
     {% ifchanged visited_at|date:"%Y%B%e" %}<dt>
       {% hl-change fmt="%e" %} {% hl-change fmt="%B" %} {% hl-change fmt="%Y" %}
     </dt>{% endif %}
+
     <dd id="visit-{{rowid}}" aria-flowto="visit-{{referrer}}">
       <em {% tab-colour %}>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
       <a href="{{ uri }}"
@@ -58,11 +61,14 @@ and to visually communicate the paths surfers took through this history. #}
             {% each-row %}
 title='{% trans %}Visited from:{% endtrans %} "{{ title }}"{# newline #}
 {{ uri }}'
-        {% endquery %}>{{title}}</a>
+        {% endquery %}>
+            <img height="16" width="16" src="{{uri|favicon}}" /> {{title}}
+        </a>
     </dd>
   {% empty %}
     <dt>{% trans %}No results for this search or on this page!{% endtrans %}</dt>
   {% endquery %}</dl>
+
   <footer>
     {% query %}SELECT count(*)/{{pagesize}} + 1 AS num_pages {% q-history %};
     {% each-row %}
