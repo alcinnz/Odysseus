@@ -57,6 +57,11 @@
     of whom will recieve similar information. However their ability to store
     data is <a href="https://webkit.org/blog/8142/intelligent-tracking-prevention-1-1/">severely</a> <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">restricted</a>.</p>
 
+  <h2>What other information do we share with third parties?</h2>
+  <p>Any search you enter into Odysseus (that anything you type into the
+    addressbar which contains a space) will for your convenience be sent to
+    <a href="https://ddg.gg/">DuckDuckGo</a> for search or autocompletion.</p>
+
   <h2>What information do we store?</h2>
   <p>The following information is saved locally on your computer
     (at <code>~/.config/com.github.alcinnz.odysseus</code>) in addition to what
