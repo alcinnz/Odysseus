@@ -36,6 +36,9 @@ namespace Odysseus.Traits {
 
         configure_context(ctx);
         DownloadSet.setup_ctx(ctx);
+
+        // Register extended tags needed by templates.
+        Database.Prosody.register_query_tags();
     }
 
     public void setup_webview(WebTab tab) {

@@ -998,7 +998,5 @@ namespace Odysseus.Templating.Std {
         modes[b("url")] = modes[b("uri")];
 
         // * indicates the tag or filter was added for use by the testrunner.
-
-        Database.Prosody.register_query_tags();
     }
 }
