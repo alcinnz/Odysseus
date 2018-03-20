@@ -22,7 +22,7 @@ public class Odysseus.Application : Granite.Application {
 
         app_launcher = "com.github.alcinnz.odysseus.desktop";
         program_name = "Odysseus";
-        build_version = "0.3";
+        build_version = "1";
         exec_name = application_id = "com.github.alcinnz.odysseus";
     }
 
