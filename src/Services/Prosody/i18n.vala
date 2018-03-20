@@ -34,10 +34,9 @@ namespace Odysseus.Templating.Std.I18n {
     // Singleton for avoiding expensive disk access as a routine part of
     //      message translation.
     private static uint8[]? catalogue = null;
-    private Bytes load_catalogue() throws Error {
+    private Bytes load_catalogue(ref bool accepts_english) throws Error {
         if (catalogue != null) return new Bytes(catalogue);
         var basepath = SEP + Path.build_path(SEP, "usr", "share", "Odysseus", "l10n");
-        var accepts_english = false; // Suppresses a spurious warning.
 
         foreach (var lang in Intl.get_language_names()) {
             if (lang == "en") accepts_english = true;
@@ -49,9 +48,7 @@ namespace Odysseus.Templating.Std.I18n {
         }
 
         // If control flow reaches here, bail out!
-        if (!accepts_english)
-            throw new SyntaxError.OTHER("No catalogue file found for specified languages");
-        else return b("");
+        throw new SyntaxError.OTHER("No catalogue file found for specified languages");
     }
 
     private Bytes locate_message(Parser cat, Bytes key) throws SyntaxError {
@@ -121,9 +118,10 @@ namespace Odysseus.Templating.Std.I18n {
             return;
         }
 
-        // Failing that, scan the catalog file. 
+        // Failing that, scan the catalog file.
+        var accepts_english = false;
         try {
-            var cat = new Parser(load_catalogue());
+            var cat = new Parser(load_catalogue(ref accepts_english));
             var key2 = locate_message(cat, key);
             body = parse_translations(cat);
 
@@ -135,7 +133,8 @@ namespace Odysseus.Templating.Std.I18n {
             entry.next = CacheEntry.translation_cache;
             CacheEntry.translation_cache = entry;
         } catch (Error e) {
-            warning("Failed to parse translation catalogue: %s", e.message);
+            if (!accepts_english)
+                warning("Failed to parse translation catalogue: %s", e.message);
         }
     }
 

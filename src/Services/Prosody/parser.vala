@@ -413,11 +413,7 @@ namespace Odysseus.Templating {
         private static Variable nilvar {
             get {
                 if (_nilvar == null) {
-                    try {
-                        _nilvar = new Variable.with(new Data.Empty());
-                    } catch (SyntaxError e) {
-                        error("Failed to initialize placeholder variable: %s", e.message);
-                    }
+                    _nilvar = new Variable.with(new Data.Empty());
                 }
                 return _nilvar;
             }
