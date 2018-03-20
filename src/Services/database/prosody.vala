@@ -109,9 +109,9 @@ namespace Odysseus.Database.Prosody {
 
             if (err != Sqlite.OK && err != Sqlite.DONE) {
                 // NOTE: If this yields messy markup, WebKit should be able to correct it.
-                output.writes("<h1 style='color: red;'><img src=gtk-icon:64/dialog-error />");
-                output.writes(get_database().errmsg());
-                output.writes("</h1>");
+                yield output.writes("<h1 style='color: red;'><img src=gtk-icon:64/dialog-error />");
+                yield output.writes(get_database().errmsg());
+                yield output.writes("</h1>");
             } else if (empty) yield emptyblock.exec(ctx, output);
         }
     }
