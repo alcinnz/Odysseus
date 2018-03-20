@@ -51,8 +51,7 @@ and to visually communicate the paths surfers took through this history. #}
     {% ifchanged visited_at|date:"%Y%B%e" %}<dt>
       {% hl-change fmt="%e" %} {% hl-change fmt="%B" %} {% hl-change fmt="%Y" %}
     </dt>{% endif %}
-    <dd data-tab="{{tab}}"
-            id="visit-{{rowid}}" {% if referrer %}aria-flowto="visit-{{referrer}}"{% endif %}>
+    <dd id="visit-{{rowid}}" aria-flowto="visit-{{referrer}}">
       <em {% tab-colour %}>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
       <a href="{{ uri }}"
         {% query %}SELECT title, uri FROM page_visit WHERE rowid = {{referrer}};
