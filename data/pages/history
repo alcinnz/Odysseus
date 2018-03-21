@@ -54,7 +54,9 @@ and to visually communicate the paths surfers took through this history. #}
       {% hl-change fmt="%e" %} {% hl-change fmt="%B" %} {% hl-change fmt="%Y" %}
     </dt>{% endif %}
 
-    <dd id="visit-{{rowid}}" aria-flowto="visit-{{referrer}}">
+    <dd id="visit-{{rowid}}" aria-flowto="visit-{{referrer}}"
+        {% query %}SELECT image FROM screenshot WHERE uri = {{ uri }};
+        {% each-row %}data-img="{{ image }}"{% endquery %}>
       <em {% tab-colour %}>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
       <a href="{{ uri }}"
         {% query %}SELECT title, uri FROM page_visit WHERE rowid = {{referrer}};
@@ -68,6 +70,19 @@ title='{% trans %}Visited from:{% endtrans %} "{{ title }}"{# newline #}
   {% empty %}
     <dt>{% trans %}No results for this search or on this page!{% endtrans %}</dt>
   {% endquery %}</dl>
+
+  <!-- To be populated by JS -->
+  <aside style="position: fixed; top: 30%; right: 0;">
+    <img id="screenshot" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+    <script>
+      let preview = document.querySelector("#screenshot")
+      for (let el of document.querySelectorAll("[data-img]")) {
+        el.onmouseover = () => {
+          preview.src = "data:image/png;base64," + el.dataset.img
+        }
+      }
+    </script>
+  </aside>
 
   <footer>
     {% query %}SELECT count(*)/{{pagesize}} + 1 AS num_pages {% q-history %};
