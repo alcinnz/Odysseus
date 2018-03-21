@@ -732,7 +732,7 @@ namespace Odysseus.Templating.Std {
             var datetime = new DateTime.from_unix_local(date.to_int());
             var format_str = format.to_string();
             if (format_str == "")
-                format_str = @"$(Granite.DateTime.get_default_date_format()) $(Granite.DateTime.get_default_time_format())";
+                format_str = @"$(Granite.DateTime.get_default_date_format(false, true, true)) $(Granite.DateTime.get_default_time_format())";
             var ret = datetime.format(format_str);
             return new Data.Literal(ret);
         }
