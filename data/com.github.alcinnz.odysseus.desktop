@@ -20,10 +20,12 @@ X-GNOME-UsesNotifications=true
 Name=New Window
 Name[cs]=Nové okno
 Name[fr]=Nouvelle fenêtre
+Name[pt]=Nova janela
 Exec=com.github.alcinnz.odysseus odysseus:NewWindow
 
 [Desktop Action NewTab]
 Name=New Tab
 Name[cs]=Nový panel
 Name[fr]=Nouvel onglet
+Name[pt]=Nova aba
 Exec=com.github.alcinnz.odysseus odysseus:home
