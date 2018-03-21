@@ -63,10 +63,8 @@ def parse_templates(repo_root = "."):
         print("Parsing template", subpath)
         template = tags(filename)
         while next(template, "trans"):
-            message, endtag = block(template, "plural endtrans")
+            message, endtag = block(template, "endtrans")
             yield message.strip()
-            if is_tag(endtag, "plural"):
-                assert block(template, "endtrans")
 
 if __name__ == "__main__":
     from sys import argv
