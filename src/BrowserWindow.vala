@@ -168,6 +168,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("_Print"), () => new WebKit.PrintOperation(web).run_dialog(this), Gdk.Key.P);
             menu.separate();
             menu.add(_("Show Downloads"), () => downloads.set_reveal_child(true), Gdk.Key.D);
+            menu.add(_("About Odysseus"), () =>
+                Granite.Services.System.open_uri("appstream://com.github.alcinnz.odysseus.desktop"));
         });
         tools.shortcut(Gdk.Key.T, () => new_tab());
     }
