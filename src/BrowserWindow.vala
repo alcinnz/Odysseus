@@ -198,7 +198,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         try {
             var favicon_db = web.web_context.get_favicon_database();
             var favicon = yield favicon_db.get_favicon(item.get_uri(), null);
-            var icon = WebTab.surface_to_pixbuf(favicon);
+            var icon = ImageUtil.surface_to_pixbuf(favicon);
             menuitem.image = new Gtk.Image.from_gicon(icon, Gtk.IconSize.MENU);
         } catch (Error e) {
             warning("Failed to load favicon for '%s':", item.get_uri());

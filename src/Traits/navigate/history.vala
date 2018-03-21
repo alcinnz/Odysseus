@@ -62,36 +62,35 @@ namespace Odysseus.Traits {
                     surface = web.get_snapshot.end(res);
                 } catch (Error err) {return;}
 
-                var size = web.get_allocated_width();
-                surface = surface.map_to_image(Cairo.RectangleInt() {
-                        x = 0, y = 0, width = size, height = size});
-                const double DESIRED_SIZE = 256;
-                var scale = DESIRED_SIZE/size;
-                surface.set_device_scale(scale, scale);
+                const int DESIRED_SIZE = 256;
+                var width = (double) web.get_allocated_width();
+                var pixbuf = new Gdk.Pixbuf(Gdk.Colorspace.RGB, false, 8,
+                        DESIRED_SIZE, DESIRED_SIZE);
+                ImageUtil.surface_to_pixbuf(surface).scale(pixbuf,
+                        0, 0, DESIRED_SIZE, DESIRED_SIZE,
+                        0, 0, /* scale */ DESIRED_SIZE/width, DESIRED_SIZE/width,
+                        Gdk.InterpType.NEAREST /* Quality's not important, responsiveness is */);
 
-                var png = new Gee.ArrayList<uchar>();
-                var err = surface.write_to_png_stream((chunk) => {
-                    png.add_all(new Gee.ArrayList<uchar>.wrap(chunk));
-                    return Cairo.Status.SUCCESS;
-                });
-                if (err != Cairo.Status.SUCCESS) {
-                    warning("Failed to save screenshot for history.");
+                uint8[] png;
+                try {
+                    pixbuf.save_to_buffer(out png, "png");
+                } catch (Error err) {
+                    warning("Failed to save screenshot for %s.", uri);
                     return;
                 }
+                var encoded = Base64.encode(png);
 
-                var encoded = Base64.encode(png.to_array());
-
-                qReplaceScreenshot.reset();
+                /*qReplaceScreenshot.reset();
                 qReplaceScreenshot.bind_text(1, encoded);
                 qReplaceScreenshot.bind_text(2, uri);
                 qReplaceScreenshot.step();
 
-                if (qReplaceScreenshot.db_handle().total_changes() == 0) {
+                if (qReplaceScreenshot.db_handle().total_changes() == 0) {*/
                     qSaveScreenshot.reset();
                     qSaveScreenshot.bind_text(1, uri);
                     qSaveScreenshot.bind_text(2, encoded);
                     qSaveScreenshot.step();
-                }
+                //}
             });
         });
         /* NOTE: It'd be nice to save any URI changes to history,

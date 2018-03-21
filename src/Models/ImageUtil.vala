@@ -40,4 +40,25 @@ namespace Odysseus.ImageUtil {
 
         return Gdk.pixbuf_get_from_surface(dest, 0, 0, source.width, source.height);
     }
+
+    // GDK does provide a utility for this,
+    // but it requires me to specify size information I do not have.
+    public static Gdk.Pixbuf? surface_to_pixbuf(Cairo.Surface surface) {
+        try {
+            var loader = new Gdk.PixbufLoader.with_mime_type("image/png");
+            surface.write_to_png_stream((data) => {
+                try {
+                    loader.write((uint8[]) data);
+                } catch (Error e) {
+                    return Cairo.Status.DEVICE_ERROR;
+                }
+                return Cairo.Status.SUCCESS;
+            });
+            var pixbuf = loader.get_pixbuf();
+            loader.close();
+            return pixbuf;
+        } catch (Error e) {
+            return null;
+        }
+    }
 }

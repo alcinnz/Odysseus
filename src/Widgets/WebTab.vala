@@ -184,32 +184,11 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         if (icon != null) this.icon = icon;
     }
 
-    // GDK does provide a utility for this,
-    // but it requires me to specify size information I do not have.
-    public static Gdk.Pixbuf? surface_to_pixbuf(Cairo.Surface surface) {
-        try {
-            var loader = new Gdk.PixbufLoader.with_mime_type("image/png");
-            surface.write_to_png_stream((data) => {
-                try {
-                    loader.write((uint8[]) data);
-                } catch (Error e) {
-                    return Cairo.Status.DEVICE_ERROR;
-                }
-                return Cairo.Status.SUCCESS;
-            });
-            var pixbuf = loader.get_pixbuf();
-            loader.close();
-            return pixbuf;
-        } catch (Error e) {
-            return null;
-        }
-    }
-
     public Icon coloured_icon {get; set; default = new ThemedIcon("web-browser-symbolic");}
 
     public void restore_favicon() {
         if (web.get_favicon() != null) {
-            var fav = surface_to_pixbuf(web.get_favicon());
+            var fav = ImageUtil.surface_to_pixbuf(web.get_favicon());
             coloured_icon = fav.scale_simple(16, 16, Gdk.InterpType.BILINEAR);
             // Has to be recoloured first, or we'll loose important details.
             // This colour was chosen to a) be amongst the elementary colour pallette
