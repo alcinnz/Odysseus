@@ -1,0 +1,203 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the io.github.alcinnz.Odysseus package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: io.github.alcinnz.Odysseus\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-23 08:14+1300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Corentin Noël <tintou@mailoo.org>, 2018\n"
+"Language-Team: French (https://www.transifex.com/none-483/teams/75521/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/BrowserWindow.vala:75
+msgid "Go to previously viewed page"
+msgstr ""
+
+#: src/BrowserWindow.vala:83
+msgid "Go to next viewed page"
+msgstr ""
+
+#: src/BrowserWindow.vala:92
+msgid "Load this page from the website again"
+msgstr ""
+
+#: src/BrowserWindow.vala:94
+msgid "Ignore cache"
+msgstr ""
+
+#: src/BrowserWindow.vala:97
+msgid "Stop loading this page"
+msgstr ""
+
+#: src/BrowserWindow.vala:99
+msgid "Stop And Reload"
+msgstr ""
+
+#: src/BrowserWindow.vala:112
+msgid "Current web address"
+msgstr ""
+
+#: src/BrowserWindow.vala:119
+msgid "Menu"
+msgstr "Menu"
+
+#: src/BrowserWindow.vala:120
+msgid "_New Window"
+msgstr "_Nouvelle fenêtre"
+
+#: src/BrowserWindow.vala:125 src/BrowserWindow.vala:126
+#: src/Widgets/DownloadButton.vala:100
+msgid "_Open"
+msgstr "_Ouvrir"
+
+#: src/BrowserWindow.vala:128
+msgid "_Save"
+msgstr "Enregi_strer"
+
+#. TRANSLATORS _ precedes shortcut key
+#: src/BrowserWindow.vala:129 src/Widgets/DownloadButton.vala:110
+#: src/Widgets/DownloadButton.vala:114
+msgid "_Save As"
+msgstr "Enregi_strer sous"
+
+#: src/BrowserWindow.vala:132
+msgid "_View Source"
+msgstr "_Afficher la source"
+
+#: src/BrowserWindow.vala:134
+msgid "Zoom In"
+msgstr "Zoom avant"
+
+#: src/BrowserWindow.vala:136
+msgid "Zoom Out"
+msgstr "Zoom arrière"
+
+#: src/BrowserWindow.vala:139
+msgid "_Find In Page"
+msgstr "_Chercher dans la page"
+
+#: src/BrowserWindow.vala:141
+msgid "_Print"
+msgstr "Im_primer"
+
+#: src/BrowserWindow.vala:143
+msgid "Show Downloads"
+msgstr "Afficher les téléchargements"
+
+#: src/BrowserWindow.vala:156 src/Widgets/DownloadButton.vala:122
+msgid "_Cancel"
+msgstr "_Annuler"
+
+#: src/Models/Download.vala:74
+#, c-format
+msgid ""
+"Error moving download to %s.\n"
+"It has been left in your Downloads folder"
+msgstr ""
+
+#. / TRANSLATORS: "%i" seconds
+#: src/Models/Download.vala:87
+#, c-format
+msgid "%is"
+msgstr "%is"
+
+#. / TRANSLATORS: "%i" minutes
+#: src/Models/Download.vala:92
+#, c-format
+msgid "%im"
+msgstr "%im"
+
+#. / TRANSLATORS: "%i" hours and "%i" minutes,
+#: src/Models/Download.vala:97
+#, c-format
+msgid "%ih %im"
+msgstr "%ih %im"
+
+#. Disallow interacting with the page while dialog is active.
+#: src/Traits/decorate/alert.vala:60
+msgid "Close the message to continue interacting with this page"
+msgstr ""
+
+#: src/Widgets/DownloadBar.vala:34
+msgid "View all downloads"
+msgstr ""
+
+#: src/Widgets/DownloadBar.vala:36
+msgid "Close downloads bar"
+msgstr ""
+
+#: src/Widgets/DownloadButton.vala:53
+msgid "[Download]"
+msgstr ""
+
+#: src/Widgets/DownloadButton.vala:93
+msgid "DONE"
+msgstr ""
+
+#: src/Widgets/DownloadButton.vala:105
+msgid "Open _Automatically"
+msgstr ""
+
+#: src/Widgets/WebTab.vala:79
+#, c-format
+msgid "%u matches of \"%s\" found"
+msgstr "%u occurrences de \"%s\" trouvés"
+
+#: src/Widgets/overlays/FindToolbar.vala:45
+msgid "Find in page..."
+msgstr ""
+
+#: src/Widgets/overlays/FindToolbar.vala:87
+msgid "Find previous match"
+msgstr ""
+
+#: src/Widgets/overlays/FindToolbar.vala:99
+msgid "View search options"
+msgstr ""
+
+#: src/Widgets/overlays/FindToolbar.vala:129
+msgid "Match Uppercase"
+msgstr ""
+
+#: src/Widgets/overlays/FindToolbar.vala:136
+msgid "Ignore Uppercase"
+msgstr "Ignorer les majuscules"
+
+#: src/Widgets/overlays/FindToolbar.vala:143
+msgid "Auto"
+msgstr "Auto"
+
+#: src/Widgets/overlays/FindToolbar.vala:153
+msgid "Cyclic Search"
+msgstr "Recherche cyclique"
+
+#: src/Widgets/overlays/FindToolbar.vala:160
+msgid "Match Word Start"
+msgstr ""
+
+#. If the user doesn't know what CamelCase means,
+#. they probably don't want this option. (note the hint in it's name)
+#: src/Widgets/overlays/FindToolbar.vala:168
+msgid "Match CamelCase"
+msgstr ""
+
+#: src/Traits/download-progress.vala:47
+msgid "Web Download Completed"
+msgstr "Téléchargement terminé"
+
+#: src/Traits/download-window.vala:27
+msgid "Downloads Are In Progress…"
+msgstr "Des téléchargements sont en cours…"
+
+#: src/Traits/download-window.vala:34
+msgid "Click a download to cancel or alter it"
+msgstr "Cliquez sur un téléchargement pour l'annuler ou le modifier"

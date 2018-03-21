@@ -10,6 +10,7 @@ Categories=Network;WebBrowser;GTK;GNOME;
 # TRANSLATORS This is a semicolon list of keywords for this application
 Keywords=WWW;Web;Internet;Browser;
 Keywords[cs]=WWW;Web;Internet;Prohlížeč;
+Keywords[fr]=WWW;Web;Internet;Navigateur;
 StartupNotify=true
 Actions=NewWindow;NewTab;
 MimeType=x-scheme-handler/http;x-scheme-handler/https;text/html;application/xhtml+xml;application/x-extension-htm;application/x-extension-html;application/x-extension-shtml;application/x-extension-xht;application/x-extension-mhtml;
@@ -18,9 +19,11 @@ X-GNOME-UsesNotifications=true
 [Desktop Action NewWindow]
 Name=New Window
 Name[cs]=Nové okno
+Name[fr]=Nouvelle fenêtre
 Exec=com.github.alcinnz.odysseus odysseus:NewWindow
 
 [Desktop Action NewTab]
 Name=New Tab
 Name[cs]=Nový panel
+Name[fr]=Nouvel onglet
 Exec=com.github.alcinnz.odysseus odysseus:home
