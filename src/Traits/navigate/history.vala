@@ -23,6 +23,17 @@ namespace Odysseus.Traits {
         var web = tab.web;
         var prev_uri = web.uri;
         var first = true; // Don't log session restoration!
+
+        var qSaveHistory = Database.parse("""INSERT INTO page_visit
+                (tab, uri, title, favicon, visited_at, referrer)
+            VALUES (
+                ?, ?, ?, ?, datetime('now', 'localtime'),
+                (SELECT rowid FROM page_visit WHERE tab = ? AND uri = ?)
+        );""");
+        var qReplaceScreenshot = Database.parse("""UPDATE screenshot
+            SET image = ? WHERE uri = ?;""");
+        var qSaveScreenshot = Database.parse("INSERT INTO screenshot VALUES (?, ?);");
+
         web.load_changed.connect((evt) => {
             if (evt == WebKit.LoadEvent.FINISHED && first) {
                 prev_uri = web.uri; first = false; return;
@@ -32,21 +43,56 @@ namespace Odysseus.Traits {
                     prev_uri == web.uri ||
                     web.title == "") return;
 
-            var stmt = Database.parse("""INSERT INTO page_visit
-                    (tab, uri, title, favicon, visited_at, referrer)
-                VALUES (
-                    ?, ?, ?, ?, datetime('now', 'localtime'),
-                    (SELECT rowid FROM page_visit WHERE tab = ? AND uri = ?)
-            );""");
-            stmt.bind_int(1, tab.historical_id);
-            stmt.bind_text(2, web.uri);
-            stmt.bind_text(3, web.title);
-            stmt.bind_text(4, ""); // TODO
-            stmt.bind_int(5, tab.historical_id);
-            stmt.bind_text(6, prev_uri);
+            qSaveHistory.reset();
+            qSaveHistory.bind_int(1, tab.historical_id);
+            qSaveHistory.bind_text(2, web.uri);
+            qSaveHistory.bind_text(3, web.title);
+            qSaveHistory.bind_text(4, ""); // TODO
+            qSaveHistory.bind_int(5, tab.historical_id);
+            qSaveHistory.bind_text(6, prev_uri);
 
-            stmt.step();
+            qSaveHistory.step();
             prev_uri = web.uri;
+            var uri = web.uri;
+
+            web.get_snapshot.begin(WebKit.SnapshotRegion.FULL_DOCUMENT,
+                    WebKit.SnapshotOptions.NONE, null, (obj, res) => {
+                Cairo.Surface surface = null;
+                try {
+                    surface = web.get_snapshot.end(res);
+                } catch (Error err) {return;}
+
+                var size = web.get_allocated_width();
+                surface = surface.map_to_image(Cairo.RectangleInt() {
+                        x = 0, y = 0, width = size, height = size});
+                const double DESIRED_SIZE = 256;
+                var scale = DESIRED_SIZE/size;
+                surface.set_device_scale(scale, scale);
+
+                var png = new Gee.ArrayList<uchar>();
+                var err = surface.write_to_png_stream((chunk) => {
+                    png.add_all(new Gee.ArrayList<uchar>.wrap(chunk));
+                    return Cairo.Status.SUCCESS;
+                });
+                if (err != Cairo.Status.SUCCESS) {
+                    warning("Failed to save screenshot for history.");
+                    return;
+                }
+
+                var encoded = Base64.encode(png.to_array());
+
+                qReplaceScreenshot.reset();
+                qReplaceScreenshot.bind_text(1, encoded);
+                qReplaceScreenshot.bind_text(2, uri);
+                qReplaceScreenshot.step();
+
+                if (qReplaceScreenshot.db_handle().total_changes() == 0) {
+                    qSaveScreenshot.reset();
+                    qSaveScreenshot.bind_text(1, uri);
+                    qSaveScreenshot.bind_text(2, encoded);
+                    qSaveScreenshot.step();
+                }
+            });
         });
         /* NOTE: It'd be nice to save any URI changes to history,
             but on sites like OSM this can crowd out the other history entries
