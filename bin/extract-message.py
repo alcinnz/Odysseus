@@ -69,12 +69,12 @@ def parse_templates(repo_root = "."):
             yield message.strip(), subpath, line
             line = next(template, "trans")
 
-def consolidate(repo_root = "."):
+def consolidate(messages):
     from collections import defaultdict
     ret = defaultdict(list)
-    for msg, tpl, line in parse_templates:
-        ret[msg].append(tpl + ":" + line)
-    return ret
+    for msg, tpl, line in messages:
+        ret[msg].append(tpl + ":" + str(line))
+    return ret.items()
 
 if __name__ == "__main__":
     from sys import argv
