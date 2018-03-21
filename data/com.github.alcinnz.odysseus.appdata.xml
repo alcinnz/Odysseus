@@ -124,5 +124,14 @@
         <p>Reduced prevalance of the "loading" message.</p>
       </description>
     </release>
+    <release version="1.2.2" date="2018-03-21">
+      <description>
+        <p>More communicative browser history viewer, with colour coded tabs,
+            tooltips communicating which links you've followed, favicons,
+            page screenshots, and years in all dates.</p>
+        <p>Fixes for video playback and infinite tab spawnage.</p>
+        <p>Added a privacy notice.</p>
+      </description>
+    </release>
   </releases>
 </component>
