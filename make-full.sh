@@ -2,7 +2,7 @@
 python3 bin/extract-message.py
 
 cd build
-ninja io.github.alcinnz.Odysseus-pot
+ninja com.github.alcinnz.odysseus-pot
 ninja extra-pot
 ninja
 
