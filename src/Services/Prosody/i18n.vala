@@ -55,7 +55,7 @@ namespace Odysseus.Templating.Std.I18n {
         WordIter msg;
         cat.scan_until("msg", out msg);
         while (msg != null) {
-            msg.next(); msg.assert_end();
+            // {% msg %} can contain translator notes (format not defined here).
 
             WordIter trans;
             var message = cat.scan_until("trans", out trans);

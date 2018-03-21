@@ -62,9 +62,19 @@ def parse_templates(repo_root = "."):
     for filename, subpath in walk(path.join(repo_root, "data", "pages")):
         print("Parsing template", subpath)
         template = tags(filename)
-        while next(template, "trans"):
+
+        line = next(template, "trans")
+        while line:
             message, endtag = block(template, "endtrans")
-            yield message.strip()
+            yield message.strip(), subpath, line
+            line = next(template, "trans")
+
+def consolidate(repo_root = "."):
+    from collections import defaultdict
+    ret = defaultdict(list)
+    for msg, tpl, line in parse_templates:
+        ret[msg].append(tpl + ":" + line)
+    return ret
 
 if __name__ == "__main__":
     from sys import argv
@@ -73,8 +83,8 @@ if __name__ == "__main__":
     l10n_root = os.path.join(repo_root, "data", "page-l10n")
 
     with open(os.path.join(l10n_root, "Odysseus.messages"), 'w') as out:
-        for msg in set(parse_templates(repo_root)):
-            print("{% msg %}", msg, "{% trans %}{% endmsg %}", file=out)
+        for msg, sources in consolidate(parse_templates(repo_root)):
+            print("{% msg", " ".join(sources), "%}", msg, "{% trans %}{% endmsg %}", file=out)
 
     print("All messages have been extracted to:",
             os.path.join(l10n_root, "Odysseus.messages"))
