@@ -44,6 +44,9 @@
     {% alt %}
       {% trans %}While Odysseus does store information about your browsing,
         but that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you.{% endtrans %}
+    {% alt %}
+      {% trans %}Odysseus is <a href="https://liberapay.com/alcinnz/">crowdfunding</a>
+        for a server to help gather useful datasets and to better aid localization. Please chip in!{% endtrans %}
   {% alt %}{% endrandom %}</footer>
 </body>
 </html>
