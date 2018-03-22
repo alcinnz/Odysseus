@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 12:13+1300\n"
+"POT-Creation-Date: 2018-03-23 09:31+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,198 +17,117 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/com.github.alcinnz.odysseus.desktop:4
-#: data/com.github.alcinnz.odysseus.appdata.xml:6
+#: data/com.github.alcinnz.odysseus-base.desktop:4
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:6
 msgid "Odysseus"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.desktop:5
-#: data/com.github.alcinnz.odysseus.appdata.xml:7
+#: data/com.github.alcinnz.odysseus-base.desktop:5
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:7
 msgid "Surf knowledge, entertainment, and services on The Web"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.desktop:8
+#: data/com.github.alcinnz.odysseus-base.desktop:7
 msgid "com.github.alcinnz.odysseus"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.desktop:12
+#: data/com.github.alcinnz.odysseus-base.desktop:11
 msgid "WWW;Web;Internet;Browser;"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.desktop:21
+#: data/com.github.alcinnz.odysseus-base.desktop:18
 msgid "New Window"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.desktop:28
+#: data/com.github.alcinnz.odysseus-base.desktop:22
 msgid "New Tab"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:8
-msgid "Prohlížejte libovolný obsah na internetu"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:11
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:10
 msgid ""
 "Surf the Web with the controls you’re already familiar with from apps like "
 "Files and Scratch. With everything where you already expect them it is "
 "seamless to switch between Odysseus and other apps."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:12
-msgid ""
-"Prohlížejte internet s ovládáním na které jste zvyklí z ostatních aplikací, "
-"jako Soubory nebo Scratch. Se stejně navrženými ovládacími prvky jako v "
-"ostatních aplikacích bude přechod na tento prohlížeč bez obtíží."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:13
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:11
 msgid "Features:"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:14
-msgid "Funkce:"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:16
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:13
 msgid "Can present any webpage Apple's Safari or GNOME's Epiphany can handle."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:17
-msgid "Zobrazí stejné webové stránky jako Apple Safari nebo GNOME Epiphany"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:18
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:14
 msgid ""
 "Full elementary-style tabbar complete with tab pinning, duplicating, "
 "restoring, moving tabs, and more."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:19
-msgid "Panel stránek ve stejném stylu jako elementary se vší funkčností."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:20
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:15
 msgid "Quickly jump to any page in your tab history."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:21
-msgid "Rychle přeskočí na jakoukoli stránku v historii panelu"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:22
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:16
 msgid "Videos, PDFs, and more open and stream into their respective apps."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:23
-msgid "Otevírá videa, PDF a další soubory ve výchozích aplikacích."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:24
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:17
 msgid "Keeps your downloads folder organized by date."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:25
-msgid "Udržuje Stažené soubory zorganizované dle data."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:26
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:18
 msgid "Quickly and flexibly find text in webpages."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:27
-msgid "Rychle a flexibilně vyhledá text na jakémkoli webu."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:28
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:19
 msgid "DuckDuckGo integration with search autocompletion."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:29
-msgid "Integrace DuckDuckGo s doplňováním vyhledávaného textu."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:30
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:20
 msgid ""
 "Takes security seriously by defaulting to HTTPS and not uploading the web "
 "addresses you type anywhere."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:31
-msgid ""
-"Bere zabezpečení vážně používáním HTTPS kde je to možné, nenahrává historii "
-"vyhledávání nikam na internet."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:32
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:21
 msgid "Shows combined download progress in the dock for a quick glance."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:33
-msgid "Zobrazuje kombinovaný stav stahování v docku pro rychlý náhled."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:34
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:22
 msgid ""
 "Quick to start as it holds off on loading pages from your previous browsing "
 "session."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:35
-msgid "Rychle startuje protože weby se načítají až po zobrazení prohlížeče."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:36
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:23
 msgid "Easily skimmable browser history"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:37
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:24
 msgid "And more to come…"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:38
-msgid "A ještě více..."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:40
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:26
 msgid "Install Odysseus for links to the depicted pages from the screenshots."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:41
-msgid "Nainstalujte si Odysseus nyní!"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:46
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:31
 msgid "Browser controls, find-in-page, and downloads progress."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:47
-msgid "Ovládání prohlížeče, vyhledávání na stránce a stav stahování."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:51
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:35
 msgid "Autocompletion"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:52
-msgid "Automatické dokončování"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:56
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:39
 msgid "Jump to any spot in tab history"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:57
-msgid "Přeskočte na jakýkoli web v historii panelu"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:61
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:43
 msgid "The Application menu"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml:62
-msgid "Menu aplikace"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml:67
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:48
 msgid "Adrian Cochrane"
 msgstr ""

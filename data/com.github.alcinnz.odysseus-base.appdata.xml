@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component type="desktop-application">
+  <id>com.github.alcinnz.odysseus.desktop</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Odysseus</name>
+  <summary>Surf knowledge, entertainment, and services on The Web</summary>
+
+  <description>
+    <p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</p>
+    <p>Features:</p>
+    <ul>
+      <li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</li>
+      <li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</li>
+      <li>Quickly jump to any page in your tab history.</li>
+      <li>Videos, PDFs, and more open and stream into their respective apps.</li>
+      <li>Keeps your downloads folder organized by date.</li>
+      <li>Quickly and flexibly find text in webpages.</li>
+      <li>DuckDuckGo integration with search autocompletion.</li>
+      <li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</li>
+      <li>Shows combined download progress in the dock for a quick glance.</li>
+      <li>Quick to start as it holds off on loading pages from your previous browsing session.</li>
+      <li>Easily skimmable browser history</li>
+      <li>And more to come…</li>
+    </ul>
+    <p>Install Odysseus for links to the depicted pages from the screenshots.</p>
+  </description>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Browser controls, find-in-page, and downloads progress.</caption>
+      <image>https://alcinnz.github.io/Odysseus/screenshot.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Autocompletion</caption>
+      <image>https://alcinnz.github.io/Odysseus/Screenshot2.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Jump to any spot in tab history</caption>
+      <image>https://alcinnz.github.io/Odysseus/Screenshot3.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>The Application menu</caption>
+      <image>https://alcinnz.github.io/Odysseus/Screenshot4.png</image>
+    </screenshot>
+  </screenshots>
+
+  <developer_name>Adrian Cochrane</developer_name>
+  <url type="homepage">https://alcinnz.github.io/Odysseus</url>
+  <url type="help">https://alcinnz.github.io/Odysseus-support</url>
+  <url type="bugtracker">https://github.com/alcinnz/Odysseus/issues</url>
+  <update_contact>alcinnz@lavabit.com</update_contact>
+
+  <custom>
+    <value key="x-appcenter-color-primary">#f7785b</value>
+    <value key="x-appcenter-color-primary-text">#000</value>
+    <value key="x-appcenter-suggested-price">1</value>
+  </custom>
+
+  <provides>
+    <binary>com.github.alcinnz.odysseus</binary>
+  </provides>
+
+  <releases>
+    <release version="1.0.4" date="2017-12-23">
+      <description>
+        <p>Offers a very smooth browsing and downloads experience.</p>
+        <p>First AppCenter release, so Merry Christmas!</p>
+      </description>
+    </release>
+    <release version="1.0.7" date="2017-12-29">
+      <description>
+        <p>Disable broken WebInspector for now.</p>
+        <p>If you have the know-how to fix https://github.com/alcinnz/Odysseus/issues/54, please help.</p>
+      </description>
+    </release>
+    <release version="1.0.8" date="2017-12-29">
+      <description>
+        <p>Bugfix: a tab always remains open in each window.</p>
+      </description>
+    </release>
+    <release version="1.0.10" date="2017-12-29">
+      <description>
+        <p>Hopefully this makes it display better in AppCenter.</p>
+      </description>
+    </release>
+    <release version="1.0.11" date="2018-01-02">
+      <description>
+        <p>Adds more keyboard and middle click shortcuts.</p>
+        <p>Fixes links displayed in AppCenter.</p>
+      </description>
+    </release>
+    <release version="1.0.12" date="2018-01-03">
+      <description>
+        <p>Now speaks Czech.</p>
+        <p>Tabs now open in background.</p>
+        <p>Short-term style fix for plus.google.com.</p>
+        <p>Preparations for more localization.</p>
+      </description>
+    </release>
+    <release version="1.2.0" date="2018-03-18">
+      <description>
+        <p>Natural search of your browser history</p>
+        <p>Added useful "hints" to the footer of the newtab page, which may link to a new credits page.</p>
+        <p>Reduced prevalance of the "loading" message.</p>
+      </description>
+    </release>
+    <release version="1.2.2" date="2018-03-21">
+      <description>
+        <p>More communicative browser history viewer, with colour coded tabs,
+            tooltips communicating which links you've followed, favicons,
+            page screenshots, and years in all dates.</p>
+        <p>Fixes for video playback and infinite tab spawnage.</p>
+        <p>Added a privacy notice.</p>
+      </description>
+    </release>
+  </releases>
+</component>
