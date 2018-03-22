@@ -10,49 +10,49 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-22 12:13+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Corentin Noël <tintou@mailoo.org>, 2018\n"
-"Language-Team: French (https://www.transifex.com/none-483/teams/75521/fr/)\n"
+"Last-Translator: Peterson SB <manitiolo@outlook.com>, 2018\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/none-483/teams/75521/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: src/BrowserWindow.vala:82
 msgid "Make Default"
-msgstr ""
+msgstr "Tornar padrão"
 
 #: src/BrowserWindow.vala:84
 msgid "Odysseus is not your default browser."
-msgstr ""
+msgstr "Odysseus não é seu navegador padrão."
 
 #: src/BrowserWindow.vala:99
 msgid "Go to previously viewed page"
-msgstr "Retourner à la page précédente"
+msgstr "Ir para página visualizada anteriormente"
 
 #: src/BrowserWindow.vala:107
 msgid "Go to next viewed page"
-msgstr "Aller à la page suivante"
+msgstr "Ir para a próxima página visualizada anteriormente"
 
 #: src/BrowserWindow.vala:116
 msgid "Load this page from the website again"
-msgstr "Recharger cette page à partir du site web"
+msgstr "Carregar esta página do website novamente"
 
 #: src/BrowserWindow.vala:118
 msgid "Ignore cache"
-msgstr "Ignorer le cache"
+msgstr "Ignorar cache"
 
 #: src/BrowserWindow.vala:121
 msgid "Stop loading this page"
-msgstr "Arrêter de charger cette page"
+msgstr "Parar o carregamento desta página"
 
 #: src/BrowserWindow.vala:123
 msgid "Stop And Reload"
-msgstr "Recommencer le chargement"
+msgstr "Para e recarregar"
 
 #: src/BrowserWindow.vala:136
 msgid "Current web address"
-msgstr "Adresse web actuelle"
+msgstr "Endereço atual da web"
 
 #: src/BrowserWindow.vala:144
 msgid "Menu"
@@ -60,58 +60,58 @@ msgstr "Menu"
 
 #: src/BrowserWindow.vala:145
 msgid "_New Window"
-msgstr "_Nouvelle fenêtre"
+msgstr "_Nova janela"
 
 #: src/BrowserWindow.vala:150 src/BrowserWindow.vala:151
 #: src/Widgets/DownloadButton.vala:99
 msgid "_Open"
-msgstr "_Ouvrir"
+msgstr "_Abrir"
 
 #: src/BrowserWindow.vala:153
 msgid "_Save"
-msgstr "Enregi_strer"
+msgstr "_Salvar"
 
 #. TRANSLATORS _ precedes shortcut key
 #: src/BrowserWindow.vala:154 src/Widgets/DownloadButton.vala:109
 #: src/Widgets/DownloadButton.vala:113
 msgid "_Save As"
-msgstr "Enregi_strer sous"
+msgstr "_Salvar como"
 
 #: src/BrowserWindow.vala:157
 msgid "_View Source"
-msgstr "_Afficher la source"
+msgstr "_Ver fonte"
 
 #: src/BrowserWindow.vala:159
 msgid "Zoom In"
-msgstr "Zoom avant"
+msgstr "Aumentar"
 
 #: src/BrowserWindow.vala:161
 msgid "Zoom Out"
-msgstr "Zoom arrière"
+msgstr "Diminuir"
 
 #: src/BrowserWindow.vala:164
 msgid "_History"
-msgstr ""
+msgstr "_Histórico"
 
 #: src/BrowserWindow.vala:166
 msgid "_Find In Page"
-msgstr "_Chercher dans la page"
+msgstr "_Buscar na página"
 
 #: src/BrowserWindow.vala:168
 msgid "_Print"
-msgstr "Im_primer"
+msgstr "_Imprimir"
 
 #: src/BrowserWindow.vala:170
 msgid "Show Downloads"
-msgstr "Afficher les téléchargements"
+msgstr "Mostrar downloads"
 
 #: src/BrowserWindow.vala:171
 msgid "About Odysseus"
-msgstr ""
+msgstr "Sobre o Odysseus"
 
 #: src/BrowserWindow.vala:185 src/Widgets/DownloadButton.vala:121
 msgid "_Cancel"
-msgstr "_Annuler"
+msgstr "_Cancelar"
 
 #: src/Models/Download.vala:74
 #, c-format
@@ -119,8 +119,8 @@ msgid ""
 "Error moving download to %s.\n"
 "It has been left in your Downloads folder"
 msgstr ""
-"Erreur lors du déplacement du téléchargement vers %s.\n"
-"Celui-ci a été laissé dans votre dossier Téléchargements"
+"Erro. Movendo download para %s.\n"
+"Ele foi colocado em sua pasta Downloads"
 
 #. / TRANSLATORS: "%i" seconds
 #: src/Models/Download.vala:87
@@ -143,79 +143,79 @@ msgstr "%ih %im"
 #. Disallow interacting with the page while dialog is active.
 #: src/Traits/decorate/alert.vala:60
 msgid "Close the message to continue interacting with this page"
-msgstr "Fermer le message pour continuer d'interagir avec la page"
+msgstr "Fechar a mensagem para continuar interagindo com esta página"
 
 #: src/Widgets/DownloadBar.vala:34
 msgid "View all downloads"
-msgstr "Voir tous les téléchargements"
+msgstr "Ver todos os downloads"
 
 #: src/Widgets/DownloadBar.vala:36
 msgid "Close downloads bar"
-msgstr "Fermer la barre des téléchargements"
+msgstr "Fechar barra de downloads"
 
 #: src/Widgets/DownloadButton.vala:53
 msgid "[Download]"
-msgstr "[Téléchargement]"
+msgstr "[Download]"
 
 #: src/Widgets/DownloadButton.vala:92
 msgid "DONE"
-msgstr "TERMINÉ"
+msgstr "FEITO"
 
 #: src/Widgets/DownloadButton.vala:104
 msgid "Open _Automatically"
-msgstr "Ouvrir _automatiquement"
+msgstr "Abrir _Automáticamente"
 
 #: src/Widgets/WebTab.vala:88
 #, c-format
 msgid "%u matches of \"%s\" found"
-msgstr "%u occurrences de « %s » trouvés"
+msgstr "%u correspondências de \"%s\" encontrados"
 
 #: src/Widgets/overlays/FindToolbar.vala:44
 msgid "Find in page..."
-msgstr "Rechercher sur la page…"
+msgstr "Buscando na página..."
 
 #: src/Widgets/overlays/FindToolbar.vala:86
 msgid "Find previous match"
-msgstr "Trouver l'occurrence précédente"
+msgstr "Buscando correspondências anteriores"
 
 #: src/Widgets/overlays/FindToolbar.vala:98
 msgid "View search options"
-msgstr "Afficher les options de recherche"
+msgstr "Ver opções de pesquisa"
 
 #: src/Widgets/overlays/FindToolbar.vala:128
 msgid "Match Uppercase"
-msgstr "Respecter les majuscules"
+msgstr "Considerar todas maiúsculas"
 
 #: src/Widgets/overlays/FindToolbar.vala:135
 msgid "Ignore Uppercase"
-msgstr "Ignorer les majuscules"
+msgstr "Ignorar maiúsculas"
 
 #: src/Widgets/overlays/FindToolbar.vala:142
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automático"
 
 #: src/Widgets/overlays/FindToolbar.vala:152
 msgid "Cyclic Search"
-msgstr "Recherche cyclique"
+msgstr "Pesquisa cíclica"
 
 #: src/Widgets/overlays/FindToolbar.vala:159
 msgid "Match Word Start"
-msgstr "Correspondre au début du mot"
+msgstr "Correspondência de palavra iniciada"
 
 #. If the user doesn't know what CamelCase means,
 #. they probably don't want this option. (note the hint in it's name)
 #: src/Widgets/overlays/FindToolbar.vala:167
 msgid "Match CamelCase"
-msgstr "Respecter la CasseChameau"
+msgstr "Correspondência CamelCase"
 
 #: src/Traits/download-progress.vala:47
 msgid "Web Download Completed"
-msgstr "Téléchargement terminé"
+msgstr "Download completado"
 
 #: src/Traits/download-window.vala:27
 msgid "Downloads Are In Progress…"
-msgstr "Des téléchargements sont en cours…"
+msgstr "Downloads em progresso…"
 
 #: src/Traits/download-window.vala:34
 msgid "Click a download to cancel or alter it"
-msgstr "Cliquez sur un téléchargement pour l'annuler ou le modifier"
+msgstr "Clique no download para cancelar ou alterar"

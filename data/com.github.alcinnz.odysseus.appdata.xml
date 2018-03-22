@@ -6,36 +6,50 @@
   <name>Odysseus</name>
   <summary>Surf knowledge, entertainment, and services on The Web</summary>
   <summary lang="cs">Prohlížejte libovolný obsah na internetu</summary>
+  <summary lang="fr">Explorez les savoirs, les divertissements, et les services du web</summary>
 
   <description>
     <p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</p>
     <p lang="cs">Prohlížejte internet s ovládáním na které jste zvyklí z ostatních aplikací, jako Soubory nebo Scratch. Se stejně navrženými ovládacími prvky jako v ostatních aplikacích bude přechod na tento prohlížeč bez obtíží.</p>
+    <p lang="fr">Naviguez sur le web avec la même interface que Fichiers et Code. Profitez d'un basculement entre applications au-delà de vos attentes.</p>
     <p>Features:</p>
     <p lang="cs">Funkce:</p>
+    <p lang="fr">Fonctionnalités :</p>
     <ul>
       <li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</li>
       <li lang="cs">Zobrazí stejné webové stránky jako Apple Safari nebo GNOME Epiphany</li>
+      <li lang="fr">Peut afficher les pages web que Safari d'Apple et Epiphany de GNOME sont capables d'afficher.</li>
       <li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</li>
       <li lang="cs">Panel stránek ve stejném stylu jako elementary se vší funkčností.</li>
+      <li lang="fr">Barre d'onglets typique à elementary avec la possibilité d'épingler, dupliquer, restaurer et déplacer les onglets, mais aussi bien plus.</li>
       <li>Quickly jump to any page in your tab history.</li>
       <li lang="cs">Rychle přeskočí na jakoukoli stránku v historii panelu</li>
+      <li lang="fr">Basculez rapidement vers n'importe quelle page de votre historique.</li>
       <li>Videos, PDFs, and more open and stream into their respective apps.</li>
       <li lang="cs">Otevírá videa, PDF a další soubory ve výchozích aplikacích.</li>
+      <li lang="fr">Les vidéos, PDFs et bien plus sont directement redirigés vers leurs applications respectives.</li>
       <li>Keeps your downloads folder organized by date.</li>
       <li lang="cs">Udržuje Stažené soubory zorganizované dle data.</li>
+      <li lang="fr">Gardez vos téléchargements organisés par date.</li>
       <li>Quickly and flexibly find text in webpages.</li>
       <li lang="cs">Rychle a flexibilně vyhledá text na jakémkoli webu.</li>
+      <li lang="fr">Trouvez rapidement et efficacement du texte dans les pages.</li>
       <li>DuckDuckGo integration with search autocompletion.</li>
       <li lang="cs">Integrace DuckDuckGo s doplňováním vyhledávaného textu.</li>
+      <li lang="fr">intégration de DuckDuckGo avec auto-complétion de la recherche.</li>
       <li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</li>
       <li lang="cs">Bere zabezpečení vážně používáním HTTPS kde je to možné, nenahrává historii vyhledávání nikam na internet.</li>
+      <li lang="fr">La sécurité est prise au sérieux avec le protocole HTTPS ainsi que la protection des données que vous entrez.</li>
       <li>Shows combined download progress in the dock for a quick glance.</li>
       <li lang="cs">Zobrazuje kombinovaný stav stahování v docku pro rychlý náhled.</li>
+      <li lang="fr">Affiche un aperçu de l'avancement des téléchargements dans le dock pour être encore plus efficace.</li>
       <li>Quick to start as it holds off on loading pages from your previous browsing session.</li>
       <li lang="cs">Rychle startuje protože weby se načítají až po zobrazení prohlížeče.</li>
+      <li lang="fr">Démarrage rapide car il se souvient de votre session précédente.</li>
       <li>Easily skimmable browser history</li>
       <li>And more to come…</li>
-      <li lang="cs">A ještě více...</li>
+      <li lang="cs">A ještě více…</li>
+      <li lang="fr">Et encore bien d'autres choses à venir…</li>
     </ul>
     <p>Install Odysseus for links to the depicted pages from the screenshots.</p>
     <p lang="cs">Nainstalujte si Odysseus nyní!</p>
@@ -50,11 +64,13 @@
     <screenshot>
       <caption>Autocompletion</caption>
       <caption lang="cs">Automatické dokončování</caption>
+      <caption lang="fr">Auto-complétion</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot2.png</image>
     </screenshot>
     <screenshot>
       <caption>Jump to any spot in tab history</caption>
       <caption lang="cs">Přeskočte na jakýkoli web v historii panelu</caption>
+      <caption lang="fr">Basculer vers n'importe quel moment de votre historique</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot3.png</image>
     </screenshot>
     <screenshot>
