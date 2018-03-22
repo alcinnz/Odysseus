@@ -1,0 +1,129 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright © 2012 - 2018 Adrian Cochrane
+#
+# This file is an extension to Weblate <https://weblate.org/>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+"""Additional formats needed by Odysseus.
+
+This needs to be included in weblate/weblate/trans/formats.py directly or indirectly
+    for it to work. """
+
+class ProsodyUnit(object):
+    def __init__(self, key, target, locations = [], context = ""):
+        self.target = target.strip()
+        self.locations = locations
+
+        key = key.strip()
+        if key.startswith("{#"):
+            split = key.index("#}")
+            # Make sure we don't split these, so the key remains precisely the same.
+            self.key = key[split+2:]
+            self.context = key[2:split]
+        else:
+            self.key = key
+
+    def isnull(self): return bool(self.target)
+    def isblank(self): return not self.target
+    def isheader(self): return False
+    def istranslatable(self): return False
+    def istranslated(self): return self.isnull()
+    def markfuzzy(self): pass
+    def isfuzzy(self): return False
+    def hasplural(self): return False
+    def settarget(self, target): self.target = target
+    def setid(self, key): self.key = key
+    def getid(self): return self.key
+
+    def getlocations(self): return self.locations
+    def getnotes(self): return []
+    def getcontext(self): return self.context
+    def isobsolete(self): return False
+
+    @property
+    def translation(self): return self.target
+
+class ProsodyStore(object):
+    @classmethod
+    def parsefile(cls, storefile):
+        if isinstance(storefile, six.string_types):
+            with open(storefile) as f: return cls(f)
+        else:
+            return cls(storefile)
+
+    def __init__(self, storefile):
+        from django.template.base import Lexer # We use the same basic syntax
+        from django.template.base import TOKEN_BLOCK, TOKEN_TEXT, TOKEN_VAR, TOKEN_COMMENT
+
+        def token2str(token):
+            if token.type == TOKEN_TEXT: return token.contents
+
+            open, close = {TOKEN_BLOCK: "%%", TOKEN_VAR: "{}", TOKEN_COMMENT: "##"}[token.type]
+            return "".join('{', open, ' ', token.contents, ' ', close, '}')
+
+        def block(tag, tokens):
+            ret = ""
+            while tokens:
+                token = tokens.token = tokens.pop(0)
+                if token.type == TOKEN_BLOCK and token.contents.split()[0]:
+                    return ret
+                ret += token2str(token)
+
+        def scan(tokens):
+            while tokens:
+                if not block("msg"): return
+                locations = tokens.token.contents.split()[1:]
+
+                key = block("trans")
+                if not key: raise ValueError("Missing {% trans %}")
+
+                val = block("endmsg")
+                if not val: raise ValueError("Missing {% endmsg %}")
+
+                yield ProsodyUnit(key, val, locations)
+
+        with open(storefile) as f:
+            self.units = list(scan(lexer.tokenize(f.read()))
+
+    def gettargetlanguage(self):return None
+    def settargetlanguage(self, lang): pass
+    def findunits(self, source): pass
+
+    def addunit(self, unit):
+        self.units.append(unit)
+
+    def serialize(self, file):
+        for unit in self.units:
+            print("{% msg ", " ".join(unit.locations), "%}", file=file)
+
+            # NOTE: The key must be written exactly right:
+            if unit.context:
+                print("{#" + unit.context + "#}"+unit.key, file=file)
+            else:
+                print(unit.key, file=file)
+
+            print("{% trans %}", file=file)
+            print(unit.translation(), file=file)
+            print("{% endmsg %}", file=file)
+
+class ProsodyFormat(FileFormat):
+    name = _('Prosody Catalogue')
+    format_id = 'prosody'
+    monolingual = False
+
+    @classmethod
+    def get_class(cls):
+        return ProsodyStore
