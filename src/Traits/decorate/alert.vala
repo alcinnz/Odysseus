@@ -21,8 +21,6 @@ I know this isn't the best UI but take up with webpages which use these APIs,
 namespace Odysseus.Traits {
     private async bool show_alert(WebTab tab, WebKit.ScriptDialog dlg,
             out bool confirm, out bool prompt) {
-        // TODO Communicate page-level modality.
-
         var msg = dlg.get_message();
         var opts = new Overlay.InfoContainer.MessageOptions();
         switch (dlg.get_dialog_type()) {
@@ -39,7 +37,7 @@ namespace Odysseus.Traits {
                 confirm = false; prompt = true;
                 break;
             case WebKit.ScriptDialogType.BEFORE_UNLOAD_CONFIRM:
-                opts.ok_text = "Leave"; opts.cancel_text = "Stay";
+                opts.ok_text = _("Leave"); opts.cancel_text = _("Stay");
                 confirm = true; prompt = false;
                 break;
             default:

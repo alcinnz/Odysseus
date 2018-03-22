@@ -31,7 +31,7 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         mainbox.expand = true;
         box.add(mainbox);
 
-        add_action("folder-download", _("View all downloads"),
+        add_action("folder", _("View all downloads"),
                 () => Granite.Services.System.open(Download.folder));
         add_action("window-close", _("Close downloads bar"), () => set_reveal_child(false));
 

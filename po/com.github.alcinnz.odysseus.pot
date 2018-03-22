@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 09:31+1300\n"
+"POT-Creation-Date: 2018-03-23 11:00+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: src/BrowserWindow.vala:82
 msgid "Make Default"
@@ -112,6 +113,12 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
+#. TRANSLATORS: This is the link Odysseus opens on first launch.
+#. Feel free to set it to whatever works best for your locale.
+#: src/Odysseus.vala:58
+msgid "https://alcinnz.github.io/Odysseus-recommendations/"
+msgstr ""
+
 #: src/Models/Download.vala:74
 #, c-format
 msgid ""
@@ -137,11 +144,6 @@ msgstr ""
 msgid "%ih %im"
 msgstr ""
 
-#. Disallow interacting with the page while dialog is active.
-#: src/Traits/decorate/alert.vala:60
-msgid "Close the message to continue interacting with this page"
-msgstr ""
-
 #: src/Widgets/DownloadBar.vala:34
 msgid "View all downloads"
 msgstr ""
@@ -164,7 +166,13 @@ msgstr ""
 
 #: src/Widgets/WebTab.vala:88
 #, c-format
-msgid "%u matches of \"%s\" found"
+msgid "%u match of \"%s\" found"
+msgid_plural "%u matches of \"%s\" found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Widgets/Chromeless.vala:24
+msgid "Web Inspector"
 msgstr ""
 
 #: src/Widgets/overlays/FindToolbar.vala:44
@@ -205,6 +213,16 @@ msgstr ""
 msgid "Match CamelCase"
 msgstr ""
 
+#: src/Widgets/overlays/InfoContainer.vala:48
+#: src/Widgets/overlays/InfoContainer.vala:64
+msgid "OK"
+msgstr ""
+
+#: src/Widgets/overlays/InfoContainer.vala:49
+#: src/Widgets/overlays/InfoContainer.vala:64
+msgid "Cancel"
+msgstr ""
+
 #: src/Traits/download-progress.vala:47
 msgid "Web Download Completed"
 msgstr ""
@@ -215,4 +233,59 @@ msgstr ""
 
 #: src/Traits/download-window.vala:34
 msgid "Click a download to cancel or alter it"
+msgstr ""
+
+#: src/Traits/decorate/alert.vala:40
+msgid "Leave"
+msgstr ""
+
+#: src/Traits/decorate/alert.vala:40
+msgid "Stay"
+msgstr ""
+
+#. Disallow interacting with the page while dialog is active.
+#: src/Traits/decorate/alert.vala:58
+msgid "Close the message to continue interacting with this page"
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:30
+msgid "Allow"
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:30
+msgid "Deny"
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:33
+msgid "This page wants to know where you currently are."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:35
+msgid "This page wants the ability to show you notifications."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:41
+msgid "This page wants to watch and listen to you."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:43
+msgid "This page wants to listen to you."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:45
+msgid "This page wants to watch you."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:50
+msgid "Additional software is required to play media on this page:"
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:52
+msgid "Install"
+msgstr ""
+
+#. If we're not viewing alternate HTML under this schema,
+#. close any tabs that have persisted.
+#: src/Traits/navigate/viewsource.vala:70
+msgid "Please go through the \"View Source\" menu item."
 msgstr ""

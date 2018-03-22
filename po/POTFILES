@@ -1,9 +1,14 @@
 src/BrowserWindow.vala
+src/Odysseus.vala
 src/Models/Download.vala
-src/Traits/decorate/alert.vala
 src/Widgets/DownloadBar.vala
 src/Widgets/DownloadButton.vala
 src/Widgets/WebTab.vala
+src/Widgets/Chromeless.vala
 src/Widgets/overlays/FindToolbar.vala
+src/Widgets/overlays/InfoContainer.vala
 src/Traits/download-progress.vala
 src/Traits/download-window.vala
+src/Traits/decorate/alert.vala
+src/Traits/decorate/permit.vala
+src/Traits/navigate/viewsource.vala

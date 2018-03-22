@@ -27,29 +27,29 @@ namespace Odysseus.Traits {
         var msg = "";
         var opts = new Overlay.InfoContainer.MessageOptions();
         opts.type = Gtk.MessageType.WARNING;
-        opts.ok_text = "Allow"; opts.cancel_text = "Deny";
+        opts.ok_text = _("Allow"); opts.cancel_text = _("Deny");
 
         if (req is WebKit.GeolocationPermissionRequest) {
-            msg = "This page wants to know where you currently are.";
+            msg = _("This page wants to know where you currently are.");
         } else if (req is WebKit.NotificationPermissionRequest) {
-            msg = "This page wants the ability to show you notifications.";
+            msg = _("This page wants the ability to show you notifications.");
         } else if (req is WebKit.UserMediaPermissionRequest) {
             var media_req = req as WebKit.UserMediaPermissionRequest;
             var listens = media_req.is_for_audio_device;
             var watches = media_req.is_for_video_device;
             if (listens && watches) {
-                msg = "This page wants to watch and listen to you.";
+                msg = _("This page wants to watch and listen to you.");
             } else if (listens) {
-                msg = "This page wants to listen to you.";
+                msg = _("This page wants to listen to you.");
             } else if (watches) {
-                msg = "This page wants to watch you.";
+                msg = _("This page wants to watch you.");
             } else return false;
         } else if (req is WebKit.InstallMissingMediaPluginsPermissionRequest) {
             var install_req = req as
                     WebKit.InstallMissingMediaPluginsPermissionRequest;
-            msg = "Additional software is required to play media on this page:\n";
-            msg += install_req.get_description();
-            opts.ok_text = "Install";
+            msg = _("Additional software is required to play media on this page:");
+            msg += "\n" + install_req.get_description();
+            opts.ok_text = _("Install");
         }
 
         return yield tab.info.message(msg, opts);

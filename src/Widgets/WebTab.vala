@@ -85,7 +85,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
         find.counted_matches.connect((search, count) => {
             if (revealer.child_revealed && search != "")
-                default_status = status = _("%u matches of \"%s\" found").printf(count, search);
+                default_status = status = ngettext("%u match of \"%s\" found",
+                        "%u matches of \"%s\" found", count).printf(count, search);
             else default_status = status = "";
         });
         find.escape_pressed.connect(() => revealer.reveal_child = false);

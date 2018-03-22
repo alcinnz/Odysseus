@@ -21,7 +21,7 @@ public class Odysseus.Chromeless : Gtk.Window {
         set_titlebar(titlebar);
         titlebar.no_show_all = true;
 
-        title = "Web Inspector — " + inspector.inspected_uri;
+        title = _("Web Inspector") + " — " + inspector.inspected_uri;
         add(inspector.get_web_view());
 
         inspector.closed.connect(() => this.destroy());

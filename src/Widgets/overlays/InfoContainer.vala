@@ -45,8 +45,8 @@ public class Odysseus.Overlay.InfoContainer : Gtk.Grid {
         this.info.show_close_button = false;
         this.info.close.connect(() => this.revealer.reveal_child = false);
 
-        this.ok_button = this.info.add_button("OK", 1);
-        this.cancel_button = this.info.add_button("Cancel", 0);
+        this.ok_button = this.info.add_button(_("OK"), 1);
+        this.cancel_button = this.info.add_button(_("Cancel"), 0);
         
         this.revealer = new Gtk.Revealer();
         this.revealer.add(this.info);
@@ -61,7 +61,7 @@ public class Odysseus.Overlay.InfoContainer : Gtk.Grid {
         public string prefill = "";
         public Gtk.MessageType type = Gtk.MessageType.QUESTION;
         public bool show_cancel = true; public bool show_entry = false;
-        public string ok_text = "OK"; public string cancel_text = "Cancel";
+        public string ok_text = _("OK"); public string cancel_text = _("Cancel");
     }
     
     public async bool message(string msg, MessageOptions opts) {
