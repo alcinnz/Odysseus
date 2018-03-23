@@ -10,7 +10,6 @@
         <file>SERVER-ERROR</file>
         <file>home</file>
         <file>butterick.css</file>
-        <file>restore</file>
         <file>history</file>
         <file>credits</file>
         <file>privacy</file>
@@ -25,6 +24,7 @@
         <file>ext/hljs-solarized-light.css.mime</file>
 
         <file>special/viewsource</file>
+        <file>special/restore</file>
 
         <file>errors/200</file>
         <file>errors/201</file>
