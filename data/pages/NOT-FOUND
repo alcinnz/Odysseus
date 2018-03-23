@@ -17,10 +17,17 @@
     <p>{% trans %}Maybe you meant one of these other internal pages?{% endtrans %}</p>
 
     <dl>
-      <dt><a href="odysseus:debugging/index">{% trans %}
-          Odysseus Debugging{% endtrans %}</a></dt>
-      <dd>{% trans %}Tools for ensuring your browser is working correctly.
-        {% endtrans %}</dd>
+      <dt><a href="odysseus:credits">{% trans %}Credits{% endtrans %}</a></dt>
+      <dd>{% trans %}The people you should thank for this gorgeous browsing experience.{% endtrans %}</dd>
+      <dt><a href="odysseus:debugging/index">{% trans %}Odysseus Debugging{% endtrans %}</a></dt>
+      <dd>{% trans %}Tools for ensuring your browser is working correctly.{% endtrans %}</dd>
+      <dt><a href="odysseus:history">{% trans %}History{% endtrans %}</a></dt>
+      <dd>{% trans %}The pages you've visited before.{% endtrans %}</dd>
+      <dt><a href="odysseus:home">{% trans %}Odysseus's homepage{% endtrans %}</a></dt>
+      <dd>{% trans %}Includes links to the pages you visit most.{% endtrans %}</dd>
+      <dd>{% trans %}This is what you see when you open a new tab.{% endtrans %}</dd>
+      <dt><a href="odysseus:privacy">{% trans %}Privacy Policy{% endtrans %}</a></dt>
+      <dd>{% trans %}The privacy situation around Odysseus.{% endtrans %}</a></dt>
     </dl>
   </main>
 </body>
