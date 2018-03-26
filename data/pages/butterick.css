@@ -13,9 +13,10 @@ body {
     color: #333;
 }
 
-nav {
+body > nav {
     border-bottom: thin solid gray;
     magin: 10px 0; padding: 10px 0;
+    text-align: left;
 }
 
 main {
@@ -24,7 +25,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 90vh
+    min-height: 90vh;
 }
 
 main h1, main h2, main h3, main h4 {
@@ -39,6 +40,12 @@ input[type=search]::-webkit-search-decoration {
     background-image: url(gtk-icon:16/system-search-symbolic);
     -webkit-appearance: none;
 }
+
+nav {text-align: center;}
+nav img {box-shadow: 2px 2px 2px gray; margin: 5px;}
+nav img:hover {box-shadow: 4px 4px 4px black;}
+
+footer {text-align: center; width: 100%;}
 
 /* These heading sizes are taken from the elementary Gtk theme
     https://github.com/elementary/stylesheet/blob/master/gtk-3.0/granite-widgets.css#L378 .
@@ -72,14 +79,3 @@ span[title] {
 
 /* Style fix, for hr to be visible (at least on odysseus:home) */
 hr {width: 100%;}
-
-/** Technique taken from https://codepen.io/cbracco/pen/zekgx?editors=0100 */
-html {height: 100%; box-sizing: border-box;}
-body {position: relative; box-sizing: border-box; padding-bottom: 2rem; min-height: 97%;}
-
-footer {
-    text-align: center;
-    position: absolute;
-    height: 2rem;
-    right: 0; left: 0; bottom: 0;
-}

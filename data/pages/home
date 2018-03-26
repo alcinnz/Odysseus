@@ -1,3 +1,6 @@
+{# This page is opened whenever the surfer opens a new tab, thus indicating they want to go somewhere.
+
+As such I provide some links to places they might likely be trying to go. #}
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +9,7 @@
     @import url(odysseus:butterick.css);
     main {color: #ddd; text-align: center;}
     main hr {border: none; border-bottom: thin solid #eee; }
+    footer {position: fixed; bottom: 0;}
   </style>
 </head>
 <body>
@@ -13,12 +17,14 @@
     <img src="gtk-icon:16/document-open-recent" />{% trans %}Browser History{% endtrans %}
   </a></aside>
 
-  <main>
-    <h1>{% trans %}Watch This Space{% endtrans %}</h1>
-    <p>{% trans %}It, and the addressbar, are going to get alot more helpful.{% endtrans %}</p>
-    <hr />
-    <p>{% trans %}Don't worry, Odysseus will maintain it's elementary simplicity.{% endtrans %}</p>
-  </main>
+  <main><nav>
+    {% query %}
+      SELECT uri, (SELECT image FROM screenshot WHERE screenshot.uri = page_visit.uri LIMIT 1) AS screenshot
+        FROM page_visit
+        GROUP BY uri HAVING COUNT(*) >= 20
+        ORDER BY COUNT(*) DESC, MAX(visited_at) DESC LIMIT 20;
+    {% each-row %}<a href="{{ uri }}"><img src="data:image/png;base64,{{ screenshot }}" height="128" width="128" /></a>{% endquery %}
+  </nav></main>
 
   <footer>{% random %}{% alt %}
       {% trans %}Browse faster with
