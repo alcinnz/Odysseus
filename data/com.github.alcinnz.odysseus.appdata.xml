@@ -7,75 +7,95 @@
   <summary>Surf knowledge, entertainment, and services on The Web</summary>
   <summary lang="cs">Prohlížejte libovolný obsah na internetu</summary>
   <summary lang="fr">Explorez les savoirs, les divertissements, et les services du web</summary>
+  <summary lang="pt">Pesquisar por conhecimento, entretenimento e serviços na web</summary>
 
   <description>
     <p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</p>
     <p lang="cs">Prohlížejte internet s ovládáním na které jste zvyklí z ostatních aplikací, jako Soubory nebo Scratch. Se stejně navrženými ovládacími prvky jako v ostatních aplikacích bude přechod na tento prohlížeč bez obtíží.</p>
     <p lang="fr">Naviguez sur le web avec la même interface que Fichiers et Code. Profitez d'un basculement entre applications au-delà de vos attentes.</p>
+    <p lang="pt">Navegue na Web com os controles com os quais você já está familiarizado em aplicativos como o Files e o Scratch. Com tudo o que você já espera, é fácil alternar entre o Odysseus e outros aplicativos.</p>
     <p>Features:</p>
     <p lang="cs">Funkce:</p>
     <p lang="fr">Fonctionnalités :</p>
+    <p lang="pt">Recursos:</p>
     <ul>
       <li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</li>
       <li lang="cs">Zobrazí stejné webové stránky jako Apple Safari nebo GNOME Epiphany</li>
       <li lang="fr">Peut afficher les pages web que Safari d'Apple et Epiphany de GNOME sont capables d'afficher.</li>
+      <li lang="pt">Os navegadores Safari da Apple ou o Epiphany do Gnome podem apresentar qualquer página.</li>
       <li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</li>
       <li lang="cs">Panel stránek ve stejném stylu jako elementary se vší funkčností.</li>
       <li lang="fr">Barre d'onglets typique à elementary avec la possibilité d'épingler, dupliquer, restaurer et déplacer les onglets, mais aussi bien plus.</li>
+      <li lang="pt">Barra de abas estilo elementary completo com tabulação de abas, duplicação, restauração, movimentação de guias e muito mais.</li>
       <li>Quickly jump to any page in your tab history.</li>
       <li lang="cs">Rychle přeskočí na jakoukoli stránku v historii panelu</li>
       <li lang="fr">Basculez rapidement vers n'importe quelle page de votre historique.</li>
+      <li lang="pt">Pular rapidamente para qualquer página em sua aba de histórico.</li>
       <li>Videos, PDFs, and more open and stream into their respective apps.</li>
       <li lang="cs">Otevírá videa, PDF a další soubory ve výchozích aplikacích.</li>
       <li lang="fr">Les vidéos, PDFs et bien plus sont directement redirigés vers leurs applications respectives.</li>
+      <li lang="pt">Vídeos, PDFs, and outros abrem e rodam em seus respectivos aplicativos.</li>
       <li>Keeps your downloads folder organized by date.</li>
       <li lang="cs">Udržuje Stažené soubory zorganizované dle data.</li>
       <li lang="fr">Gardez vos téléchargements organisés par date.</li>
+      <li lang="pt">Manter suas pastas de downloads organizadas por data.</li>
       <li>Quickly and flexibly find text in webpages.</li>
       <li lang="cs">Rychle a flexibilně vyhledá text na jakémkoli webu.</li>
       <li lang="fr">Trouvez rapidement et efficacement du texte dans les pages.</li>
+      <li lang="pt">Rapidamente e de forma flexível encontrar texto em páginas da web.</li>
       <li>DuckDuckGo integration with search autocompletion.</li>
       <li lang="cs">Integrace DuckDuckGo s doplňováním vyhledávaného textu.</li>
       <li lang="fr">intégration de DuckDuckGo avec auto-complétion de la recherche.</li>
+      <li lang="pt">Integração do DuckDuckGo com autocompletar de pesquisa.</li>
       <li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</li>
       <li lang="cs">Bere zabezpečení vážně používáním HTTPS kde je to možné, nenahrává historii vyhledávání nikam na internet.</li>
       <li lang="fr">La sécurité est prise au sérieux avec le protocole HTTPS ainsi que la protection des données que vous entrez.</li>
+      <li lang="pt">Leve a segurança a sério, optando pelo HTTPS e não faça o upload dos endereços da Web que você digita em qualquer lugar.</li>
       <li>Shows combined download progress in the dock for a quick glance.</li>
       <li lang="cs">Zobrazuje kombinovaný stav stahování v docku pro rychlý náhled.</li>
       <li lang="fr">Affiche un aperçu de l'avancement des téléchargements dans le dock pour être encore plus efficace.</li>
+      <li lang="pt">Mostrar o progresso do download combinado na dock para uma rápida olhada.</li>
       <li>Quick to start as it holds off on loading pages from your previous browsing session.</li>
       <li lang="cs">Rychle startuje protože weby se načítají až po zobrazení prohlížeče.</li>
       <li lang="fr">Démarrage rapide car il se souvient de votre session précédente.</li>
+      <li lang="pt">Iniciar rapidamente, carregando páginas da sua sessão de navegação anterior.</li>
       <li>Easily skimmable browser history</li>
+      <li lang="pt">Acessar facilmente o histórico do navegador</li>
       <li>And more to come…</li>
       <li lang="cs">A ještě více…</li>
       <li lang="fr">Et encore bien d'autres choses à venir…</li>
+      <li lang="pt">E mais por vir…</li>
     </ul>
     <p>Install Odysseus for links to the depicted pages from the screenshots.</p>
     <p lang="cs">Nainstalujte si Odysseus nyní!</p>
+    <p lang="pt">Instalar Odysseus por links para descrever páginas de screenshots.</p>
   </description>
 
   <screenshots>
     <screenshot type="default">
       <caption>Browser controls, find-in-page, and downloads progress.</caption>
       <caption lang="cs">Ovládání prohlížeče, vyhledávání na stránce a stav stahování.</caption>
+      <caption lang="pt">Controles de navegador, pesquisa e progresso de downloads.</caption>
       <image>https://alcinnz.github.io/Odysseus/screenshot.png</image>
     </screenshot>
     <screenshot>
       <caption>Autocompletion</caption>
       <caption lang="cs">Automatické dokončování</caption>
       <caption lang="fr">Auto-complétion</caption>
+      <caption lang="pt">Autocompletar</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot2.png</image>
     </screenshot>
     <screenshot>
       <caption>Jump to any spot in tab history</caption>
       <caption lang="cs">Přeskočte na jakýkoli web v historii panelu</caption>
       <caption lang="fr">Basculer vers n'importe quel moment de votre historique</caption>
+      <caption lang="pt">Pular para qualquer ponto na aba histórica</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot3.png</image>
     </screenshot>
     <screenshot>
       <caption>The Application menu</caption>
       <caption lang="cs">Menu aplikace</caption>
+      <caption lang="pt">Menu de aplicação</caption>
       <image>https://alcinnz.github.io/Odysseus/Screenshot4.png</image>
     </screenshot>
   </screenshots>

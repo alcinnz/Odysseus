@@ -4,6 +4,7 @@ Name=Odysseus
 Comment=Surf knowledge, entertainment, and services on The Web
 Comment[cs]=Prohlížejte libovolný obsah na internetu
 Comment[fr]=Explorez les savoirs, les divertissements, et les services du web
+Comment[pt]=Pesquisar por conhecimento, entretenimento e serviços na web
 Exec=com.github.alcinnz.odysseus %U
 Icon=com.github.alcinnz.odysseus
 Terminal=false
