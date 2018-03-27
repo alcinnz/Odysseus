@@ -1,0 +1,23 @@
+Why is odysseus:history designed the way it is?
+
+As mentioned in the file, my main goal is to make it make it easy for your eyes
+to land on the correct entry. And secondly I'm guided by an assumption that
+surfers have some idea of what they are looking for.
+
+And to do so (help you find the right entry) I make use of emphasis to highlight
+changes in the hours/day/month/year the page was visited, and use colour to give
+some indication of traversals between pages. Limiting these indicators to
+typography reduces visual noise and leaves the focus on the actual content.
+
+The paging was added to handle a freeze caused by WebKit struggling to read in
+your full browser history (rendered to HTML) in a single go. A date range is
+added to the header in part because it's easier to design around the flakiness of
+the first iteration of the {% ifchanged %} tag in this way then to actually fix
+it. But also it helps to indicate whether the page your looking for will be on
+this page. For similar reasons the pagination links are tooltipped with their
+date ranges to help surfers find the correct one to click, but otherwise they
+need no label - just a mark.
+
+Search was added so surfers can tell the computer what that idea of what they
+want to find again, and screenshots were added to give an indication of whether
+they've found the right entry.

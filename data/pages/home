@@ -1,6 +1,7 @@
 {# This page is opened whenever the surfer opens a new tab, thus indicating they want to go somewhere.
 
-As such I provide some links to places they might likely be trying to go. #}
+As such I provide some links to places they might likely be trying to go (depicted as recognizable screenshots),
+and I take advantage of this page to promote project links. #}
 <!DOCTYPE html>
 <html>
 <head>
