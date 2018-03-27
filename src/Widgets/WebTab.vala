@@ -117,7 +117,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
         web.create.connect((nav_action) => {
             var tab = new WebTab.with_new_entry(parent, nav_action.get_request().uri, true);
-            parent.insert_tab(tab, -1);
+            parent.insert_tab(tab, order >= 0 ? order + 1 : -1);
             return tab.web;
         });
         web.button_press_event.connect((evt) => {
