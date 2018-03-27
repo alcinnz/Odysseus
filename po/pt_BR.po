@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 11:00+1300\n"
+"POT-Creation-Date: 2018-03-22 12:13+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Peterson SB <manitiolo@outlook.com>, 2018\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/none-483/teams/75521/pt_BR/)\n"
@@ -113,12 +113,6 @@ msgstr "Sobre o Odysseus"
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#. TRANSLATORS: This is the link Odysseus opens on first launch.
-#. Feel free to set it to whatever works best for your locale.
-#: src/Odysseus.vala:58
-msgid "https://alcinnz.github.io/Odysseus-recommendations/"
-msgstr "https://alcinnz.github.io/Odysseus-recommendations/"
-
 #: src/Models/Download.vala:74
 #, c-format
 msgid ""
@@ -146,6 +140,11 @@ msgstr "%im"
 msgid "%ih %im"
 msgstr "%ih %im"
 
+#. Disallow interacting with the page while dialog is active.
+#: src/Traits/decorate/alert.vala:60
+msgid "Close the message to continue interacting with this page"
+msgstr "Fechar a mensagem para continuar interagindo com esta página"
+
 #: src/Widgets/DownloadBar.vala:34
 msgid "View all downloads"
 msgstr "Ver todos os downloads"
@@ -168,14 +167,8 @@ msgstr "Abrir _Automáticamente"
 
 #: src/Widgets/WebTab.vala:88
 #, c-format
-msgid "%u match of \"%s\" found"
-msgid_plural "%u matches of \"%s\" found"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/Widgets/Chromeless.vala:24
-msgid "Web Inspector"
-msgstr "Web Inspector"
+msgid "%u matches of \"%s\" found"
+msgstr "%u correspondências de \"%s\" encontrados"
 
 #: src/Widgets/overlays/FindToolbar.vala:44
 msgid "Find in page..."
@@ -215,16 +208,6 @@ msgstr "Correspondência de palavra iniciada"
 msgid "Match CamelCase"
 msgstr "Correspondência CamelCase"
 
-#: src/Widgets/overlays/InfoContainer.vala:48
-#: src/Widgets/overlays/InfoContainer.vala:64
-msgid "OK"
-msgstr "OK"
-
-#: src/Widgets/overlays/InfoContainer.vala:49
-#: src/Widgets/overlays/InfoContainer.vala:64
-msgid "Cancel"
-msgstr "Cancelar"
-
 #: src/Traits/download-progress.vala:47
 msgid "Web Download Completed"
 msgstr "Download completado"
@@ -236,58 +219,3 @@ msgstr "Downloads em progresso…"
 #: src/Traits/download-window.vala:34
 msgid "Click a download to cancel or alter it"
 msgstr "Clique no download para cancelar ou alterar"
-
-#: src/Traits/decorate/alert.vala:40
-msgid "Leave"
-msgstr "Partir"
-
-#: src/Traits/decorate/alert.vala:40
-msgid "Stay"
-msgstr "Ficar"
-
-#. Disallow interacting with the page while dialog is active.
-#: src/Traits/decorate/alert.vala:58
-msgid "Close the message to continue interacting with this page"
-msgstr "Fechar a mensagem para continuar interagindo com esta página"
-
-#: src/Traits/decorate/permit.vala:30
-msgid "Allow"
-msgstr "Permitir"
-
-#: src/Traits/decorate/permit.vala:30
-msgid "Deny"
-msgstr "Negar"
-
-#: src/Traits/decorate/permit.vala:33
-msgid "This page wants to know where you currently are."
-msgstr "Esta página quer saber onde você está atualmente."
-
-#: src/Traits/decorate/permit.vala:35
-msgid "This page wants the ability to show you notifications."
-msgstr "Esta página quer a capacidade de mostrar notificações."
-
-#: src/Traits/decorate/permit.vala:41
-msgid "This page wants to watch and listen to you."
-msgstr "Está página quer assistir e ouvir você."
-
-#: src/Traits/decorate/permit.vala:43
-msgid "This page wants to listen to you."
-msgstr "Está página quer ouvir você."
-
-#: src/Traits/decorate/permit.vala:45
-msgid "This page wants to watch you."
-msgstr "Está página quer assistir você."
-
-#: src/Traits/decorate/permit.vala:50
-msgid "Additional software is required to play media on this page:"
-msgstr "Software adicional é necessário para rodar mídia nesta página:"
-
-#: src/Traits/decorate/permit.vala:52
-msgid "Install"
-msgstr "Instalar"
-
-#. If we're not viewing alternate HTML under this schema,
-#. close any tabs that have persisted.
-#: src/Traits/navigate/viewsource.vala:70
-msgid "Please go through the \"View Source\" menu item."
-msgstr "Por favor, vá até o item de menu \"Ver Fonte\"."

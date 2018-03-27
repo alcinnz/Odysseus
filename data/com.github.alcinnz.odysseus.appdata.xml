@@ -169,5 +169,13 @@
         <p>Added a privacy notice.</p>
       </description>
     </release>
+    <release version="1.2.3" date="2018-03-27">
+      <description>
+        <p>Your most visited pages are now linked to from the newtab page.</p>
+        <p>Now speaks French and Portuguese.</p>
+        <p>Added credits page to thank contributors.</p>
+        <p>More minor UI corrections.</p>
+      </description>
+    </release>
   </releases>
 </component>
