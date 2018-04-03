@@ -58,4 +58,20 @@ SELECT load_extension('/usr/share/Odysseus/libfts5.so');
     columnsize = 0); -- We don't need ranking
 {% endif %}
 
-PRAGMA user_version = 3;
+{% if v < 4 %}
+  -- And now, build a new screenshots table that is properly unique
+  CREATE TABLE screenshot_v2(uri PRIMARY KEY ON CONFLICT IGNORE, image);
+  INSERT OR IGNORE INTO screenshot_v2(uri, image) SELECT uri, image FROM screenshot;
+  -- Unfortunately can't drop screenshot table now, SQLite errors out
+    -- saying the table is locked.
+  -- Add indices so the SQLite's AI can speed things up.
+  CREATE INDEX historical_chronology ON page_visit(visited_at);
+  CREATE INDEX historical_locations ON page_visit(uri);
+
+  -- Now the real meat!
+  CREATE TABLE topsites_whitelist(uri PRIMARY KEY, order_);
+  CREATE INDEX topsites_by_order ON topsites_whitelist(order_);
+  CREATE TABLE topsites_blacklist(uri PRIMARY KEY);
+{% endif %}
+
+PRAGMA user_version = 4;
