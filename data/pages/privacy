@@ -34,6 +34,9 @@
     anyone on the network between you and the site you're visiting can also see this information.
     Odysseus, other browsers, the <a href="https://www.eff.org/encrypt-the-web">EFF</a>, and others are working on closing this leak.</p>
 
+  <p>It's worth noting that HTTPS still leaves room for improving privacy, as the
+    sites you interact with still get all the information listed above.</p>
+
   <hr />
 
   <p>Furthermore sites can provide programs for Odysseus to run,

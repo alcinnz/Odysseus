@@ -10,7 +10,7 @@ decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll'
         'fix-plus.google.com', 'fix-bg-videos']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
 services = ['pages', 'Completer', 'globals', 'icons', 'favicons']
-db_services = ['database', 'util', 'prosody', 'completer']
+db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'byteutils', 'jsondata', 'diff', 'i18n']
 models = ['Download', 'DownloadSet', 'ImageUtil']

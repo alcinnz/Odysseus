@@ -1,0 +1,27 @@
+{# This page is triggered by the "psuedorest" trait when SQLite errors out. #}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% trans %}INVALID FORM SUBMISSION{% endtrans %}</title>
+  <style>@import url(odysseus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>{% trans %}Invalid form submission{% endtrans %}</h1>
+    <p>{% trans %}The form you just submitted was invalid! While you <em>could</em>
+      be to blame, this is probably <span title="Odysseus's">my</span> fault.
+    {% endtrans %}</p>
+
+    <p>{% trans %}Please
+      <a href="https://github.com/alcinnz/odysseus/issues/new">report this to
+        <span title="the Odysseus developers">us</span></a> and attach a copy of
+      this page (use the "Save As" option). More information (in English) is below.
+    {% endtrans %}</p>
+
+    <hr />
+
+    <h2>SQLite Reported:</h2>
+    <p>{{ error }}</p>
+  </main>
+</body>
+</html>

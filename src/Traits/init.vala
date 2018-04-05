@@ -55,6 +55,7 @@ namespace Odysseus.Traits {
         setup_autoscroll(tab.web);
         fix_google_plus(tab.web);
         setup_history_tracker(tab);
+        Database.setup_pseudorest(tab);
     }
 
     public void setup_autosuggest() {
