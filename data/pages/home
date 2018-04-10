@@ -24,7 +24,20 @@ and I take advantage of this page to promote project links. #}
         FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC LIMIT 20;
-    {% each-row %}<a href="{{ uri }}"><img src="data:image/png;base64,{{ screenshot }}" height="128" width="128" /></a>{% endquery %}
+    {% each-row %}
+      <figure style="width: 132px; height: 132px;">
+        <a href="{{ uri }}">
+          <img src="data:image/png;base64,{{ screenshot }}"
+                height="128" width="128" />
+        </a>
+        <form><input type="hidden" name="$" value="topsites_whitelist" />
+          <button type="submit" title="Keep this link on this page.">&check;</button>
+        </form>
+        <form><input type="hidden" name="$" value="topsites_blacklist" />
+          <button type="submit" title="Remove this link from this page.">x</button>
+        </form>
+      </figure>
+    {% endquery %}
   </nav></main>
 
   <footer>{% random %}{% alt %}
