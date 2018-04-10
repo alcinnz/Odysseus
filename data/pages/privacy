@@ -35,7 +35,12 @@
     Odysseus, other browsers, the <a href="https://www.eff.org/encrypt-the-web">EFF</a>, and others are working on closing this leak.</p>
 
   <p>It's worth noting that HTTPS still leaves room for improving privacy, as the
-    sites you interact with still get all the information listed above.</p>
+    sites you interact with still get all the information listed above and because
+    the websites you are visiting are still (roughly) visible to anyone between you
+    and the website. Furthermore this information may/will be visible to any
+    businesses who have been hired by the site operators to help deliver their site
+    to you. This will frequently include <a href="https://www.amazon.com/">Amazon</a>
+    and/or <a href="https://www.cloudflare.com/">Cloudflare</a>.</p>
 
   <hr />
 
