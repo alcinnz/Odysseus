@@ -31,9 +31,12 @@ and I take advantage of this page to promote project links. #}
                 height="128" width="128" />
         </a>
         <form><input type="hidden" name="$" value="topsites_whitelist" />
+          <input type="hidden" name="uri" value="{{ uri }}" />
+          <input type="number" name="order_" value="0" />
           <button type="submit" title="Keep this link on this page.">&check;</button>
         </form>
         <form><input type="hidden" name="$" value="topsites_blacklist" />
+          <input type="hidden" name="uri" value="{{ uri }}" />
           <button type="submit" title="Remove this link from this page.">x</button>
         </form>
       </figure>
