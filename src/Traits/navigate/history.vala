@@ -30,9 +30,7 @@ namespace Odysseus.Traits {
                 ?, ?, ?, ?, datetime('now', 'localtime'),
                 (SELECT rowid FROM page_visit WHERE tab = ? AND uri = ?)
         );""");
-        var qReplaceScreenshot = Database.parse("""UPDATE screenshot
-            SET image = ? WHERE uri = ?;""");
-        var qSaveScreenshot = Database.parse("INSERT INTO screenshot VALUES (?, ?);");
+        var qSaveScreenshot = Database.parse("INSERT OR REPLACE INTO screenshot(uri, image) VALUES (?, ?);");
 
         web.load_changed.connect((evt) => {
             if (evt == WebKit.LoadEvent.FINISHED && first) {
@@ -80,17 +78,10 @@ namespace Odysseus.Traits {
                 }
                 var encoded = Base64.encode(png);
 
-                /*qReplaceScreenshot.reset();
-                qReplaceScreenshot.bind_text(1, encoded);
-                qReplaceScreenshot.bind_text(2, uri);
-                qReplaceScreenshot.step();
-
-                if (qReplaceScreenshot.db_handle().total_changes() == 0) {*/
-                    qSaveScreenshot.reset();
-                    qSaveScreenshot.bind_text(1, uri);
-                    qSaveScreenshot.bind_text(2, encoded);
-                    qSaveScreenshot.step();
-                //}
+                qSaveScreenshot.reset();
+                qSaveScreenshot.bind_text(1, uri);
+                qSaveScreenshot.bind_text(2, encoded);
+                qSaveScreenshot.step();
             });
         });
         /* NOTE: It'd be nice to save any URI changes to history,

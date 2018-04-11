@@ -55,7 +55,7 @@ and to visually communicate the paths surfers took through this history. #}
     </dt>{% endif %}
 
     <dd id="visit-{{rowid}}" aria-flowto="visit-{{referrer}}"
-        {% query %}SELECT image FROM screenshot WHERE uri = {{ uri }};
+        {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
         {% each-row %}data-img="{{ image }}"{% endquery %}>
       <em {% tab-colour %}>{% hl-change fmt="%k" %}:{{visited_at|date:"%M"}}</em>
       <a href="{{ uri }}"
