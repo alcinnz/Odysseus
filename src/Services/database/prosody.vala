@@ -22,6 +22,11 @@ namespace Odysseus.Database.Prosody {
 
     private class QueryBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            var limit_arg = args.next_value();
+            var limit = -1;
+            if (limit_arg != null) limit = int.parse(ByteUtils.to_string(limit_arg));
+            args.assert_end();
+
             WordIter endtoken;
             var queryParams = new Gee.ArrayList<Variable>();
             var query = compile_block(parser.parse("each-row empty endquery", out endtoken), queryParams);
@@ -45,7 +50,7 @@ namespace Odysseus.Database.Prosody {
             if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS("{%% query %%} must be balanced with an {%% endquery %%}");
 
-            return new QueryTag(query, queryParams, loop_body, emptyblock);
+            return new QueryTag(query, queryParams, loop_body, emptyblock, limit);
         }
 
         private string compile_block(Template ast, Gee.ArrayList<Variable> queryParams) throws SyntaxError {
@@ -94,16 +99,18 @@ namespace Odysseus.Database.Prosody {
         private Gee.List<Variable> qParams;
         private Template loopBody;
         private Template emptyblock;
+        private int limit;
 
-        public QueryTag(string query, Gee.List<Variable> qParams, Template loopBody, Template emptyblock) throws SyntaxError {
+        public QueryTag(string query, Gee.List<Variable> qParams, Template loopBody, Template emptyblock, int limit = -1) throws SyntaxError {
             this.query = new MultiStatement(get_database(), query);
             this.qParams = qParams;
             this.loopBody = loopBody;
             this.emptyblock = emptyblock;
+            this.limit = limit;
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            var empty = true;
+            var count = 0;
             var err = Sqlite.OK;
             for (var iter = this.query; iter != null; iter = iter.next) {
                 unowned Sqlite.Statement query = iter.query;
@@ -118,7 +125,9 @@ namespace Odysseus.Database.Prosody {
                 while ((err = query.step()) == Sqlite.ROW) {
                     var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
                     yield loopBody.exec(loopParams, output);
-                    empty = false;
+
+                    count++;
+                    if (count == this.limit) return;
                 }
 
                 if (err != Sqlite.OK && err != Sqlite.DONE) break;
@@ -129,7 +138,7 @@ namespace Odysseus.Database.Prosody {
                 yield output.writes("<h1 style='color: red;'><img src=gtk-icon:64/dialog-error />");
                 yield output.writes(get_database().errmsg());
                 yield output.writes("</h1>");
-            } else if (empty) yield emptyblock.exec(ctx, output);
+            } else if (count == 0) yield emptyblock.exec(ctx, output);
         }
     }
 
