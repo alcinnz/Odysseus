@@ -74,37 +74,54 @@ namespace Odysseus.Database.Prosody {
         }
     }
 
+    private class MultiStatement {
+        /* This is a linked-list of Sqlite Statements that works with their memory management. */
+        public Sqlite.Statement query;
+        public MultiStatement? next;
+
+        public MultiStatement(Sqlite.Database db, string sql) throws SyntaxError {
+            string tail;
+            var err = db.prepare_v2(sql, sql.length, out this.query, out tail);
+            if (err != Sqlite.OK)
+                throw new SyntaxError.OTHER("Invalid query %d: %s", db.errcode(), db.errmsg());
+
+            this.next = tail.chug() == "" ? null : new MultiStatement(db, tail);
+        }
+    }
+
     private class QueryTag : Template {
-        private Sqlite.Statement query;
+        private MultiStatement query;
         private Gee.List<Variable> qParams;
         private Template loopBody;
         private Template emptyblock;
 
         public QueryTag(string query, Gee.List<Variable> qParams, Template loopBody, Template emptyblock) throws SyntaxError {
-            unowned Sqlite.Database db = get_database();
-            if (db.prepare_v2(query, query.length, out this.query) != Sqlite.OK)
-                throw new SyntaxError.OTHER("Invalid query %d: %s", db.errcode(), db.errmsg());
-
+            this.query = new MultiStatement(get_database(), query);
             this.qParams = qParams;
             this.loopBody = loopBody;
             this.emptyblock = emptyblock;
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            query.reset();
-
-            int ix = 1;
-            foreach (var param in qParams) {
-                query.bind_text(ix, param.eval(ctx).to_string());
-                ix++;
-            }
-
             var empty = true;
-            int err = 0;
-            while ((err = query.step()) == Sqlite.ROW) {
-                var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
-                yield loopBody.exec(loopParams, output);
-                empty = false;
+            var err = Sqlite.OK;
+            for (var iter = this.query; iter != null; iter = iter.next) {
+                unowned Sqlite.Statement query = iter.query;
+                query.reset();
+
+                int ix = 1;
+                foreach (var param in qParams) {
+                    query.bind_text(ix, param.eval(ctx).to_string());
+                    ix++;
+                }
+
+                while ((err = query.step()) == Sqlite.ROW) {
+                    var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
+                    yield loopBody.exec(loopParams, output);
+                    empty = false;
+                }
+
+                if (err != Sqlite.OK && err != Sqlite.DONE) break;
             }
 
             if (err != Sqlite.OK && err != Sqlite.DONE) {
