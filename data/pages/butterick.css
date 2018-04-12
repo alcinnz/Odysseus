@@ -65,6 +65,8 @@ figure form:nth-of-type(1) {left: 0;}
 figure form:nth-of-type(2) {right: 0;}
 figure:hover form {visibility: visible;}
 
+input[type=number] {width: 20px;}
+
 /* These heading sizes are taken from the elementary Gtk theme
     https://github.com/elementary/stylesheet/blob/master/gtk-3.0/granite-widgets.css#L378 .
     They have been converted into percentages so that I could
