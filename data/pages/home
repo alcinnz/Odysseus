@@ -19,20 +19,21 @@ and I take advantage of this page to promote project links. #}
   </a></aside>
 
   <main><nav>
-    {% query %}
-      SELECT uri, (SELECT image FROM screenshot_v2 WHERE screenshot_v2.uri = page_visit.uri LIMIT 1) AS screenshot
-        FROM page_visit
+    {% query 20 %}
+      SELECT uri, order_ FROM topsites_whitelist ORDER BY order_ DESC;
+      SELECT uri FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20
-        ORDER BY COUNT(*) DESC, MAX(visited_at) DESC LIMIT 20;
+        ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
     {% each-row %}
       <figure style="width: 132px; height: 132px;">
         <a href="{{ uri }}">
-          <img src="data:image/png;base64,{{ screenshot }}"
+          <img {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
+                {% each-row %}src="data:image/png;base64,{{ image }}"{% endquery %}
                 height="128" width="128" />
         </a>
         <form><input type="hidden" name="$" value="topsites_whitelist" />
           <input type="hidden" name="uri" value="{{ uri }}" />
-          <input type="number" name="order_" value="0" />
+          <input type="number" name="order_" value="{{ order_ }}" />
           <button type="submit" title="Keep this link on this page.">&check;</button>
         </form>
         <form><input type="hidden" name="$" value="topsites_blacklist" />
