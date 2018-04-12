@@ -57,7 +57,7 @@ namespace Odysseus.Database.Prosody {
             if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS("{%% query %%} must be balanced with an {%% endquery %%}");
 
-            return new QueryTag(query, queryParams, loop_body, emptyblock, limit);
+            return new QueryTag(query, queryParams, exceptQuery, exceptParams, loop_body, emptyblock, limit);
         }
 
         private string compile_block(Template ast, Gee.ArrayList<Variable> queryParams) throws SyntaxError {
@@ -103,16 +103,31 @@ namespace Odysseus.Database.Prosody {
             var tailParams = parameters[this.query.bind_parameter_count():parameters.size];
             this.next = tail.chug() == "" ? null : new MultiStatement(db, tail, tailParams);
         }
+
+        public void bind(Data.Data ctx) {
+            query.reset();
+
+            int ix = 1;
+            foreach (var param in parameters) {
+                query.bind_text(ix, param.eval(ctx).to_string());
+                ix++;
+            }
+        }
     }
 
     private class QueryTag : Template {
         private MultiStatement query;
+        private MultiStatement except;
         private Template loopBody;
         private Template emptyblock;
         private int limit;
 
-        public QueryTag(string query, Gee.List<Variable> qParams, Template loopBody, Template emptyblock, int limit = -1) throws SyntaxError {
-            this.query = new MultiStatement(get_database(), query, qParams);
+        public QueryTag(string query, Gee.List<Variable> qParams, string qExcept, Gee.List<Variable> exceptParams,
+                    Template loopBody, Template emptyblock, int limit = -1) throws SyntaxError {
+            unowned Sqlite.Database db = get_database();
+            this.query = new MultiStatement(db, query, qParams);
+            this.except = qExcept.chug() == "" ? null :
+                    new MultiStatement(db, qExcept, exceptParams);
             this.loopBody = loopBody;
             this.emptyblock = emptyblock;
             this.limit = limit;
@@ -123,16 +138,21 @@ namespace Odysseus.Database.Prosody {
             var err = Sqlite.OK;
             for (var iter = this.query; iter != null; iter = iter.next) {
                 unowned Sqlite.Statement query = iter.query;
-                query.reset();
-
-                int ix = 1;
-                foreach (var param in iter.parameters) {
-                    query.bind_text(ix, param.eval(ctx).to_string());
-                    ix++;
-                }
+                iter.bind(ctx);
 
                 while ((err = query.step()) == Sqlite.ROW) {
                     var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
+
+                    // Mostly just useful for odysseus:home's topsites.
+                    var skip = false;
+                    for (var except = this.except; except != null; except = except.next) {
+                        except.bind(loopParams);
+                        if (except.query.step() == Sqlite.ROW) continue;
+                        skip = true;
+                        break;
+                    }
+                    if (skip) continue;
+
                     yield loopBody.exec(loopParams, output);
 
                     count++;
