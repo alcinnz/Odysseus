@@ -29,8 +29,15 @@ namespace Odysseus.Database.Prosody {
 
             WordIter endtoken;
             var queryParams = new Gee.ArrayList<Variable>();
-            var query = compile_block(parser.parse("each-row empty endquery", out endtoken), queryParams);
+            var query = compile_block(parser.parse("except each-row empty endquery", out endtoken), queryParams);
             var endtag = endtoken.next();
+
+            var exceptParams = new Gee.ArrayList<Variable>();
+            var exceptQuery = "";
+            if (ByteUtils.equals_str(endtag, "except")) {
+                exceptQuery = compile_block(parser.parse("each-row empty endquery", out endtoken), exceptParams);
+                endtag = endtoken.next();
+            }
 
             Template loop_body = new Echo(b(""));
             if (ByteUtils.equals_str(endtag, "each-row")) {
