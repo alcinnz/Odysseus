@@ -89,28 +89,30 @@ namespace Odysseus.Database.Prosody {
     private class MultiStatement {
         /* This is a linked-list of Sqlite Statements that works with their memory management. */
         public Sqlite.Statement query;
+        public Gee.List<Variable> parameters;
         public MultiStatement? next;
 
-        public MultiStatement(Sqlite.Database db, string sql) throws SyntaxError {
+        public MultiStatement(Sqlite.Database db, string sql, Gee.List<Variable> parameters) throws SyntaxError {
             string tail;
             var err = db.prepare_v2(sql, sql.length, out this.query, out tail);
             if (err != Sqlite.OK)
                 throw new SyntaxError.OTHER("Invalid query %d: %s", db.errcode(), db.errmsg());
 
-            this.next = tail.chug() == "" ? null : new MultiStatement(db, tail);
+            this.parameters = parameters[0:this.query.bind_parameter_count()];
+
+            var tailParams = parameters[this.query.bind_parameter_count():parameters.size];
+            this.next = tail.chug() == "" ? null : new MultiStatement(db, tail, tailParams);
         }
     }
 
     private class QueryTag : Template {
         private MultiStatement query;
-        private Gee.List<Variable> qParams;
         private Template loopBody;
         private Template emptyblock;
         private int limit;
 
         public QueryTag(string query, Gee.List<Variable> qParams, Template loopBody, Template emptyblock, int limit = -1) throws SyntaxError {
-            this.query = new MultiStatement(get_database(), query);
-            this.qParams = qParams;
+            this.query = new MultiStatement(get_database(), query, qParams);
             this.loopBody = loopBody;
             this.emptyblock = emptyblock;
             this.limit = limit;
@@ -124,7 +126,7 @@ namespace Odysseus.Database.Prosody {
                 query.reset();
 
                 int ix = 1;
-                foreach (var param in qParams) {
+                foreach (var param in iter.parameters) {
                     query.bind_text(ix, param.eval(ctx).to_string());
                     ix++;
                 }
