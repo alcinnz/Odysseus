@@ -22,7 +22,7 @@ and I take advantage of this page to promote project links. #}
     {% query 20 %}
       SELECT uri, order_ FROM topsites_whitelist ORDER BY order_ DESC;
       SELECT uri FROM page_visit
-        GROUP BY uri HAVING COUNT(*) >= 20
+        GROUP BY uri HAVING COUNT(*) >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
     {% except %}
       SELECT 1 WHERE {{ uri }} NOT IN (SELECT uri FROM topsites_blacklist);
