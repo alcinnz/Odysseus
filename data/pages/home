@@ -23,8 +23,12 @@ and I take advantage of this page to promote project links. #}
 
   <main style="max-width: 720px;"><!-- FIXME ugly code forcing this style --><nav>
     {% query 20 %}
-      SELECT uri, order_ FROM topsites_whitelist ORDER BY order_ DESC;
-      SELECT uri FROM page_visit
+      SELECT uri, order_ FROM topsites_whitelist ORDER BY order_ ASC;
+      SELECT uri,
+          (SELECT COUNT(*) FROM topsites_whitelist
+            WHERE uri NOT IN (SELECT uri FROM topsites_blacklist))
+          AS order_
+        FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
     {% except %}
@@ -52,7 +56,22 @@ and I take advantage of this page to promote project links. #}
 
   <script src="odysseus:ext/html5sortable.js"></script>
   <script>
-    sortable('nav')
+    sortable('nav')[0].addEventListener('sortupdate', (e) => {
+      /* This code submits the appropriate form to save the new order. */
+      var data = e.detail.destination,
+        $ = (el) => el.querySelector('[name=order_]'),
+        _ = (offset) =>
+          $(data.items[Math.min(data.index + offset, data.items.length)])
+
+      if (data.index == 0) _(0).value = $(data.items[0]).value - 1;
+      else _(0).value = +_(1).value - +_(-1).value
+
+      _(0).form.submit();
+    })
+
+    // As poor progressive enhancement, remove extraneous controls only once they're extraneous.
+    for (var el of document.querySelectorAll('[name=order_]'))
+      el.setAttribute('aria-hidden', true)
   </script>
 
   <footer>{% random %}{% alt %}
