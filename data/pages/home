@@ -18,7 +18,7 @@ and I take advantage of this page to promote project links. #}
     <img src="gtk-icon:16/document-open-recent" />{% trans %}Browser History{% endtrans %}
   </a></aside>
 
-  <main><nav>
+  <main style="max-width: 720px;"><!-- FIXME ugly code forcing this style --><nav>
     {% query 20 %}
       SELECT uri, order_ FROM topsites_whitelist ORDER BY order_ DESC;
       SELECT uri FROM page_visit
