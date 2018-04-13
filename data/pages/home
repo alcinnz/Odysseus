@@ -24,6 +24,9 @@ and I take advantage of this page to promote project links. #}
       SELECT uri FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
+    {% except %}
+      SELECT 1 WHERE {{ uri }} NOT IN (SELECT uri FROM topsites_blacklist);
+      SELECT 1 WHERE {{ uri }} IN (SELECT uri FROM screenshot_v2);
     {% each-row %}
       <figure style="width: 132px; height: 132px;">
         <a href="{{ uri }}">
