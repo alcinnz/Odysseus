@@ -3,7 +3,10 @@
 <html>
 <head>
   <title>{% trans %}INVALID FORM SUBMISSION{% endtrans %}</title>
-  <style>@import url(odysseus:butterick.css);</style>
+  <style>
+    @import url(odysseus:butterick.css);
+    @import url(odysseus:ext/hljs-solarized-light.css);
+  </style>
 </head>
 <body>
   <main>
@@ -22,6 +25,10 @@
 
     <h2>SQLite Reported:</h2>
     <p>{{ error }}</p>
+
+    <pre class="sql">{{ sql }}</pre>
+    <script src="odysseus:ext/highlight.pack.js"></script>
+    <script>hljs.highlightBlock(document.querySelector('pre'))</script>
   </main>
 </body>
 </html>

@@ -34,13 +34,13 @@ and I take advantage of this page to promote project links. #}
                 {% each-row %}src="data:image/png;base64,{{ image }}"{% endquery %}
                 height="128" width="128" />
         </a>
-        <form><input type="hidden" name="$" value="topsites_whitelist" />
-          <input type="hidden" name="uri" value="{{ uri }}" />
+        <form><input aria-hidden name="$" value="topsites_whitelist" />
+          <input aria-hidden name="uri" value="{{ uri }}" />
           <input type="number" name="order_" value="{{ order_ }}" />
           <button type="submit" title="Keep this link on this page.">&check;</button>
         </form>
-        <form><input type="hidden" name="$" value="topsites_blacklist" />
-          <input type="hidden" name="uri" value="{{ uri }}" />
+        <form><input aria-hidden name="$" value="topsites_blacklist" />
+          <input aria-hidden name="uri" value="{{ uri }}" />
           <button type="submit" title="Remove this link from this page.">x</button>
         </form>
       </figure>

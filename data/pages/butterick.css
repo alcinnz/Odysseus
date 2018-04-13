@@ -19,6 +19,8 @@ body > nav {
     text-align: left;
 }
 
+[aria-hidden] {display: none;}
+
 main {
     max-width: 600px; /* almost 3 uppercase alphabets worth */
     margin: 0 auto;

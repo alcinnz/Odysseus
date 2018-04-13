@@ -8,6 +8,7 @@
     <gresource prefix="/io/github/alcinnz/Odysseus/odysseus:/">
         <file>NOT-FOUND</file>
         <file>SERVER-ERROR</file>
+        <file>INVALID-FORM</file>
         <file>home</file>
         <file>butterick.css</file>
         <file>history</file>

@@ -42,11 +42,13 @@ namespace Odysseus.Database {
             var table_index = -1;
             var first = true;
             for (var i = 0; i < keys.size; i++) {
-                if (!first) builder.append(", ");
-                else first = false;
+                if (keys[i] == "$") {table_index = i;first = true;}
+                else {
+                    if (!first) builder.append(", ");
+                    else first = false;
 
-                if (keys[i] == "$") {table_index = i; first = true;}
-                else builder.append(keys[i]);
+                    builder.append(keys[i]);
+                }
             }
             if (table_index == -1) return; // It's not meant for us.
 
@@ -56,13 +58,13 @@ namespace Odysseus.Database {
             var table_name = "";
             first = true;
             for (var i = 0; i < values.size; i++) {
-                if (!first) builder.append(", ");
-                else first = false;
-
                 if (i == table_index) {
                     table_name = values[i];
                     first = true; // Don't double up on seperators
                 } else {
+                    if (!first) builder.append(", ");
+                    else first = false;
+
                     builder.append("'");
                     builder.append(values[i].replace("'", "''"));
                     builder.append("'");
@@ -82,6 +84,7 @@ namespace Odysseus.Database {
             if (err != Sqlite.OK) {
                 var data = new Templating.Data.Mapping();
                 data["error"] = new Templating.Data.Literal(msg);
+                data["sql"] = new Templating.Data.Literal(builder.str);
                 Services.render_alternate_html(tab, "INVALID-FORM", null, true, data);
             } else {
                 web.reload(); // So we can see the changes.
