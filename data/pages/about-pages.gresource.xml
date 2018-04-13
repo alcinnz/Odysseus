@@ -23,6 +23,8 @@
         <file>ext/highlight.pack.js.mime</file>
         <file>ext/hljs-solarized-light.css</file>
         <file>ext/hljs-solarized-light.css.mime</file>
+        <file>ext/html5sortable.js</file>
+        <file>ext/html5sortable.js.mime</file>
 
         <file>special/viewsource</file>
         <file>special/restore</file>

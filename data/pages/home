@@ -11,6 +11,9 @@ and I take advantage of this page to promote project links. #}
     main {color: #ddd; text-align: center;}
     main hr {border: none; border-bottom: thin solid #eee; }
     footer {position: fixed; bottom: 0;}
+
+    /* Fixes for H%ML5Sortable to work in the context of the topsites list. */
+    .sortable-placeholder {display: inline-block; width: 132px;}
   </style>
 </head>
 <body>
@@ -46,6 +49,11 @@ and I take advantage of this page to promote project links. #}
       </figure>
     {% endquery %}
   </nav></main>
+
+  <script src="odysseus:ext/html5sortable.js"></script>
+  <script>
+    sortable('nav')
+  </script>
 
   <footer>{% random %}{% alt %}
       {% trans %}Browse faster with
