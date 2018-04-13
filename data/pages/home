@@ -64,7 +64,7 @@ and I take advantage of this page to promote project links. #}
           $(data.items[Math.min(data.index + offset, data.items.length)])
 
       if (data.index == 0) _(0).value = $(data.items[0]).value - 1;
-      else _(0).value = +_(1).value - +_(-1).value
+      else _(0).value = +_(1).value + (+_(1).value - +_(-1).value)/2
 
       _(0).form.submit();
     })
