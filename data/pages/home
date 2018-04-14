@@ -12,6 +12,8 @@ and I take advantage of this page to promote project links. #}
     main hr {border: none; border-bottom: thin solid #eee; }
     footer {position: fixed; bottom: 0;}
 
+    .pinned form:first-of-type {background: #64baff;}
+
     /* Fixes for H%ML5Sortable to work in the context of the topsites list. */
     .sortable-placeholder {display: inline-block; width: 132px;}
   </style>
@@ -23,11 +25,11 @@ and I take advantage of this page to promote project links. #}
 
   <main style="max-width: 720px;"><!-- FIXME ugly code forcing this style --><nav>
     {% query 20 %}
-      SELECT uri, order_ FROM topsites_whitelist ORDER BY order_ ASC;
+      SELECT uri, order_, "pinned" AS cat FROM topsites_whitelist ORDER BY order_ ASC;
       SELECT uri,
           (SELECT COUNT(*) FROM topsites_whitelist
             WHERE uri NOT IN (SELECT uri FROM topsites_blacklist))
-          AS order_
+          AS order_, "history" AS cat
         FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
@@ -35,7 +37,7 @@ and I take advantage of this page to promote project links. #}
       SELECT 1 WHERE {{ uri }} NOT IN (SELECT uri FROM topsites_blacklist);
       SELECT 1 WHERE {{ uri }} IN (SELECT uri FROM screenshot_v2);
     {% each-row %}
-      <figure style="width: 132px; height: 132px;">
+      <figure class="{{ cat }}" tooltip="{{ cat }}" style="width: 132px; height: 132px;">
         <a href="{{ uri }}">
           <img {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
                 {% each-row %}src="data:image/png;base64,{{ image }}"{% endquery %}
