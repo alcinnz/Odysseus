@@ -12,7 +12,8 @@ complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
 services = ['pages', 'Completer', 'globals', 'icons', 'favicons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
-        'byteutils', 'jsondata', 'diff', 'i18n']
+        'byteutils']
+prosody_misc = ['jsondata', 'diff', 'i18n']
 models = ['Download', 'DownloadSet', 'ImageUtil']
 
 foreach f : header_widgets
@@ -40,6 +41,9 @@ endforeach
 
 foreach f : db_services
     services += ['database/' + f]
+endforeach
+foreach f : prosody_misc
+    prosody += ['misc/' + f]
 endforeach
 foreach f : prosody
     services += ['Prosody/' + f]
