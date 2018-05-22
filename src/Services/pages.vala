@@ -67,6 +67,14 @@ namespace Odysseus.Services {
             url["http"] = new Templating.Data.Literal(http_url);
         }
 
+		// And add content-negotiation header
+        var langs = Intl.get_language_names();
+        var langs_data = new Templating.Data.Data[langs.length];
+        for (var i = 0; i < langs.length; i++) {
+            langs_data[i] = new Templating.Data.Literal(langs[i]);
+        }
+        ctx["LOCALE"] = new Templating.Data.List.from_array(langs_data);
+
         return ctx;
     }
 

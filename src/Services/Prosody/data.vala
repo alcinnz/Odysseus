@@ -241,6 +241,23 @@ namespace Odysseus.Templating.Data {
         }
     }
 
+    public class List : Data.Data {
+        private Data[] inner;
+        public List(Gee.List<Data> inner) {
+            this.inner = inner.to_array();
+        }
+        public List.from_array(Data[] inner) {this.inner = inner;}
+
+        public override void foreach_map(Data.Data.ForeachMap cb) {
+            foreach (var item in inner)
+                if (cb(b(""), item)) break;
+        }
+        public override int to_int(out is_length = null) {
+            is_length = true;
+            return inner.length;
+        }
+    }
+
     public class Stack : Data {
         Data first;
         Data last;
