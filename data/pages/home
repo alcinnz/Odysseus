@@ -2,7 +2,27 @@
 
 As such I provide some links to places they might likely be trying to go (depicted as recognizable screenshots),
 and I take advantage of this page to promote project links. #}
+
 <!DOCTYPE html>
+
+{# Ensure the appropriate recommendations are downloaded. #}
+{% query %}{% endquery %} {# FIXME I tried to do something similar before and it failed. #}
+{% query %}SELECT * FROM recommendations;
+{% empty %}
+  {% fetch %}
+    {% for lang in LOCALE %}
+      https://alcinnz.github.io/Odysseus-recommendations/db/{{ lang }}.sqlite
+    {% endfor %}
+  {% each as online_recommendations %}
+    {% query %}
+      ATTACH DATABASE {{ db }} AS online;
+      INSERT OR IGNORE INTO screenshot_v2(url, image) SELECT url, screenshot FROM online.recommendations;
+      INSERT OR IGNORE INTO recommendations(url, weight) SELECT url, weight FROM online.recommendations;
+      DETACH DATABASE db;
+    {% endquery %}
+  {% endfetch %}
+{% endquery %}
+
 <html>
 <head>
   <title>[user-home] {% trans %}New Tab{% endtrans %}</title>
@@ -14,7 +34,7 @@ and I take advantage of this page to promote project links. #}
 
     .pinned form:first-of-type {background: #64baff;}
 
-    /* Fixes for H%ML5Sortable to work in the context of the topsites list. */
+    /* Fixes for HTML5Sortable to work in the context of the topsites list. */
     .sortable-placeholder {display: inline-block; width: 132px;}
   </style>
 </head>
@@ -24,15 +44,17 @@ and I take advantage of this page to promote project links. #}
   </a></aside>
 
   <main style="max-width: 720px;"><!-- FIXME ugly code forcing this style --><nav>
+    {% macro q-tailrank %}(SELECT COUNT(*) FROM topsites_whitelist
+        WHERE uri NOT IN (SELECT uri FROM topsites_blacklist))
+      AS order_
+    {% endmacro %}
     {% query 20 %}
       SELECT uri, order_, "pinned" AS cat FROM topsites_whitelist ORDER BY order_ ASC;
-      SELECT uri,
-          (SELECT COUNT(*) FROM topsites_whitelist
-            WHERE uri NOT IN (SELECT uri FROM topsites_blacklist))
-          AS order_, "history" AS cat
+      SELECT uri, {% q-tailrank %}, "history" AS cat
         FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
+      SELECT uri, {% q-tailrank %}, "recommendations" AS cat FROM recommendations ORDER BY random() * weight;
     {% except %}
       SELECT 1 WHERE {{ uri }} NOT IN (SELECT uri FROM topsites_blacklist);
       SELECT 1 WHERE {{ uri }} IN (SELECT uri FROM screenshot_v2);

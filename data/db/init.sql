@@ -74,4 +74,9 @@ SELECT load_extension('/usr/share/Odysseus/libfts5.so');
   CREATE TABLE topsites_blacklist(uri PRIMARY KEY);
 {% endif %}
 
-PRAGMA user_version = 4;
+{% if v < 5 %}
+  -- Create a table to cache recommendations from https://alcinnz.github.io/Odysseus-recommendations/db/
+  CREATE TABLE IF NOT EXISTS recommendations(url PRIMARY KEY, weight);
+{% endif %}
+
+PRAGMA user_version = 5;
