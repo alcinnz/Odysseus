@@ -949,6 +949,7 @@ namespace Odysseus.Templating.Std {
     public void register_standard_library() {
         register_tag("autoescape", new AutoescapeBuilder());
         register_tag("debug", new DebugBuilder());
+		register_tag("fetch", new HTTP.FetchBuilder());
         register_tag("filter", new FilterBuilder());
         register_tag("for", new ForBuilder());
         register_tag("if", new IfBuilder());

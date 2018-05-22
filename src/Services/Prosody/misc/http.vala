@@ -20,33 +20,41 @@
 This would mostly just serve to implement of builtin federated search,
     but it's also useful for loading in recommendations to fill in the gaps. */
 namespace Odysseus.Templating.HTTP {
-    using namespace Std;
+    using Std;
     public class FetchBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             args.assert_end();
             WordIter endtoken;
-            var body = parser.parse("endfatch", out endtoken);
+            var prevMode = parser.escapes;
+            parser.escapes = Std.AutoescapeBuilder.modes[b("url")];
+            var request = parser.parse("each", out endtoken);
+            parser.escapes = prevMode;
             if (endtoken == null ||
-                    (!ByteUtils.equals_str(endtoken.next(), "endfetch") &&
+                    (!ByteUtils.equals_str(endtoken.next(), "each") &&
                     !ByteUtils.equals_str(endtoken.next(), "as")))
                 throw new SyntaxError.INVALID_ARGS(
-                    "{%% fetch %%} must be closed with an {%% endfetch as _ %%}");
+                        "{%% fetch %%} must be contain a {%% each as _ %%} block!");
 
             var target = endtoken.next();
             endtoken.assert_end();
 
-            var tail = parser.parse();
-            return new FetchTag(body, target, tail);
+            var loop = parser.parse("endfetch", out endtoken);
+            if (endtoken == null)
+                throw new SyntaxError.INVALID_ARGS(
+                        "{%% fetch %%} must be closed with an {%% endfetch %%}");
+            endtoken.assert_end();
+            return new FetchTag(request, target, loop);
         }
     }
 
-    public class FetchTag : Template {
-        private Template body, tail;
+    errordomain HTTPError {STATUS_CODE}
+
+    private class FetchTag : Template {
+        private Template body;
+        private Template loop;
         private Bytes target;
-        public FetchTag(Template body, Bytes target, Template tail) {
-            this.body = body;
-            this.target = target;
-            this.tail = tail;
+        public FetchTag(Template body, Bytes target, Template loop) {
+            this.body = body; this.target = target; this.loop = loop;
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
@@ -54,47 +62,52 @@ namespace Odysseus.Templating.HTTP {
             yield body.exec(ctx, capture);
             var urls = capture.grab_string().split_set(" \t\r\n");
 
-            var data = new ListData(yield request(urls));
-            var tail_ctx = ByteUtils.build_map<Data.Data>();
-            tail_ctx[target] = data;
-            yield tail.exec(new Data.Stack.with_map(ctx, tail_ctx), output);
-        }
-
-        private async Gee.List<Data.Data> request(string[] urls) {
             var session = new Soup.Session();
-            var responses = new Gee.ArrayList<Data.Data>();
-            var mutex = 0;
+            var inprogress = new Semaphore(urls.length);
             foreach (var url in urls) {
-                var req = session.request(url);
-                mutex += 1;
-                req.send_async.begin(null, (obj, res) => {
-                    var response = req.send_async.end(res);
-                    var mime = req.get_content_type();
-                    responses.add(yield build_response_data(mime, response));
+                render_request.begin(session, url, ctx, output, (obj, res) => {
+                    try {
+                        render_request.end(res);
+                    } catch (Error err) {
+                        // Try to render to WebInspector
+                        var js_err = "\"Error fetching %s: %s\"".printf(
+                                url.escape(), err.message.escape());
+                        output.writes.begin(@"<script>console.warn($js_err)</script>");
+                    }
 
-                    mutex -= 1;
-                    if (mutex == 0) request.callback();
+                    if (inprogress.dec()) exec.callback();
                 });
             }
             yield;
-            return responses;
+        }
+
+        private async void render_request(Soup.Session session, string url,
+                Data.Data ctx, Writer output) throws Error {
+            var req = session.request_http("GET", url);
+            var response = yield req.send_async(null);
+            var status = req.get_message().status_code;
+            if (status != 200) throw new HTTPError.STATUS_CODE("HTTP %u", status);
+
+            var mime = req.get_content_type();
+            var loop_vars = ByteUtils.create_map<Data.Data>();
+            loop_vars[target] = yield build_response_data(mime, response);
+            loop.exec(new Data.Stack.with_map(ctx, loop_vars), output);
         }
 
         private async Data.Data build_response_data(
-                string mime, InputStream stream, string filename = "") {
-            try {
+                string mime, InputStream stream, string filename = "") throws Error {
             if ("json" in mime) {
                 var json = new Json.Parser();
                 yield json.load_from_stream_async(stream);
                 return Data.JSON.build(json.get_root());
-            } else if ("xml" in mime) {
+            } /*else if ("xml" in mime) {
                 // Unfortunately libxml cannot read from an InputStream,
                 // So read the entire response into a string.
                 var b = new MemoryOutputStream.resizable();
                 yield b.splice_async(stream, 0);
                 var xml = Xml.Parser.parse_memory((char[]) b.data, b.get_data_size());
                 return new Data.XML(xml);
-            } else if (filename != "") {
+            }*/ else if (filename != "") {
                 return new Data.Literal(filename);
             } else {
                 var temp = File.new_tmp(null, null);
@@ -104,9 +117,16 @@ namespace Odysseus.Templating.HTTP {
 
                 return new Data.Literal(temp.get_path());
             }
-            } catch (Error err) {
-                return Data.Empty();
-            }
+        }
+    }
+
+    /* This must to make `count` mutable within callback functions. */
+    private class Semaphore {
+        int count;
+        public Semaphore(int count = 0) {this.count = count;}
+        public bool dec() {
+            this.count--;
+            return this.count == 0;
         }
     }
 }
