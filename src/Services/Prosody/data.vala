@@ -241,18 +241,18 @@ namespace Odysseus.Templating.Data {
         }
     }
 
-    public class List : Data.Data {
+    public class List : Data {
         private Data[] inner;
         public List(Gee.List<Data> inner) {
             this.inner = inner.to_array();
         }
         public List.from_array(Data[] inner) {this.inner = inner;}
 
-        public override void foreach_map(Data.Data.ForeachMap cb) {
+        public override void foreach_map(Data.ForeachMap cb) {
             foreach (var item in inner)
                 if (cb(b(""), item)) break;
         }
-        public override int to_int(out is_length = null) {
+        public override int to_int(out bool is_length = null) {
             is_length = true;
             return inner.length;
         }
