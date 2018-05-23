@@ -47,7 +47,7 @@ namespace Odysseus.Templating.HTTP {
         }
     }
 
-    errordomain HTTPError {STATUS_CODE}
+    errordomain HTTPError {STATUS_CODE, UNSUPPORTED_FORMAT}
 
     private class FetchTag : Template {
         private Template body;
@@ -94,8 +94,7 @@ namespace Odysseus.Templating.HTTP {
             loop.exec(new Data.Stack.with_map(ctx, loop_vars), output);
         }
 
-        private async Data.Data build_response_data(
-                string mime, InputStream stream, string filename = "") throws Error {
+        private async Data.Data build_response_data(string mime, InputStream stream) throws Error {
             if ("json" in mime) {
                 var json = new Json.Parser();
                 yield json.load_from_stream_async(stream);
@@ -107,16 +106,10 @@ namespace Odysseus.Templating.HTTP {
                 yield b.splice_async(stream, 0);
                 var xml = Xml.Parser.parse_memory((char[]) b.data, b.get_data_size());
                 return new Data.XML(xml);
-            }*/ else if (filename != "") {
-                return new Data.Literal(filename);
-            } else {
-                var temp = File.new_tmp(null, null);
-                var output = yield temp.append_to_async(0);
-                yield output.splice_async(stream, 0);
-                yield output.close_async();
-
-                return new Data.Literal(temp.get_path());
+            }*/ else if (mime == "text/tsv") {
+                return yield readTSV(new DataInputStream(stream));
             }
+            throw new HTTPError.UNSUPPORTED_FORMAT("Cannot read %s files!", mime);
         }
     }
 
