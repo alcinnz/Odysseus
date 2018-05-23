@@ -252,6 +252,16 @@ namespace Odysseus.Templating.Data {
             foreach (var item in inner)
                 if (cb(b(""), item)) break;
         }
+        public override Data get(Bytes property_bytes) {
+            var property = ByteUtils.to_string(property_bytes);
+            uint64 index = 0;
+            if (property[0] == '$' &&
+                    uint64.try_parse(property[1:property.length], out index) &&
+                    index < inner.length) {
+                return inner[index];
+            }
+            return new Empty();
+        }
         public override int to_int(out bool is_length = null) {
             is_length = true;
             return inner.length;
