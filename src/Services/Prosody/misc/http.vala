@@ -30,8 +30,8 @@ namespace Odysseus.Templating.HTTP {
             var request = parser.parse("each", out endtoken);
             parser.escapes = prevMode;
             if (endtoken == null ||
-                    (!ByteUtils.equals_str(endtoken.next(), "each") &&
-                    !ByteUtils.equals_str(endtoken.next(), "as")))
+                    !(ByteUtils.equals_str(endtoken.next(), "each") &&
+                    ByteUtils.equals_str(endtoken.next(), "as")))
                 throw new SyntaxError.INVALID_ARGS(
                         "{%% fetch %%} must be contain a {%% each as _ %%} block!");
 
