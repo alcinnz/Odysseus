@@ -106,7 +106,7 @@ namespace Odysseus.Templating.HTTP {
                 yield b.splice_async(stream, 0);
                 var xml = Xml.Parser.parse_memory((char[]) b.data, b.get_data_size());
                 return new Data.XML(xml);
-            }*/ else if (mime == "text/tsv") {
+            }*/ else if (mime == "text/tsv" || mime == "text/tab-separated-values") {
                 return yield readTSV(new DataInputStream(stream));
             }
             throw new HTTPError.UNSUPPORTED_FORMAT("Cannot read %s files!", mime);
