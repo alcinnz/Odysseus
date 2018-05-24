@@ -6,20 +6,19 @@ and I take advantage of this page to promote project links. #}
 <!DOCTYPE html>
 
 {# Ensure the appropriate recommendations are downloaded. #}
-{% query %}{% endquery %} {# FIXME I tried to do something similar before and it failed. #}
 {% query %}SELECT * FROM recommendations;
 {% empty %}
   {% fetch %}
     {% for lang in LOCALE %}
-      https://alcinnz.github.io/Odysseus-recommendations/db/{{ lang }}.sqlite
+      https://alcinnz.github.io/Odysseus-recommendations/tsv/{{ lang }}.tsv
     {% endfor %}
-  {% each as online_recommendations %}
-    {% query %}
-      ATTACH DATABASE {{ db }} AS online;
-      INSERT OR IGNORE INTO screenshot_v2(url, image) SELECT url, screenshot FROM online.recommendations;
-      INSERT OR IGNORE INTO recommendations(url, weight) SELECT url, weight FROM online.recommendations;
-      DETACH DATABASE db;
-    {% endquery %}
+  {% each as links %}
+    {% for link in links %}
+      {% query %}
+        INSERT OR IGNORE INTO screenshot_v2(uri, image) VALUES ({{ link.$1 }}, {{ link.$2 }});
+        INSERT OR IGNORE INTO recommendations(url, weight) VALUES ({{ link.$1 }}, {{ link.$0 }});
+      {% endquery %}
+    {% endfor %}
   {% endfetch %}
 {% endquery %}
 
