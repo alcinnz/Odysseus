@@ -66,6 +66,7 @@ namespace Odysseus.Templating.HTTP {
             var urls = capture.grab_string().split_set(" \t\r\n");
 
             var session = new Soup.Session();
+            session.add_feature(new Soup.ContentSniffer());
             var inprogress = new Semaphore(urls.length);
             foreach (var url in urls) {
                 if (url == "") {inprogress.dec(); continue;}
