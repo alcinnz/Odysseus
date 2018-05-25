@@ -16,7 +16,7 @@ and I take advantage of this page to promote project links. #}
     {% for link in links %}
       {% query %}
         INSERT OR IGNORE INTO screenshot_v2(uri, image) VALUES ({{ link.$1 }}, {{ link.$2 }});
-        INSERT OR IGNORE INTO recommendations(url, weight) VALUES ({{ link.$1 }}, {{ link.$0 }});
+        INSERT OR IGNORE INTO recommendations(uri, weight) VALUES ({{ link.$1 }}, {{ link.$0 }});
       {% endquery %}
     {% endfor %}
   {% endfetch %}
@@ -53,7 +53,8 @@ and I take advantage of this page to promote project links. #}
         FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
-      SELECT uri, {% q-tailrank %}, "recommendations" AS cat FROM recommendations ORDER BY random() * weight;
+      SELECT uri, {% q-tailrank %}, "recommendations" AS cat
+        FROM recommendations ORDER BY random() * weight;
     {% except %}
       SELECT 1 WHERE {{ uri }} NOT IN (SELECT uri FROM topsites_blacklist);
       SELECT 1 WHERE {{ uri }} IN (SELECT uri FROM screenshot_v2);

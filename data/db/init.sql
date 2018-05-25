@@ -76,7 +76,7 @@ SELECT load_extension('/usr/share/Odysseus/libfts5.so');
 
 {% if v < 5 %}
   -- Create a table to cache recommendations from https://alcinnz.github.io/Odysseus-recommendations/db/
-  CREATE TABLE recommendations(url PRIMARY KEY, weight);
+  CREATE TABLE recommendations(uri PRIMARY KEY, weight);
   DELETE FROM screenshot; -- Clean up this unused data, should've done so earlier.
 {% endif %}
 
