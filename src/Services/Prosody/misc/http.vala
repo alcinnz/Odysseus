@@ -42,7 +42,7 @@ namespace Odysseus.Templating.HTTP {
             if (endtoken == null)
                 throw new SyntaxError.INVALID_ARGS(
                         "{%% fetch %%} must be closed with an {%% endfetch %%}");
-            endtoken.assert_end();
+            endtoken.next(); endtoken.assert_end();
             return new FetchTag(request, target, loop);
         }
     }
@@ -53,6 +53,9 @@ namespace Odysseus.Templating.HTTP {
         private Template body;
         private Template loop;
         private Bytes target;
+
+        private Mutex outputlock = new Mutex();
+
         public FetchTag(Template body, Bytes target, Template loop) {
             this.body = body; this.target = target; this.loop = loop;
         }
@@ -65,6 +68,8 @@ namespace Odysseus.Templating.HTTP {
             var session = new Soup.Session();
             var inprogress = new Semaphore(urls.length);
             foreach (var url in urls) {
+                if (url == "") {inprogress.dec(); continue;}
+
                 render_request.begin(session, url, ctx, output, (obj, res) => {
                     try {
                         render_request.end(res);
@@ -72,13 +77,16 @@ namespace Odysseus.Templating.HTTP {
                         // Try to render to WebInspector
                         var js_err = "\"Error fetching %s: %s\"".printf(
                                 url.escape(), err.message.escape());
+                        // Don't bother locking and let these occur wherever.
                         output.writes.begin(@"<script>console.warn($js_err)</script>");
                     }
 
                     if (inprogress.dec()) exec.callback();
                 });
             }
-            yield;
+            if (inprogress.count == 0) {
+                output.writes.begin("<script>console.warn('No requests to make!')</script>");
+            } else yield;
         }
 
         private async void render_request(Soup.Session session, string url,
@@ -91,7 +99,10 @@ namespace Odysseus.Templating.HTTP {
             var mime = req.get_content_type();
             var loop_vars = ByteUtils.create_map<Data.Data>();
             loop_vars[target] = yield build_response_data(mime, response);
-            loop.exec(new Data.Stack.with_map(ctx, loop_vars), output);
+
+            yield outputlock.enter();
+            yield loop.exec(new Data.Stack.with_map(ctx, loop_vars), output);
+            outputlock.exit();
         }
 
         private async Data.Data build_response_data(string mime, InputStream stream) throws Error {
@@ -115,11 +126,24 @@ namespace Odysseus.Templating.HTTP {
 
     /* This must to make `count` mutable within callback functions. */
     private class Semaphore {
-        int count;
+        public int count;
         public Semaphore(int count = 0) {this.count = count;}
         public bool dec() {
             this.count--;
             return this.count == 0;
         }
+    }
+
+    /* A very simplistic GLib mainloop mutex. */
+    private class Mutex {
+        private bool locked = false;
+        public async void enter() {
+            while (locked) {
+                Idle.add(enter.callback, Priority.LOW);
+                yield;
+            }
+            locked = true;
+        }
+        public void exit() {locked = false;}
     }
 }
