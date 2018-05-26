@@ -305,36 +305,6 @@ namespace Odysseus.Templating.Std {
         }
     }
 
-    // Includes custom tags from another template
-    // Requires a loading engine to work
-    private class IncludeBuilder : TagBuilder, Object {
-        public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            var path = File.new_for_path(parser.path);
-            path = path.resolve_relative_path(ByteUtils.to_string(args.next()));
-
-            Parser lib;
-            try {
-                lib = new Parser(resources_lookup_data(path.get_path(), 0));
-            } catch (SyntaxError err) {throw err;}
-            catch (Error err) {
-                throw new SyntaxError.INVALID_ARGS("Imported template is invalid! %s", err.message);
-            }
-            var sep = args.next_value();
-
-            if (sep != null) {
-                if (!ByteUtils.equals_str(sep, ":"))
-                    throw new SyntaxError.INVALID_ARGS(
-                            "Second arg must be ':' if it exists, got '%s'", ByteUtils.to_string(sep));
-                foreach (var tag in args)
-                    parser.local_tag_lib[tag] = lib.local_tag_lib[tag];
-            } else {
-                foreach (var tag in lib.local_tag_lib.keys)
-                    parser.local_tag_lib[tag] = lib.local_tag_lib[tag];
-            }
-            return null;
-        }
-    }
-
     /* This isn't tested, as it's intentionally non-determinate */
     private class RandomBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
