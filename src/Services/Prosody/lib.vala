@@ -60,53 +60,6 @@ namespace Odysseus.Templating.Std {
         }
     }
 
-    // Defines a function capable of recursion
-    private class Block : TagBuilder, Object {
-        public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            var name = args.next();
-            args.assert_end();
-
-            if (name[0] in "\"'".data)
-                throw new SyntaxError.INVALID_ARGS("Tagname %s cannot be a string!",
-                        ByteUtils.to_string(name));
-            if (tag_lib.has_key(name) || parser.local_tag_lib.has_key(name))
-                throw new SyntaxError.INVALID_ARGS("Tag %s is already defined!",
-                        ByteUtils.to_string(name));
-
-            var macro = new Macro();
-            parser.local_tag_lib[name] = macro;
-
-            WordIter? endtoken;
-            var body = parser.parse("endblock", out endtoken);
-            if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS(
-                    "{%% block %s %%} must be closed with a {%% endblock %%} tag",
-                    ByteUtils.to_string(name));
-            // Let the programmer add a note to the end tag, so don't check it.
-
-            macro.body = body;
-            return null;
-        }
-    }
-    private class Macro : TagBuilder, Object {
-        public Template body;
-        public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            return new BlockTag(this, parse_params(args));
-        }
-    }
-    private class BlockTag : Template {
-        // Indirect reference to body template in order to support recursion.
-        private Macro macro;
-        private Gee.Map<Bytes,Variable> args;
-        public BlockTag(Macro m, Gee.Map<Bytes,Variable> arguments) {
-            this.macro = m;
-            this.args = arguments;
-        }
-
-        public override async void exec(Data.Data ctx, Writer output) {
-            yield macro.body.exec(new Data.Lazy(args, ctx), output);
-        }
-    }
-
     private class DebugBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             args.assert_end();
