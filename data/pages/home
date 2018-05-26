@@ -53,15 +53,15 @@ and I take advantage of this page to promote project links. #}
     {% endmacro %}
     {% query 20 %}
       SELECT uri, order_, "pinned" AS cat,
-          "{% trans %}You 'pinned' this here{% endtrans %}" AS help
+          {% trans %}"You 'pinned' this here"{% endtrans %} AS help
         FROM topsites_whitelist ORDER BY order_ ASC;
       SELECT uri, {% q-tailrank %}, "history" AS cat,
-          "{% trans %}Frequently visited{% endtrans %}" AS help
+          {% trans %}"Frequently visited"{% endtrans %} AS help
         FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
       SELECT uri, {% q-tailrank %}, "recommendation" AS cat,
-          "{% trans %}Recommended by Adrian Cochrane{% endtrans %}" AS help
+          {% trans %}"Recommended by Adrian Cochrane"{% endtrans %} AS help
         FROM recommendations
         WHERE uri NOT IN (SELECT uri FROM page_visit) -- Only recommend new links.
         ORDER BY random() * weight;
