@@ -53,9 +53,7 @@ public class Odysseus.Application : Granite.Application {
         // Create main application window, upon restore failure.
         if (is_first_start) {
             var window = new BrowserWindow.from_new_entry();
-            /* TRANSLATORS: This is the link Odysseus opens on first launch.
-                Feel free to set it to whatever works best for your locale. */
-            window.new_tab(_("https://alcinnz.github.io/Odysseus-recommendations/"));
+            window.new_tab();
             window.show_all();
         } else Persist.restore_application();
     }
