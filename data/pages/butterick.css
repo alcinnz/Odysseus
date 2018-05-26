@@ -45,7 +45,7 @@ input[type=search]::-webkit-search-decoration {
 
 main nav {text-align: center; width: 720px; /* Fits 5 128px thumbnails + spacing */}
 main nav img {box-shadow: 2px 2px 2px gray; margin: 5px;}
-main nav img:hover {box-shadow: 4px 4px 4px black;}
+main nav img:hover {box-shadow: 4px 4px 4px;}
 
 footer {text-align: center; width: 100%;}
 

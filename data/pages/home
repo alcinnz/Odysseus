@@ -29,9 +29,13 @@ and I take advantage of this page to promote project links. #}
     @import url(odysseus:butterick.css);
     main {color: #ddd; text-align: center;}
     main hr {border: none; border-bottom: thin solid #eee; }
-    footer {position: fixed; bottom: 0;}
+    footer {position: fixed; bottom: 0; background: #fffa;}
 
+    /* Styling for the different link sources */
+    .pinned img:hover {color: #64baff;}
     .pinned form:first-of-type {background: #64baff;}
+    .history img:hover {color: #666;}
+    .recommendation img:hover {color: #9bdb4d;}
 
     /* Fixes for HTML5Sortable to work in the context of the topsites list. */
     .sortable-placeholder {display: inline-block; width: 132px;}
@@ -48,19 +52,24 @@ and I take advantage of this page to promote project links. #}
       AS order_
     {% endmacro %}
     {% query 20 %}
-      SELECT uri, order_, "pinned" AS cat FROM topsites_whitelist ORDER BY order_ ASC;
-      SELECT uri, {% q-tailrank %}, "history" AS cat
+      SELECT uri, order_, "pinned" AS cat,
+          "{% trans %}You 'pinned' this here{% endtrans %}" AS help
+        FROM topsites_whitelist ORDER BY order_ ASC;
+      SELECT uri, {% q-tailrank %}, "history" AS cat,
+          "{% trans %}Frequently visited{% endtrans %}" AS help
         FROM page_visit
         GROUP BY uri HAVING COUNT(*) >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY COUNT(*) DESC, MAX(visited_at) DESC;
-      SELECT uri, {% q-tailrank %}, "recommendations" AS cat
+      SELECT uri, {% q-tailrank %}, "recommendation" AS cat,
+          "{% trans %}Recommended by Adrian Cochrane{% endtrans %}" AS help
         FROM recommendations ORDER BY random() * weight;
     {% except %}
       SELECT 1 WHERE {{ uri }} NOT IN (SELECT uri FROM topsites_blacklist);
       SELECT 1 WHERE {{ uri }} IN (SELECT uri FROM screenshot_v2);
     {% each-row %}
       <figure class="{{ cat }}" tooltip="{{ cat }}" style="width: 132px; height: 132px;">
-        <a href="{{ uri }}">
+        <a href="{{ uri }}" title="{{ help }}
+{{ uri }}">
           <img {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
                 {% each-row %}src="data:image/png;base64,{{ image }}"{% endquery %}
                 height="128" width="128" />
@@ -121,10 +130,9 @@ and I take advantage of this page to promote project links. #}
         I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>!{% endtrans %}
     {% alt %}
       {% trans %}While Odysseus does store information about your browsing,
-        but that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you.{% endtrans %}
+        that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you.{% endtrans %}
     {% alt %}
-      {% trans %}Odysseus is <a href="https://liberapay.com/alcinnz/">crowdfunding</a>
-        for a server to help gather useful datasets and to better aid localization. Please chip in!{% endtrans %}
+      {% trans %}FYI: None of the links on this page were sponsered, no one paid for any of them.{% endtrans %}
   {% alt %}{% endrandom %}</footer>
 </body>
 </html>
