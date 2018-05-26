@@ -46,7 +46,8 @@ namespace Odysseus.Traits {
 
             var notify = new Notification(_("Web Download Completed"));
             var response = dl.download.response;
-            notify.set_body(response.uri);
+            var url = new Soup.URI(response.uri);
+            notify.set_body(url.path.rstr("/") + "\n" + url.host);
             notify.set_icon(dl.icon);
             Odysseus.Application.instance.send_notification(null, notify);
         });
