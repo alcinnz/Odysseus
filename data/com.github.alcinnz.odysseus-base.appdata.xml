@@ -114,5 +114,11 @@
         <p>Added a privacy notice.</p>
       </description>
     </release>
+    <release version="1.4.0" date="2018-05-26">
+      <description>
+        <p>Fills in gaps within the topsites display with my recommendations.</p>
+        <p>More succinct text in download notifications.</p>
+      </description>
+    </release>
   </releases>
 </component>
