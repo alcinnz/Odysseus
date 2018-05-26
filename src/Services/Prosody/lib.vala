@@ -857,7 +857,9 @@ namespace Odysseus.Templating.Std {
         var modes = AutoescapeBuilder.modes;
         modes[b("off")] = Gee.Map.empty<char,string>();
         modes[b("html")] = escape_html = ByteUtils.build_escapes("<>&'\"",
-                "&lt;", "&gt;", "&amp;", "&apos;", "&quot");;
+                "&lt;", "&gt;", "&amp;", "&apos;", "&quot;");
+        modes[b("html-lines")] = ByteUtils.build_escapes("<>&'\"\n",
+                "&lt;", "&gt;", "&amp;", "&apos;", "&quot;", "<br />");
         AutoescapeBuilder.modes[b("csv")] = ByteUtils.build_escapes("'\"", "\\'", "\\\"");
         // These escape codes taken from Django
         // https://github.com/django/django/blob/9718fa2e8abe430c3526a9278dd976443d4ae3c6/django/utils/html.py#L51
