@@ -708,19 +708,6 @@ namespace Odysseus.Templating.Std {
         public override Data.Data filter0(Data.Data a) {return a[this.key];}
     }
 
-    private class FloatFormatFilter : Filter {
-        public override Data.Data filter(Data.Data a, Data.Data places) {
-            string ret;
-            if (places is Data.Empty) {
-                ret = "%.1f".printf(a.to_double());
-                if (ret[ret.length - 1] == 0)
-                    ret = "%.0f".printf(a.to_double());
-            } else ret = "%%.%if".printf(places.to_int()).printf(a.to_double());
-
-            return new Data.Literal(ret);
-        }
-    }
-
     private class ForceEscape : Filter {
         public override bool? should_escape() {return false;}
 
@@ -790,34 +777,6 @@ namespace Odysseus.Templating.Std {
         }
     }
 
-    private class LineBreaksFilter : Filter {
-        public override Data.Data filter0(Data.Data text) {
-            var paragraphs = text.to_string().split("\n\n");
-            var builder = new StringBuilder();
-            foreach (var paragraph in paragraphs) {
-                builder.append("<p>");
-                builder.append(paragraph.strip().replace("\n", "<br />"));
-                builder.append("</p>\n");
-            }
-            return new Data.Literal(builder.str);
-        }
-    }
-
-    private class LineNumbersFilter : Filter {
-        public override Data.Data filter0(Data.Data text) {
-            var lines = text.to_string().split("\n");
-            var builder = new StringBuilder();
-            for (var i = 0; i < lines.length; i++) {
-                builder.printf("%i. ", i + 1);
-                builder.append(lines[i]);
-
-                // Replace newlines on all but the first & last lines.
-                if (i < lines.length - 1) builder.append_c('\n');
-            }
-            return new Data.Literal(builder.str);
-        }
-    }
-
     private class LookupFilter : Filter {
         public override Data.Data filter(Data.Data a, Data.Data expression) {
             return a.lookup(expression.to_string());
@@ -832,13 +791,6 @@ namespace Odysseus.Templating.Std {
 
     private class SafeFilter : Filter {
         public override bool? should_escape() {return false;}
-    }
-
-    private class StringFormatFilter : Filter {
-        public override Data.Data filter(Data.Data num, Data.Data format) {
-            var ret = ("%" + format.to_string()).printf(num.to_double());
-            return new Data.Literal(ret);
-        }
     }
 
     private class TitleFilter : Filter {
@@ -863,7 +815,6 @@ namespace Odysseus.Templating.Std {
             return new Data.Literal(builder.str);
         }
     }
-    // URL encode?
 
 
 
