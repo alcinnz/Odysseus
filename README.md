@@ -70,4 +70,4 @@ Help is always appreciated, so feel free to open a pull request! If you want to 
 
 For developers, the coding convention for Vala is GNOME's naming conventions with 4 space indents, another 4 space line continuations, and no spaces between method calls & their argument lists. Other style guides are strawn across the repository.
 
-If you want to help teach Oddysseus a new language, please visit https://www.transifex.com/none-483/odysseus/dashboard/. 
+If you want to help teach Oddysseus a new language, please visit https://github.com/alcinnz/Odysseus/wiki/Localizing-Odysseus. 
