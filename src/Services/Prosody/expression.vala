@@ -47,7 +47,7 @@ namespace Odysseus.Templating.Expression {
                     index, name);
         }
 
-        public abstract bool eval(Data.Data ctx);
+        public virtual bool eval(Data.Data ctx) {return num(ctx) != 0.0;}
         public virtual double num(Data.Data ctx) {
             return eval(ctx) ? 1.0 : 0.0;
         }
@@ -119,10 +119,12 @@ namespace Odysseus.Templating.Expression {
                     token = new LessEqual();
                 else if (packed == 0x3E3D) /* ">=" */
                     token = new GreaterEqual();
-                else if (packed == 0x3D3D) /* "==" */
+                else if (packed == 0x3D3D || packed == 0x3D) /* "==", "=" */
                     token = new EqualTo();
                 else if (packed == 0x213D) /* "!=" */
                     token = new NotEqual();
+                else if (packed == 0x25) /* "%" */
+                    token = new Remainder();
                 else
                     token = new Value(arg);
             }
@@ -233,6 +235,16 @@ namespace Odysseus.Templating.Expression {
         public override string name {get {return "!=";}}
 
         public override bool eval(Data.Data d) {return x.num(d) != y.num(d);}
+    }
+
+    private class Remainder : Infix {
+        public override int lbp {get {return 50;}}
+        public override string name {get {return "%";}}
+
+        public override double num(Data.Data d) {
+            var a = (int) x.num(d); var b = (int) y.num(d);
+            return (double) (a % b);
+        }
     }
 
     private class Value : Expression {
