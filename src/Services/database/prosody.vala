@@ -223,7 +223,9 @@ namespace Odysseus.Database.Prosody {
             // Don't assert end, so templates can indicate which args they expect.
 
             WordIter endtoken;
-            var body = parser.scan_until("endmacro", out endtoken);
+            Bytes body;
+            // parse() does a better job reporting errors than scan_until().
+            parser.parse("endmacro", out endtoken, out body);
             if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endmacro %%}!");
 
             parser.local_tag_lib[name] = new MacroBuilder(ByteUtils.strip(body), parser.local_tag_lib);
