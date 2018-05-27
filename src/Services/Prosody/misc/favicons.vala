@@ -15,8 +15,7 @@
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 /** Template filter for accessing the WebKit Favicon Database. */
-namespace Odysseus.Services {
-    using Templating;
+namespace Odysseus.Templating.Ext {
 
     /** Translates a URI into one for it's favicon. */
     private class FaviconFilter : Filter {
@@ -26,9 +25,5 @@ namespace Odysseus.Services {
             return new Data.Literal(uri == null ?
                 "gtk-icon:16/web-browser-symbolic" : uri);
         }
-    }
-
-    public void register_favicon_filters() {
-        register_filter("favicon", new FaviconFilter());
     }
 }

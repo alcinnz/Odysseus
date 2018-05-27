@@ -9,11 +9,11 @@ nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history',
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll',
         'fix-plus.google.com', 'fix-bg-videos']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
-services = ['pages', 'Completer', 'globals', 'icons', 'favicons']
+services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'byteutils']
-prosody_misc = ['jsondata', 'http', 'diff', 'i18n', 'tsv']
+prosody_misc = ['jsondata', 'http', 'diff', 'i18n', 'tsv', 'favicons']
 models = ['Download', 'DownloadSet', 'ImageUtil']
 
 foreach f : header_widgets

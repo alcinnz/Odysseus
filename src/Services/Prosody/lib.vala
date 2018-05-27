@@ -851,6 +851,7 @@ namespace Odysseus.Templating.Std {
         register_filter("diff", new DiffFilter()); // *
         register_filter("escape", new EscapeFilter());
         register_filter("escapeURI", new EscapeURIFilter());
+        register_filter("favicon", new Ext.FaviconFilter());
         register_filter("filesize", new FileSizeFormatFilter());
         register_filter("first", new FirstFilter());
         register_filter("force-escape", new ForceEscape());

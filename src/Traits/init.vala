@@ -39,7 +39,6 @@ namespace Odysseus.Traits {
 
         // Register extended tags needed by templates.
         Database.Prosody.register_query_tags();
-        Services.register_favicon_filters();
     }
 
     public void setup_webview(WebTab tab) {
