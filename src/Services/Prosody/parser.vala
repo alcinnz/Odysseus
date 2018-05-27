@@ -501,10 +501,17 @@ namespace Odysseus.Templating {
 
                 compiled_filters.add(new FilterCall(cb, filter_arg));
             }
-            this.filters = compiled_filters.to_array();
 
-            if (should_escape && escapes != null) this.escapes = escapes;
+            if (should_escape && escapes != null) {
+                if (escapes.has_key(0)) {
+                    var escapeFilter = filter_lib[b(escapes[0])];
+                    compiled_filters.add(new FilterCall(escapeFilter, nilvar));
+                    this.escapes = new Gee.HashMap<char,string>();
+                } else this.escapes = escapes;
+            }
             else this.escapes = new Gee.HashMap<char,string>();
+
+            this.filters = compiled_filters.to_array();
         }
 
         public override async void exec(Data.Data ctx, Writer output) {

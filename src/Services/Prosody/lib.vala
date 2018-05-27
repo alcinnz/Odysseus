@@ -695,6 +695,13 @@ namespace Odysseus.Templating.Std {
         public override bool? should_escape() {return true;}
     }
 
+    private class EscapeURIFilter : Filter {
+        public override bool? should_escape() {return true;}
+        public override Data.Data filter0(Data.Data a) {
+            return new Data.Literal(Soup.URI.encode(a.to_string(), "#?&=/"));
+        }
+    }
+
     private class FileSizeFormatFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
             return new Data.Literal(format_size(a.to_int()));
@@ -843,6 +850,7 @@ namespace Odysseus.Templating.Std {
         register_filter("default", new DefaultFilter());
         register_filter("diff", new DiffFilter()); // *
         register_filter("escape", new EscapeFilter());
+        register_filter("escapeURI", new EscapeURIFilter());
         register_filter("filesize", new FileSizeFormatFilter());
         register_filter("first", new FirstFilter());
         register_filter("force-escape", new ForceEscape());
@@ -871,7 +879,8 @@ namespace Odysseus.Templating.Std {
         for (char z = 0; z < 32; z++)
             escape_js_string[z] = "\\u%04X".printf(z);
         modes[b("js-string")] = escape_js_string;
-        modes[b("uri")] = ByteUtils.build_escapes(":/?&=#", "%3A", "%2F", "%3F", "%26", "%3D", "%23");
+        modes[b("uri")] = ByteUtils.build_escapes("");
+        modes[b("uri")][0] = "escapeURI"; // Ugly hack to call better maintained logic.
         modes[b("url")] = modes[b("uri")];
 
         // * indicates the tag or filter was added for use by the testrunner.
