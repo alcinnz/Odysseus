@@ -65,8 +65,7 @@ namespace Odysseus.Templating.HTTP {
             yield body.exec(ctx, capture);
             var urls = capture.grab_string().split_set(" \t\r\n");
 
-            var session = new Soup.Session();
-            session.add_feature(new Soup.ContentSniffer());
+            var session = build_session();
             var inprogress = new Semaphore(urls.length);
             foreach (var url in urls) {
                 if (url == "") {inprogress.dec(); continue;}
@@ -88,6 +87,14 @@ namespace Odysseus.Templating.HTTP {
             if (inprogress.count == 0) {
                 output.writes.begin("<script>console.warn('No requests to make!')</script>");
             } else yield;
+        }
+
+        public static string user_agent = "Prosody-template";
+        private Soup.Session build_session() {
+            var session = new Soup.Session();
+            session.user_agent = user_agent;
+            session.add_feature(new Soup.ContentSniffer());
+            return session;
         }
 
         private async void render_request(Soup.Session session, string url,
