@@ -23,7 +23,12 @@ namespace Odysseus.Templating.HTTP {
     using Std;
     public class FetchBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            var cache_flag = args.next_value();
+            if (cache_flag != null && !ByteUtils.equals_str(cache_flag, "permacached"))
+                throw new SyntaxError.INVALID_ARGS(
+                        "First arg to {%% fetch %%}, if any, must be 'permacached'!");
             args.assert_end();
+
             WordIter endtoken;
             var prevMode = parser.escapes;
             parser.escapes = Std.AutoescapeBuilder.modes[b("url")];
@@ -43,7 +48,7 @@ namespace Odysseus.Templating.HTTP {
                 throw new SyntaxError.INVALID_ARGS(
                         "{%% fetch %%} must be closed with an {%% endfetch %%}");
             endtoken.next(); endtoken.assert_end();
-            return new FetchTag(request, target, loop);
+            return new FetchTag(request, cache_flag == null, target, loop);
         }
     }
 
@@ -53,11 +58,12 @@ namespace Odysseus.Templating.HTTP {
         private Template body;
         private Template loop;
         private Bytes target;
+        private bool nocache;
 
         private Mutex outputlock = new Mutex();
 
-        public FetchTag(Template body, Bytes target, Template loop) {
-            this.body = body; this.target = target; this.loop = loop;
+        public FetchTag(Template body, bool nocache, Bytes target, Template loop) {
+            this.body = body; this.nocache = nocache; this.target = target; this.loop = loop;
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
@@ -93,13 +99,23 @@ namespace Odysseus.Templating.HTTP {
         private Soup.Session build_session() {
             var session = new Soup.Session();
             session.user_agent = user_agent;
+            // Required in order to read the ContentType header.
             session.add_feature(new Soup.ContentSniffer());
+
+            if (!nocache) {
+                var cache = new Soup.Cache(Odysseus.build_config_path("addons"), Soup.CacheType.SINGLE_USER);
+                // If the UI's caching something from the Web, keep it around!
+                // FIXME clear expired items.
+                cache.set_max_size(uint.MAX);
+                session.add_feature(cache);
+            }
             return session;
         }
 
         private async void render_request(Soup.Session session, string url,
                 Data.Data ctx, Writer output) throws Error {
             var req = session.request_http("GET", url);
+            req.get_message().request_headers.append("Accept", ACCEPTS);
             var response = yield req.send_async(null);
             var status = req.get_message().status_code;
             if (status != 200) throw new HTTPError.STATUS_CODE("HTTP %u", status);
@@ -113,6 +129,7 @@ namespace Odysseus.Templating.HTTP {
             outputlock.exit();
         }
 
+        private const string ACCEPTS = "application/json, text/tsv, text/tab-separated-values";
         private async Data.Data build_response_data(string mime, InputStream stream) throws Error {
             if ("json" in mime) {
                 var json = new Json.Parser();
