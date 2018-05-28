@@ -34,8 +34,7 @@ namespace Odysseus.Services {
         url["scheme"] = new Templating.Data.Literal(parser.scheme);
         url["user"] = new Templating.Data.Literal(parser.user);
 
-        var query = Templating.ByteUtils.create_map<Templating.Data.Data>();
-        url["query"] = new Templating.Data.Mapping(query, parser.query);
+        var q = Templating.ByteUtils.create_map<Gee.List<Templating.Data.Data>>();
         foreach (var keyvalue in parser.query.split("&")) {
             var segments = keyvalue.split("=", 2);
             if (segments.length == 0) {
@@ -44,23 +43,18 @@ namespace Odysseus.Services {
             }
             // TODO code cleanup, coerce better between string and list.
             var key = b(segments[0]);
-            Templating.Data.Data val = new Templating.Data.Literal(true);
+            Templating.Data.Data val = new Templating.Data.Literal("");
             if (segments.length > 1) val = new Templating.Data.Literal(segments[1]);
 
-            if (query.has_key(key)) {
-                var vals = query[key];
-                if (vals is Templating.Data.Literal) {
-                    vals = new Templating.Data.Mapping(null, query[key].to_string());
-                    vals["$0"] = query[key];
-                }
-
-                assert(vals is Templating.Data.Mapping);
-                var val_list = vals as Templating.Data.Mapping;
-                val_list["$%i".printf(val_list.to_int())] = val;
-                val = vals;
-            }
-            query[key] = val;
+            if (!q.has_key(key)) q[key] = new Gee.ArrayList<Templating.Data.Data>();
+            var vals = q[key];
+            vals.add(val);
         }
+
+        var query = Templating.ByteUtils.create_map<Templating.Data.Data>();
+        url["query"] = new Templating.Data.Mapping(query, parser.query);
+        foreach (var p in q.entries)
+            query[p.key] = new Templating.Data.List(p.value);
 
         // Predominantly used by the bad-certificate error page.
         if (url_text.has_prefix("https://")) {
