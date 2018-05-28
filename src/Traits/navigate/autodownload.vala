@@ -53,6 +53,7 @@ namespace Odysseus.Traits {
 
         web.load_failed.connect((load_evt, uri, err) => {
             // 101 = CANNOT_SHOW_URI
+            // FIXME Add a fallback that helps surfers find apps to use.
             if (err.matches(WebKit.PolicyError.quark(), 101) &&
                     // If it's an HTTP(S) URI, it's just going to keep failing.
                     !uri.has_prefix("http:") && !uri.has_prefix("https:")) {
