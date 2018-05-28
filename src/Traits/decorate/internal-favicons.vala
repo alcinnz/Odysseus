@@ -21,13 +21,7 @@ namespace Odysseus.Traits {
     private void setup_internal_favicons(WebTab tab) {
         var web = tab.web;
         web.notify["title"].connect((pspec) => {
-            // Checks for whether we want to act
-            var uri = tab.web.uri;
-            var is_internal_page = tab.is_internal_page ||
-                    uri.has_prefix("odysseus:") || uri.has_prefix("oddysseus:")
-                    || uri.has_prefix("source:");
-            if (!is_internal_page) return;
-            var title = tab.web.title;
+            var title = tab.web.title.chug();
             if (title[0] != '[') return;
 
             // Extract icon from title & set it on the tab

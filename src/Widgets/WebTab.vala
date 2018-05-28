@@ -21,7 +21,6 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     public int64 tab_id;
     public int order = -1;
-    public bool is_internal_page {get; set; default = false;}
 
     public string url {
         get {return web.uri;}
@@ -133,10 +132,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
             } else status = default_status;
         });
 
-        web.load_changed.connect((load_evt) => {
-            if (load_evt == WebKit.LoadEvent.STARTED) is_internal_page = false;
-            Persist.on_browse();
-        });
+        web.load_changed.connect((load_evt) => Persist.on_browse());
     }
 
     private static Sqlite.Statement? Qinsert_new;

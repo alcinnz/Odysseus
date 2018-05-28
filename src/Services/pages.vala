@@ -42,6 +42,7 @@ namespace Odysseus.Services {
                 warning("Malformed query string '%s'", parser.query);
                 continue;
             }
+            // TODO code cleanup, coerce better between string and list.
             var key = b(segments[0]);
             Templating.Data.Data val = new Templating.Data.Literal(true);
             if (segments.length > 1) val = new Templating.Data.Literal(segments[1]);
@@ -118,7 +119,6 @@ namespace Odysseus.Services {
             Templating.Data.Data? data = null,
             Templating.TagBuilder? error_tag = null) {
         var webview = tab.web;
-        tab.is_internal_page = true;
 
         var alternative_uri = webview.uri;
         if (alt_uri != null) alternative_uri = alt_uri;
