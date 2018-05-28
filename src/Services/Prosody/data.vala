@@ -248,6 +248,10 @@ namespace Odysseus.Templating.Data {
         }
         public List.from_array(Data[] inner) {this.inner = inner;}
 
+        public override string to_string() {
+            // This semantic is mostly useful for query parameters, as it nicely coerces between lists and arrays.
+            return inner[0].to_string();
+        }
         public override void foreach_map(Data.ForeachMap cb) {
             foreach (var item in inner)
                 if (cb(b(""), item)) break;

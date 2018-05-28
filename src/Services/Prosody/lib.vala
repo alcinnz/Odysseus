@@ -800,6 +800,13 @@ namespace Odysseus.Templating.Std {
         public override bool? should_escape() {return false;}
     }
 
+    /* Explicit coercion potentially useful for working with SQL results or query params. */
+    private class TextFilter : Filter {
+        public override Data.Data filter0(Data.Data text) {
+            return new Data.Literal(text.to_string());
+        }
+    }
+
     private class TitleFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
             var builder = new StringBuilder();
@@ -861,6 +868,7 @@ namespace Odysseus.Templating.Std {
         register_filter("lengthis", new LengthIsFilter());
         register_filter("lower", new LowerFilter());
         register_filter("safe", new SafeFilter());
+        register_filter("text", new TextFilter());
         register_filter("title", new TitleFilter());
 
         var modes = AutoescapeBuilder.modes;
