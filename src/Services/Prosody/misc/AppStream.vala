@@ -28,7 +28,7 @@ And given I can link to app descriptions where they can be installed via simple
         challenging bit is getting at the data, which is what's done here. */
 namespace Odysseus.Templating.ExtAppStram {
     using AppStream;
-    // Now allow templates to access this.
+
     public class AppStreamBuilder : TagBuilder, Object {
         private weak AppStream.Pool pool;
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
