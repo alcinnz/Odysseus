@@ -385,6 +385,33 @@ namespace Odysseus.Templating {
         public virtual async void writes(string text) {
             yield write(b(text));
         }
+        // Utility methods predominatly for variable nodes to use.
+        public static Gee.Map<uint8,string>? _html = null;
+        public static Gee.Map<uint8,string> html() {
+            if (_html == null) _html = build_escapes("<>&'\"",
+                    "&lt;", "&gt;", "&amp;", "&apos;", "&quot;");
+            return _html;
+        }
+        public virtual async void escaped(Slice text, Gee.Map<uint8,string>? subs = html()) {
+            if (text == null) return;
+            if (subs == null || subs.size == 0) {yield write(text._); return;}
+
+            var needles = subs.keys.to_array();
+            subs['\0'] = "\0";
+
+            int start = 0; int end = 0;
+            while (end < text.length) {
+                var sub = subs[text.find_next(needles, ref end)];
+                yield write(text[start:end]._); yield writes(sub);
+                start = ++end;
+            }
+        }
+        public static Gee.Map<uint8,string> build_escapes(string needles, ...) {
+            var subs = va_list();
+            var escapes = new Gee.HashMap<uint8, string>();
+            foreach (var needle in needles.data) escapes[needle] = subs.arg();
+            return escapes;
+        }
     }
     public abstract class Template : Object {
         // Used to help the user debug unbalanced tags
