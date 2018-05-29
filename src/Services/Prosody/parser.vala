@@ -503,7 +503,7 @@ namespace Odysseus.Templating {
             }
 
             if (should_escape && escapes != null) {
-                if (escapes.has_key(0)) {
+                if (escapes.has_key(0) && filter_lib.has_key(b(escapes[0]))) {
                     var escapeFilter = filter_lib[b(escapes[0])];
                     compiled_filters.add(new FilterCall(escapeFilter, nilvar));
                     this.escapes = new Gee.HashMap<char,string>();
