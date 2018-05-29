@@ -65,10 +65,6 @@ namespace Odysseus.Traits {
     public void setup_report_errors(WebTab tab) {
         var web = tab.web;
 
-        web.web_process_crashed.connect(() => {
-            report_error("crashed", web.uri, tab);
-            return true;
-        });
         web.load_failed_with_tls_errors.connect((uri, certificate, error) => {
             report_error("bad-certificate", uri, tab);
             // This is to debug potential hostname parsing problems.
