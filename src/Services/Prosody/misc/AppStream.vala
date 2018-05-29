@@ -94,7 +94,7 @@ namespace Odysseus.Templating.ExtAppStram {
             // 5. Render via a common template
             var data = Data.Let.build(b("pacman"), new Data.Literal(pacman),
                     Data.Let.build(b("apps"), new Data.List.from_array(app_list)));
-            renderer.exec(data, output);
+            yield renderer.exec(data, output);
         }
     }
 }
