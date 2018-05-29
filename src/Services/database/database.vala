@@ -49,11 +49,8 @@ namespace Odysseus.Database {
         int version = 0;
         err = main_db.exec("PRAGMA user_version;", (n, values, columns) => {
             version = int.parse(values[0]);
-            stdout.printf("%i\n", version);
-            var raw_data = Templating.ByteUtils.create_map<Templating.Data.Data>();
-            raw_data[Templating.ByteUtils.from_string("v")] =
-                    new Templating.Data.Literal(version);
-            var data = new Templating.Data.Mapping(raw_data);
+            var v = Templating.ByteUtils.from_string("v");
+            var data = Templating.Data.Let.build(v, new Templating.Data.Literal(version));
 
             var upgrade_path = "/io/github/alcinnz/Odysseus/database/init.sql";
             Templating.ErrorData? error_data = null;

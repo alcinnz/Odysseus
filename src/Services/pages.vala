@@ -17,24 +17,23 @@
 
 /** Exposes our GLib.Resource templates to WebKit. */
 namespace Odysseus.Services {
-    /* shortname for Templating.ByteUtils.from_string */
-    private Bytes b(string s) {return Templating.ByteUtils.from_string(s);}
+    using Templating;
+    /* shortname for ByteUtils.from_string */
+    private Bytes b(string s) {return ByteUtils.from_string(s);}
 
-    private Templating.Data.Data parse_url_to_prosody(string url_text) {
-        var ctx = new Templating.Data.Mapping();
-        var url = new Templating.Data.Mapping(null, url_text);
-        ctx["url"] = url;
-
+    private Data.Data parse_url_to_prosody(string url_text) {
+        var url = new Data.Mapping(null, url_text);
         var parser = new Soup.URI(url_text);
-        url["fragment"] = new Templating.Data.Literal(parser.fragment);
-        url["host"] = new Templating.Data.Literal(parser.host);
-        url["password"] = new Templating.Data.Literal(parser.password);
-        url["path"] = new Templating.Data.Literal(parser.path);
-        url["port"] = new Templating.Data.Literal(parser.port);
-        url["scheme"] = new Templating.Data.Literal(parser.scheme);
-        url["user"] = new Templating.Data.Literal(parser.user);
 
-        var q = Templating.ByteUtils.create_map<Gee.List<Templating.Data.Data>>();
+        url["fragment"] = new Data.Literal(parser.fragment);
+        url["host"] = new Data.Literal(parser.host);
+        url["password"] = new Data.Literal(parser.password);
+        url["path"] = new Data.Literal(parser.path);
+        url["port"] = new Data.Literal(parser.port);
+        url["scheme"] = new Data.Literal(parser.scheme);
+        url["user"] = new Data.Literal(parser.user);
+
+        var q = ByteUtils.create_map<Gee.List<Data.Data>>();
         foreach (var keyvalue in parser.query.split("&")) {
             var segments = keyvalue.split("=", 2);
             if (segments.length == 0) {
@@ -43,65 +42,61 @@ namespace Odysseus.Services {
             }
             // TODO code cleanup, coerce better between string and list.
             var key = b(segments[0]);
-            Templating.Data.Data val = new Templating.Data.Literal("");
-            if (segments.length > 1) val = new Templating.Data.Literal(segments[1]);
+            Data.Data val = new Data.Literal("");
+            if (segments.length > 1) val = new Data.Literal(segments[1]);
 
-            if (!q.has_key(key)) q[key] = new Gee.ArrayList<Templating.Data.Data>();
+            if (!q.has_key(key)) q[key] = new Gee.ArrayList<Data.Data>();
             var vals = q[key];
             vals.add(val);
         }
 
-        var query = Templating.ByteUtils.create_map<Templating.Data.Data>();
-        url["query"] = new Templating.Data.Mapping(query, parser.query);
-        foreach (var p in q.entries)
-            query[p.key] = new Templating.Data.List(p.value);
+        var query = ByteUtils.create_map<Data.Data>();
+        url["query"] = new Data.Mapping(query, parser.query);
+        foreach (var p in q.entries) query[p.key] = new Data.List(p.value);
 
         // Predominantly used by the bad-certificate error page.
         if (url_text.has_prefix("https://")) {
             var http_url = "http" + url_text["https".length:url_text.length];
-            url["http"] = new Templating.Data.Literal(http_url);
+            url["http"] = new Data.Literal(http_url);
         }
 
 		// And add content-negotiation header
         var langs = Intl.get_language_names();
-        var langs_data = new Templating.Data.Data[langs.length];
+        var langs_data = new Data.Data[langs.length];
         for (var i = 0; i < langs.length; i++) {
-            langs_data[i] = new Templating.Data.Literal(langs[i]);
+            langs_data[i] = new Data.Literal(langs[i]);
         }
-        ctx["LOCALE"] = new Templating.Data.List.from_array(langs_data);
 
-        return ctx;
+        return Data.Let.build(b("url"), url,
+                Data.Let.build(b("LOCALE"), new Data.List.from_array(langs_data)));
     }
 
     private void render_error(WebKit.URISchemeRequest request, string error,
-            Templating.Data.Data? base_data = null,
-            Templating.TagBuilder? error_tag = null) {
+            Data.Data base_data = new Data.Empty(),
+            TagBuilder? error_tag = null) {
         try {
             var path = "/" + Path.build_path("/",
                     "io", "github", "alcinnz", "Odysseus", "odysseus:", error);
 
-            var data = new Templating.Data.Mapping();
-            data["url"] = new Templating.Data.Literal(request.get_uri());
-            data["path"] = new Templating.Data.Literal(request.get_path());
-            Templating.Data.Data data_ = data;
-            if (base_data != null) data_ = new Templating.Data.Stack(data, base_data);
+            var data = Data.Let.build(b("url"), new Data.Literal(request.get_uri()),
+                    Data.Let.build(b("path"), new Data.Literal(request.get_path()),
+                    base_data));
 
-            Templating.ErrorData? error_data = null;
-            Templating.Template template;
+            ErrorData? error_data = null;
+            Template template;
             if (error_tag == null)
-                template = Templating.get_for_resource(path, ref error_data);
+                template = get_for_resource(path, ref error_data);
             else {
                 // Parse specially with the custom {% error-line %} tag.
                 var bytes = resources_lookup_data(path, 0);
-                var parser = new Templating.Parser(bytes);
-                var error_line_key = Templating.ByteUtils.from_string("error-line");
-                parser.local_tag_lib[error_line_key] = error_tag;
+                var parser = new Parser(bytes);
+                parser.local_tag_lib[b("error-line")] = error_tag;
                 template = parser.parse();
             }
 
-            var stream = new Templating.InputStreamWriter();
+            var stream = new InputStreamWriter();
             request.finish(stream, -1, "text/html");
-            template.exec.begin(data_, stream, (obj, res) => stream.close_write());
+            template.exec.begin(data, stream, (obj, res) => stream.close_write());
         } catch (Error err) {
             warning("Error reporting errors.");
             request.finish_error(err);
@@ -110,8 +105,8 @@ namespace Odysseus.Services {
 
     public async void render_alternate_html(WebTab tab,
             string subpath, string? alt_uri = null, bool render_errors = true,
-            Templating.Data.Data? data = null,
-            Templating.TagBuilder? error_tag = null) {
+            Data.Data? data = null,
+            TagBuilder? error_tag = null) {
         var webview = tab.web;
 
         var alternative_uri = webview.uri;
@@ -119,20 +114,19 @@ namespace Odysseus.Services {
 
         var path = "/" + Path.build_path("/",
                 "io", "github", "alcinnz", "Odysseus", "odysseus:", subpath);
-        Templating.Template template;
-        Templating.ErrorData? error_data = null;
+        Template template;
+        ErrorData? error_data = null;
         try {
             if (error_tag == null)
-                template = Templating.get_for_resource(path, ref error_data);
+                template = get_for_resource(path, ref error_data);
             else {
                 // Parse specially with custom {% error-line %} tag.
                 var bytes = resources_lookup_data(path, 0);
-                var parser = new Templating.Parser(bytes);
-                var error_line_key = Templating.ByteUtils.from_string("error-line");
-                parser.local_tag_lib[error_line_key] = error_tag;
+                var parser = new Parser(bytes);
+                parser.local_tag_lib[b("error-line")] = error_tag;
                 template = parser.parse();
             }
-        } catch (Templating.SyntaxError e) {
+        } catch (SyntaxError e) {
             if (render_errors)
                 yield render_alternate_html(tab, "SERVER-ERROR",
                         alt_uri, false, error_data, error_data.tag);
@@ -146,12 +140,12 @@ namespace Odysseus.Services {
             return;
         }
 
-        Templating.Data.Data full_data;
+        Data.Data full_data;
         if (data != null)
-            full_data = new Templating.Data.Stack(data, parse_url_to_prosody(alternative_uri));
+            full_data = new Data.Stack(data, parse_url_to_prosody(alternative_uri));
         else full_data = parse_url_to_prosody(alternative_uri);
 
-        var stream = new Templating.CaptureWriter();
+        var stream = new CaptureWriter();
         yield template.exec(full_data, stream);
         var content = stream.grab_string();
         webview.load_alternate_html(content, alternative_uri, alternative_uri);
@@ -170,20 +164,20 @@ namespace Odysseus.Services {
         if (mime_type[0] == '+') {
             mime_type = mime_type[1:mime_type.length];
 
-            Templating.Template template;
-            Templating.ErrorData? error_data = null;
+            Template template;
+            ErrorData? error_data = null;
             try {
-                template = Templating.get_for_resource(path, ref error_data);
-            } catch (Templating.SyntaxError e) {
+                template = get_for_resource(path, ref error_data);
+            } catch (SyntaxError e) {
                 render_error(request, "SERVER-ERROR", error_data, error_data.tag);
                 return;
             } catch (Error e) {
                 render_error(request, "NOT-FOUND");
                 return;
             }
-            Templating.Data.Data data = parse_url_to_prosody(request.get_uri());
+            Data.Data data = parse_url_to_prosody(request.get_uri());
 
-            var stream = new Templating.InputStreamWriter();
+            var stream = new InputStreamWriter();
             request.finish(stream, -1, mime_type);
             template.exec.begin(data, stream, (obj, res) => stream.close_write());
         } else {

@@ -84,7 +84,7 @@ namespace Odysseus.Templating.Std {
             var filter_tail = args.next();
             args.assert_end();
 
-            var filter = "body|" + ByteUtils.to_string(filter_tail);
+            var filter = "$|" + ByteUtils.to_string(filter_tail);
             var variable = new Variable(b(filter));
 
             WordIter? endtoken;
@@ -109,9 +109,7 @@ namespace Odysseus.Templating.Std {
             yield body.exec(ctx, capture);
             var text = capture.grab_data();
 
-            var fake_ctx = ByteUtils.create_map<Data.Data>();
-            fake_ctx[b("body")] = new Data.Substr(text);
-            yield filter.exec(new Data.Mapping(fake_ctx), output);
+            yield filter.exec(Data.Let.build(b("$"), new Data.Substr(text)), output);
         }
     }
 
@@ -168,15 +166,13 @@ namespace Odysseus.Templating.Std {
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            Gee.Map<Bytes, Data.Data> local_vars = ByteUtils.create_map<Data.Data>();
-            Data.Data local_context = new Data.Stack.with_map(ctx, local_vars);
             var isempty = true;
 
             foreach (var e in collection.eval(ctx).to_array()) {
                 isempty = false;
-                local_vars[keyvar] = new Data.Substr(e.key);
-                local_vars[valuevar] = e.val;
-                yield body.exec(local_context, output);
+                // NOTE: valuevar is defined in the outermost context for a minor performance gain.
+                var local_ctx = Data.Let.build(keyvar, new Data.Substr(e.key), ctx);
+                yield body.exec(Data.Let.build(valuevar, e.val, local_ctx), output);
             }
 
             if (isempty) yield empty_block.exec(ctx, output);

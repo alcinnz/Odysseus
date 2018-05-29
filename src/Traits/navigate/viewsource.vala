@@ -17,6 +17,7 @@
 
 using Odysseus.Services;
 namespace Odysseus.Traits {
+    using Templating;
     public async string view_source(WebKit.WebView source) {
         var data = new Source();
         data.title = source.title;
@@ -39,27 +40,30 @@ namespace Odysseus.Traits {
     }
     private Gee.Map<string, Source>? sources = null; // UGLY HACK
 
+    private Data.Data let(string k, Data.Data v, Data.Data b = new Data.Empty()) {
+        return Data.Let.build(ByteUtils.from_string(k), v, b);
+    }
+    private Data.Data lit(string s) {return new Data.Literal(s);}
+
     public void handle_source_uri(WebKit.URISchemeRequest request) {
         if (sources != null && sources.has_key(request.get_uri())) {
             var resource = sources[request.get_uri()];
             sources.unset(request.get_uri());
 
-            var data = Templating.ByteUtils.create_map<Templating.Data.Data>();
-            data[Templating.ByteUtils.from_string("source")] = new Templating.Data.Substr(resource.code);
-            data[Templating.ByteUtils.from_string("title")] = new Templating.Data.Literal(resource.title);
             var url = request.get_uri();
-            url = url["source:".length:url.length];
-            data[Templating.ByteUtils.from_string("url")] = new Templating.Data.Literal(url);
+            var data = let("source", new Data.Substr(resource.code),
+                    let("title", lit(resource.title),
+                    let("url", lit(url["source:".length:url.length]))));
 
             try {
-                Templating.ErrorData? ignored = null;
-                var template = Templating.get_for_resource(
+                ErrorData? ignored = null;
+                var template = get_for_resource(
                         "/io/github/alcinnz/Odysseus/odysseus:/special/viewsource",
                         ref ignored);
                 // This is the reason for the hack: InputStreamWriter
-                var stream = new Templating.InputStreamWriter();
+                var stream = new InputStreamWriter();
                 request.finish(stream, -1, "text/html");
-                template.exec.begin(new Templating.Data.Mapping(data), stream, (obj, res) => stream.close_write());
+                template.exec.begin(data, stream, (obj, res) => stream.close_write());
             } catch (Error err) {
                // Don't bother reporting errors better
                request.finish_error(err); 
@@ -68,7 +72,7 @@ namespace Odysseus.Traits {
             // If we're not viewing alternate HTML under this schema,
             //      close any tabs that have persisted. 
             var response = _("Please go through the \"View Source\" menu item.");
-            var stream = new MemoryInputStream.from_bytes(Templating.ByteUtils.from_string(response));
+            var stream = new MemoryInputStream.from_bytes(ByteUtils.from_string(response));
             request.finish(stream, response.length, "text/html");
         }
     }

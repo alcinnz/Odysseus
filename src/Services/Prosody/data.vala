@@ -360,4 +360,33 @@ namespace Odysseus.Templating.Data {
                 if (cb(key)) break;
         }
     }
+
+    public class Let : Data {
+        private Bytes key;
+        private Data val;
+        private Data fallback;
+
+        private Let() {}
+        public static Data build(Bytes key, Data val, Data fallback = new Empty()) {
+            if (key == null || key.length == 0) return fallback;
+
+            var self = new Let();
+            self.key = key; self.val = val; self.fallback = fallback;
+            return self;
+        }
+
+        public override Data get(Bytes index) {
+            if (index.compare(key) == 0) return val;
+            else return fallback[index];
+        }
+
+        public override string to_string() {return fallback.to_string();}
+        public override bool exists {get {return true;}}
+        public override int to_int(out bool is_length = null) {
+            return fallback.to_int(out is_length);
+        }
+        public override void @foreach(Data.Foreach cb) {
+            if (!cb(key)) fallback.@foreach(cb);
+        }
+    }
 }

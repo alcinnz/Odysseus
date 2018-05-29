@@ -120,12 +120,10 @@ namespace Odysseus.Templating.HTTP {
             var status = req.get_message().status_code;
             if (status != 200) throw new HTTPError.STATUS_CODE("HTTP %u", status);
 
-            var mime = req.get_content_type();
-            var loop_vars = ByteUtils.create_map<Data.Data>();
-            loop_vars[target] = yield build_response_data(mime, response);
+            var resp = yield build_response_data(req.get_content_type(), response);
 
             yield outputlock.enter();
-            yield loop.exec(new Data.Stack.with_map(ctx, loop_vars), output);
+            yield loop.exec(Data.Let.build(target, resp, ctx), output);
             outputlock.exit();
         }
 
