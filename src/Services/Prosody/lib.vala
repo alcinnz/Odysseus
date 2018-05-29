@@ -68,24 +68,12 @@ namespace Odysseus.Templating.Std {
     }
     private class DebugTag : Template {
         public override async void exec(Data.Data ctx, Writer output) {
-            // This step ensures we can yield from inside the loop body.
-            var keys = new Gee.ArrayList<Bytes>();
-            ctx.@foreach_map((key, val) => {
-                keys.add(key);
-                keys.add(val.to_bytes());
-                return false;
-            });
-
-            // The real work!
             yield output.writes("<dl>");
-            for (var i = 0; i < keys.size; i++) {
-              yield output.writes("<dt>");
-              yield output.write(keys[i]);
-              yield output.writes("</dt>");
-              i++;
-              yield output.writes("<dd>");
-              yield output.write(keys[i]);
-              yield output.writes("</dd>\n");
+            foreach (var e in ctx.to_array()) {
+                yield output.writes("<dt>");
+                yield output.write(e.key);
+                yield output.writes("</dt>");
+                yield output.writes(@"<dd>$(e.val)</dd>\n");
             }
             yield output.writes("</dl>");
         }
@@ -179,25 +167,15 @@ namespace Odysseus.Templating.Std {
             this.empty_block = empty_block;
         }
 
-        private struct KeyValue {public Bytes key; public Data.Data val;}
-
         public override async void exec(Data.Data ctx, Writer output) {
-            Gee.Map<Bytes, Data.Data> local_vars =
-                ByteUtils.create_map<Data.Data>();
+            Gee.Map<Bytes, Data.Data> local_vars = ByteUtils.create_map<Data.Data>();
             Data.Data local_context = new Data.Stack.with_map(ctx, local_vars);
             var isempty = true;
 
-            // To accommodate filters, foreach_map can't handle async,
-            //      so split this loop in two.
-            var to_exec = new Gee.ArrayList<KeyValue?>();
-            collection.eval(ctx).foreach_map((key, val) => {
+            foreach (var e in collection.eval(ctx).to_array()) {
                 isempty = false;
-                to_exec.add(KeyValue() {key = key, val = val});
-                return false; // AKA continue;
-            });
-            foreach (var entry in to_exec) {
-                local_vars[keyvar] = new Data.Substr(entry.key);
-                local_vars[valuevar] = entry.val;
+                local_vars[keyvar] = new Data.Substr(e.key);
+                local_vars[valuevar] = e.val;
                 yield body.exec(local_context, output);
             }
 

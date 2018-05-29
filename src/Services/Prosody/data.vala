@@ -74,6 +74,16 @@ namespace Odysseus.Templating.Data {
         protected virtual void @foreach(Foreach cb) {
             @foreach_map((key, val) => cb(key));
         }
+        // Easier way for template tags to call foreach_map, within their async methods.
+        public class KeyValue {
+            public Bytes key; public Data val;
+            public KeyValue(Bytes key, Data val) {this.key = key; this.val = val;}
+        }
+        public KeyValue[] to_array() {
+            var ret = new Gee.ArrayList<KeyValue>();
+            foreach_map((key, val) => {ret.add(new KeyValue(key, val)); return false;});
+            return ret.to_array();
+        }
 
         /* These methods are used by a variety of filters */
         public virtual double to_double() {return (double) to_int(); }
