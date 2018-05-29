@@ -26,7 +26,7 @@ Unfortunately I have to duplicate some AppCenter UI due to the way the AppStream
 And given I can link to app descriptions where they can be installed via simple
         URLs, it looks quite trivial to write that UI in Prosody. The
         challenging bit is getting at the data, which is what's done here. */
-namespace Odysseus.Templating.ExtAppStram {
+namespace Odysseus.Templating.xAppStram {
     using AppStream;
 
     public class AppStreamBuilder : TagBuilder, Object {

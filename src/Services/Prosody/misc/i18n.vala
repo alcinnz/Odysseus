@@ -23,7 +23,8 @@ in order to gain better performance and fewer SEGFAULTs.
 Essentially it parses the translation catalogs as a template with a custom tag
 called "{% msg %}". This data can then be incorporated into other templates via
 the "{% trans %}" tag. */
-namespace Odysseus.Templating.Std.I18n {
+namespace Odysseus.Templating.xI18n {
+    using Std;
 // Try having each translation perform a database scan. However the problem
 // with that is that it would reparse the translated templates each time. 
 // So maintain a weak map to the translated templates from their source language.

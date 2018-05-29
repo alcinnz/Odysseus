@@ -55,7 +55,7 @@ namespace Odysseus.Traits {
         settings.print_backgrounds = true;
         settings.set_user_agent_with_application_details("Odysseus",
                 Odysseus.Application.instance.build_version);
-        Templating.HTTP.FetchTag.user_agent = settings.user_agent;
+        Templating.xHTTP.FetchTag.user_agent = settings.user_agent;
         settings.zoom_text_only = false;
         web.settings = settings;
     }

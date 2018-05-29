@@ -15,7 +15,7 @@
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 /** This tag helps Odysseus talk about filetypes in a slightly more natural way. */
-namespace Odysseus.Templating.MIMEInfo {
+namespace Odysseus.Templating.xMIMEInfo {
     public class MIMEInfoBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var variables = new Gee.ArrayList<Variable>();

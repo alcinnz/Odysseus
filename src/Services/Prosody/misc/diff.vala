@@ -27,7 +27,7 @@ WARNING! This computes solutions to all pairs of prefixes to the input strings
     as that has a measly O(min(m, n)) time & 0 space requirements.
 
     The per-line basis of the command minimizes this problem there. */
-namespace Odysseus.Templating.Diff {
+namespace Odysseus.Templating.xDiff {
     public class Duo {
         public int first;
         public int last;

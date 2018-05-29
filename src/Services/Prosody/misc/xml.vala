@@ -21,7 +21,9 @@
 For simple cases, this naively coerces to the Prosody data model (a coercion that
     is actually helpful for handling RSS/Atom), but for more complex cases
     it exposes XPath support. */
-namespace Odysseus.Templating.Data {
+namespace Odysseus.Templating.xXML {
+    using Data;
+
     public class XML : Data {
         private Xml.Node *node;
         public XML(Xml.Node *node) {this.node = node;}
@@ -56,7 +58,7 @@ namespace Odysseus.Templating.Data {
         }
     }
 
-    public class XPathResult : Data {
+    private class XPathResult : Data {
         private Xml.XPath.Object *inner;
         public XPathResult(Xml.XPath.Object *obj) {return this.inner = obj;}
 

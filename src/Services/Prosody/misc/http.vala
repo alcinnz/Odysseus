@@ -19,7 +19,7 @@
 
 This would mostly just serve to implement of builtin federated search,
     but it's also useful for loading in recommendations to fill in the gaps. */
-namespace Odysseus.Templating.HTTP {
+namespace Odysseus.Templating.xHTTP {
     using Std;
     public class FetchBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
@@ -132,16 +132,16 @@ namespace Odysseus.Templating.HTTP {
             if ("json" in mime) {
                 var json = new Json.Parser();
                 yield json.load_from_stream_async(stream);
-                return Data.JSON.build(json.get_root());
+                return xJSON.build(json.get_root());
             } /*else if ("xml" in mime) {
                 // Unfortunately libxml cannot read from an InputStream,
                 // So read the entire response into a string.
                 var b = new MemoryOutputStream.resizable();
                 yield b.splice_async(stream, 0);
                 var xml = Xml.Parser.parse_memory((char[]) b.data, b.get_data_size());
-                return new Data.XML(xml);
+                return new xXML.XML(xml);
             }*/ else if (mime == "text/tsv" || mime == "text/tab-separated-values") {
-                return yield readTSV(new DataInputStream(stream));
+                return yield x.readTSV(new DataInputStream(stream));
             }
             throw new HTTPError.UNSUPPORTED_FORMAT("Cannot read %s files!", mime);
         }

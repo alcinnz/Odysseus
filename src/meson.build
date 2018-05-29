@@ -13,8 +13,10 @@ services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'byteutils']
-prosody_misc = ['jsondata', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test',
+prosody_misc = ['json', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test',
         'AppStream', 'mimeinfo']
+prosody_misc = ['json', 'tsv', 'http', 'AppStream', 'mimeinfo', 'favicons',
+        'diff', 'test', 'i18n']
 models = ['Download', 'DownloadSet', 'ImageUtil']
 
 foreach f : header_widgets

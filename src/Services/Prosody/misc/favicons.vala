@@ -15,7 +15,7 @@
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 /** Template filter for accessing the WebKit Favicon Database. */
-namespace Odysseus.Templating.Ext {
+namespace Odysseus.Templating.x {
 
     /** Translates a URI into one for it's favicon. */
     private class FaviconFilter : Filter {

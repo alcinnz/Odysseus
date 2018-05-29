@@ -18,8 +18,10 @@
 /** A datasource to expose JSON data to templates.
 
 This is particularly vital for running the test suite. */
-namespace Odysseus.Templating.Data.JSON {
-    public Data build(Json.Node? node) {
+namespace Odysseus.Templating.xJSON {
+    using Data;
+
+    public Data.Data build(Json.Node? node) {
         if (node == null) return new Empty();
         switch (node.get_node_type()) {
         case Json.NodeType.OBJECT:
@@ -35,11 +37,11 @@ namespace Odysseus.Templating.Data.JSON {
         }
     }
 
-    private class Array : Data {
+    private class Array : Data.Data {
         Json.Array inner;
         public Array(Json.Array a) {this.inner = a;}
 
-        public override Data get(Bytes property_bytes) {
+        public override Data.Data get(Bytes property_bytes) {
             var property = ByteUtils.to_string(property_bytes);
             uint64 index = 0;
             if (property[0] == '$' &&
@@ -50,7 +52,7 @@ namespace Odysseus.Templating.Data.JSON {
             return new Empty();
         }
 
-        public override void @foreach(Data.Foreach cb) {
+        public override void @foreach(Data.Data.Foreach cb) {
             range(cb, inner.get_length());
         }
 
@@ -60,15 +62,15 @@ namespace Odysseus.Templating.Data.JSON {
         }
     }
 
-    private class Object : Data {
+    private class Object : Data.Data {
         Json.Object inner;
         public Object(Json.Object o) {this.inner = o;}
 
-        public override Data get(Bytes property) {
+        public override Data.Data get(Bytes property) {
             return build(inner.dup_member(ByteUtils.to_string(property)));
         }
 
-        public override void @foreach(Data.Foreach cb) {
+        public override void @foreach(Data.Data.Foreach cb) {
             foreach (var key in inner.get_members())
                 if (cb(b(key))) break;
         }

@@ -17,7 +17,7 @@
 /** Support for reading TSV files into Prosody data.
 
     This is mostly used for downloading recommendations to fill in gaps in Top Sites. */
-namespace Odysseus.Templating {
+namespace Odysseus.Templating.x {
     public async Data.Data readTSV(DataInputStream stream) throws IOError {
         var rows = new Gee.ArrayList<Data.Data>();
         for (var line = yield stream.read_line_async(); line != null;

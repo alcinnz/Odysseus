@@ -114,9 +114,9 @@ namespace Odysseus.Templating {
 
         public override async void exec(Data.Data ctx, Writer stream) {
             // Utilize diff rendering for this. 
-            var err_ranges = new Gee.ArrayList<Diff.Duo>();
-            err_ranges.add(new Diff.Duo(err_start, err_end));
-            yield Diff.render_ranges(source[line_start:line_end], err_ranges, "strong", stream);
+            var err_ranges = new Gee.ArrayList<xDiff.Duo>();
+            err_ranges.add(new xDiff.Duo(err_start, err_end));
+            yield xDiff.render_ranges(source[line_start:line_end], err_ranges, "strong", stream);
         }
     }
 }

@@ -19,7 +19,7 @@
 
 These are used on odysseus:debugging/test, and as a nice aside exercies the
     entire parser quite naturally. Leaving just the tags & filters to be tested. */
-namespace Odysseus.Templating.TestRunner {
+namespace Odysseus.Templating.xTestRunner {
     public class TestBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var caption = ByteUtils.parse_string(args.next());
@@ -75,7 +75,7 @@ namespace Odysseus.Templating.TestRunner {
                             "{%% test %%}: Content of the {%% input %%} block " +
                             "must be valid JSON: %s", e.message);
                 }
-                input = Data.JSON.build(json_parser.get_root());
+                input = xJSON.build(json_parser.get_root());
             }
 
             if (endtag == null)
@@ -126,14 +126,14 @@ namespace Odysseus.Templating.TestRunner {
             yield testcase.exec(input, capture);
             Bytes computed = capture.grab_data();
 
-            Diff.Ranges diff;
+            xDiff.Ranges diff;
             bool passed;
             if (computed.compare(output) == 0) {
                 // Fast & thankfully common case
                 passed = true;
-                diff = Diff.Ranges();
+                diff = xDiff.Ranges();
             } else {
-                diff = Diff.diff(output, computed);
+                diff = xDiff.diff(output, computed);
                 passed = diff.a_ranges.size == 0 && diff.b_ranges.size == 0;
                 assert(!passed); // Do the fast & slow checks agree?
             }
@@ -146,7 +146,7 @@ namespace Odysseus.Templating.TestRunner {
         }
 
         private async void format_results(bool passed, Writer stream,
-            Bytes computed, Diff.Ranges diff)  {
+            Bytes computed, xDiff.Ranges diff)  {
             yield stream.writes("<details");
             if (ignore) yield stream.writes(" style='opacity: 75%;'");
             yield stream.writes(">\n\t<summary style='background: ");
@@ -170,9 +170,9 @@ namespace Odysseus.Templating.TestRunner {
             yield stream.writes("<tr><th>Computed</th>");
             yield stream.writes("<th>Expected</th></tr>\n\t\t");
             yield stream.writes("<tr><td><pre>");
-            yield Diff.render_ranges(computed, diff.b_ranges, "ins", stream);
+            yield xDiff.render_ranges(computed, diff.b_ranges, "ins", stream);
             yield stream.writes("</pre></td><td><pre>");
-            yield Diff.render_ranges(output, diff.a_ranges, "del", stream);
+            yield xDiff.render_ranges(output, diff.a_ranges, "del", stream);
             yield stream.writes("</pre></td></tr>\n\t");
             yield stream.writes("</table>\n</details>");
         }
@@ -239,7 +239,7 @@ namespace Odysseus.Templating.TestRunner {
 
             var loop = new MainLoop();
             AsyncResult? result = null;
-            diff_to_str.begin(A, B, Diff.diff(A, B), (obj, res) => {
+            diff_to_str.begin(A, B, xDiff.diff(A, B), (obj, res) => {
                 result = res;
                 loop.quit();
             });
@@ -247,11 +247,11 @@ namespace Odysseus.Templating.TestRunner {
             return new Data.Substr(diff_to_str.end(result));
         }
 
-        private async Bytes diff_to_str(Bytes a, Bytes b, Diff.Ranges diff) {
+        private async Bytes diff_to_str(Bytes a, Bytes b, xDiff.Ranges diff) {
             var output = new CaptureWriter();
-            yield Diff.render_ranges(a, diff.a_ranges, "-", output);
+            yield xDiff.render_ranges(a, diff.a_ranges, "-", output);
             yield output.writes("\t");
-            yield Diff.render_ranges(b, diff.b_ranges, "+", output);
+            yield xDiff.render_ranges(b, diff.b_ranges, "+", output);
             return output.grab_data();
         }
     }

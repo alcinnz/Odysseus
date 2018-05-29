@@ -575,16 +575,16 @@ namespace Odysseus.Templating.Std {
     public void register_standard_library() {
         register_tag("autoescape", new AutoescapeBuilder());
         register_tag("debug", new DebugBuilder());
-		register_tag("fetch", new HTTP.FetchBuilder());
+		register_tag("fetch", new xHTTP.FetchBuilder());
         register_tag("filter", new FilterBuilder());
         register_tag("for", new ForBuilder());
         register_tag("if", new IfBuilder());
         register_tag("ifchanged", new IfChangedBuilder());
         register_tag("random", new RandomBuilder());
         register_tag("templatetag", new TemplateTagBuilder());
-        register_tag("test", new TestRunner.TestBuilder());
-        register_tag("test-report", new TestRunner.TestReportBuilder());
-        register_tag("trans", new I18n.TransBuilder());
+        register_tag("test", new xTestRunner.TestBuilder());
+        register_tag("test-report", new xTestRunner.TestReportBuilder());
+        register_tag("trans", new xI18n.TransBuilder());
         register_tag("with", new WithBuilder());
 
         register_filter("add", new AddFilter());
@@ -593,10 +593,10 @@ namespace Odysseus.Templating.Std {
         register_filter("cut", new CutFilter());
         register_filter("date", new DateFilter());
         register_filter("default", new DefaultFilter());
-        register_filter("diff", new TestRunner.DiffFilter());
+        register_filter("diff", new xTestRunner.DiffFilter());
         register_filter("escape", new EscapeFilter());
         register_filter("escapeURI", new EscapeURIFilter());
-        register_filter("favicon", new Ext.FaviconFilter());
+        register_filter("favicon", new x.FaviconFilter());
         register_filter("filesize", new FileSizeFormatFilter());
         register_filter("first", new FirstFilter());
         register_filter("force-escape", new ForceEscape());
