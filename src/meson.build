@@ -13,7 +13,8 @@ services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'byteutils']
-prosody_misc = ['jsondata', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test']
+prosody_misc = ['jsondata', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test',
+        'AppStream']
 models = ['Download', 'DownloadSet', 'ImageUtil']
 
 foreach f : header_widgets
@@ -78,6 +79,7 @@ executable('com.github.alcinnz.odysseus',
         dependency('libsoup-2.4'),
         dependency('sqlite3'),
         dependency('unity'),
+        dependency('appstream'),
         posix_dep
     ],
     install: true
