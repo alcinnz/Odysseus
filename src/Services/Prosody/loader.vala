@@ -38,15 +38,17 @@ namespace Odysseus.Templating {
 
             if (!lib_initialized()) Std.register_standard_library();
             var bytes = resources_lookup_data(resource, 0);
-            var parser = new Parser(bytes);
+            var parser = new Parser.b(bytes);
             parser.path = resource;
             try {
                 template_cache[resource] = parser.parse();
                 cached_keys.insert(0, resource);
             } catch (SyntaxError err) {
                 int line_number; int line_offset; int err_start; int err_end;
-                parser.get_current_token(out line_number, out line_offset, out err_start, out err_end);
-                error_data = new ErrorData(err, line_number, line_offset, err_start, err_end, bytes);
+                parser.get_current_token(out line_number, out line_offset,
+                                        out err_start, out err_end);
+                error_data = new ErrorData(err, line_number, line_offset, 
+                                        err_start, err_end, new Slice.b(bytes));
                 throw err;
             }
         } else {
@@ -65,17 +67,17 @@ namespace Odysseus.Templating {
                 "Unknown Tag", "Unknown Filter",
                 "Invalid Arguments for Tag", "Unclosed Block Tag"};
         public ErrorData(SyntaxError err, int line_number, int line_offset,
-                int error_start, int error_end, Bytes source) throws SyntaxError {
-            data[b("err-code")] = new Data.Literal(error_types[err.code]);
-            data[b("err-text")] = new Data.Literal(err.message);
+                int error_start, int error_end, Slice source) throws SyntaxError {
+            data[new Slice.s("err-code")] = new Data.Literal(error_types[err.code]);
+            data[new Slice.s("err-text")] = new Data.Literal(err.message);
 
-            var err_token = source.slice(error_start, error_end);
+            var err_token = source[error_start:error_end];
             if (Token.get_type(err_token) == TokenType.TAG) {
                 var err_tag = new Data.Substr(Token.get_args(err_token).next());
-                data[b("err-tag")] = err_tag;
+                data[new Slice.s("err-tag")] = err_tag;
             }
 
-            data[b("line-number")] = new Data.Literal(line_number);
+            data[new Slice.s("line-number")] = new Data.Literal(line_number);
 
             var tag = new ErrorTag(line_offset, error_start, error_end, source);
             this.tag = new ErrorTagBuilder(tag);
@@ -96,16 +98,16 @@ namespace Odysseus.Templating {
         private int line_end;
         private int err_start;
         private int err_end;
-        private Bytes source;
+        private Slice source;
 
-        public ErrorTag(int line_offset, int error_start, int error_end, Bytes source) {
+        public ErrorTag(int line_offset, int error_start, int error_end, Slice source) {
             this.line_start = line_offset;
             this.line_end = line_offset + 1;
-            ByteUtils.find_next(source, {'\n'}, ref this.line_end);
+            source.find_next({'\n'}, ref this.line_end);
             while (this.line_end <= error_start) {
                 this.line_start = line_end;
                 this.line_end = this.line_start + 1;
-                ByteUtils.find_next(source, {'\n'}, ref this.line_end);
+                source.find_next({'\n'}, ref this.line_end);
             }
             this.err_start = error_start - line_start;
             this.err_end = int.min(error_end, line_end) - line_start;

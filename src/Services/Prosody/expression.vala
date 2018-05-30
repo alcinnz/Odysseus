@@ -249,7 +249,7 @@ namespace Odysseus.Templating.Expression {
 
     private class Value : Expression {
         public Variable exp;
-        public Value(Bytes source) throws SyntaxError {
+        public Value(Slice source) throws SyntaxError {
             this.exp = new Variable(source);
         }
 

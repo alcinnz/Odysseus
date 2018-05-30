@@ -16,6 +16,7 @@
 */
 
 using Odysseus.Services;
+using Odysseus.Templating.Data;
 namespace Odysseus.Traits {
     using Templating;
     public async string view_source(WebKit.WebView source) {
@@ -23,7 +24,7 @@ namespace Odysseus.Traits {
         data.title = source.title;
         try {
             var code = yield source.get_main_resource().get_data(null);
-            data.code = new Bytes(code);
+            data.code = new Slice.a(code);
         } catch (Error e) {
             return "odysseus:errors/no-source"; // Don't go through
         }
@@ -36,14 +37,9 @@ namespace Odysseus.Traits {
 
     private class Source {
         public string title;
-        public Bytes code;
+        public Slice code;
     }
     private Gee.Map<string, Source>? sources = null; // UGLY HACK
-
-    private Data.Data let(string k, Data.Data v, Data.Data b = new Data.Empty()) {
-        return Data.Let.build(ByteUtils.from_string(k), v, b);
-    }
-    private Data.Data lit(string s) {return new Data.Literal(s);}
 
     public void handle_source_uri(WebKit.URISchemeRequest request) {
         if (sources != null && sources.has_key(request.get_uri())) {
@@ -51,9 +47,9 @@ namespace Odysseus.Traits {
             sources.unset(request.get_uri());
 
             var url = request.get_uri();
-            var data = let("source", new Data.Substr(resource.code),
-                    let("title", lit(resource.title),
-                    let("url", lit(url["source:".length:url.length]))));
+            var data = Let.builds("source", new Substr(resource.code),
+                    Let.builds("title", new Literal(resource.title),
+                    Let.builds("url", new Literal(url["source:".length:url.length]))));
 
             try {
                 ErrorData? ignored = null;
@@ -72,7 +68,7 @@ namespace Odysseus.Traits {
             // If we're not viewing alternate HTML under this schema,
             //      close any tabs that have persisted. 
             var response = _("Please go through the \"View Source\" menu item.");
-            var stream = new MemoryInputStream.from_bytes(ByteUtils.from_string(response));
+            var stream = new MemoryInputStream.from_bytes(new Slice.s(response)._);
             request.finish(stream, response.length, "text/html");
         }
     }

@@ -31,7 +31,7 @@ namespace Odysseus.Templating {
     //      but found them too heavy weight for what I needed.
     //      -- Adrian Cochrane
     public class WordIter {
-        public Bytes text;
+        public Slice text;
         public int index;
         public int line_no;
         public int line_offset;
@@ -79,7 +79,7 @@ namespace Odysseus.Templating {
                         if (get_char() == '\\') next_char(); // escape
                         next_char(); // string char
                     }
-                    if (text[index] != c)
+                    if (get_char(0) != c)
                         throw new SyntaxError.UNCLOSED_STRING("A string literal wasn't closed!");
                     next_char(); // close quote
                 } else {
@@ -91,7 +91,7 @@ namespace Odysseus.Templating {
         /* Iteration methods */
         public WordIter iterator() {return this;}
 
-        public virtual Bytes? next_value() throws SyntaxError {
+        public virtual Slice? next_value() throws SyntaxError {
             if (index >= text.length) return null;
 
             while (get_char('"') in delimiters) {next_char();}
@@ -103,7 +103,7 @@ namespace Odysseus.Templating {
         }
 
         /* Parsing methods */
-        public Bytes next() throws SyntaxError {
+        public Slice next() throws SyntaxError {
             var ret = next_value();
             if (ret == null)
                 throw new SyntaxError.INVALID_ARGS("Tag got too few arguments.");
@@ -115,15 +115,9 @@ namespace Odysseus.Templating {
             if (arg != null)
                 throw new SyntaxError.INVALID_ARGS("Tag got too many arguments.");
         }
-
-        public Bytes[] collect() throws SyntaxError {
-            var ret = new Gee.ArrayList<Bytes>();
-            foreach (var word in this) ret.add(word);
-            return ret.to_array();
-        }
     }
 
-    public WordIter smart_split(Bytes text, string delims) {
+    public WordIter smart_split(Slice text, string delims) {
         return new WordIter() {text = text, delimiters = delims.data};
     }
 
@@ -138,7 +132,7 @@ namespace Odysseus.Templating {
         public int last_start;
         public int last_end {get {return index;}}
 
-        public Lexer(Bytes text) {
+        public Lexer(Slice text) {
             this.text = text;
             this.delimiters = new uint8[1];
             this.index = 0;
@@ -147,7 +141,6 @@ namespace Odysseus.Templating {
             tag_chars = new uint8[] {open, '%', '#'};
         }
 
-        // Unfortunately even with 'new' can't override the foreach behaviour.
         private void scan_token() throws SyntaxError {
             last_start = index;
 
@@ -166,8 +159,8 @@ namespace Odysseus.Templating {
                 next_char(2);
             } else {
                 // It's literal text
+                text.find_next({open, '\n'}, ref index);
 
-                ByteUtils.find_next(text, {open, '\n'}, ref index);
                 // Also scan any standalone `open` characters.
                 while (index < text.length) {
                     if (text[index] == '\n') {
@@ -175,25 +168,26 @@ namespace Odysseus.Templating {
                         line_no++;
                         line_offset = index;
                     }
+
                     // Are we starting a tag? If so, stop the text here.
                     if (index + 2 < text.length &&
                             text[index] == open && text[index + 1] in tag_chars)
                         break;
 
                     next_char();
-                    ByteUtils.find_next(text, {open, '\n'}, ref index);
+                    text.find_next({open, '\n'}, ref index);
                 }
             }
         }
 
-        public override Bytes? next_value() throws SyntaxError {
+        public override Slice? next_value() throws SyntaxError {
             if (last_end >= text.length) return null;
 
             scan_token();
             return text[last_start:last_end];
         }
 
-        public Bytes? peek() throws SyntaxError {
+        public Slice? peek() throws SyntaxError {
             var start = index;
             var ret = next_value();
             index = start;
@@ -214,7 +208,7 @@ namespace Odysseus.Templating {
     }
 
     namespace Token {
-        public TokenType get_type(Bytes token) {
+        public TokenType get_type(Slice token) {
             if (token[0] != '{') return TokenType.TEXT;
 
             switch (token[1]) {
@@ -225,7 +219,7 @@ namespace Odysseus.Templating {
             }
         }
 
-        public WordIter get_args(Bytes token) {
+        public WordIter get_args(Slice token) {
             return smart_split(token[2:token.length-2], " \t\r\n");
         }
     }
@@ -233,16 +227,16 @@ namespace Odysseus.Templating {
     public interface TagBuilder : Object {
         public abstract Template? build(Parser parse, WordIter args) throws SyntaxError;
     }
-    private Map<Bytes, TagBuilder>? tag_lib;
+    private Map<Slice, TagBuilder>? tag_lib;
 
     public bool register_tag(string name, TagBuilder builder) {
-        if (tag_lib == null) tag_lib = ByteUtils.create_map();
+        if (tag_lib == null) tag_lib = new Gee.HashMap<Slice, TagBuilder>();
 
         if (name[0] in "\"'".data) {
             warning("Failed to register tag. Name '%s' cannot start with a quote.", name);
             return false;
         }
-        var key = b(name);
+        var key = new Slice.s(name);
         if (tag_lib.has_key(key)) {
             warning("Failed to register tag. Tag '%s' already exists.", name);
             return false;
@@ -258,12 +252,12 @@ namespace Odysseus.Templating {
         public virtual Data.Data filter(Data.Data a, Data.Data b) {return filter0(a);}
         public virtual Data.Data filter0(Data.Data input) {return input;}
     }
-    private Map<Bytes, Filter>? filter_lib;
+    private Map<Slice, Filter>? filter_lib;
 
     public bool register_filter(string name, Filter filter) {
-        if (filter_lib == null) filter_lib = ByteUtils.create_map();
+        if (filter_lib == null) filter_lib = new Gee.HashMap<Slice, Filter>();
 
-        var key = b(name);
+        var key = new Slice.s(name);
         if (filter_lib.has_key(key)) {
             warning("Failed to register filter. Filter '|%s' already exists.", name);
             return false;
@@ -280,20 +274,20 @@ namespace Odysseus.Templating {
     public class Parser : Object {
         public Lexer lex;
         public Map<uint8,string> escapes;
-        public Map<Bytes, TagBuilder> local_tag_lib;
+        public Map<Slice, TagBuilder> local_tag_lib;
         public string path;
 
-        public Parser(Bytes source) {
+        public Parser(Slice source) {
             this.lex = new Lexer(source);
-            this.escapes = Std.escape_html;
-            this.local_tag_lib = ByteUtils.create_map<TagBuilder>();
+            this.escapes = Writer.html();
+            this.local_tag_lib = new Gee.HashMap<Slice, TagBuilder>();
         }
 
-        public Parser.from_file(File source) throws FileError {
-            this(new MappedFile(source.get_path(), false).get_bytes());
+        public Parser.b(Bytes source) {
+            this(new Slice.b(source));
         }
 
-        public Bytes get_current_token(out int line_no = null,
+        public Slice get_current_token(out int line_no = null,
                 out int line_offset = null,
                 out int start = null, out int end = null) {
             line_no = lex.line_no;
@@ -304,8 +298,8 @@ namespace Odysseus.Templating {
         }
 
         public Template parse(string endtags_str = "", out WordIter? ended_on = null,
-                out Bytes? source_text = null) throws SyntaxError {
-            var endtags = ByteUtils.split(b(endtags_str), ' ');
+                out Slice? source_text = null) throws SyntaxError {
+            var endtags = new Slice.s(endtags_str).split(' ');
             ended_on = null; // default out value
             source_text = null; // default out value
             var start = lex.last_end;
@@ -330,20 +324,18 @@ namespace Odysseus.Templating {
                     // ALSO NOTE: The lexer keeps it's state between
                     //        iterators for this reason.
                     foreach (var endtag in endtags) {
-                        if (endtag.compare(name) == 0) {
-                            ended_on = Token.get_args(token);
-                            source_text = lex.text.slice(start, lex.last_start);
+                        if (!endtag.equal_to(name)) continue;
 
-                            return new Block(template_nodes.to_array(), startline);
-                        }
+                        ended_on = Token.get_args(token);
+                        source_text = lex.text[start:lex.last_start];
+                        return new Block(template_nodes.to_array(), startline);
                     }
 
                     if (tag_lib != null && !local_tag_lib.has_key(name) &&
                             tag_lib.has_key(name))
                         local_tag_lib[name] = tag_lib[name];
                     if (!local_tag_lib.has_key(name))
-                        throw new SyntaxError.UNKNOWN_TAG(
-                                "Unknown tag '%s'", ByteUtils.to_string(name));
+                        throw new SyntaxError.UNKNOWN_TAG(@"Unknown tag '$name'");
                     node = local_tag_lib[name].build(this, args);
                     if (node == null) continue;
                     break;
@@ -357,9 +349,9 @@ namespace Odysseus.Templating {
             return new Block(template_nodes.to_array(), startline);
         }
 
-        public Bytes scan_until(string endtags_str, out WordIter? ended_on)
+        public Slice scan_until(string endtags_str, out WordIter? ended_on)
                 throws SyntaxError {
-            var endtags = ByteUtils.split(b(endtags_str), ' ');
+            var endtags = new Slice.s(endtags_str).split(' ');
             var start = lex.last_end;
             ended_on = null; // Default out value
 
@@ -368,10 +360,10 @@ namespace Odysseus.Templating {
                     var name = Token.get_args(token).next();
 
                     foreach (var endtag in endtags) {
-                        if (endtag.compare(name) == 0) {
-                            ended_on = Token.get_args(token);
-                            return lex.text[start:lex.last_start];
-                        }
+                        if (!endtag.equal_to(name)) continue;
+
+                        ended_on = Token.get_args(token);
+                        return lex.text[start:lex.last_start];
                     }
                 }
             }
@@ -381,9 +373,9 @@ namespace Odysseus.Templating {
     }
 
     public interface Writer : Object {
-        public abstract async void write(Bytes text);
+        public abstract async void write(Slice text);
         public virtual async void writes(string text) {
-            yield write(b(text));
+            yield write(new Slice.s(text));
         }
         // Utility methods predominatly for variable nodes to use.
         public static Gee.Map<uint8,string>? _html = null;
@@ -394,7 +386,7 @@ namespace Odysseus.Templating {
         }
         public virtual async void escaped(Slice text, Gee.Map<uint8,string>? subs = html()) {
             if (text == null) return;
-            if (subs == null || subs.size == 0) {yield write(text._); return;}
+            if (subs == null || subs.size == 0) {yield write(text); return;}
 
             var needles = subs.keys.to_array();
             subs['\0'] = "\0";
@@ -402,7 +394,7 @@ namespace Odysseus.Templating {
             int start = 0; int end = 0;
             while (end < text.length) {
                 var sub = subs[text.find_next(needles, ref end)];
-                yield write(text[start:end]._); yield writes(sub);
+                yield write(text[start:end]); yield writes(sub);
                 start = ++end;
             }
         }
@@ -415,6 +407,7 @@ namespace Odysseus.Templating {
     }
     public abstract class Template : Object {
         // Used to help the user debug unbalanced tags
+        // FIXME: I won't need this, as instead I could use .get_class().get_name()
         public virtual string get_name() {return "";}
 
         // main method
@@ -422,15 +415,31 @@ namespace Odysseus.Templating {
     }
 
     public class Echo : Template {
-        public Bytes text;
-        public Echo(Bytes source) {this.text = source;}
+        public Slice text;
+        public Echo(Slice source = new Slice()) {this.text = source;}
         public override async void exec(Data.Data data, Writer output) {
             yield output.write(text);
         }
     }
 
+    public class Block : Template {
+        // Fields are public to help with debugging unbalanced tags.
+        public Template[] children;
+        public int linenumber;
+        public string name; // externally debugging label
+
+        public Block(Template[] children, int line) {
+            this.children = children;
+            this.linenumber = line;
+        }
+
+        public override async void exec(Data.Data data, Writer output) {
+            foreach (var child in children) yield child.exec(data, output);
+        }
+    }
+
     public class Variable : Template {
-        protected Bytes[] path;
+        protected Slice[] path;
         protected Data.Data? literal;
         public Map<uint8,string> escapes; // public so firstOf can apply it.
 
@@ -443,15 +452,6 @@ namespace Odysseus.Templating {
                     _nilvar = new Variable.with(new Data.Empty());
                 }
                 return _nilvar;
-            }
-        }
-
-        private static Bytes? _force_escape = null;
-        private static Bytes force_escape {
-            get {
-                if (_force_escape == null)
-                    _force_escape = b("force-escape");
-                return _force_escape;
             }
         }
         /* end lazily compiled global constants */
@@ -471,37 +471,36 @@ namespace Odysseus.Templating {
 
         public Variable.with(Data.Data? d) {
             this.literal = d;
-            this.path = new Bytes[0];
+            this.path = new Slice[0];
             this.escapes = new Gee.HashMap<uint8,string>();
             filters = new FilterCall[0];
         }
 
-        public Variable(Bytes text, Map<uint8,string>? escapes = null) throws SyntaxError {
+        public Variable(Slice text, Map<uint8,string>? escapes = null) throws SyntaxError {
             var filters = smart_split(text, "|");
             var base_text = filters.next_value();
 
             switch (base_text[0]) {
             case '"':
             case '\'':
-                if (base_text[base_text.length - 1] != base_text[0])
+                if (base_text[-1] != base_text[0])
                     throw new SyntaxError.UNEXPECTED_CHAR(
-                        "String (%s) has extraneous suffix characters",
-                        ByteUtils.to_string(base_text));
+                        @"String ($base_text) has extraneous suffix characters." +
+                        @"Starts with $((char) base_text[-1]), ends with $((char) base_text[0])");
 
-                this.literal = new Data.Literal(ByteUtils.parse_string(base_text));
+                this.literal = new Data.Literal(base_text.parse());
                 break;
             case '-': case '0': case '1': case '2': case '3': case '4':
             case '5': case '6': case '7': case '8': case '9':
                 double number;
-                if (!double.try_parse(ByteUtils.to_string(base_text), out number))
+                if (!double.try_parse(@"$base_text", out number))
                     throw new SyntaxError.UNEXPECTED_CHAR(
-                        "Number (%s) has extraneous suffix characters",
-                        ByteUtils.to_string(base_text));
+                        @"Number ($base_text) has extraneous suffix characters");
 
                 this.literal = new Data.Literal(number);
                 break;
             default:
-                this.path = ByteUtils.split(base_text, '.');
+                this.path = base_text.split('.');
                 this.literal = null;
                 break;
             }
@@ -515,23 +514,21 @@ namespace Odysseus.Templating {
                 parts.assert_end();
 
                 if (filter_lib == null || !filter_lib.has_key(name))
-                    throw new SyntaxError.UNKNOWN_FILTER("Unknown filter '%s'",
-                            ByteUtils.to_string(name));
+                    throw new SyntaxError.UNKNOWN_FILTER(@"Unknown filter '$name'");
 
                 Filter cb = filter_lib[name];
-                if (cb.should_escape() != null)
-                    should_escape = cb.should_escape();
+                if (cb.should_escape() != null) should_escape = cb.should_escape();
 
-                Variable filter_arg;
+                Variable filter_arg = nilvar;
                 if (arg_text != null) filter_arg = new Variable(arg_text, escapes);
-                else filter_arg = nilvar;
 
                 compiled_filters.add(new FilterCall(cb, filter_arg));
             }
 
             if (should_escape && escapes != null) {
-                if (escapes.has_key(0) && filter_lib.has_key(b(escapes[0]))) {
-                    var escapeFilter = filter_lib[b(escapes[0])];
+                if (escapes.has_key(0) &&
+                        filter_lib.has_key(new Slice.s(escapes[0]))) {
+                    var escapeFilter = filter_lib[new Slice.s(escapes[0])];
                     compiled_filters.add(new FilterCall(escapeFilter, nilvar));
                     this.escapes = new Gee.HashMap<char,string>();
                 } else this.escapes = escapes;
@@ -542,7 +539,7 @@ namespace Odysseus.Templating {
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            yield ByteUtils.write_escaped(eval(ctx).to_bytes(), escapes, output);
+            yield output.escaped(eval(ctx).to_bytes(), escapes);
         }
 
         public Data.Data eval(Data.Data context) {
@@ -559,7 +556,7 @@ namespace Odysseus.Templating {
 
         // Called from external tags
         // FIXME could really do with some rigid tests.
-        public Variable inlineCtx(Gee.Map<Bytes, Variable> ctx) {
+        public Variable inlineCtx(Gee.Map<Slice, Variable> ctx) {
             // First see if we can get away with returning an existing variable.
             if (literal != null || (path.length >= 1 && !ctx.has_key(path[0]))) {
                 // Filter arguments may still need inlining, but check first!
@@ -608,30 +605,14 @@ namespace Odysseus.Templating {
         }
 
         private class PathFilter : Filter {
-            private Bytes[] path;
-            public PathFilter(Bytes[] path) {this.path = path;}
+            private Slice[] path;
+            public PathFilter(Slice[] path) {this.path = path;}
 
             public override Data.Data filter0(Data.Data a) {
                 var data = a;
                 foreach (var property in path) data = data[property];
                 return data;
             }
-        }
-    }
-
-    public class Block : Template {
-        // Fields are public to help with debugging unbalanced tags.
-        public Template[] children;
-        public int linenumber;
-        public string name; // externally debugging label
-
-        public Block(Template[] children, int line) {
-            this.children = children;
-            this.linenumber = line;
-        }
-
-        public override async void exec(Data.Data data, Writer output) {
-            foreach (var child in children) yield child.exec(data, output);
         }
     }
 }

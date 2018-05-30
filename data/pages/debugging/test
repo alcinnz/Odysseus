@@ -101,7 +101,7 @@ Beware of sirens!
   <details style='opacity: 75%'>
 	<summary style='background: yellow' title='Ignored ERROR'>This should fail</summary>
 	<h3>odysseus_templating_syntax_error-quark thrown :: While Parsing <code>{% 404 %}</code></h3>
-	<p>Unknown tag '404'</p>
+	<p>Unknown tag &apos;404&apos;</p>
 </details>
 {% endtest %}
 

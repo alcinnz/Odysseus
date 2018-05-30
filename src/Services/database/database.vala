@@ -24,8 +24,8 @@ namespace Odysseus.Database {
     private class ProsodyPipeSQLite : Templating.Writer, Object {
         // NOTE: This Writer doesn't like SQL statements
         //      being split up by templating.
-        public async void write(Bytes text) {
-            yield writes(Templating.ByteUtils.to_string(text));
+        public async void write(Slice text) {
+            yield writes(@"$text");
         }
         public async void writes(string text) {
             string err_msg;
@@ -49,8 +49,8 @@ namespace Odysseus.Database {
         int version = 0;
         err = main_db.exec("PRAGMA user_version;", (n, values, columns) => {
             version = int.parse(values[0]);
-            var v = Templating.ByteUtils.from_string("v");
-            var data = Templating.Data.Let.build(v, new Templating.Data.Literal(version));
+            var data = Templating.Data.Let.build(
+                    new Slice.s("v"), new Templating.Data.Literal(version));
 
             var upgrade_path = "/io/github/alcinnz/Odysseus/database/init.sql";
             Templating.ErrorData? error_data = null;
@@ -58,7 +58,7 @@ namespace Odysseus.Database {
             try {
                 template = Templating.get_for_resource(upgrade_path, ref error_data);
             } catch (Error err) {
-                error("Failed to parse init script's templating!");
+                error("Failed to parse init script's templating! %s", err.message);
             }
 
             var writer = new ProsodyPipeSQLite();

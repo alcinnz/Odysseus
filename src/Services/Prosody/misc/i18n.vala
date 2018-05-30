@@ -35,24 +35,23 @@ namespace Odysseus.Templating.xI18n {
     // Singleton for avoiding expensive disk access as a routine part of
     //      message translation.
     private static uint8[]? catalogue = null;
-    private Bytes load_catalogue(ref bool accepts_english) throws Error {
-        if (catalogue != null) return new Bytes(catalogue);
+    private Slice load_catalogue(ref bool accepts_english) throws Error {
+        if (catalogue != null) return new Slice.a(catalogue);
         var basepath = SEP + Path.build_path(SEP, "usr", "share", "Odysseus", "l10n");
 
         foreach (var lang in Intl.get_language_names()) {
             if (lang == "en") accepts_english = true;
             var path = Path.build_path(SEP, basepath, lang);
-            if (File.new_for_path(path).query_exists()) {
+            if (File.new_for_path(path).query_exists())
                 FileUtils.get_data(path, out catalogue);
-                return new Bytes(catalogue);
-            }
+                return new Slice.a(catalogue);
         }
 
         // If control flow reaches here, bail out!
         throw new SyntaxError.OTHER("No catalogue file found for specified languages");
     }
 
-    private Bytes locate_message(Parser cat, Bytes key) throws SyntaxError {
+    private Slice locate_message(Parser cat, Slice key) throws SyntaxError {
         WordIter msg;
         cat.scan_until("msg", out msg);
         while (msg != null) {
@@ -64,9 +63,9 @@ namespace Odysseus.Templating.xI18n {
                 throw new SyntaxError.UNBALANCED_TAGS("Missing {%% trans %%} in {%% msg %%} body");
             trans.next(); trans.assert_end();
 
-            if (ByteUtils.strip(message).compare(key) == 0)
+            if (message.strip().equal_to(key))
                 // Output so the cache doesn't need to hold external templates in memory.
-                return ByteUtils.strip(message);
+                return message.strip();
 
             cat.scan_until("endmsg", out trans);
             if (trans == null)
@@ -76,8 +75,7 @@ namespace Odysseus.Templating.xI18n {
             cat.scan_until("msg", out msg);
         }
 
-        throw new SyntaxError.UNCLOSED_ARG("Failed to find translation for string '%s'!",
-                ByteUtils.to_string(key));
+        throw new SyntaxError.UNCLOSED_ARG(@"Failed to find translation for string '$key'!");
     }
 
     private Template parse_translations(Parser cat) throws SyntaxError {
@@ -94,14 +92,14 @@ namespace Odysseus.Templating.xI18n {
 
     // cache used to avoid keeping multiple copies of a translation in memory.
     private class CacheEntry {
-        public Bytes key;
+        public Slice key;
         public weak Template translation;
         public CacheEntry? next;
 
         public static CacheEntry translation_cache = new CacheEntry();
     }
 
-    private void lookup_translation(Bytes key,  ref Template body) {
+    private void lookup_translation(Slice key, ref Template body) {
         // Look it up in the cache of translations already in memory...
         CacheEntry? prev = null;
         CacheEntry? entry = CacheEntry.translation_cache;
@@ -113,7 +111,7 @@ namespace Odysseus.Templating.xI18n {
                 continue;
             }
 
-            if (entry.key.compare(key) != 0) continue;
+            if (!(key.equal_to(entry.key))) continue;
 
             body = entry.translation;
             return;
@@ -145,13 +143,13 @@ namespace Odysseus.Templating.xI18n {
             var parameters = parse_params(args);
 
             WordIter? endtoken;
-            Bytes key;
+            Slice key;
             var body = parser.parse("endtrans", out endtoken, out key);
             if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%} tag.");
             endtoken.next(); endtoken.assert_end();
 
-            lookup_translation(ByteUtils.strip(key), ref body);
+            lookup_translation(key.strip(), ref body);
             return new WithTag(parameters, body);
         }
     }

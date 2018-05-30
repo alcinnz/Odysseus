@@ -28,8 +28,8 @@ namespace Odysseus.Templating.xXML {
         private Xml.Node *node;
         public XML(Xml.Node *node) {this.node = node;}
 
-        public override Data get(Bytes property) {
-            var prop = ByteUtils.to_string(property);
+        public override Data get(Slice property) {
+            var prop = @"$property";
             // First lookup amongst the properties
             for (Xml.Attr *iter = node->properties; iter != null; iter = iter->next) {
                 if (iter->name == prop) return new XML(iter->children);
@@ -62,11 +62,11 @@ namespace Odysseus.Templating.xXML {
         private Xml.XPath.Object *inner;
         public XPathResult(Xml.XPath.Object *obj) {return this.inner = obj;}
 
-        public override Data get(Bytes property) {
-            var property = ByteUtils.to_string(property_bytes);
+        public override Data get(Slice property) {
+            var property = @"$property_bytes";
             uint64 index = 0;
             if (property[0] == '$' &&
-                    uint64.try_parse(property[1:property.length], out index) &&
+                    uint64.try_parse(property[1:0], out index) &&
                     index < inner->nodesetval->length()) {
                 return new XML(inner->nodesetval->item((int) index));
             }

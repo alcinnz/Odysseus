@@ -12,7 +12,7 @@ complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
 services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
-        'byteutils', 'slice']
+        'slice']
 prosody_misc = ['json', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test',
         'AppStream', 'mimeinfo']
 prosody_misc = ['json', 'tsv', 'http', 'AppStream', 'mimeinfo', 'favicons',

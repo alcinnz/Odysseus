@@ -28,8 +28,8 @@ namespace Odysseus.Traits {
             resources_get_info(test_path, 0, out ignored, out ignored2);
         } catch (Error e) {
             try {
-                var res = resources_lookup_data(test_path + ".link", 0);
-                error = Templating.ByteUtils.to_string(res).chomp();
+                var res = new Slice.b(resources_lookup_data(test_path + ".link", 0));
+                error = @"$res".chomp();
             } catch (Error err) {
                 error = "xxx";
             }

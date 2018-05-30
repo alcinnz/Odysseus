@@ -41,8 +41,8 @@ namespace Odysseus.Templating.xJSON {
         Json.Array inner;
         public Array(Json.Array a) {this.inner = a;}
 
-        public override Data.Data get(Bytes property_bytes) {
-            var property = ByteUtils.to_string(property_bytes);
+        public override Data.Data get(Slice property_bytes) {
+            var property = @"$property_bytes";
             uint64 index = 0;
             if (property[0] == '$' &&
                     uint64.try_parse(property[1:property.length], out index) &&
@@ -66,13 +66,13 @@ namespace Odysseus.Templating.xJSON {
         Json.Object inner;
         public Object(Json.Object o) {this.inner = o;}
 
-        public override Data.Data get(Bytes property) {
-            return build(inner.dup_member(ByteUtils.to_string(property)));
+        public override Data.Data get(Slice property) {
+            return build(inner.dup_member(@"$property"));
         }
 
         public override void @foreach(Data.Data.Foreach cb) {
             foreach (var key in inner.get_members())
-                if (cb(b(key))) break;
+                if (cb(new Slice.s(key))) break;
         }
 
         public override int to_int(out bool is_length = null) {

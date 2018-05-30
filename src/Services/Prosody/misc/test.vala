@@ -22,21 +22,21 @@ These are used on odysseus:debugging/test, and as a nice aside exercies the
 namespace Odysseus.Templating.xTestRunner {
     public class TestBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            var caption = ByteUtils.parse_string(args.next());
+            var caption = args.next().parse();
             var flag = args.next_value();
             args.assert_end();
 
             bool reset = false;
             bool ignore = false;
             if (flag == null) {/* ignore */}
-            else if (ByteUtils.equals_str(flag, "reset")) reset = true;
-            else if (ByteUtils.equals_str(flag, "ignore")) ignore = true;
+            else if ("reset" in flag) reset = true;
+            else if ("ignore" in flag) ignore = true;
             else throw new SyntaxError.INVALID_ARGS(
                     "If specified, the flag argument must be either " +
-                    "'reset' or 'ignore', got '%s'", ByteUtils.to_string(flag));
+                    @"'reset' or 'ignore', got '$flag'");
 
             WordIter? endtoken;
-            Bytes test_source;
+            Slice test_source;
             Template testcase;
             try {
                 testcase = parser.parse("input output", out endtoken, out test_source);
@@ -56,19 +56,19 @@ namespace Odysseus.Templating.xTestRunner {
 
                 return new TestSyntaxError(caption, failed_token, ignore, e);
             }
-            Bytes endtag = endtoken.next();
+            Slice endtag = endtoken.next();
             endtoken.assert_end();
 
             Data.Data input = new Data.Empty();
-            Bytes input_text = new Bytes("".data);
-            if (ByteUtils.equals_str(endtag, "input")) {
+            Slice input_text = new Slice();
+            if ("input" in endtag) {
                 input_text = parser.scan_until("output", out endtoken);
                 endtag = endtoken.next();
                 endtoken.assert_end();
 
                 var json_parser = new Json.Parser();
                 try {
-                    json_parser.load_from_data((string) input_text.get_data(),
+                    json_parser.load_from_data((string) input_text.to_array(),
                             input_text.length);
                 } catch (Error e) {
                     throw new SyntaxError.UNEXPECTED_CHAR(
@@ -81,7 +81,7 @@ namespace Odysseus.Templating.xTestRunner {
             if (endtag == null)
                 throw new SyntaxError.UNBALANCED_TAGS(
                         "{%% test %%} expects an {%% output %%} branch");
-            Bytes output = parser.scan_until("endtest", out endtoken);
+            Slice output = parser.scan_until("endtest", out endtoken);
 
             if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS(
@@ -94,18 +94,18 @@ namespace Odysseus.Templating.xTestRunner {
     private class TestTag : Template {
         private bool reset;
         private bool ignore;
-        private Bytes caption;
+        private Slice caption;
         private Template testcase;
-        private Bytes test_source;
+        private Slice test_source;
         private Data.Data input;
-        private Bytes input_text;
-        private Bytes output;
+        private Slice input_text;
+        private Slice output;
         public TestTag(bool reset, bool ignore, string caption,
-                Template testcase, Bytes test_source, Data.Data input,
-            Bytes input_text, Bytes output) {
+                Template testcase, Slice test_source, Data.Data input,
+                Slice input_text, Slice output) {
             this.reset = reset;
             this.ignore = ignore;
-            this.caption = b(caption);
+            this.caption = new Slice.s(caption);
             this.testcase = testcase;
             this.test_source = test_source;
             this.input = input;
@@ -124,11 +124,11 @@ namespace Odysseus.Templating.xTestRunner {
 
             var capture = new CaptureWriter();
             yield testcase.exec(input, capture);
-            Bytes computed = capture.grab_data();
+            Slice computed = capture.grab_data();
 
             xDiff.Ranges diff;
             bool passed;
-            if (computed.compare(output) == 0) {
+            if (output.equal_to(computed)) {
                 // Fast & thankfully common case
                 passed = true;
                 diff = xDiff.Ranges();
@@ -146,7 +146,7 @@ namespace Odysseus.Templating.xTestRunner {
         }
 
         private async void format_results(bool passed, Writer stream,
-            Bytes computed, xDiff.Ranges diff)  {
+            Slice computed, xDiff.Ranges diff)  {
             yield stream.writes("<details");
             if (ignore) yield stream.writes(" style='opacity: 75%;'");
             yield stream.writes(">\n\t<summary style='background: ");
@@ -155,16 +155,16 @@ namespace Odysseus.Templating.xTestRunner {
             if (ignore) yield stream.writes("Ignored ");
             yield stream.writes(passed ? "PASS" : "FAILURE");
             yield stream.writes("'>");
-            yield ByteUtils.write_escaped_html(caption, stream);
+            yield stream.escaped(caption);
             yield stream.writes("</summary>\n\t");
 
             yield stream.writes("<table>\n\t\t");
             yield stream.writes("<tr><th>Test Code</th>");
             yield stream.writes("<th>Test Input</th></tr>\n\t\t");
             yield stream.writes("<tr><td><pre>");
-            yield ByteUtils.write_escaped_html(test_source, stream);
+            yield stream.escaped(test_source);
             yield stream.writes("</pre></td><td><pre>");
-            yield ByteUtils.write_escaped_html(input_text, stream);
+            yield stream.escaped(input_text);
             yield stream.writes("</pre></td></tr>\n\t\t");
 
             yield stream.writes("<tr><th>Computed</th>");
@@ -180,13 +180,13 @@ namespace Odysseus.Templating.xTestRunner {
     private class TestSyntaxError : Template {
         private SyntaxError error;
         private bool ignore;
-        private Bytes caption;
-        private Bytes failed_tag;
-        public TestSyntaxError(string caption, Bytes failed_tag,
+        private Slice caption;
+        private Slice failed_tag;
+        public TestSyntaxError(string caption, Slice failed_tag,
             bool ignore, SyntaxError e) {
             this.error = e;
             this.ignore = ignore;
-            this.caption = b(caption);
+            this.caption = new Slice.s(caption);
             this.failed_tag = failed_tag;
         }
 
@@ -196,13 +196,13 @@ namespace Odysseus.Templating.xTestRunner {
             yield stream.writes(">\n\t<summary style='background: yellow' title='");
             if (ignore) yield stream.writes("Ignored ");
             yield stream.writes("ERROR'>");
-            yield ByteUtils.write_escaped_html(caption, stream);
+            yield stream.escaped(caption);
             yield stream.writes("</summary>\n\t<h3>");
             yield stream.writes(error.domain.to_string());
             yield stream.writes(" thrown :: While Parsing <code>");
             yield stream.write(failed_tag);
             yield stream.writes("</code></h3>\n\t<p>");
-            yield ByteUtils.write_escaped_html(b(error.message), stream);
+            yield stream.escaped(new Slice.s(error.message));
             yield stream.writes("</p>\n</details>");
 
             // Report as failure to the stats
@@ -223,9 +223,7 @@ namespace Odysseus.Templating.xTestRunner {
             yield output.writes(passed ? "green" : "red");
             yield output.writes("; position: fixed; top: 10px; right: 10px; ");
             yield output.writes("padding: 10px;'>");
-            yield output.writes(TestTag.passed.to_string());
-            yield output.writes("/");
-            yield output.writes(TestTag.count.to_string());
+            yield output.writes(@"$(TestTag.passed)/$(TestTag.count)");
             yield output.writes(" passed</aside>\n<script>document.title = '");
             yield output.writes(passed ? "[process-completed] Tests PASSED" :
                     "[process-stop] Tests FAILED");
@@ -247,7 +245,7 @@ namespace Odysseus.Templating.xTestRunner {
             return new Data.Substr(diff_to_str.end(result));
         }
 
-        private async Bytes diff_to_str(Bytes a, Bytes b, xDiff.Ranges diff) {
+        private async Slice diff_to_str(Slice a, Slice b, xDiff.Ranges diff) {
             var output = new CaptureWriter();
             yield xDiff.render_ranges(a, diff.a_ranges, "-", output);
             yield output.writes("\t");

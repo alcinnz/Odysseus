@@ -25,10 +25,10 @@ namespace Odysseus.Templating {
         This is useful in templating,
         and when interfacing to APIs that require a Bytes object or similar. */
     public class CaptureWriter : Object, Writer {
-        private List<Bytes> data = new List<Bytes>();
+        private List<Slice> data = new List<Slice>();
         private int length = 0;
 
-        public async void write(Bytes text) {
+        public async void write(Slice text) {
             data.append(text);
             length += text.length;
         }
@@ -37,13 +37,13 @@ namespace Odysseus.Templating {
             var ret = new uint8[length + extra_bytes];
             var builder = ArrayBuilder(ret);
             foreach (var block in data) {
-                builder.append(block.get_data());
+                builder.append(block.to_array());
             }
             return ret;
         }
 
-        public Bytes grab_data() {
-            return new Bytes(grab());
+        public Slice grab_data() {
+            return new Slice.a(grab());
         }
 
         public string grab_string() {
@@ -55,8 +55,8 @@ namespace Odysseus.Templating {
 
     /* This class may be useful if Prosody is used in another project.
     public class StdOutWriter : Object, Writer {
-        public async void write(Bytes text) {
-            stdout.write(text.get_data());
+        public async void write(Slice text) {
+            stdout.write(@"$text");
         }
     }*/
 
@@ -69,10 +69,10 @@ namespace Odysseus.Templating {
         Also the use of idleing ensures this doesn't block the Gtk UI
             when used on the mainthread. */
     public class InputStreamWriter : InputStream, Writer {
-        private List<Bytes> data = new List<Bytes>();
+        private List<Slice> data = new List<Slice>();
         private bool closed = false;
 
-        public async void write(Bytes text) {
+        public async void write(Slice text) {
             if (!closed) {
                 data.append(text);
 
@@ -136,7 +136,7 @@ namespace Odysseus.Templating {
                 } else data.remove_link(data);
 
                 // Read the data to the buffer
-                builder.append(chunk.get_data());
+                builder.append(chunk.to_array());
                 bytes_read += chunk.length;
             }
 

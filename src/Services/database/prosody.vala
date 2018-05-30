@@ -24,7 +24,7 @@ namespace Odysseus.Database.Prosody {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var limit_arg = args.next_value();
             var limit = -1;
-            if (limit_arg != null) limit = int.parse(ByteUtils.to_string(limit_arg));
+            if (limit_arg != null) limit = int.parse(@"$limit_arg");
             args.assert_end();
 
             WordIter endtoken;
@@ -34,21 +34,21 @@ namespace Odysseus.Database.Prosody {
 
             var exceptParams = new Gee.ArrayList<Variable>();
             var exceptQuery = "";
-            if (ByteUtils.equals_str(endtag, "except")) {
+            if ("except" in endtag) {
                 exceptQuery = compile_block(parser.parse("each-row empty endquery", out endtoken), exceptParams);
                 endtag = endtoken.next();
             }
 
-            Template loop_body = new Echo(b(""));
-            if (ByteUtils.equals_str(endtag, "each-row")) {
+            Template loop_body = new Echo();
+            if ("each-row" in endtag) {
                 endtoken.assert_end();
 
                 loop_body = parser.parse("endquery empty", out endtoken);
                 endtag = endtoken.next();
             }
 
-            Template emptyblock = new Echo(b(""));
-            if (ByteUtils.equals_str(endtag, "empty")) {
+            Template emptyblock = new Echo();
+            if ("empty" in endtag) {
                 endtoken.assert_end();
 
                 emptyblock = parser.parse("endquery", out endtoken);
@@ -70,7 +70,7 @@ namespace Odysseus.Database.Prosody {
                 queryParams.add(ast as Variable);
                 return "?";
             } else if (ast is Echo) {
-                return ByteUtils.to_string((ast as Echo).text);
+                return @"$((ast as Echo).text)";
             } else if (ast is Std.WithTag) {
                 var with = ast as Std.WithTag;
 
@@ -176,10 +176,9 @@ namespace Odysseus.Database.Prosody {
         public DataSQLiteRow(Sqlite.Statement q) {this.query = q;}
         public override void foreach_map(Data.Data.ForeachMap cb) {
             for (var i = 0; i < query.column_count(); i++) {
-                var key = b(query.column_name(i));
+                var key = new Slice.s(query.column_name(i));
                 var val = new DataSQLite(query.column_value(i));
-                if (cb(key, val))
-                    break;
+                if (cb(key, val)) break;
             }
         }
     }
@@ -187,11 +186,11 @@ namespace Odysseus.Database.Prosody {
     private class DataSQLite : Data.Data {
         private unowned Sqlite.Value val;
         public DataSQLite(Sqlite.Value val) {this.val = val;}
-        public override Data.Data get(Bytes _) {return new Data.Empty();}
+        public override Data.Data get(Slice _) {return new Data.Empty();}
         public override string to_string() {return val.to_text();}
         public override void foreach_map(Data.Data.ForeachMap cb) {
             for (var i = 0; i < val.to_int(); i++)
-                if (cb(b(""), new Data.Literal(i))) break;
+                if (cb(new Slice(), new Data.Literal(i))) break;
         }
         public override int to_int(out bool is_length = null) {
             is_length = false;
@@ -219,23 +218,23 @@ namespace Odysseus.Database.Prosody {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var name = args.next();
             if (tag_lib.has_key(name) || parser.local_tag_lib.has_key(name))
-                throw new SyntaxError.INVALID_ARGS("{%% %s %%} already exists!", ByteUtils.to_string(name));
+                throw new SyntaxError.INVALID_ARGS(@"{%% $name %%} already exists!");
             // Don't assert end, so templates can indicate which args they expect.
 
             WordIter endtoken;
-            Bytes body;
+            Slice body;
             // parse() does a better job reporting errors than scan_until().
             parser.parse("endmacro", out endtoken, out body);
             if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endmacro %%}!");
 
-            parser.local_tag_lib[name] = new MacroBuilder(ByteUtils.strip(body), parser.local_tag_lib);
+            parser.local_tag_lib[name] = new MacroBuilder(body.strip(), parser.local_tag_lib);
             return null;
         }
     }
     private class MacroBuilder : TagBuilder, Object {
-        private Bytes source;
-        private Gee.Map<Bytes, TagBuilder> lib;
-        public MacroBuilder(Bytes source, Gee.Map<Bytes, TagBuilder> lib) {
+        private Slice source;
+        private Gee.Map<Slice, TagBuilder> lib;
+        public MacroBuilder(Slice source, Gee.Map<Slice, TagBuilder> lib) {
             this.source = source; this.lib = lib;
         }
 

@@ -18,8 +18,8 @@
 /* Standard "tags" and "filters" to use in templates.
     Beware that these may differ subtly from Django's implementation. */
 namespace Odysseus.Templating.Std {
-    public Gee.Map<Bytes, Variable> parse_params(WordIter args) throws SyntaxError {
-        var parameters = ByteUtils.create_map<Variable>();
+    public Gee.Map<Slice, Variable> parse_params(WordIter args) throws SyntaxError {
+        var parameters = new Gee.HashMap<Slice, Variable>();
         var count = 0;
         foreach (var arg in args) {
             var parts = smart_split(arg, "=");
@@ -29,7 +29,7 @@ namespace Odysseus.Templating.Std {
 
             if (val == null) {
                 val = key;
-                key = b("$%i".printf(count++));
+                key = new Slice.s("$%i".printf(count++));
             }
 
             parameters[key] = new Variable(val);
@@ -38,24 +38,24 @@ namespace Odysseus.Templating.Std {
     }
 
     private class AutoescapeBuilder : TagBuilder, Object {
-        public static Gee.Map<Bytes,Gee.Map<uint8,string>>? _modes;
-        public static Gee.Map<Bytes,Gee.Map<uint8,string>> modes {
-            get {
-                if (_modes == null)
-                    _modes = ByteUtils.create_map<Gee.Map<char,string>>();
-                return _modes;
-            }
+        public Gee.Map<Slice,Gee.Map<uint8,string>> modes =
+                new Gee.HashMap<Slice, Gee.Map<uint8,string>>();
+
+        public new void set(string key, Gee.Map<uint8, string> val) {
+            modes[new Slice.s(key)] = val;
         }
+        public new Gee.Map<uint8, string> get(Slice key) {return modes[key];}
 
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var mode = args.next();
             args.assert_end();
             if (!modes.has_key(mode)) throw new SyntaxError.INVALID_ARGS(
-                    "Invalid {%% autoescape %%} mode: '%s'", ByteUtils.to_string(mode));
+                    @"Invalid {%% autoescape %%} mode: '$mode`");
 
             var prev = parser.escapes;
             parser.escapes = modes[mode];
-            modes[b("end")] = prev;
+            this["end"] = prev;
+
             return null;
         }
     }
@@ -83,9 +83,7 @@ namespace Odysseus.Templating.Std {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var filter_tail = args.next();
             args.assert_end();
-
-            var filter = "$|" + ByteUtils.to_string(filter_tail);
-            var variable = new Variable(b(filter));
+            var variable = new Variable(new Slice.s(@"_|$filter_tail"));
 
             WordIter? endtoken;
             var body = parser.parse("endfilter", out endtoken);
@@ -109,24 +107,23 @@ namespace Odysseus.Templating.Std {
             yield body.exec(ctx, capture);
             var text = capture.grab_data();
 
-            yield filter.exec(Data.Let.build(b("$"), new Data.Substr(text)), output);
+            yield filter.exec(Data.Let.builds("_", new Data.Substr(text)), output);
         }
     }
 
     private class ForBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
-            //Bytes[] args = args_iter.collect();
             var targetvar = args.next();
             var sep = args.next();
-            var keyvar = b("");
-            if (!ByteUtils.equals_str(sep, "in")) {
+            var keyvar = new Slice();
+            if (!("in" in sep)) {
                 keyvar = targetvar;
                 targetvar = sep;
                 sep = args.next();
             }
-            if (!ByteUtils.equals_str(sep, "in"))
+            if (!("in" in sep))
                 throw new SyntaxError.INVALID_ARGS("{%% for %%} expects the second to last " +
-                        "template argument to be 'in', got '%s'", ByteUtils.to_string(sep));
+                        @"template argument to be 'in', got '$sep'");
 
             var collection = new Variable(args.next());
             args.assert_end();
@@ -135,8 +132,8 @@ namespace Odysseus.Templating.Std {
             var body = parser.parse("endfor empty", out endtoken);
             var endtag = endtoken.next();
 
-            Template empty_block = new Echo(b(""));
-            if (ByteUtils.equals_str(endtag, "empty")) {
+            Template empty_block = new Echo();
+            if ("empty" in endtag) {
                 endtoken.assert_end();
 
                 empty_block = parser.parse("endfor", out endtoken);
@@ -151,12 +148,12 @@ namespace Odysseus.Templating.Std {
         }
     }
     private class ForTag : Template {
-        private Bytes keyvar;
-        private Bytes valuevar;
+        private Slice keyvar;
+        private Slice valuevar;
         private Variable collection;
         private Template body;
         private Template empty_block;
-        public ForTag(Bytes keyvar, Bytes valuevar, Variable collection,
+        public ForTag(Slice keyvar, Slice valuevar, Variable collection,
                 Template body, Template empty_block) {
             this.keyvar = keyvar;
             this.valuevar = valuevar;
@@ -188,22 +185,20 @@ namespace Odysseus.Templating.Std {
             var true_branch = parser.parse("elif else endif", out endtoken);
             var end_tag = endtoken.next();
 
-            Template false_branch = new Echo(b(""));
-            if (ByteUtils.equals_str(end_tag, "elif")) {
+            Template false_branch = new Echo();
+            if ("elif" in end_tag) {
                 false_branch = build(parser, endtoken);
-            } else if (ByteUtils.equals_str(end_tag, "else")) {
+            } else if ("else" in end_tag) {
                 endtoken.assert_end();
 
                 false_branch = parser.parse("endif", out endtoken);
                 end_tag = endtoken.next();
             }
 
-            if (!ByteUtils.equals_str(end_tag, "endif") &&
-                    !ByteUtils.equals_str(end_tag, "elif"))
+            if (!("endif" in end_tag || "elif" in end_tag))
                 throw new SyntaxError.UNBALANCED_TAGS(
                         "{%% if %%} must be closed with a {%% endif %%}");
-            if (ByteUtils.equals_str(end_tag, "endif"))
-                endtoken.assert_end();
+            if ("endif" in end_tag) endtoken.assert_end();
 
             return new IfTag(expression, true_branch, false_branch);
         }
@@ -233,8 +228,8 @@ namespace Odysseus.Templating.Std {
             var true_branch = parser.parse("endif else", out endtoken);
             var endtag = endtoken.next();
 
-            Template false_branch = new Echo(b(""));
-            if (ByteUtils.equals_str(endtag, "else")) {
+            Template false_branch = new Echo();
+            if ("else" in endtag) {
                 endtoken.assert_end();
                 false_branch = parser.parse("endif", out endtoken);
                 endtag = endtoken.next();
@@ -287,7 +282,7 @@ namespace Odysseus.Templating.Std {
             do {
                 endtoken.assert_end();
                 alts.add(parser.parse("alt endrandom", out endtoken));
-            } while (ByteUtils.equals_str(endtoken.next(), "alt"));
+            } while ("alt" in endtoken.next());
             endtoken.assert_end();
 
             if (endtoken == null)
@@ -313,13 +308,13 @@ namespace Odysseus.Templating.Std {
         }
     }
     private class TemplateTagTag : Template {
-        private string escape;
-        public TemplateTagTag(Bytes esc) {
-            this.escape = ByteUtils.to_string(esc);
+        private Quark escape; // The quark cuts down on memory use.
+        public TemplateTagTag(Slice esc) {
+            escape = Quark.from_string(@"$esc");
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            switch(escape) {
+            switch(@"$escape") {
             case "openblock": yield output.writes("{%"); break;
             case "closeblock": yield output.writes("%}"); break;
             case "openvariable": yield output.writes("{{"); break;
@@ -346,9 +341,9 @@ namespace Odysseus.Templating.Std {
     }
     private class WithTag : Template {
         // These fields are public to allow for external code to inline them.
-        public Gee.Map<Bytes,Variable> vars;
+        public Gee.Map<Slice,Variable> vars;
         public Template body;
-        public WithTag(Gee.Map<Bytes,Variable> variables, Template bodyblock) {
+        public WithTag(Gee.Map<Slice,Variable> variables, Template bodyblock) {
             this.vars = variables;
             this.body = bodyblock;
         }
@@ -405,8 +400,7 @@ namespace Odysseus.Templating.Std {
 
     private class CutFilter : Filter {
         public override Data.Data filter(Data.Data a, Data.Data b) {
-            var A = a.to_string();
-            var B = b.to_string();
+            var A = @"$a"; var B = @"$b";
             return new Data.Literal(A.replace(B, ""));
         }
     }
@@ -414,9 +408,10 @@ namespace Odysseus.Templating.Std {
     private class DateFilter : Filter {
         public override Data.Data filter(Data.Data date, Data.Data format) {
             var datetime = new DateTime.from_unix_local(date.to_int());
-            var format_str = format.to_string();
+            var format_str = @"$format";
             if (format_str == "")
-                format_str = @"$(Granite.DateTime.get_default_date_format(false, true, true)) $(Granite.DateTime.get_default_time_format())";
+                format_str = Granite.DateTime.get_default_date_format(false, true, true) +
+                        " " + Granite.DateTime.get_default_time_format();
             var ret = datetime.format(format_str);
             return new Data.Literal(ret);
         }
@@ -434,7 +429,7 @@ namespace Odysseus.Templating.Std {
     }
 
     private class EscapeURIFilter : Filter {
-        public override bool? should_escape() {return true;}
+        public override bool? should_escape() {return false;}
         public override Data.Data filter0(Data.Data a) {
             return new Data.Literal(Soup.URI.encode(a.to_string(), "#?&=/"));
         }
@@ -447,19 +442,21 @@ namespace Odysseus.Templating.Std {
     }
 
     private class FirstFilter : Filter {
-        private Bytes key;
-        construct {key = b("$0");}
-
-        public override Data.Data filter0(Data.Data a) {return a[this.key];}
+        public override Data.Data filter0(Data.Data a) {
+            Data.Data ret = new Data.Empty();
+            a.foreach_map((key, val) => {ret = val; return true;});
+            return ret;
+        }
     }
 
     private class ForceEscape : Filter {
+        public AutoescapeBuilder modes;
         public override bool? should_escape() {return false;}
 
         public override Data.Data filter(Data.Data a, Data.Data mode) {
             var loop = new MainLoop();
             AsyncResult? result = null;
-            escape.begin(a.to_bytes(), AutoescapeBuilder.modes[mode.to_bytes()], (obj, res) => {
+            escape.begin(a.to_bytes(), modes[mode.to_bytes()], (obj, res) => {
                 result = res;
                 loop.quit();
             });
@@ -467,9 +464,9 @@ namespace Odysseus.Templating.Std {
             return new Data.Substr(escape.end(result));
         }
 
-        private async Bytes escape(Bytes text, Gee.Map<uint8,string> escapes) {
+        private async Slice escape(Slice text, Gee.Map<uint8,string> escapes) {
             var capture = new CaptureWriter();
-            yield ByteUtils.write_escaped(text, escapes, capture);
+            yield capture.escaped(text, escapes);
             return capture.grab_data();
         }
     }
@@ -501,7 +498,7 @@ namespace Odysseus.Templating.Std {
 
     private class LengthFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
-        bool is_length;
+            bool is_length;
             int ret = a.to_int(out is_length);
 
             if (!is_length) {
@@ -513,8 +510,7 @@ namespace Odysseus.Templating.Std {
     }
 
     private class LengthIsFilter : Filter {
-        private LengthFilter length_filter;
-        construct {length_filter = new LengthFilter();}
+        private LengthFilter length_filter = new LengthFilter();
 
         public override Data.Data filter(Data.Data a, Data.Data b) {
             var length = length_filter.filter0(a);
@@ -524,13 +520,13 @@ namespace Odysseus.Templating.Std {
 
     private class LookupFilter : Filter {
         public override Data.Data filter(Data.Data a, Data.Data expression) {
-            return a.lookup(expression.to_string());
+            return a.lookup(@"$expression");
         }
     }
 
     private class LowerFilter : Filter {
         public override Data.Data filter0(Data.Data text) {
-            return new Data.Literal(text.to_string().down());
+            return new Data.Literal(@"$text".down());
         }
     }
 
@@ -570,10 +566,10 @@ namespace Odysseus.Templating.Std {
 
 
 
-    public Gee.Map<uint8,string> escape_html;
 
     public void register_standard_library() {
-        register_tag("autoescape", new AutoescapeBuilder());
+        var escapes = new AutoescapeBuilder();
+        register_tag("autoescape", escapes);
         register_tag("debug", new DebugBuilder());
 		register_tag("fetch", new xHTTP.FetchBuilder());
         register_tag("filter", new FilterBuilder());
@@ -599,7 +595,7 @@ namespace Odysseus.Templating.Std {
         register_filter("favicon", new x.FaviconFilter());
         register_filter("filesize", new FileSizeFormatFilter());
         register_filter("first", new FirstFilter());
-        register_filter("force-escape", new ForceEscape());
+        register_filter("force-escape", new ForceEscape() {modes = escapes});
         register_filter("join", new JoinFilter());
         register_filter("last", new LastFilter());
         register_filter("length", new LengthFilter());
@@ -609,25 +605,24 @@ namespace Odysseus.Templating.Std {
         register_filter("text", new TextFilter());
         register_filter("title", new TitleFilter());
 
-        var modes = AutoescapeBuilder.modes;
-        modes[b("off")] = Gee.Map.empty<char,string>();
-        modes[b("html")] = escape_html = ByteUtils.build_escapes("<>&'\"",
-                "&lt;", "&gt;", "&amp;", "&apos;", "&quot;");
-        modes[b("html-lines")] = ByteUtils.build_escapes("<>&'\"\n",
+        escapes["off"] = Gee.Map.empty<char,string>();
+        escapes["html"] = Writer.html();
+        escapes["html-lines"] = Writer.build_escapes("<>&'\"\n",
                 "&lt;", "&gt;", "&amp;", "&apos;", "&quot;", "<br />");
-        AutoescapeBuilder.modes[b("csv")] = ByteUtils.build_escapes("'\"", "\\'", "\\\"");
+        escapes["csv"] = Writer.build_escapes("'\"", "\\'", "\\\"");
         // These escape codes taken from Django
         // https://github.com/django/django/blob/9718fa2e8abe430c3526a9278dd976443d4ae3c6/django/utils/html.py#L51
-        var escape_js_string = ByteUtils.build_escapes("\\\"><&=-;\x2028\x2029'",
+        var escape_js_string = Writer.build_escapes("\\\"><&=-;\x2028\x2029'",
                 "\\u005C", "\\u0022", "\\u003E", "\\u003C", "\\u0026",
                 "\\u003D", "\\u002D", "\\u003B", "\\u2028", "\\u2029");
         // Escape every ASCII character with a value less than 32.
         escape_js_string['\''] = "\\u0027";
         for (char z = 0; z < 32; z++)
             escape_js_string[z] = "\\u%04X".printf(z);
-        modes[b("js-string")] = escape_js_string;
-        modes[b("uri")] = ByteUtils.build_escapes("");
-        modes[b("uri")][0] = "escapeURI"; // Ugly hack to call better maintained logic.
-        modes[b("url")] = modes[b("uri")];
+        escapes["js-string"] = escape_js_string;
+        var escape_uri = new Gee.HashMap<uint8, string>();
+        escape_uri[0] = "escapeURI"; // Ugly hack to call better maintained logic.
+        escapes["uri"] = escape_uri;
+        escapes["url"] = escape_uri;
     }
 }

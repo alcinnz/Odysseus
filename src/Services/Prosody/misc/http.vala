@@ -22,21 +22,23 @@ This would mostly just serve to implement of builtin federated search,
 namespace Odysseus.Templating.xHTTP {
     using Std;
     public class FetchBuilder : TagBuilder, Object {
+        private Gee.Map<uint8, string> escapeURL = new Gee.HashMap<uint8, string>();
+        construct {escapeURL[0] = "escapeURI";}
+
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var cache_flag = args.next_value();
-            if (cache_flag != null && !ByteUtils.equals_str(cache_flag, "permacached"))
+            if (cache_flag != null && cache_flag != new Slice.s("permacached"))
                 throw new SyntaxError.INVALID_ARGS(
                         "First arg to {%% fetch %%}, if any, must be 'permacached'!");
             args.assert_end();
 
             WordIter endtoken;
-            var prevMode = parser.escapes;
-            parser.escapes = Std.AutoescapeBuilder.modes[b("url")];
+            var prevMode = parser.escapes; parser.escapes = escapeURL;
             var request = parser.parse("each", out endtoken);
             parser.escapes = prevMode;
+
             if (endtoken == null ||
-                    !(ByteUtils.equals_str(endtoken.next(), "each") &&
-                    ByteUtils.equals_str(endtoken.next(), "as")))
+                    !("each" in endtoken.next() && "as" in endtoken.next()))
                 throw new SyntaxError.INVALID_ARGS(
                         "{%% fetch %%} must be contain a {%% each as _ %%} block!");
 
@@ -48,6 +50,7 @@ namespace Odysseus.Templating.xHTTP {
                 throw new SyntaxError.INVALID_ARGS(
                         "{%% fetch %%} must be closed with an {%% endfetch %%}");
             endtoken.next(); endtoken.assert_end();
+
             return new FetchTag(request, cache_flag == null, target, loop);
         }
     }
@@ -57,12 +60,12 @@ namespace Odysseus.Templating.xHTTP {
     private class FetchTag : Template {
         private Template body;
         private Template loop;
-        private Bytes target;
+        private Slice target;
         private bool nocache;
 
         private Mutex outputlock = new Mutex();
 
-        public FetchTag(Template body, bool nocache, Bytes target, Template loop) {
+        public FetchTag(Template body, bool nocache, Slice target, Template loop) {
             this.body = body; this.nocache = nocache; this.target = target; this.loop = loop;
         }
 

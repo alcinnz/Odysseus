@@ -56,7 +56,8 @@ namespace Odysseus.Templating.xAppStram {
             } catch (SyntaxError err) {
                 throw err;
             } catch (Error err) {
-                return new Echo(b(@"<p style='color: red;'>$(err.message)</p>"));
+                var msg = new Slice.s(@"<p style='color: red;'>$(err.message)</p>");
+                return new Echo(msg);
             }
         }
     }
@@ -92,8 +93,8 @@ namespace Odysseus.Templating.xAppStram {
             var pacman = AppInfo.get_default_for_uri_scheme("appstream").get_display_name();
 
             // 5. Render via a common template
-            var data = Data.Let.build(b("pacman"), new Data.Literal(pacman),
-                    Data.Let.build(b("apps"), new Data.List.from_array(app_list)));
+            var data = Data.Let.builds("pacman", new Data.Literal(pacman),
+                    Data.Let.builds("apps", new Data.List.from_array(app_list)));
             yield renderer.exec(data, output);
         }
     }

@@ -21,7 +21,7 @@ namespace Odysseus.Templating.x {
     private class FaviconFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
             var db = get_web_context().get_favicon_database();
-            var uri = db.get_favicon_uri(a.to_string());
+            var uri = db.get_favicon_uri(@"$a");
             return new Data.Literal(uri == null ?
                 "gtk-icon:16/web-browser-symbolic" : uri);
         }

@@ -107,25 +107,25 @@ namespace Odysseus.Templating.xDiff {
         return ret;
     }
 
-    public Ranges diff(Bytes a, Bytes b) {
-        var ranges = longest_common_subsequence(a.get_data(), b.get_data());
+    public Ranges diff(Slice a, Slice b) {
+        var ranges = longest_common_subsequence(a.to_array(), b.to_array());
         // Ensure get_ranges captures trailing text that was added.
         ranges.append(new Duo(a.length, b.length));
         return get_ranges(ranges);
     }
 
-    public async void render_ranges(Bytes source, Gee.List<Duo> ranges,
+    public async void render_ranges(Slice source, Gee.List<Duo> ranges,
             string tagname, Writer output) {
         var last_end = 0;
         foreach (var range in ranges) {
             if (last_end != range.first)
-                yield ByteUtils.write_escaped_html(source[last_end:range.first], output);
+                yield output.escaped(source[last_end:range.first]);
             last_end = range.last;
 
             yield output.writes(@"<$tagname>");
-            yield ByteUtils.write_escaped_html(source[range.first:range.last], output);
+            yield output.escaped(source[range.first:range.last]);
             yield output.writes(@"</$tagname>");
         }
-        yield ByteUtils.write_escaped_html(source[last_end:source.length], output);
+        yield output.escaped(source[last_end:source.length]);
     }
 }

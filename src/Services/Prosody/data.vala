@@ -20,20 +20,22 @@
 
     Can currently work with JSON, and Vala literals. */
 namespace Odysseus.Templating.Data {
-    private void indent(string text, StringBuilder builder) {
+    private string indent(string text) {
+        var builder = new StringBuilder();
         var lines = text.split("\n");
         builder.append(lines[0]);
         foreach (var line in lines[1:lines.length]) {
             builder.append("\n\t");
             builder.append(line);
         }
+        return builder.str;
     }
     public abstract class Data : Object {
         /* These methods are used in core language syntax */
-        public virtual new Data get(Bytes property) {
+        public virtual new Data get(Slice property) {
             Data ret = new Empty();
             foreach_map((key, val) => {
-                if (key.compare(property) == 0) {
+                if (key.equal_to(property)) {
                     ret = val;
                     return true;
                 }
@@ -46,17 +48,15 @@ namespace Odysseus.Templating.Data {
             var builder = new StringBuilder();
             builder.append("{");
             @foreach_map((key, val) => {
-                builder.append("\n\t");
-                builder.append_len((string) key.get_data(), key.length);
-                builder.append(" => ");
-                indent(val.to_string(), builder);
+                var indented = indent(@"$val");
+                builder.append(@"\n\t$key => $indented");
                 return false;
             });
             builder.append("}");
             return builder.str;
         }
-        public virtual Bytes to_bytes() {
-            return b(this.to_string());
+        public virtual Slice to_bytes() {
+            return new Slice.s(this.to_string());
         }
 
         /* These methods/properties are used by important tags,
@@ -65,19 +65,19 @@ namespace Odysseus.Templating.Data {
             get {return to_int() != 0;}
         }
 
-        public delegate bool ForeachMap(Bytes key, Data val);
+        public delegate bool ForeachMap(Slice key, Data val);
         public virtual void foreach_map(ForeachMap cb) {
             @foreach((key) => cb(key, this[key]));
         }
         // Possibly easier way to implement foreach_map
-        public delegate bool Foreach(Bytes key);
+        public delegate bool Foreach(Slice key);
         protected virtual void @foreach(Foreach cb) {
             @foreach_map((key, val) => cb(key));
         }
         // Easier way for template tags to call foreach_map, within their async methods.
         public class KeyValue {
-            public Bytes key; public Data val;
-            public KeyValue(Bytes key, Data val) {this.key = key; this.val = val;}
+            public Slice key; public Data val;
+            public KeyValue(Slice key, Data val) {this.key = key; this.val = val;}
         }
         public KeyValue[] to_array() {
             var ret = new Gee.ArrayList<KeyValue>();
@@ -96,7 +96,7 @@ namespace Odysseus.Templating.Data {
         // Defaults to using our Variable syntax.
         public virtual Data lookup(string query) {
             try {
-                return new Variable(b(query)).eval(this);
+                return new Variable(new Slice.s(query)).eval(this);
             } catch (SyntaxError e) {
                 warning("Invalid syntax expression: %s", e.message);
                 return new Empty();
@@ -107,14 +107,13 @@ namespace Odysseus.Templating.Data {
     // Utility callback-iterator for numeric ranges
     public bool range(Data.Foreach cb, uint end, uint start = 0) {
         for (var index = start; index < end; index++) {
-            var key = "$%u".printf(index);
-            if (cb(b(key))) return true;
+            if (cb(new Slice.s("$%u".printf(index)))) return true;
         }
         return false;
     }
 
     public class Empty : Data {
-        public override Data get(Bytes _) {return this;}
+        public override Data get(Slice _) {return this;}
         public override string to_string() {return "";}
         public override void foreach_map(Data.ForeachMap cb) {}
         public override int to_int(out bool is_length = null) {
@@ -131,7 +130,7 @@ namespace Odysseus.Templating.Data {
         public override void foreach_map(Data.ForeachMap cb) {
             if (data.holds(typeof(int)) || data.holds(typeof(double))) {
                 var to = to_int();
-                for (var i = 0; i < to; i++) if (cb(b(""), new Literal(i))) break;
+                for (var i = 0; i < to; i++) if (cb(new Slice(), new Literal(i))) break;
                 return;
             }
             var text = to_string();
@@ -141,7 +140,7 @@ namespace Odysseus.Templating.Data {
             unichar c;
             while (text.get_next_char(ref index, out c)) {
                 var key = "$%u".printf(unichar_count++);
-                if (cb(b(key), new Literal(c))) break;
+                if (cb(new Slice.s(key), new Literal(c))) break;
             }
         }
 
@@ -183,7 +182,7 @@ namespace Odysseus.Templating.Data {
                 if (data.holds(typeof(string))) {
                     return ((string) data).length > 0;
                 } if (data.holds(typeof(double)) || data.holds(typeof(int))) {
-                    return to_double() > 0;
+                    return to_double() != 0;
                 } else {
                     Value ret = Value(typeof(bool));
                     if (data.transform(ref ret)) return (bool) ret;
@@ -194,11 +193,11 @@ namespace Odysseus.Templating.Data {
     }
 
     public class Substr : Data {
-        Bytes data;
-        public Substr(Bytes b) {this.data = b;}
+        Slice data;
+        public Substr(Slice b) {this.data = b;}
 
         public override void foreach_map(Data.ForeachMap cb) {
-            var text = (string) data.get_data();
+            var text = to_string();
 
             int index = 0;
             uint char_count = 0;
@@ -209,12 +208,12 @@ namespace Odysseus.Templating.Data {
                     return;
                 }
                 var key = "$%u".printf(char_count++);
-                if (cb(b(key), new Literal(c))) break;
+                if (cb(new Slice.s(key), new Literal(c))) break;
             }
         }
 
-        public override string to_string() {return ByteUtils.to_string(data);}
-        public override Bytes to_bytes() {return data;}
+        public override string to_string() {return @"$data";}
+        public override Slice to_bytes() {return data;}
         public override bool exists {get {return data.length > 0;}}
 
         public override int to_int(out bool is_length = null) {
@@ -226,20 +225,20 @@ namespace Odysseus.Templating.Data {
     }
 
     public class Mapping : Data {
-        public Gee.Map<Bytes, Data> data;
+        public Gee.Map<Slice, Data> data;
         public string? text;
-        public Mapping(Gee.Map<Bytes, Data>? m = null, string? s = "") {
+        public Mapping(Gee.Map<Slice, Data>? m = null, string? s = "") {
             if (m != null) this.data = m;
-            else this.data = ByteUtils.create_map<Data>();
+            else this.data = new Gee.HashMap<Slice, Data>();
             this.text = s;
         }
 
-        public override Data get(Bytes property) {
+        public override Data get(Slice property) {
             if (data.has_key(property)) return data[property];
             else return new Empty();
         }
         public new void set(string property, Data val) {
-            data[b(property)] = val;
+            data[new Slice.s(property)] = val;
         }
         public override void foreach_map(Data.ForeachMap cb) {
             data.map_iterator().@foreach((k, v) => !cb(k, v));
@@ -263,11 +262,12 @@ namespace Odysseus.Templating.Data {
             return inner[0].to_string();
         }
         public override void foreach_map(Data.ForeachMap cb) {
+            var index = 0;
             foreach (var item in inner)
-                if (cb(b(""), item)) break;
+                if (cb(new Slice.s("$%i".printf(index++)), item)) break;
         }
-        public override Data get(Bytes property_bytes) {
-            var property = ByteUtils.to_string(property_bytes);
+        public override Data get(Slice property_bytes) {
+            var property = @"$property_bytes";
             uint64 index = 0;
             if (property[0] == '$' &&
                     uint64.try_parse(property[1:property.length], out index) &&
@@ -289,11 +289,11 @@ namespace Odysseus.Templating.Data {
             this.first = first; this.last = last;
         }
 
-        public Stack.with_map(Data fallback, Gee.Map<Bytes, Data> top) {
+        public Stack.with_map(Data fallback, Gee.Map<Slice, Data> top) {
             this(new Mapping(top), fallback);
         }
 
-        public override Data get(Bytes property) {
+        public override Data get(Slice property) {
             var val = first[property];
             if (val is Empty) return last[property];
             else return val;
@@ -321,15 +321,15 @@ namespace Odysseus.Templating.Data {
 
     public class Lazy : Data {
         Data ctx;
-        Gee.Map<Bytes,Variable> vars;
-        Gee.Map<Bytes,Data> evaluated;
-        public Lazy(Gee.Map<Bytes,Variable> variables, Data context) {
+        Gee.Map<Slice,Variable> vars;
+        Gee.Map<Slice,Data> evaluated;
+        public Lazy(Gee.Map<Slice,Variable> variables, Data context) {
             this.ctx = context;
             this.vars = variables;
-            this.evaluated = ByteUtils.create_map<Data>();
+            this.evaluated = new Gee.HashMap<Slice, Data>();
         }
 
-        public override Data get(Bytes property) {
+        public override Data get(Slice property) {
             if (evaluated.has_key(property)) return evaluated[property];
             if (vars.has_key(property)) {
                 evaluated[property] = vars[property].eval(ctx);
@@ -362,25 +362,28 @@ namespace Odysseus.Templating.Data {
     }
 
     public class Let : Data {
-        private Bytes key;
+        private Slice key;
         private Data val;
         private Data fallback;
 
         private Let() {}
-        public static Data build(Bytes key, Data val, Data fallback = new Empty()) {
+        public static Data build(Slice key, Data val, Data fallback = new Empty()) {
             if (key == null || key.length == 0) return fallback;
 
             var self = new Let();
             self.key = key; self.val = val; self.fallback = fallback;
             return self;
         }
+        public static Data builds(string key, Data val, Data fallback = new Empty()) {
+            return build(new Slice.s(key), val, fallback);
+        }
 
-        public override Data get(Bytes index) {
-            if (index.compare(key) == 0) return val;
+        public override Data get(Slice index) {
+            if (index.equal_to(key)) return val;
             else return fallback[index];
         }
 
-        public override string to_string() {return fallback.to_string();}
+        public override string to_string() {return @"$fallback";}
         public override bool exists {get {return true;}}
         public override int to_int(out bool is_length = null) {
             return fallback.to_int(out is_length);

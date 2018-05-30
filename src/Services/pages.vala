@@ -18,8 +18,6 @@
 /** Exposes our GLib.Resource templates to WebKit. */
 namespace Odysseus.Services {
     using Templating;
-    /* shortname for ByteUtils.from_string */
-    private Bytes b(string s) {return ByteUtils.from_string(s);}
 
     private Data.Data parse_url_to_prosody(string url_text) {
         var url = new Data.Mapping(null, url_text);
@@ -33,15 +31,15 @@ namespace Odysseus.Services {
         url["scheme"] = new Data.Literal(parser.scheme);
         url["user"] = new Data.Literal(parser.user);
 
-        var q = ByteUtils.create_map<Gee.List<Data.Data>>();
+        var q = new Gee.HashMap<Slice, Gee.List<Data.Data>>();
         foreach (var keyvalue in parser.query.split("&")) {
             var segments = keyvalue.split("=", 2);
             if (segments.length == 0) {
                 warning("Malformed query string '%s'", parser.query);
                 continue;
             }
-            // TODO code cleanup, coerce better between string and list.
-            var key = b(segments[0]);
+
+            var key = new Slice.s(segments[0]);
             Data.Data val = new Data.Literal("");
             if (segments.length > 1) val = new Data.Literal(segments[1]);
 
@@ -50,7 +48,7 @@ namespace Odysseus.Services {
             vals.add(val);
         }
 
-        var query = ByteUtils.create_map<Data.Data>();
+        var query = new Gee.HashMap<Slice, Data.Data>();
         url["query"] = new Data.Mapping(query, parser.query);
         foreach (var p in q.entries) query[p.key] = new Data.List(p.value);
 
@@ -67,8 +65,8 @@ namespace Odysseus.Services {
             langs_data[i] = new Data.Literal(langs[i]);
         }
 
-        return Data.Let.build(b("url"), url,
-                Data.Let.build(b("LOCALE"), new Data.List.from_array(langs_data)));
+        return Data.Let.builds("url", url,
+                Data.Let.builds("LOCALE", new Data.List.from_array(langs_data)));
     }
 
     private void render_error(WebKit.URISchemeRequest request, string error,
@@ -78,8 +76,8 @@ namespace Odysseus.Services {
             var path = "/" + Path.build_path("/",
                     "io", "github", "alcinnz", "Odysseus", "odysseus:", error);
 
-            var data = Data.Let.build(b("url"), new Data.Literal(request.get_uri()),
-                    Data.Let.build(b("path"), new Data.Literal(request.get_path()),
+            var data = Data.Let.builds("url", new Data.Literal(request.get_uri()),
+                    Data.Let.builds("path", new Data.Literal(request.get_path()),
                     base_data));
 
             ErrorData? error_data = null;
@@ -89,8 +87,8 @@ namespace Odysseus.Services {
             else {
                 // Parse specially with the custom {% error-line %} tag.
                 var bytes = resources_lookup_data(path, 0);
-                var parser = new Parser(bytes);
-                parser.local_tag_lib[b("error-line")] = error_tag;
+                var parser = new Parser.b(bytes);
+                parser.local_tag_lib[new Slice.s("error-line")] = error_tag;
                 template = parser.parse();
             }
 
@@ -122,8 +120,8 @@ namespace Odysseus.Services {
             else {
                 // Parse specially with custom {% error-line %} tag.
                 var bytes = resources_lookup_data(path, 0);
-                var parser = new Parser(bytes);
-                parser.local_tag_lib[b("error-line")] = error_tag;
+                var parser = new Parser.b(bytes);
+                parser.local_tag_lib[new Slice.s("error-line")] = error_tag;
                 template = parser.parse();
             }
         } catch (SyntaxError e) {
