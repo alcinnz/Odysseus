@@ -406,10 +406,6 @@ namespace Odysseus.Templating {
         }
     }
     public abstract class Template : Object {
-        // Used to help the user debug unbalanced tags
-        // FIXME: I won't need this, as instead I could use .get_class().get_name()
-        public virtual string get_name() {return "";}
-
         // main method
         public abstract async void exec(Data.Data data, Writer output);
     }
