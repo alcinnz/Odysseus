@@ -33,6 +33,7 @@ public class Odysseus.Overlay.InfoContainer : Gtk.Grid {
     
     construct {
         this.body = new Gtk.Label(null);
+        this.body.wrap = true;
 
         this.entry = new Gtk.Entry();
 
