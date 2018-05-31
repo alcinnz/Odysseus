@@ -80,6 +80,6 @@ public class Slice : Gee.Hashable<Slice>, Object {
         var end = _.length - 1;
         while (end < _.length && _[end] in " \t\r\n".data) end--;
 
-        return this[start:end];
+        return this[start:++end];
     }
 }

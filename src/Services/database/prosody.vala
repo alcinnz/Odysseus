@@ -96,7 +96,7 @@ namespace Odysseus.Database.Prosody {
             string tail;
             var err = db.prepare_v2(sql, sql.length, out this.query, out tail);
             if (err != Sqlite.OK)
-                throw new SyntaxError.OTHER("Invalid query %d: %s", db.errcode(), db.errmsg());
+                throw new SyntaxError.OTHER("Invalid query (%s) %d: %s", sql, db.errcode(), db.errmsg());
 
             this.parameters = parameters[0:this.query.bind_parameter_count()];
 
