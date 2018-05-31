@@ -19,7 +19,7 @@
 namespace Odysseus.Templating {
     private Gee.Map<string, Template>? template_cache = null;
     private Gee.ArrayList<string>? cached_keys; // Decides what template to free
-    private const int CACHE_SIZE = 4;
+    private const int CACHE_SIZE = 8;
 
     public Template get_for_resource(string resource, ref ErrorData? error_data)
             throws SyntaxError, Error {
