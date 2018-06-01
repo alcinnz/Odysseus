@@ -75,19 +75,34 @@ namespace Odysseus.Templating.xAppStram {
         }
         public override async void exec(Data.Data ctx, Writer output) {
             // 1. Assemble the MIMEtype query
-            var mime = new StringBuilder();
-            foreach (var variable in vars) mime.append(variable.eval(ctx).to_string());
+            var mimes = new StringBuilder();
+            foreach (var variable in vars) mimes.append(variable.eval(ctx).to_string());
+            var extra_mimes = mimes.str.split(";");
+            var mime = extra_mimes[0];
+            extra_mimes = extra_mimes[1:extra_mimes.length];
 
             // 2. Query AppStream
-            var apps = pool.get_components_by_provided_item(ProvidedKind.MIMETYPE, mime.str);
+            var apps = pool.get_components_by_provided_item(ProvidedKind.MIMETYPE, mime);
 
             // 3. Construct a datamodel for rendering
-            var app_list = new Data.Data[apps.length];
+            var app_list = new Data.Data[apps.length]; int j = 0;
             for (var i = 0; i < apps.length; i++) {
-                var app_data = app_list[i] = new Data.Mapping(null, apps[i].id);
+                // First check if it also matches extra_mimes!
+                var app_mimes = apps[i].get_provided_for_kind(AppStream.ProvidedKind.MIMETYPE);
+                var matches = true;
+                foreach (var extra_mime in extra_mimes) {
+                    if (app_mimes.has_item(extra_mime)) continue;
+                    matches = false;
+                    break;
+                }
+                if (!matches) continue;
+
+                // And now we can confidently filter by the others.
+                var app_data = app_list[j++] = new Data.Mapping(null, apps[i].id);
                 app_data["icon"] = new Data.Literal(apps[i].icons.data.get_url());
                 app_data["name"] = new Data.Literal(apps[i].name);
             }
+            app_list = app_list[0:j];
 
             // 4. What was the package manager again?
             var pacman = AppInfo.get_default_for_uri_scheme("appstream").get_display_name();
