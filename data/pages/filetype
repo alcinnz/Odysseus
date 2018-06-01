@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[application-default-icon]
-    {% trans %}CAN'T OPEN {{ filetype }} FILES{% endtrans %}</title>
+  <title>[unknown] {% trans %}CAN'T OPEN {{ filetype }} FILES{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
     h1 em {font-weight: normal;}
