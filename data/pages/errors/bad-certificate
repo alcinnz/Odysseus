@@ -16,7 +16,7 @@
   <main>
     <h1>{% trans %}This site may not be who it appears to be{% endtrans %}</h1>
     <p>{% trans %}It has failed to <a href="https://en.wikipedia.org/wiki/Public_key_certificate">assert</a> it's own identity.
-      This may be due to it's configuration, or it may be because someone's actively trying to spy on you.{% endtrans %}</p>
+      This may be due to its configuration, or it may be because someone's actively trying to <strong>spy</strong> on you.{% endtrans %}</p>
 
     <!-- <p>{% trans %}Details available by clicking the
       <img src="gtk-icon:16/channel-insecure-symbolic" alt="Insecure connection icon" />
