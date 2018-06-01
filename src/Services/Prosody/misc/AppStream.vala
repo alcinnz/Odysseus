@@ -69,7 +69,7 @@ namespace Odysseus.Templating.xAppStram {
         public AppStreamTag(Variable[] vars, AppStream.Pool appstream) throws Error {
             this.vars = vars; this.pool = appstream;
 
-            var path = "/io/github/alcinnz/Odysseus/odysseus:/special/applist.html";
+            var path = "/io/github/alcinnz/Odysseus/odysseus:/special/applist";
             ErrorData? error_data = null; // ignored
             this.renderer = get_for_resource(path, ref error_data);
         }

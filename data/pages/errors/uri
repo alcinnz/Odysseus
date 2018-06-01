@@ -1,0 +1,19 @@
+{# Displayed when we fail to parse a URI but it's URI scheme is supported by Odysseus #}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% trans %}INVALID LINK{% endtrans %}</title>
+  <style>@import url(odysseus:butterick.css);</style>
+</head>
+<body>
+  <main>
+    <h1>
+        {% macro url %}<code>{{ url }}</code>{% endmacro %}
+        {% trans %}Could not read link {% url %}{% endtrans %}
+    </h1>
+    <p>{% trans %}
+      Please report this issue to whoever gave you this link, they messed up!
+    {% endtrans %}</p>
+  </main>
+</body>
+</html>

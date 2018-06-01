@@ -1,0 +1,30 @@
+{# Displayed in the absence of an installed app that can handle the URI #}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>[application-default-icon]
+    {% trans %}CAN'T OPEN {{ filetype }} FILES{% endtrans %}</title>
+  <style>
+    @import url(odysseus:butterick.css);
+    h1 em {font-weight: normal;}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>
+      {% macro filetype %}
+        <code>{{ filetype }}:</code>
+        <em>{% mimeinfo filetype %}</em>
+      {% endmacro %}
+      {% trans %}
+        {% filetype %} files cannot be opened with any software on this computer
+      {% endtrans %}
+    </h1>
+    <p>{% trans %}
+      You must install a compatible app before your download will open.
+    {% endtrans %}</p>
+
+    {% appstream filetype %}
+  </main>
+</body>
+</html>

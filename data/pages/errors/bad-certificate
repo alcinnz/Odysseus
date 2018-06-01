@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>[channel-insecure]{% trans %}INVALID CERTIFICATE{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
@@ -15,10 +14,13 @@
 </head>
 <body>
   <main>
-    <h1>{% trans %}This Site Appears To Be Masquarading As Someone Else{% endtrans %}</h1>
-    <p>{% trans %}It provided <span title="You and the Odysseus browser">us</span> with a so-called "<a href="https://en.wikipedia.org/wiki/Public_key_certificate">cryptographic certificate</a>" to prove who it was, and yet that proof has <em>failed</em>. <span title="The Odysseus developers">We</span> encourage you to turn back now.{% endtrans %} <strong>{% trans %}This is not the site you're looking for!{% endtrans %}</strong></p>
-    
-    <!-- <p>{% trans %}You can check this "cryptographic certificate" in it's normal place within the addressbar.{% endtrans %}</p> [Add this once there is a normal place for it] -->
+    <h1>{% trans %}This site may not be who it appears to be{% endtrans %}</h1>
+    <p>{% trans %}It has failed to <a href="https://en.wikipedia.org/wiki/Public_key_certificate">assert</a> it's own identity.
+      This may be due to it's configuration, or it may be because someone's actively trying to spy on you.{% endtrans %}</p>
+
+    <!-- <p>{% trans %}Details available by clicking the
+      <img src="gtk-icon:16/channel-insecure-symbolic" alt="Insecure connection icon" />
+      in the addressbar.{% endtrans %}</p> -->
 
     <p>
       <form method="POST">

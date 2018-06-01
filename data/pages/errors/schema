@@ -1,0 +1,30 @@
+{# Displayed in the absence of an installed app that can handle the URI #}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>[application-default-icon]
+    {% trans %}CAN'T OPEN {{ url.scheme }}: LINKS{% endtrans %}</title>
+  <style>
+    @import url(odysseus:butterick.css);
+    h1 em {font-weight: normal;}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>
+      {% macro urischema %}
+        <code>{{ url.scheme }}:</code>
+        <em>{% mimeinfo "scheme-handler/" url.scheme %}</em>
+      {% endmacro %}
+      {% trans %}
+        {% urischema %} links cannot be opened with any software on this computer
+      {% endtrans %}
+    </h1>
+    <p>{% trans %}
+      You must install a compatible app before opening <a href="{{ url }}">this link</a>.
+    {% endtrans %}</p>
+
+    {% appstream "x-scheme-handler/" url.scheme %}
+  </main>
+</body>
+</html>
