@@ -3,7 +3,10 @@
 <html>
 <head>
   <title>[internet-feed] {% trans %}Available feedreaders{% endtrans %}</title>
-  <style>@import url(odysseus:butterick.css);</style>
+  <style>
+    @import url(odysseus:butterick.css);
+    main {text-align: center;}
+  </style>
 </head>
 <body>
   <main>

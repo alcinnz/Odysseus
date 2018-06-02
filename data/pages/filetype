@@ -6,13 +6,14 @@
   <style>
     @import url(odysseus:butterick.css);
     h1 em {font-weight: normal;}
+    main {text-align: center;}
   </style>
 </head>
 <body>
-  <main>
+  <main>{% with filetype=url.query.mime %}
     <h1>
       {% macro filetype %}
-        <code>{{ filetype }}:</code>
+        <code>{{ filetype }}</code>
         <em>{% mimeinfo filetype %}</em>
       {% endmacro %}
       {% trans %}
@@ -24,6 +25,6 @@
     {% endtrans %}</p>
 
     {% appstream filetype %}
-  </main>
+  {% endwith %}</main>
 </body>
 </html>
