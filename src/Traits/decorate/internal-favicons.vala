@@ -27,7 +27,7 @@ namespace Odysseus.Traits {
             // Extract icon from title & set it on the tab
             var splitat = title.index_of_char(']');
             if (splitat < 0) return;
-            tab.icon = new ThemedIcon(title[1:splitat] + "-symbolic");
+            tab.icon = new ThemedIcon.with_default_fallbacks(title[1:splitat] + "-symbolic");
             tab.coloured_icon = new ThemedIcon(title[1:splitat]);
             tab.label = title[splitat+1:title.length].strip();
         });
