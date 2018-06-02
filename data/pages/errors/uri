@@ -1,4 +1,4 @@
-{# Displayed when we fail to parse a URI but it's URI scheme is supported by Odysseus #}
+{# Displayed when we fail to parse a URI but its URI scheme is supported by Odysseus #}
 <!DOCTYPE html>
 <html>
 <head>
