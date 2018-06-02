@@ -26,7 +26,7 @@ Unfortunately I have to duplicate some AppCenter UI due to the way the AppStream
 And given I can link to app descriptions where they can be installed via simple
         URLs, it looks quite trivial to write that UI in Prosody. The
         challenging bit is getting at the data, which is what's done here. */
-namespace Odysseus.Templating.xAppStram {
+namespace Odysseus.Templating.xAppStream {
     using AppStream;
 
     public class AppStreamBuilder : TagBuilder, Object {
@@ -97,10 +97,30 @@ namespace Odysseus.Templating.xAppStram {
                 }
                 if (!matches) continue;
 
-                // And now we can confidently filter by the others.
-                var app_data = app_list[j++] = new Data.Mapping(null, apps[i].id);
-                app_data["icon"] = new Data.Literal(apps[i].icons.data.get_url());
-                app_data["name"] = new Data.Literal(apps[i].name);
+                // Find an icon for the app.
+                var icon = "gtk-icon:128/application-default-icon";
+                var icons = apps[i].get_icons();
+                if (icons.length > 0) icon = icons[0].get_url();
+
+                // WebKit refuses to renderer file: images inline, so translate to data:
+                if (icon.has_prefix("file:")) {
+                    uint8[] img; string etag;
+                    try {
+                        var file = File.new_for_uri(icon);
+                        yield file.load_contents_async(null, out img, out etag);
+                        var img64 = Base64.encode(img);
+                        var info = yield file.query_info_async("standard::*", 0);
+                        var img_mime = info.get_content_type();
+                        icon = @"data:$img_mime;base64,$img64";
+                    } catch (Error err) {
+                        icon = "gtk-icon:128/application-default-icon";
+                    }
+                }
+
+                app_list[j++] = Data.Let.builds("id", new Data.Literal(apps[i].id),
+                        Data.Let.builds("icon", new Data.Literal(icon),
+                        Data.Let.builds("name", new Data.Literal(apps[i].get_name())
+                )));
             }
             app_list = app_list[0:j];
 

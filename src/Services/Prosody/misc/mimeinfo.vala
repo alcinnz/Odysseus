@@ -32,8 +32,12 @@ namespace Odysseus.Templating.xMIMEInfo {
             var mime = new StringBuilder();
             foreach (var variable in vars) mime.append(variable.eval(ctx).to_string());
 
+            // I wish I didn't have to, but assume that
+            // if a filetype is in the database it has a decent description.
+            if (ContentType.list_registered().index(mime.str) < 0) return;
+
             var desc = ContentType.get_description(mime.str);
-            if (desc != "") yield output.writes(@"($desc)");
+            yield output.writes(@"($desc)");
         }
     }
 }

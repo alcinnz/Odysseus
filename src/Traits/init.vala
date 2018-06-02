@@ -42,7 +42,7 @@ namespace Odysseus.Traits {
     }
 
     public void setup_webview(WebTab tab) {
-        setup_autodownload(tab.web); // This most come first, so as to cancel errors.
+        setup_autodownload(tab); // This most come first, so as to cancel errors.
         setup_newtab_shortcuts(tab.web);
 
         setup_settings(tab.web);

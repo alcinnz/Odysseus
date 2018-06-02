@@ -55,11 +55,38 @@ public class Odysseus.Download : Object {
             completed = true;
             if (auto_open) open();
         });
+
+        // Allow surfer to install an app for a download before it completes.
+        find_apps();
     }
     
     public bool open() {
-        if (completed) Granite.Services.System.open_uri(destination);
-        return completed;
+        if (!completed) return false;
+
+        var app = find_apps();
+        if (app == null) return false;
+
+        var files = new List<string>();
+        files.append(destination);
+        try {
+            app.launch_uris(files, null);
+        } catch (Error err) {
+            warning(err.message);
+            return false;
+        }
+
+        return true;
+    }
+
+    private AppInfo? find_apps() {
+        var app = AppInfo.get_default_for_type(mimetype, false);
+        if (app != null) return app;
+
+        var suggest_uri = "odysseus:filetype?mime=" + Soup.URI.encode(mimetype, null);
+        var win = Odysseus.Application.instance.get_active_window() as BrowserWindow;
+        if (win != null) win.new_tab(suggest_uri);
+
+        return null;
     }
 
     private void move(string old_path, string new_path) {

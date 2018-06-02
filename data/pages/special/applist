@@ -3,10 +3,10 @@
 
 <nav>{% for app in apps %}
   <figure>
-    <a href="appstream:{{ app }}" title="{% trans %}View in {{ pacman }}.{% endtrans %}">
-      <img src="{{ app.icon }}" width="128" height="128" alt="{{ app }}" />
+    <a href="appstream:{{ app.id }}" title="{% trans %}View in {{ pacman }}.{% endtrans %}">
+      <img src="{{ app.icon }}" width="128" height="128" alt="{{ app.id }}" />
+      <figcaption>{{ app.name|default:app.id }}</figcaption>
     </a>
-    <figcaption>{{ app.name }}</figcaption>
   </figure>
 {% empty %}{% trans %}No compatible apps found in {{ pacman }}.{% endtrans %}
 {% endfor %}</nav>

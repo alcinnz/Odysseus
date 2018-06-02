@@ -569,6 +569,7 @@ namespace Odysseus.Templating.Std {
 
     public void register_standard_library() {
         var escapes = new AutoescapeBuilder();
+        register_tag("appstream", new xAppStream.AppStreamBuilder());
         register_tag("autoescape", escapes);
         register_tag("debug", new DebugBuilder());
 		register_tag("fetch", new xHTTP.FetchBuilder());
@@ -576,6 +577,7 @@ namespace Odysseus.Templating.Std {
         register_tag("for", new ForBuilder());
         register_tag("if", new IfBuilder());
         register_tag("ifchanged", new IfChangedBuilder());
+        register_tag("mimeinfo", new xMIMEInfo.MIMEInfoBuilder());
         register_tag("random", new RandomBuilder());
         register_tag("templatetag", new TemplateTagBuilder());
         register_tag("test", new xTestRunner.TestBuilder());

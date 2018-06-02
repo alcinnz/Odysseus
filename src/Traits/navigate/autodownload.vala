@@ -16,7 +16,9 @@
 */
 
 namespace Odysseus.Traits {
-    public void setup_autodownload(WebKit.WebView web) {
+    public void setup_autodownload(WebTab tab) {
+        var web = tab.web;
+
         web.decide_policy.connect((decision, type) => {
             if (type == WebKit.PolicyDecisionType.RESPONSE) {
                 var response_decision = (WebKit.ResponsePolicyDecision) decision;
@@ -52,15 +54,26 @@ namespace Odysseus.Traits {
         });
 
         web.load_failed.connect((load_evt, uri, err) => {
-            // 101 = CANNOT_SHOW_URI
-            // FIXME Add a fallback that helps surfers find apps to use.
-            if (err.matches(WebKit.PolicyError.quark(), 101) &&
-                    // If it's an HTTP(S) URI, it's just going to keep failing.
-                    !uri.has_prefix("http:") && !uri.has_prefix("https:")) {
-                Granite.Services.System.open_uri(uri);
-                return true;
+            if (!err.matches(WebKit.PolicyError.quark(), 101)) return false;
+
+            var schema = uri.split(":", 2)[0];
+            var app = AppInfo.get_default_for_uri_scheme(schema);
+            if (app == null) {
+                report_error("schema", uri, tab);
+            } else if (app.get_id() == Odysseus.Application.instance.application_id) {
+                // NOTE: If this case isn't handled, there'd be an infinite loop
+                //      between this and Odysseus.Application.open.
+                report_error("url", uri, tab);
+            } else {
+                var uris = new List<string>();
+                uris.append(uri);
+                try {
+                    app.launch_uris(uris, null);
+                } catch (Error err) {
+                    warning(err.message);
+                }
             }
-            return false;
+            return true;
         });
     }
 }

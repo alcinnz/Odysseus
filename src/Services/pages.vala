@@ -41,7 +41,8 @@ namespace Odysseus.Services {
 
             var key = new Slice.s(segments[0]);
             Data.Data val = new Data.Literal("");
-            if (segments.length > 1) val = new Data.Literal(segments[1]);
+            if (segments.length > 1)
+                val = new Data.Literal(Soup.URI.decode(segments[1]));
 
             if (!q.has_key(key)) q[key] = new Gee.ArrayList<Data.Data>();
             var vals = q[key];

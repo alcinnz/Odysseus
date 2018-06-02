@@ -61,7 +61,7 @@ public class Odysseus.Application : Granite.Application {
     public override void open(File[] files, string hint) {
         activate(); // To gaurantee the application is initialized.
 
-        var window = get_last_window();
+        var window = get_active_window() as BrowserWindow;
         foreach (var file in files) {
             if (file.get_uri() == "odysseus:///NewWindow" ||
                     file.get_uri() == "odysseus:NewWindow") {
@@ -78,12 +78,6 @@ public class Odysseus.Application : Granite.Application {
             initialize();
             initialized = true;
         }
-    }
-
-    public BrowserWindow? get_last_window() {
-        unowned List<weak Gtk.Window> windows = get_windows();
-        return windows.length() > 0 ?
-                windows.last().data as BrowserWindow : null;
     }
 }
 
