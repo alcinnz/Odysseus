@@ -56,9 +56,6 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
     }
 
     public void add_download(Odysseus.Download dl) {
-        dl.finished.connect(() => {
-            if (DownloadSet.get_downloads().downloads.size == 0) reveal_child = false;
-        });
         mainbox.add(new DownloadButton(dl));
     }
 
