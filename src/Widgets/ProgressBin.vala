@@ -19,7 +19,9 @@ public class Odysseus.ProgressBin : Gtk.Bin {
     public double progress {get; set;}
 
     public ProgressBin() {
-        progressFill = new Cairo.Pattern.rgba(0.7, 0.8, 1.0, 0.9);
+        var c = Gdk.RGBA();
+        c.parse("#8cd5ff");
+        progressFill = new Cairo.Pattern.rgba(c.red, c.green, c.blue, 0.8);
         
         this.notify.connect((sender, property) => queue_draw());
     }
