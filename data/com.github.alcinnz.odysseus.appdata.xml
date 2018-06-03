@@ -183,5 +183,18 @@
         <p>Minor optimizations to odysseus:history.</p>
       </description>
     </release>
+    <release version="1.4.0" date="2018-05-26">
+      <description>
+        <p>Fills in gaps within the topsites display with my recommendations.</p>
+        <p>More succinct text in download notifications.</p>
+      </description>
+    </release>
+    <release version="1.4.1" date="2018-06-04">
+      <description>
+        <p>Major performance improvements in regards to internal pages. i.e. stops wasting time wasting memory.</p>
+        <p>Recommends apps for unsupported URL and file types.</p>
+        <p>Improved accessibility of the downloads bar.</p>
+      </description>
+    </release>
   </releases>
 </component>
