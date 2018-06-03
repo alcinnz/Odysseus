@@ -47,7 +47,7 @@ and I take advantage of this page to promote project links. #}
 </head>
 <body>
   <aside style="position: fixed; right: 0; top: 0;"><a href="odysseus:history">
-    <img src="gtk-icon:16/document-open-recent" />{% trans %}Browser History{% endtrans %}
+    <img src="icon:16/document-open-recent" />{% trans %}Browser History{% endtrans %}
   </a></aside>
 
   <main style="max-width: 720px;"><!-- FIXME ugly code forcing this style --><nav>

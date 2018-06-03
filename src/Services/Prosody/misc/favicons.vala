@@ -23,7 +23,7 @@ namespace Odysseus.Templating.x {
             var db = get_web_context().get_favicon_database();
             var uri = db.get_favicon_uri(@"$a");
             return new Data.Literal(uri == null ?
-                "gtk-icon:16/web-browser-symbolic" : uri);
+                "icon:16/web-browser-symbolic" : uri);
         }
     }
 }

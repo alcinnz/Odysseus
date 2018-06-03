@@ -39,7 +39,7 @@ input[type=search]::-webkit-search-decoration {
     margin: 0 2px;
     align-self: center;
 
-    background-image: url(gtk-icon:16/system-search-symbolic);
+    background-image: url(icon:16/system-search-symbolic);
     -webkit-appearance: none;
 }
 

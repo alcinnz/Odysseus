@@ -98,7 +98,7 @@ namespace Odysseus.Templating.xAppStream {
                 if (!matches) continue;
 
                 // Find an icon for the app.
-                var icon = "gtk-icon:128/application-default-icon";
+                var icon = "icon:128/application-default-icon";
                 var icons = apps[i].get_icons();
                 if (icons.length > 0) icon = icons[0].get_url();
 
@@ -113,7 +113,7 @@ namespace Odysseus.Templating.xAppStream {
                         var img_mime = info.get_content_type();
                         icon = @"data:$img_mime;base64,$img64";
                     } catch (Error err) {
-                        icon = "gtk-icon:128/application-default-icon";
+                        icon = "icon:128/application-default-icon";
                     }
                 }
 

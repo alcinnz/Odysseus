@@ -1,4 +1,4 @@
-<h1><img src="gtk-icon:32/system-software-install" alt="{{ pacman }}" />
+<h1><img src="icon:32/system-software-install" alt="{{ pacman }}" />
   {% trans %}Compatible apps{% endtrans %}</h1>
 
 <nav>{% for app in apps %}

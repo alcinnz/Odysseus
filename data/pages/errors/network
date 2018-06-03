@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>[network-offline]{% trans %}CAN'T CONNECT{% endtrans %}</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
@@ -9,8 +8,8 @@
   <main>
     <h1>{% trans %}Could Not Connect To The Internet{% endtrans %}</h1>
     <p><a href="settings://network/" title="Open network preferences">
-      <img src="gtk-icon:128/preferences-system-network" 
-            alt="{% trans %}Network{% endtrans %}" /></a></p>
+      <img src="icon:128/preferences-system-network" 
+            alt="{% trans %}Network Settings{% endtrans %}" /></a></p>
   </main>
   <script>
     document.ononline = () => location.reload()

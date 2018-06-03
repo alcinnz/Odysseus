@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>[dialog-error]{% trans %}CAN'T CONTACT{% endtrans %}</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
@@ -10,8 +9,8 @@
     <h1>{% trans %}Could Not Contact {{ url.host }}{% endtrans %}</h1>
     <p>{% trans %}This may be due to a network failure or a broken link.{% endtrans %}</p>
     <p><a href="settings://network/" title="Open network preferences">
-      <img src="gtk-icon:128/preferences-system-network" 
-            alt="Network" /></a></p>
+      <img src="icon:128/preferences-system-network" 
+            alt="{% trans %}Network Settings {% endtrans %}" /></a></p>
   </main>
 </body>
 </html>

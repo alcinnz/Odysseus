@@ -19,14 +19,14 @@
       This may be due to its configuration, or it may be because someone's actively trying to <strong>spy</strong> on you.{% endtrans %}</p>
 
     <!-- <p>{% trans %}Details available by clicking the
-      <img src="gtk-icon:16/channel-insecure-symbolic" alt="Insecure connection icon" />
+      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon" />
       in the addressbar.{% endtrans %}</p> -->
 
     <p>
       <form method="POST">
         <button type="submit" title="{% trans %}Load {{ url }} despite this warning{% endtrans %}">
           <!-- NOTE: It's more appropriate to turn this button yellow, but that removes all system styling and ends up looking worse. -->
-          <img src="gtk-icon:16/dialog-warning" />
+          <img src="icon:16/dialog-warning" />
           {% trans %}{# People have to click this to bypass certificate warnings #}
             I Don't Trust <code>{{ url.host }}</code> Anyways{% endtrans %}
         </button>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
   <title>[dialog-error]{% trans %}SERVICE UNAVAILABLE{% endtrans %}</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
@@ -12,7 +11,7 @@
 
     <!-- does a simple reload -->
     <form method="GET">
-      <p><button type="submit"><img src="gtk-icon:16/view-refresh">
+      <p><button type="submit"><img src="icon:16/view-refresh">
         {% trans %}Reload{% endtrans %}</button></p>
     </form>
   </main>
