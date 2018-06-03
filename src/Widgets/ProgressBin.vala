@@ -27,11 +27,6 @@ public class Odysseus.ProgressBin : Gtk.Bin {
     public override bool draw(Cairo.Context cr) {
         var width = get_allocated_width();
         var height = get_allocated_height();
-        // draw ontop of the background
-        var child_ctx = get_child().get_style_context();
-        child_ctx.render_background(cr, 0, 0, width, height);
-
-        child_ctx.save();
         
         // Render progress
         cr.rectangle(0, 0, width * progress, height);
@@ -40,7 +35,6 @@ public class Odysseus.ProgressBin : Gtk.Bin {
         
         // but below the content
         get_child().draw(cr);
-        child_ctx.restore();
         
         return true;
     }
