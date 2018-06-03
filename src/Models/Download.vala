@@ -171,6 +171,13 @@ public class Odysseus.Download : Object {
             return _icon;
         }
     }
+    private string _filetype = "";
+    public string filetype {
+        get {
+            if (_filetype == "") _filetype = ContentType.get_description(mimetype);
+            return _filetype;
+        }
+    }
 
     public static string normalize_mimetype(WebKit.URIResponse dl) {
         if (dl.mime_type == "application/octet-stream")
