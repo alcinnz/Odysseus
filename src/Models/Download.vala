@@ -53,11 +53,17 @@ public class Odysseus.Download : Object {
             received_data();
             finished();
             completed = true;
-            if (auto_open) open();
+            if (auto_open && !cancelled) open();
         });
 
         // Allow surfer to install an app for a download before it completes.
-        find_apps();
+        // Do so upon receiving first chunk, as otherwise
+        // the mimetype property caches an invalid value.
+        ulong first_chunk_hook = 0;
+        first_chunk_hook = received_data.connect(() => {
+            find_apps();
+            disconnect(first_chunk_hook);
+        });
     }
     
     public bool open() {
