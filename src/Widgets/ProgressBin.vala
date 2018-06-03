@@ -24,6 +24,10 @@ public class Odysseus.ProgressBin : Gtk.Bin {
         progressFill = new Cairo.Pattern.rgba(c.red, c.green, c.blue, 0.8);
         
         this.notify.connect((sender, property) => queue_draw());
+
+        // Add some a11y
+        set_accessible_role(Atk.Role.PROGRESS_BAR);
+        set_accessible_type(typeof(ProgressBinA11y));
     }
 
     public override bool draw(Cairo.Context cr) {
@@ -41,3 +45,15 @@ public class Odysseus.ProgressBin : Gtk.Bin {
         return true;
     }
 }
+
+public class Odysseus.ProgressBinA11y : Gtk.ContainerAccessible {
+    construct {
+        var pbin = widget as ProgressBin;
+        pbin.notify["progress"].connect((sender, prop) =>
+            accessible_value = pbin.progress);
+    }
+}    construct {
+        var pbin = widget as ProgressBin;
+        pbin.notify["progress"].connect((sender, prop) =>
+            accessible_value = pbin.progress);
+    }
