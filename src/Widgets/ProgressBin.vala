@@ -52,8 +52,4 @@ public class Odysseus.ProgressBinA11y : Gtk.ContainerAccessible {
         pbin.notify["progress"].connect((sender, prop) =>
             accessible_value = pbin.progress);
     }
-}    construct {
-        var pbin = widget as ProgressBin;
-        pbin.notify["progress"].connect((sender, prop) =>
-            accessible_value = pbin.progress);
-    }
+}
