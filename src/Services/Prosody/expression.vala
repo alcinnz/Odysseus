@@ -37,7 +37,7 @@ namespace Odysseus.Templating.Expression {
         public int index;
         public virtual Expression nud() throws SyntaxError {
             throw new SyntaxError.INVALID_ARGS(
-                    "[Argument #%i] Expected 'not', '(', or some value, not '%s'.",
+                    "[Argument #%i] Expected 'not' or some value, not '%s'.",
                     index, name);
         }
 
@@ -77,7 +77,6 @@ namespace Odysseus.Templating.Expression {
         }
 
         public Expression next() throws SyntaxError {
-            //var t = token;
             Expression token;
             var arg = args.next_value();
             if (arg == null) token = eol;

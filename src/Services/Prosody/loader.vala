@@ -30,7 +30,7 @@ namespace Odysseus.Templating {
         }
 
         if (!template_cache.has_key(resource)) {
-            if (cached_keys.size > CACHE_SIZE) {
+            if (cached_keys.size >= CACHE_SIZE) {
                 // cap number of templates
                 template_cache.unset(cached_keys[CACHE_SIZE - 1]);
                 cached_keys.remove_at(CACHE_SIZE - 1);

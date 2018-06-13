@@ -244,7 +244,6 @@ namespace Odysseus.Templating.Std {
         }
     }
     private class IfChangedTag : Template {
-        private string[]? last_values = null;
         private Variable[] test_vars;
         private Template ifchanged;
         private Template ifunchanged;
@@ -256,11 +255,8 @@ namespace Odysseus.Templating.Std {
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            var changed = false;
-            if (last_values == null) {
-                last_values = new string[test_vars.length];
-                changed = true;
-            }
+            string[] last_values;
+            var changed = setup_context(output, out last_values);
 
             for (var i = 0; i < test_vars.length; i++) {
                 var val = test_vars[i].eval(ctx).to_string();
@@ -272,6 +268,34 @@ namespace Odysseus.Templating.Std {
 
             yield (changed ? ifchanged : ifunchanged).exec(ctx, output);
         }
+
+        // This cleans up some rendering artifacts.
+
+        // It ensures each template instance (identified by a Writer) has it's
+        // own context, so they don't interfere with each other's rendering.
+        // Django found this much easier to do in dynamically typed Python,
+
+        // Though template rendering is fast enough this isn't really a problem.
+        private IfChangedContext? contexts = null;
+        public bool setup_context(Writer id, out string[] values) {
+            IfChangedContext? prev = null;
+            for (var entry = contexts; entry != null; prev = entry, entry = entry.next) {
+                if (entry.key == id) {values = entry.values; return false;}
+                if (entry.key == null) {
+                    if (prev == null) contexts = entry.next;
+                    else prev.next = entry.next;
+                }
+            }
+
+            values = new string[test_vars.length];
+            this.contexts = new IfChangedContext() {
+                key = id, values = values, next = contexts
+            };
+            return true;
+        }
+    }
+    private class IfChangedContext {
+        public weak Writer key; public string[] values; public IfChangedContext? next;
     }
 
     /* This isn't tested, as it's intentionally non-determinate */
@@ -304,25 +328,18 @@ namespace Odysseus.Templating.Std {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var variant = args.next();
             args.assert_end();
-            return new TemplateTagTag(variant);
-        }
-    }
-    private class TemplateTagTag : Template {
-        private Quark escape; // The quark cuts down on memory use.
-        public TemplateTagTag(Slice esc) {
-            escape = Quark.from_string(@"$esc");
-        }
 
-        public override async void exec(Data.Data ctx, Writer output) {
-            switch(@"$escape") {
-            case "openblock": yield output.writes("{%"); break;
-            case "closeblock": yield output.writes("%}"); break;
-            case "openvariable": yield output.writes("{{"); break;
-            case "closevariable": yield output.writes("}}"); break;
-            case "openbrace": yield output.writes("{"); break;
-            case "closebrace": yield output.writes("}"); break;
-            case "opencomment": yield output.writes("{#"); break;
-            case "closecomment": yield output.writes("#}"); break;
+            switch (@"$variant") {
+            case "openblock": return new Echo(new Slice.s("{%"));
+            case "closeblock": return new Echo(new Slice.s("%}"));
+            case "openvariable": return new Echo(new Slice.s("{{"));
+            case "closevariable": return new Echo(new Slice.s("}}"));
+            case "openbrace": return new Echo(new Slice.s("{"));
+            case "closebrace": return new Echo(new Slice.s("}"));
+            case "opencomment": return new Echo(new Slice.s("{#"));
+            case "closecomment": return new Echo(new Slice.s("#}"));
+            default: throw new SyntaxError.INVALID_ARGS(
+                    @"Expected '(open|close)(block|variable|brace|comment)' got '$variant'!");
             }
         }
     }

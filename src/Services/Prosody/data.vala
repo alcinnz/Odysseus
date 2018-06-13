@@ -20,16 +20,6 @@
 
     Can currently work with JSON, and Vala literals. */
 namespace Odysseus.Templating.Data {
-    private string indent(string text) {
-        var builder = new StringBuilder();
-        var lines = text.split("\n");
-        builder.append(lines[0]);
-        foreach (var line in lines[1:lines.length]) {
-            builder.append("\n\t");
-            builder.append(line);
-        }
-        return builder.str;
-    }
     public abstract class Data : Object {
         /* These methods are used in core language syntax */
         public virtual new Data get(Slice property) {
@@ -48,7 +38,7 @@ namespace Odysseus.Templating.Data {
             var builder = new StringBuilder();
             builder.append("{");
             @foreach_map((key, val) => {
-                var indented = indent(@"$val");
+                var indented = @"$val".replace("\n", "\n\t");
                 builder.append(@"\n\t$key => $indented");
                 return false;
             });
