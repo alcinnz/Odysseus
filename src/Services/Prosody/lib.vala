@@ -255,7 +255,7 @@ namespace Odysseus.Templating.Std {
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            string[] last_values;
+            Gee.List<string> last_values;
             var changed = setup_context(output, out last_values);
 
             for (var i = 0; i < test_vars.length; i++) {
@@ -277,17 +277,18 @@ namespace Odysseus.Templating.Std {
 
         // Though template rendering is fast enough this isn't really a problem.
         private IfChangedContext? contexts = null;
-        public bool setup_context(Writer id, out string[] values) {
+        public bool setup_context(Object id, out Gee.List<string> values) {
+            var int_id = (int) id;
             IfChangedContext? prev = null;
             for (var entry = contexts; entry != null; prev = entry, entry = entry.next) {
-                if (entry.key == id) {values = entry.values; return false;}
+                if (((int) entry.key) == int_id) {values = entry.values; return false;}
                 if (entry.key == null) {
                     if (prev == null) contexts = entry.next;
                     else prev.next = entry.next;
                 }
             }
 
-            values = new string[test_vars.length];
+            values = new Gee.ArrayList<string>.wrap(new string[test_vars.length]);
             this.contexts = new IfChangedContext() {
                 key = id, values = values, next = contexts
             };
@@ -295,7 +296,8 @@ namespace Odysseus.Templating.Std {
         }
     }
     private class IfChangedContext {
-        public weak Writer key; public string[] values; public IfChangedContext? next;
+        public weak Object key; public Gee.List<string> values;
+        public IfChangedContext? next;
     }
 
     /* This isn't tested, as it's intentionally non-determinate */
