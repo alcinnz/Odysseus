@@ -26,7 +26,7 @@ Unfortunately this requires events on the DynamicNotebook for proper behaviour,
     with the other traits. */
 namespace Odysseus.Traits {
     public void pause_bg_videos(Granite.Widgets.DynamicNotebook tabs) {
-        var js = "for (let vid of document.querySelectorAll('video')) vid.pause()";
+        var js = "for (let media of document.querySelectorAll('video, audio')) media.pause()";
         tabs.tab_removed.connect((tab) => {
             (tab as WebTab).web.run_javascript.begin(js, null);
         });
