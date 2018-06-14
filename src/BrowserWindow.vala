@@ -164,7 +164,10 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("_History"), () => new_tab("odysseus:history"), Gdk.Key.H);
             menu.separate();
             menu.add(_("_Find In Page"), () => (tabs.current as WebTab).find_in_page(), Gdk.Key.F);
-            tools.shortcut(Gdk.Key.Escape, () => (tabs.current as WebTab).close_find(), 0);
+            tools.shortcut(Gdk.Key.Escape, () => {
+                (tabs.current as WebTab).close_find();
+                unfullscreen();
+            }, 0);
             menu.add(_("_Print"), () => new WebKit.PrintOperation(web).run_dialog(this), Gdk.Key.P);
             menu.separate();
             menu.add(_("Show Downloads"), () => downloads.set_reveal_child(true), Gdk.Key.D);

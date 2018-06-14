@@ -64,6 +64,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         container.expand = true;
         container.add(this.web);
         info.add(container);
+        report_fullscreen();
 
 
         container.add_overlay(build_findbar());
@@ -197,6 +198,14 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     public void find_in_page() {
         find.reveal_child = true;
         find.get_child().grab_focus();
+    }
+
+    public void report_fullscreen() {
+        window_state_event.connect((evt) => {
+            if (Gdk.WindowState.FULLSCREEN in evt.new_window_state)
+                status = _("Press [esc] to leave fullscreen"); // TODO make this more dominant.
+            return false;
+        });
     }
 
     public void close_find() {
