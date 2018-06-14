@@ -108,7 +108,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     private void connect_webview(Granite.Widgets.DynamicNotebook parent) {
         web.bind_property("title", this, "label");
         web.bind_property("title", this, "tooltip_text");
-        this.icon = new ThemedIcon("web-browser-symbolic");
+        this.icon = new ThemedIcon("text-x-generic");
         web.notify["favicon"].connect((sender, property) => {
             restore_favicon();
         });
@@ -181,7 +181,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         if (icon != null) this.icon = icon;
     }
 
-    public Icon coloured_icon {get; set; default = new ThemedIcon("web-browser-symbolic");}
+    public Icon coloured_icon {get; set; default = new ThemedIcon("text-x-generic");}
 
     public void restore_favicon() {
         if (web.get_favicon() != null) {
@@ -191,7 +191,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
             // This colour was chosen to a) be amongst the elementary colour pallette
             //      & b) blend in with text (#333) despite heavier digital ink usage
             icon = ImageUtil.recolour(fav, "#666").scale_simple(16, 16, Gdk.InterpType.BILINEAR);
-        } else icon = coloured_icon = new ThemedIcon("web-browser-symbolic");
+        } else icon = coloured_icon = new ThemedIcon("text-x-generic");
     }
 
     public void find_in_page() {

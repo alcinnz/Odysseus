@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[application-default-icon]
+  <title>[application-x-executable]
     {% trans %}CAN'T OPEN {{ url.scheme }}: LINKS{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);

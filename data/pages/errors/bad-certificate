@@ -19,7 +19,8 @@
       This may be due to its configuration, or it may be because someone's actively trying to <strong>spy</strong> on you.{% endtrans %}</p>
 
     <!-- <p>{% trans %}Details available by clicking the
-      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon" />
+      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
+            onerror="this.src = 'icon:16/security-medium-symbolic'" />
       in the addressbar.{% endtrans %}</p> -->
 
     <p>
