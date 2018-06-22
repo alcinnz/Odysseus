@@ -13,6 +13,7 @@ There are a handful of considerations that apply to any change that is made to O
 ## System Design
 
 * Each file should contain a header comment describing why it's there and what it does.
+* The copyright notice in each file should state who has changed a file in the past and between which years has it been changed. This same information is available from Git, but I find it appropriate to summarise it there.
 * We have a reuse, extend, invent philosophy. Reuse existing functions and stylings wherever possible, extend if needed, and only invent new if absolutely necessary.
 * Odysseus should be understandable as a bunch of simple components layered ontop of it's core UI, somewhat resembling the [UZBL browser](https://www.uzbl.org/) but hardcoded. This helps the core UI code avoid being overly complex.
 * Odysseus's code should adhear to any relevant standards (W3C, FreeDesktop.Org, etc) when interacting with any out-of-process code. Failing that a proposed standard should be drafted in a separate repository.
