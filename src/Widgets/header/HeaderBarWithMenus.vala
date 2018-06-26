@@ -120,6 +120,18 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
             return item;
         }
 
+        public delegate void OpenLink(string url);
+        public Gtk.ImageMenuItem link(string title, string url,
+                owned OpenLink action = Granite.Services.System.open_uri,
+                int key = 0, Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK) {
+            var item = add(title, () => action(url), key, modifier);
+            item.always_show_image = true;
+            item.image = new Gtk.Image.from_icon_name("emblem-symbolic-link",
+                    Gtk.IconSize.MENU);
+            item.tooltip_text = @"$url ($(item.tooltip_text))";
+            return item;
+        }
+
         public void separate() {
             menu.add(new Gtk.SeparatorMenuItem());
         }
