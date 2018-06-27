@@ -18,6 +18,20 @@
     page's title to determine it's favicon as WebKit refuses to give us the
     correct favicon. */
 namespace Odysseus.Traits {
+    /* Makes it easier to put symbolic icons in tabbar & non-symbolic in addressbar. */
+    errordomain Availability {UNAVAILABLE}
+    private Icon choose_icon(string spec, string suffix = "") throws Error {
+        var theme = Gtk.IconTheme.get_default();
+
+        var icons = spec.split_set(" \t\r\n");
+        for (var i = 0; i < icons.length; i++) icons[i] = icons[i] + suffix;
+
+        var icon = theme.choose_icon(icons, 16, Gtk.IconLookupFlags.GENERIC_FALLBACK);
+        if (icon == null) throw new Availability.UNAVAILABLE("");
+
+        return icon.load_icon();
+    }
+
     private void setup_internal_favicons(WebTab tab) {
         var web = tab.web;
         web.notify["title"].connect((pspec) => {
@@ -27,9 +41,15 @@ namespace Odysseus.Traits {
             // Extract icon from title & set it on the tab
             var splitat = title.index_of_char(']');
             if (splitat < 0) return;
-            tab.icon = new ThemedIcon.with_default_fallbacks(title[1:splitat] + "-symbolic");
-            tab.coloured_icon = new ThemedIcon(title[1:splitat]);
-            tab.label = title[splitat+1:title.length].strip();
+            var icons = title[1:splitat];
+
+            try {
+                var colour = Gdk.RGBA();
+                colour.parse("#666");
+                tab.icon = choose_icon(icons, "-symbolic");
+                tab.coloured_icon = choose_icon(icons);
+                tab.label = title[splitat+1:title.length].strip();
+            } catch (Error err) {}
         });
     }
 }
