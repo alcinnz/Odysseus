@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% trans %}INVALID FORM SUBMISSION{% endtrans %}</title>
+  <title>[dialog-error] {% trans %}INVALID FORM SUBMISSION{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
     @import url(odysseus:ext/hljs-solarized-light.css);

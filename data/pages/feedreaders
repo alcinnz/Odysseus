@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[internet-feed] {% trans %}Available feedreaders{% endtrans %}</title>
+  <title>[application-rss+xml] {% trans %}Available feedreaders{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
     main {text-align: center;}

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; encoding=utf-8" />
-  <title>[locked]{% trans %}FORBIDDEN{% endtrans %}</title>
+  <title>[locked emblem-unreadable]{% trans %}FORBIDDEN{% endtrans %}</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
 <body>
