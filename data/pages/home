@@ -28,18 +28,18 @@ and I take advantage of this page to promote project links. #}
   <style>
     @import url(odysseus:butterick.css);
     main {color: #ddd; text-align: center;}
-    main hr {border: none; border-bottom: thin solid #eee; }
+    main hr {border: none; border-bottom: thin solid; }
     footer {position: fixed; bottom: 0; background: #fffa;}
 
     main nav {width: 720px; /* Fits 5 128px thumbnails + spacing */}
-    main nav img {box-shadow: 2px 2px 2px gray; margin: 5px;}
+    main nav img {box-shadow: 2px 2px 2px; margin: 5px;}
     main nav img:hover {box-shadow: 4px 4px 4px;}
 
     /* Styling for the different link sources */
-    .pinned img:hover {color: #64baff;}
-    .pinned form:first-of-type {background: #64baff;}
-    .history img:hover {color: #666;}
-    .recommendation img:hover {color: #9bdb4d;}
+    .pinned img {color: #64baff;}
+    .pinned form:first-of-type * {display: none;}
+    .history img {color: #666;}
+    .recommendation img {color: #9bdb4d;}
 
     /* Fixes for HTML5Sortable to work in the context of the topsites list. */
     .sortable-placeholder {display: inline-block; width: 132px;}
