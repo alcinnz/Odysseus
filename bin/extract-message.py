@@ -84,9 +84,10 @@ def parse_templates(repo_root = "."):
             line, text = next(template, "trans")
 
 def consolidate(messages):
-    from collections import defaultdict
-    ret = defaultdict(list)
+    from collections import OrderedDict
+    ret = OrderedDict()
     for msg, tpl, line in messages:
+        if msg not in ret: ret[msg] = []
         ret[msg].append(tpl + ":" + str(line))
     return ret.items()
 
