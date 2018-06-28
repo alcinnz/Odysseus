@@ -196,5 +196,11 @@
         <p>Improved accessibility of the downloads bar.</p>
       </description>
     </release>
+    <release version="1.5.0" date="2018-06-29">
+      <description>
+        <p>Topsites performance and design improvements.</p>
+        <p>Add indicators for menuitems that are links.</p>
+      </description>
+    </release>
   </releases>
 </component>
