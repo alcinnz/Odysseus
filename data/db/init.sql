@@ -80,4 +80,10 @@ SELECT load_extension('/usr/share/Odysseus/libfts5.so');
   DELETE FROM screenshot; -- Clean up this unused data, should've done so earlier.
 {% endif %}
 
-PRAGMA user_version = 5;
+{% if v < 6 %}
+  -- Prepare a table to make odysseus:home fast
+  CREATE TABLE visit_counts(url PRIMARY KEY, count);
+  CREATE INDEX url_by_count ON visit_counts(count, url);
+{% endif %}
+
+PRAGMA user_version = 6;
