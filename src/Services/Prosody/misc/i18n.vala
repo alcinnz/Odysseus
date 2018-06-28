@@ -77,11 +77,12 @@ namespace Odysseus.Templating.xI18n {
         throw new SyntaxError.UNCLOSED_ARG(@"Failed to find translation for string '$key'!");
     }
 
-    private Template parse_translations(Parser cat) throws SyntaxError {
+    private Template parse_translations(Parser cat, out Slice text = null)
+            throws SyntaxError {
         // Essentially this is just a cat.parse call with extra verification.
 
         WordIter endtrans;
-        var ret = cat.parse("endmsg", out endtrans);
+        var ret = cat.parse("endmsg", out endtrans, out text);
         if (endtrans == null)
             throw new SyntaxError.UNBALANCED_TAGS("Missing {%% endtrans %%}!");
         endtrans.next(); endtrans.assert_end();
@@ -146,6 +147,30 @@ namespace Odysseus.Templating.xI18n {
 
             lookup_translation(key.strip(), ref body);
             return new WithTag(parameters, body);
+        }
+    }
+
+    public class TransFilter : Filter {
+        // Cache where we read up to last time,
+        // in the hopes that the next message is shortly after it.
+        private Parser cat = new Parser(new Slice());
+
+        public override Data.Data filter0(Data.Data text) {
+            var key = text.to_bytes();
+            var trans = key;
+            try {
+                locate_message(cat, key);
+                parse_translations(cat, out trans);
+            } catch (Error e) {
+                /* Try again from the start */
+                try {
+                    cat = new Parser(load_catalogue());
+                    locate_message(cat, key);
+                    parse_translations(cat, out trans);
+                } catch (Error e) {/* Fail silently */}
+            }
+
+            return new Data.Substr(trans);
         }
     }
 }

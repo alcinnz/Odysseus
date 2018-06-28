@@ -625,6 +625,7 @@ namespace Odysseus.Templating.Std {
         register_filter("safe", new SafeFilter());
         register_filter("text", new TextFilter());
         register_filter("title", new TitleFilter());
+        register_filter("trans", new xI18n.TransFilter());
 
         escapes["off"] = Gee.Map.empty<char,string>();
         escapes["html"] = Writer.html();

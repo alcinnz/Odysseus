@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 11:00+1300\n"
+"POT-Creation-Date: 2018-06-28 21:14+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,7 +63,7 @@ msgid "_New Window"
 msgstr ""
 
 #: src/BrowserWindow.vala:150 src/BrowserWindow.vala:151
-#: src/Widgets/DownloadButton.vala:99
+#: src/Widgets/DownloadButton.vala:100
 msgid "_Open"
 msgstr ""
 
@@ -72,8 +72,8 @@ msgid "_Save"
 msgstr ""
 
 #. TRANSLATORS _ precedes shortcut key
-#: src/BrowserWindow.vala:154 src/Widgets/DownloadButton.vala:109
-#: src/Widgets/DownloadButton.vala:113
+#: src/BrowserWindow.vala:154 src/Widgets/DownloadButton.vala:110
+#: src/Widgets/DownloadButton.vala:114
 msgid "_Save As"
 msgstr ""
 
@@ -97,29 +97,23 @@ msgstr ""
 msgid "_Find In Page"
 msgstr ""
 
-#: src/BrowserWindow.vala:168
+#: src/BrowserWindow.vala:171
 msgid "_Print"
 msgstr ""
 
-#: src/BrowserWindow.vala:170
+#: src/BrowserWindow.vala:173
 msgid "Show Downloads"
 msgstr ""
 
-#: src/BrowserWindow.vala:171
+#: src/BrowserWindow.vala:174
 msgid "About Odysseus"
 msgstr ""
 
-#: src/BrowserWindow.vala:185 src/Widgets/DownloadButton.vala:121
+#: src/BrowserWindow.vala:187 src/Widgets/DownloadButton.vala:122
 msgid "_Cancel"
 msgstr ""
 
-#. TRANSLATORS: This is the link Odysseus opens on first launch.
-#. Feel free to set it to whatever works best for your locale.
-#: src/Odysseus.vala:58
-msgid "https://alcinnz.github.io/Odysseus-recommendations/"
-msgstr ""
-
-#: src/Models/Download.vala:74
+#: src/Models/Download.vala:107
 #, c-format
 msgid ""
 "Error moving download to %s.\n"
@@ -127,19 +121,19 @@ msgid ""
 msgstr ""
 
 #. / TRANSLATORS: "%i" seconds
-#: src/Models/Download.vala:87
+#: src/Models/Download.vala:120
 #, c-format
 msgid "%is"
 msgstr ""
 
 #. / TRANSLATORS: "%i" minutes
-#: src/Models/Download.vala:92
+#: src/Models/Download.vala:125
 #, c-format
 msgid "%im"
 msgstr ""
 
 #. / TRANSLATORS: "%i" hours and "%i" minutes,
-#: src/Models/Download.vala:97
+#: src/Models/Download.vala:130
 #, c-format
 msgid "%ih %im"
 msgstr ""
@@ -156,11 +150,11 @@ msgstr ""
 msgid "[Download]"
 msgstr ""
 
-#: src/Widgets/DownloadButton.vala:92
+#: src/Widgets/DownloadButton.vala:93
 msgid "DONE"
 msgstr ""
 
-#: src/Widgets/DownloadButton.vala:104
+#: src/Widgets/DownloadButton.vala:105
 msgid "Open _Automatically"
 msgstr ""
 
@@ -170,6 +164,10 @@ msgid "%u match of \"%s\" found"
 msgid_plural "%u matches of \"%s\" found"
 msgstr[0] ""
 msgstr[1] ""
+
+#: src/Widgets/WebTab.vala:206
+msgid "Press [esc] to leave fullscreen"
+msgstr ""
 
 #: src/Widgets/Chromeless.vala:24
 msgid "Web Inspector"
@@ -213,13 +211,13 @@ msgstr ""
 msgid "Match CamelCase"
 msgstr ""
 
-#: src/Widgets/overlays/InfoContainer.vala:48
-#: src/Widgets/overlays/InfoContainer.vala:64
+#: src/Widgets/overlays/InfoContainer.vala:49
+#: src/Widgets/overlays/InfoContainer.vala:65
 msgid "OK"
 msgstr ""
 
-#: src/Widgets/overlays/InfoContainer.vala:49
-#: src/Widgets/overlays/InfoContainer.vala:64
+#: src/Widgets/overlays/InfoContainer.vala:50
+#: src/Widgets/overlays/InfoContainer.vala:65
 msgid "Cancel"
 msgstr ""
 

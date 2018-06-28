@@ -1,137 +1,170 @@
-{% msg /credits:12 %} Feature suggesions & bug reports {% trans %}{% endmsg %}
-{% msg /errors/501:10 %} Though it might be in the future. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:19 %} Odysseus Debugging {% trans %}{% endmsg %}
-{% msg /errors/408:10 %} Try reloading it later. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:14 %} This Page (<code>{{ url }} </code>) Does Not Exist <br />
-        (and probably never has) {% trans %}{% endmsg %}
-{% msg /errors/501:9 %} Feature Not Supported {% trans %}{% endmsg %}
-{% msg /errors/501:4 %} UNSUPPORTED {% trans %}{% endmsg %}
-{% msg /errors/410:10 %} This page has been purposefully removed, and will not return. {% trans %}{% endmsg %}
-{% msg /errors/200:4 /errors/204:4 %} NO CONTENT {% trans %}{% endmsg %}
-{% msg /errors/409:9 %} Your Action Conflicted With Someone Else's {% trans %}{% endmsg %}
-{% msg /errors/418:12 %} {# Easter-egg 418: verse 1 of "I'm A Teapot" nursery rhyme #} t
-      I'm a little teapot<br />
-      Short and stout<br />
-      Here is my handle<br />
-      And here is my spout {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:27 %} {# People have to click this to bypass certificate warnings #} 
-            I Don't Trust <code>{{ url.host }} </code> Anyways {% trans %}{% endmsg %}
-{% msg /credits:42 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
-    and everyone who's ever published anything to the Web. You're what makes it all worthwhile! {% trans %}{% endmsg %}
-{% msg /home:23 %} Browse faster with
-        <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
-          keyboard shortcuts</a>! {% trans %}{% endmsg %}
-{% msg /errors/418:22 %} {# Easter-egg 418: attribution #} 
-      <strong>April Fools!</strong>
-      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% trans %}{% endmsg %}
-{% msg /errors/404:9 %} This Page Does Not Exist {% trans %}{% endmsg %}
-{% msg /restore:8 %} Loading… {% trans %}{% endmsg %}
-{% msg /errors/423:4 %} LOCKED {% trans %}{% endmsg %}
-{% msg /errors/401:4 %} Log-in Required {% trans %}{% endmsg %}
-{% msg /errors/403:9 %} Permission Denied {% trans %}{% endmsg %}
-{% msg /errors/405:4 %} INVALID FORM SUBMISSION {% trans %}{% endmsg %}
-{% msg /errors/507:9 /errors/dns:9 %} Could Not Contact {{ url.host }} {% trans %}{% endmsg %}
-{% msg /errors/network:9 %} Could Not Connect To The Internet {% trans %}{% endmsg %}
-{% msg /errors/401:20 %} Password {% trans %}{% endmsg %}
-{% msg /errors/507:10 /errors/dns:10 %} This may be due to a network failure or a broken link. {% trans %}{% endmsg %}
-{% msg /errors/network:4 %} CAN'T CONNECT {% trans %}{% endmsg %}
-{% msg /errors/500:4 %} WEBSITE PROBLEMS {% trans %}{% endmsg %}
-{% msg /errors/500:10 %} This shouldn't be happening, and you should report it. {% trans %}{% endmsg %}
-{% msg /errors/506:4 %} NEGOTIATION FAIL {% trans %}{% endmsg %}
-{% msg /errors/protocol:10 %} It doesn't speak the same language I do. {% trans %}{% endmsg %}
-{% msg /errors/418:4 %} I'm A Teapot {% trans %}{% endmsg %}
-{% msg /credits:9 %} Logo critiques {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:24 %} Load {{ url }}  despite this warning {% trans %}{% endmsg %}
-{% msg /errors/409:10 %} Please <a href="javascript:history.back()">go back</a> and try again. {% trans %}{% endmsg %}
-{% msg /errors/404:4 %} NOT FOUND {% trans %}{% endmsg %}
-{% msg /errors/protocol:9 %} I Cannot Work With This Website {% trans %}{% endmsg %}
-{% msg /errors/423:9 %} This WebDAV Page is Locked {% trans %}{% endmsg %}
-{% msg /home:39 %} Designed and coded with <a href="odysseus:credits">help</a> & ♥ by Adrian Lyall Cochrane in NZ. {% trans %}{% endmsg %}
-{% msg /credits:17 %} Translation {% trans %}{% endmsg %}
-{% msg /errors/409:4 %} EDIT CONFLICT {% trans %}{% endmsg %}
-{% msg /errors/204:10 %} Until <span title="Odysseus browser">I</a> added this content to let you know so. {% trans %}{% endmsg %}
-{% msg /home:31 %} Don't know where to go? Here's some
-        <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>. {% trans %}{% endmsg %}
-{% msg /home:16 %} Watch This Space {% trans %}{% endmsg %}
-{% msg /history:98 %} Wow! No history. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Go explore</a>! {% trans %}{% endmsg %}
-{% msg /errors/429:9 %} The Website Is Too Busy Serving Others {% trans %}{% endmsg %}
-{% msg /errors/503:15 /errors/429:15 /errors/408:15 %} Reload {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:22 %} Tools for ensuring your browser is working correctly. {% trans %}{% endmsg %}
+{% msg /history:70 %} No results for this search or on this page! {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:21 %} Odysseus Debugging {% trans %}{% endmsg %}
+{% msg /errors/429:8 %} The Website Is Too Busy Serving Others {% trans %}{% endmsg %}
 {% msg /errors/xxx:1 %} Something went wrong! {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:9 %} Tool Not Found {% trans %}{% endmsg %}
-{% msg /errors/crashed:3 %} CRASHED {% trans %}{% endmsg %}
-{% msg /errors/403:4 %} FORBIDDEN {% trans %}{% endmsg %}
-{% msg /home:34 %} Want to help
-        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>? {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:21 %} Tools for ensuring your browser is working correctly. {% trans %}{% endmsg %}
-{% msg /history:63 %} Visited from: {% trans %}{% endmsg %}
-{% msg /errors/dns:11 %} Or it could be simply that <em>this site does not exist</em>. {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:18 %} It provided <span title="You and the Odysseus browser">us</span> with a so-called "<a href="https://en.wikipedia.org/wiki/Public_key_certificate">cryptographic certificate</a>" to prove who it was, and yet that proof has <em>failed</em>. <span title="The Odysseus developers">We</span> encourage you to turn back now. {% trans %}{% endmsg %}
-{% msg /home:19 %} Don't worry, Odysseus will maintain it's elementary simplicity. {% trans %}{% endmsg %}
-{% msg /errors/506:9 %} Failed To Decide on a File Format {% trans %}{% endmsg %}
-{% msg /home:37 %} Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>. {% trans %}{% endmsg %}
-{% msg /credits:30 %} If it weren't for these projects Odysseus wouldn't exist,
-    it'd just be too hard to develop. So <em>thank you</em> to everyone who has
-    worked on these projects, and a special thanks to those who guide their development. {% trans %}{% endmsg %}
-{% msg /home:41 %} History search not powerful enough for you?
-        I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>! {% trans %}{% endmsg %}
-{% msg /errors/network:12 /errors/dns:14 %} Network {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:29 %} The privacy situation around Odysseus. {% trans %}{% endmsg %}
+{% msg /errors/410:10 %} This page has been purposefully removed, and will not return. {% trans %}{% endmsg %}
+{% msg /SERVER-ERROR:21 %} This Is Bad… {% trans %}{% endmsg %}
+{% msg /special/applist:1 %} Compatible apps {% trans %}{% endmsg %}
+{% msg /INVALID-FORM:17 %} Please
+      <a href="https://github.com/alcinnz/odysseus/issues/new">report this to
+        <span title="the Odysseus developers">us</span></a> and attach a copy of
+      this page (use the "Save As" option). More information (in English) is below. {% trans %}{% endmsg %}
 {% msg /errors/418:17 %} {# Easter-egg 418: verse 2 of "I'm A Teapot" nursery rhyme #} t
       When I get all steamed up<br />
       Hear me shout<br />
       "Tip me over<br />
       And pour me out!" {% trans %}{% endmsg %}
-{% msg /SERVER-ERROR:21 %} This Is Bad… {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:10 %} INVALID CERTIFICATE {% trans %}{% endmsg %}
+{% msg /feedreaders:4 %} Available feedreaders {% trans %}{% endmsg %}
 {% msg /errors/424:9 %} Follow On From a Previous Error {% trans %}{% endmsg %}
-{% msg /errors/400:9 %} This Is Apparently <span title="Odysseus Browser">Our</span> Fault {% trans %}{% endmsg %}
+{% msg /errors/network:3 %} CAN'T CONNECT {% trans %}{% endmsg %}
+{% msg /history:98 %} Wow! No history. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Go explore</a>! {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:23 /history:29 /history:46 %} History {% trans %}{% endmsg %}
 {% msg /errors/423:10 %} Try making your changes again later, or take it up with your group. {% trans %}{% endmsg %}
-{% msg /history:29 /history:46 %} History {% trans %}{% endmsg %}
-{% msg /errors/410:9 %} This Page Has Been Removed {% trans %}{% endmsg %}
-{% msg /errors/204:9 %} This Page Has Been Intentionally Left Empty {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:31 %} Try insecure connection {% trans %}{% endmsg %}
-{% msg /errors/410:4 %} DOES NOT EXIST {% trans %}{% endmsg %}
-{% msg /errors/400:4 %} BAD REQUEST {% trans %}{% endmsg %}
-{% msg /errors/429:10 %} You'll just have to wait. {% trans %}{% endmsg %}
-{% msg /errors/200:9 %} No content received {% trans %}{% endmsg %}
-{% msg /errors/451:4 %} LEGAL TAKEDOWN {% trans %}{% endmsg %}
-{% msg /errors/xxx:3 %} But <span title="The Odysseus browser">I</span> don't understand what it was. {% trans %}{% endmsg %}
-{% msg /home:44 %} While Odysseus does store information about your browsing,
-        but that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you. {% trans %}{% endmsg %}
-{% msg /errors/500:9 %} The Website Experienced An Error {% trans %}{% endmsg %}
-{% msg /errors/401:16 %} Username {% trans %}{% endmsg %}
-{% msg /errors/400:10 %} Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and <span title="Odysseus developers">we'll</span> see what we can do about it. {% trans %}{% endmsg %}
-{% msg /SERVER-ERROR:22 %} I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message. {% trans %}{% endmsg %}
-{% msg /home:12 %} Browser History {% trans %}{% endmsg %}
-{% msg /errors/451:9 %} This Page Has Been Removed For Legal Reasons {% trans %}{% endmsg %}
-{% msg /errors/401:10 %} You need to log in to access this page. {% trans %}{% endmsg %}
-{% msg /home:17 %} It, and the addressbar, are going to get alot more helpful. {% trans %}{% endmsg %}
-{% msg /errors/404:12 /errors/451:12 /errors/410:12 %} Try <a href="/">their homepage</a>, or: {% trans %}{% endmsg %}
-{% msg /errors/408:9 %} Timed Out While Asking For This Page {% trans %}{% endmsg %}
-{% msg /errors/507:4 /errors/dns:4 %} CAN'T CONTACT {% trans %}{% endmsg %}
-{% msg /errors/429:4 %} SITE'S TOO BUSY {% trans %}{% endmsg %}
+{% msg /errors/400:3 %} BAD REQUEST {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:24 %} The pages you've visited before. {% trans %}{% endmsg %}
+{% msg /errors/204:10 %} Until <span title="Odysseus browser">I</a> added this content to let you know so. {% trans %}{% endmsg %}
+{% msg /errors/501:10 %} Though it might be in the future. {% trans %}{% endmsg %}
 {% msg /errors/404:10 %} Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them. {% trans %}{% endmsg %}
-{% msg /errors/405:9 %} The Form You Submitted Was Invalid {% trans %}{% endmsg %}
-{% msg /home:47 %} Odysseus is <a href="https://liberapay.com/alcinnz/">crowdfunding</a>
-        for a server to help gather useful datasets and to better aid localization. Please chip in! {% trans %}{% endmsg %}
-{% msg /credits:29 %} External Projects {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:20 %} You can check this "cryptographic certificate" in it's normal place within the addressbar. {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:17 %} This Site Appears To Be Masquarading As Someone Else {% trans %}{% endmsg %}
-{% msg /errors/protocol:4 %} INVALID SITE {% trans %}{% endmsg %}
-{% msg /errors/503:9 %} Service Temporarily Unavailable {% trans %}{% endmsg %}
-{% msg /errors/503:10 %} Please try again later. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:16 %} Maybe you meant one of these other internal pages? {% trans %}{% endmsg %}
-{% msg /SERVER-ERROR:9 %} Internal Error {% trans %}{% endmsg %}
-{% msg /errors/408:4 %} REQUEST TIMED OUT {% trans %}{% endmsg %}
-{% msg /errors/405:10 %} Please take this up with the website's developers. {% trans %}{% endmsg %}
-{% msg /history:70 %} No results for this search or on this page! {% trans %}{% endmsg %}
-{% msg /errors/503:4 %} SERVICE UNAVAILABLE {% trans %}{% endmsg %}
-{% msg /errors/401:9 %} Please Log In {% trans %}{% endmsg %}
+{% msg /errors/503:14 /errors/429:14 /errors/408:14 %} Reload {% trans %}{% endmsg %}
+{% msg /errors/400:9 %} Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and <span title="Odysseus developers">we'll</span> see what we can do about it. {% trans %}{% endmsg %}
 {% msg /errors/401:25 %} Log In {% trans %}{% endmsg %}
-{% msg /home:27 %} {# Translators: Use this entry to sell your translation project! #} 
+{% msg /NOT-FOUND:19 %} Credits {% trans %}{% endmsg %}
+{% msg /credits:17 %} Translation {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:25 %} Odysseus's homepage {% trans %}{% endmsg %}
+{% msg /errors/bad-certificate:17 %} It has failed to <a href="https://en.wikipedia.org/wiki/Public_key_certificate">assert</a> it's own identity.
+      This may be due to its configuration, or it may be because someone's actively trying to <strong>spy</strong> on you. {% trans %}{% endmsg %}
+{% msg /home:68 %} "Frequently visited" {% trans %}{% endmsg %}
+{% msg /errors/408:9 %} Try reloading it later. {% trans %}{% endmsg %}
+{% msg /errors/506:9 %} Failed To Decide on a File Format {% trans %}{% endmsg %}
+{% msg /errors/uri:4 %} INVALID LINK {% trans %}{% endmsg %}
+{% msg /errors/crashed:3 %} CRASHED {% trans %}{% endmsg %}
+{% msg /errors/405:9 %} The Form You Submitted Was Invalid {% trans %}{% endmsg %}
+{% msg /errors/507:12 /errors/network:11 /errors/dns:14 %} Network Settings {% trans %}{% endmsg %}
+{% msg /INVALID-FORM:12 %} Invalid form submission {% trans %}{% endmsg %}
+{% msg /credits:30 %} If it weren't for these projects Odysseus wouldn't exist,
+    it'd just be too hard to develop. So <em>thank you</em> to everyone who has
+    worked on these projects, and a special thanks to those who guide their development. {% trans %}{% endmsg %}
+{% msg /home:49 %} Browser History {% trans %}{% endmsg %}
+{% msg /errors/bad-certificate:27 %} Load {{ url }}  despite this warning {% trans %}{% endmsg %}
+{% msg /errors/uri:14 %} Could not read link {% url %} {% trans %}{% endmsg %}
+{% msg /errors/507:8 /errors/dns:9 %} Could Not Contact {{ url.host }} {% trans %}{% endmsg %}
+{% msg /errors/403:10 %} You are not allowed to access this webpage. Try their <a href="/">homepage</a>. {% trans %}{% endmsg %}
+{% msg /errors/503:9 %} Please try again later. {% trans %}{% endmsg %}
+{% msg /errors/schema:23 %} You must install a compatible app before opening <a href="{{ url }} ">this link</a>. {% trans %}{% endmsg %}
+{% msg /errors/dns:11 %} Or it could be simply that <em>this site does not exist</em>. {% trans %}{% endmsg %}
+{% msg /home:122 %} Browse faster with
+        <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
+          keyboard shortcuts</a>! {% trans %}{% endmsg %}
+{% msg /errors/401:4 %} Log-in Required {% trans %}{% endmsg %}
+{% msg /errors/404:4 %} NOT FOUND {% trans %}{% endmsg %}
+{% msg /feedreaders:12 %} No <a href="https://en.wikipedia.org/wiki/News_aggregator">feed readers</a> are installed {% trans %}{% endmsg %}
+{% msg /home:59 %} You 'pinned' this here {% trans %}{% endmsg %}
+{% msg /errors/bad-certificate:30 %} {# People have to click this to bypass certificate warnings #} 
+            I Don't Trust <code>{{ url.host }} </code> Anyways {% trans %}{% endmsg %}
+{% msg /home:73 %} "Recommended by Adrian Cochrane" {% trans %}{% endmsg %}
+{% msg /errors/schema:5 %} CAN'T OPEN {{ url.scheme }} : LINKS {% trans %}{% endmsg %}
+{% msg /errors/401:10 %} You need to log in to access this page. {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:14 %} This Page (<code>{{ url }} </code>) Does Not Exist <br />
+        (and probably never has) {% trans %}{% endmsg %}
+{% msg /errors/404:9 %} This Page Does Not Exist {% trans %}{% endmsg %}
+{% msg /errors/405:10 %} Please take this up with the website's developers. {% trans %}{% endmsg %}
+{% msg /home:138 %} Designed and coded with <a href="odysseus:credits">help</a> & ♥ by Adrian Lyall Cochrane in NZ. {% trans %}{% endmsg %}
+{% msg /home:146 %} FYI: None of the links on this page were sponsered, no one paid for any of them. {% trans %}{% endmsg %}
+{% msg /SERVER-ERROR:22 %} I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message. {% trans %}{% endmsg %}
+{% msg /errors/429:3 %} SITE'S TOO BUSY {% trans %}{% endmsg %}
+{% msg /errors/401:20 %} Password {% trans %}{% endmsg %}
+{% msg /errors/schema:19 %} {% urischema %}  links cannot be opened with any software on this computer {% trans %}{% endmsg %}
+{% msg /errors/501:9 %} Feature Not Supported {% trans %}{% endmsg %}
+{% msg /errors/503:8 %} Service Temporarily Unavailable {% trans %}{% endmsg %}
+{% msg /errors/424:4 %} REPEATED ERRORS {% trans %}{% endmsg %}
+{% msg /errors/409:9 %} Your Action Conflicted With Someone Else's {% trans %}{% endmsg %}
+{% msg /errors/507:3 /errors/dns:4 %} CAN'T CONTACT {% trans %}{% endmsg %}
+{% msg /errors/423:4 %} LOCKED {% trans %}{% endmsg %}
+{% msg /errors/451:10 %} This page has been purposefully removed, and may not return. {% trans %}{% endmsg %}
+{% msg /home:133 %} Want to help
+        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>? {% trans %}{% endmsg %}
+{% msg /errors/204:9 %} This Page Has Been Intentionally Left Empty {% trans %}{% endmsg %}
+{% msg /errors/408:3 %} REQUEST TIMED OUT {% trans %}{% endmsg %}
+{% msg /feedreaders:15 %} In order to subscribe to a <a href="https://en.wikipedia.org/wiki/Web_feed">webfeed</a>,
+      please install one first. {% trans %}{% endmsg %}
+{% msg /errors/xxx:3 %} But <span title="The Odysseus browser">I</span> don't understand what it was. {% trans %}{% endmsg %}
+{% msg /errors/503:3 %} SERVICE UNAVAILABLE {% trans %}{% endmsg %}
+{% msg /errors/501:4 %} UNSUPPORTED {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:20 %} The people you should thank for this gorgeous browsing experience. {% trans %}{% endmsg %}
+{% msg /errors/418:12 %} {# Easter-egg 418: verse 1 of "I'm A Teapot" nursery rhyme #} t
+      I'm a little teapot<br />
+      Short and stout<br />
+      Here is my handle<br />
+      And here is my spout {% trans %}{% endmsg %}
+{% msg /credits:42 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
+    and everyone who's ever published anything to the Web. You're what makes it all worthwhile! {% trans %}{% endmsg %}
+{% msg /filetype:22 %} You must install a compatible app before your download will open. {% trans %}{% endmsg %}
+{% msg /home:143 %} While Odysseus does store information about your browsing,
+        that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you. {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:26 %} Includes links to the pages you visit most. {% trans %}{% endmsg %}
+{% msg /errors/bad-certificate:9 %} INVALID CERTIFICATE {% trans %}{% endmsg %}
+{% msg /errors/500:10 %} This shouldn't be happening, and you should report it. {% trans %}{% endmsg %}
+{% msg /errors/401:16 %} Username {% trans %}{% endmsg %}
+{% msg /errors/protocol:10 %} It doesn't speak the same language I do. {% trans %}{% endmsg %}
+{% msg /errors/506:4 %} NEGOTIATION FAIL {% trans %}{% endmsg %}
+{% msg /history:63 %} Visited from: {% trans %}{% endmsg %}
+{% msg /credits:12 %} Feature suggesions & bug reports {% trans %}{% endmsg %}
+{% msg /credits:9 %} Logo critiques {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:27 %} This is what you see when you open a new tab. {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:9 %} Tool Not Found {% trans %}{% endmsg %}
+{% msg /errors/400:8 %} This Is Apparently <span title="Odysseus Browser">Our</span> Fault {% trans %}{% endmsg %}
+{% msg /errors/network:8 %} Could Not Connect To The Internet {% trans %}{% endmsg %}
+{% msg /filetype:18 %} {% filetype %}  files cannot be opened with any software on this computer {% trans %}{% endmsg %}
+{% msg /special/restore:8 %} Loading… {% trans %}{% endmsg %}
+{% msg /errors/200:4 /errors/204:4 %} NO CONTENT {% trans %}{% endmsg %}
+{% msg /errors/429:9 %} You'll just have to wait. {% trans %}{% endmsg %}
+{% msg /errors/protocol:4 %} INVALID SITE {% trans %}{% endmsg %}
+{% msg /errors/418:22 %} {# Easter-egg 418: attribution #} 
+      <strong>April Fools!</strong>
+      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% trans %}{% endmsg %}
+{% msg /errors/bad-certificate:20 %} Details available by clicking the
+      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
+            onerror="this.src = 'icon:16/security-medium-symbolic'" />
+      in the addressbar. {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:16 %} Maybe you meant one of these other internal pages? {% trans %}{% endmsg %}
+{% msg /errors/410:9 %} This Page Has Been Removed {% trans %}{% endmsg %}
+{% msg /SERVER-ERROR:9 %} Internal Error {% trans %}{% endmsg %}
+{% msg /errors/200:9 %} No content received {% trans %}{% endmsg %}
+{% msg /errors/451:9 %} This Page Has Been Removed For Legal Reasons {% trans %}{% endmsg %}
+{% msg /special/applist:10 %} No compatible apps found in {{ pacman }} . {% trans %}{% endmsg %}
+{% msg /errors/500:9 %} The Website Experienced An Error {% trans %}{% endmsg %}
+{% msg /errors/409:4 %} EDIT CONFLICT {% trans %}{% endmsg %}
+{% msg /home:126 %} {# Translators: Use this entry to sell your translation project! #} 
         Do you know another language? Then do your friends a favour and
         <a href="https://www.transifex.com/none-483/odysseus/dashboard/">teach Odysseus it</a>! {% trans %}{% endmsg %}
-{% msg /errors/451:10 %} This page has been purposefully removed, and may not return. {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:18 %} This is not the site you're looking for! {% trans %}{% endmsg %}
-{% msg /errors/403:10 %} You are not allowed to access this webpage. Try their <a href="/">homepage</a>. {% trans %}{% endmsg %}
-{% msg /home:3 %} New Tab {% trans %}{% endmsg %}
-{% msg /errors/424:4 %} REPEATED ERRORS {% trans %}{% endmsg %}
+{% msg /errors/410:4 %} DOES NOT EXIST {% trans %}{% endmsg %}
+{% msg /errors/507:9 /errors/dns:10 %} This may be due to a network failure or a broken link. {% trans %}{% endmsg %}
+{% msg /home:136 %} Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>. {% trans %}{% endmsg %}
+{% msg /errors/404:12 /errors/451:12 /errors/410:12 %} Try <a href="/">their homepage</a>, or: {% trans %}{% endmsg %}
+{% msg /errors/403:4 %} FORBIDDEN {% trans %}{% endmsg %}
+{% msg /errors/protocol:9 %} I Cannot Work With This Website {% trans %}{% endmsg %}
+{% msg /credits:29 %} External Projects {% trans %}{% endmsg %}
+{% msg /home:140 %} History search not powerful enough for you?
+        I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>! {% trans %}{% endmsg %}
+{% msg /filetype:4 %} CAN'T OPEN {{ filetype }}  FILES {% trans %}{% endmsg %}
+{% msg /errors/423:9 %} This WebDAV Page is Locked {% trans %}{% endmsg %}
+{% msg /home:26 %} New Tab {% trans %}{% endmsg %}
+{% msg /special/applist:5 %} View in {{ pacman }} . {% trans %}{% endmsg %}
+{% msg /errors/bad-certificate:34 %} Try insecure connection {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:28 %} Privacy Policy {% trans %}{% endmsg %}
+{% msg /INVALID-FORM:13 %} The form you just submitted was invalid! While you <em>could</em>
+      be to blame, this is probably <span title="Odysseus's">my</span> fault. {% trans %}{% endmsg %}
+{% msg /errors/408:8 %} Timed Out While Asking For This Page {% trans %}{% endmsg %}
+{% msg /errors/418:4 %} I'm A Teapot {% trans %}{% endmsg %}
+{% msg /errors/409:10 %} Please <a href="javascript:history.back()">go back</a> and try again. {% trans %}{% endmsg %}
+{% msg /errors/500:4 %} WEBSITE PROBLEMS {% trans %}{% endmsg %}
+{% msg /errors/451:4 %} LEGAL TAKEDOWN {% trans %}{% endmsg %}
+{% msg /errors/uri:16 %} Please report this issue to whoever gave you this link, they messed up! {% trans %}{% endmsg %}
+{% msg /errors/401:9 %} Please Log In {% trans %}{% endmsg %}
+{% msg /INVALID-FORM:4 /errors/405:4 %} INVALID FORM SUBMISSION {% trans %}{% endmsg %}
+{% msg /home:130 %} Don't know where to go? Here's some
+        <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>. {% trans %}{% endmsg %}
+{% msg /errors/403:9 %} Permission Denied {% trans %}{% endmsg %}
+{% msg /errors/bad-certificate:16 %} This site may not be who it appears to be {% trans %}{% endmsg %}

@@ -57,7 +57,7 @@ and I take advantage of this page to promote project links. #}
     {% endmacro %}
     {% query 20 %}
       SELECT uri, order_, "pinned" AS cat,
-          {% trans %}"You 'pinned' this here"{% endtrans %} AS help
+          {{"You 'pinned' this here"|trans}} AS help
         FROM topsites_whitelist ORDER BY order_ ASC;
       {# These next two queries are the core of this list,
           and are written using a special in-database cache to keep

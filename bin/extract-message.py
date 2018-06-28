@@ -22,10 +22,17 @@ def is_tag(token, tagnames):
     return token[0] in tagnames.split()
 
 def next(template, tagnames):
+    import codecs
+    unicode_escape = codecs.getdecoder('unicode_escape')
     for token, line_no in template:
         if is_tag(token, tagnames):
-            return line_no
-    return None
+            return line_no, None
+        if token.startswith("{{"):
+            body = token[2:-2].strip().split("|")
+            if (body[0][0] in "'\"" and body[0][-1] == body[0][0]
+                    and len(body) >= 2 and body[1] == "trans"):
+                return line_no, unicode_escape(body[0][1:-1])[0]
+    return None, None
 
 def block(template, tagnames):
     block = ""
@@ -63,11 +70,18 @@ def parse_templates(repo_root = "."):
         print("Parsing template", subpath)
         template = tags(filename)
 
-        line = next(template, "trans")
+        line, text = next(template, "trans")
         while line:
-            message, endtag = block(template, "endtrans")
-            yield message.strip(), subpath, line
-            line = next(template, "trans")
+            if text is None:
+                message, endtag = block(template, "endtrans")
+                yield message.strip(), subpath, line
+            else:
+                for special in ("{%", "%}", "{{", "}}", "{#", "#}"):
+                    if special in text:
+                        print("Invalid text translation!", repr(text))
+                        exit(1)
+                yield text.strip(), subpath, line
+            line, text = next(template, "trans")
 
 def consolidate(messages):
     from collections import defaultdict
