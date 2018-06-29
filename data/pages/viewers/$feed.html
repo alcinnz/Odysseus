@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% with channel=page|lookup:"channel"|first %}
+<html>
+<head>
+  <title>{{ channel.title }}</title>
+  <link rel="alternate" type="{{ mime }}" href="{{ channel.link|default:url }}" />
+  <style>
+    @import url("odysseus:butterick.css");
+
+    a[href^="mailto:"]:before {content: url(icon:16/tag);}
+    a[href^="?tag="]:before {content: url(icon:16/mail-send);}
+  </style>
+</head>
+<body>
+  {% macro entry : post level %}
+    <h{{ level }}><a href="{{ post.link }}">{{ post.title }}</a></h{{ level }}>
+    <aside style="float:right">{{ post.pubDate }}</aside>
+    <aside style="float:left">{{ post.author }}</aside>
+    <iframe sandbox src="data:text/html,{{ post.description|escape:'uri' }}">
+      {{ post.description }}
+    </iframe>
+    <nav>
+      {% for file in post|lookup:"attachment" %}
+        <a href="{{ file.url }}">
+          <img src="icon:32/{{ file.type|escape:'mimeicon' }}" {# TODO define mimeicon filter #}
+                alt="{{ file.type }}
+                    {% filter escape:'html' %}{% mimeinfo file.type %}{% endfilter %}" />
+        </a>
+      {% endfor %}
+      {% for tag in post|lookup:"category" %}
+        <a href="?tag={{ tag|escape:'url' }}">{{ tag }}</a>
+      {% endfor %}
+    </nav>
+  {% endmacro %}
+
+  {% if channel.image and channel.image.url %}{% with img=channel.image %}
+    {% if img.link %}<a href="{{ img.link }}">{% endif %}
+    <img src="{{ img.url }}" alt="{{ img.title }}" title="{{ img.title }}" />
+    {% if img.link %}</a>{% endif %}
+  {% endif %}
+
+  {% entry post=channel level=1 %}
+  <main>{% for post in channel|lookup:"item" %}
+    <section>{% entry level=2 %}</section>
+  {% endfor %}</main>
+
+  <footer>
+    {{ channel.copyright }}
+    {% if channel.managingEditor %}
+      <a href="mailto:{{ channel.managingEditor }}">{% trans %}Editor{% endtrans %}</a>
+    {% endif %}
+    {% if channel.webMaster %}
+      <a href="mailto:{{ channel.webMaster }}">{% trans %}Web Master{% endtrans %}</a>
+    {% endif %}
+  </footer>
+</body>
+</html>
+{% endwith %}
