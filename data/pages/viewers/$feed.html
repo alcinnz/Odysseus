@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% with channel=page|lookup:"channel"|first %}
+{% with channel=page|lookup:"channel"|first|default:page %}
 <html>
 <head>
   <title>{{ channel.title }}</title>
@@ -9,19 +9,42 @@
 
     a[href^="mailto:"]:before {content: url(icon:16/tag);}
     a[href^="?tag="]:before {content: url(icon:16/mail-send);}
+    iframe {
+      width: 100%;
+      height: 200px;
+      resize: vertical;
+    }
   </style>
+  {% if channel.icon %}<link rel="shortcut icon" href="{{ channel.icon }}" />{% endif %}
 </head>
 <body>
   {% macro entry : post level %}
     <h{{ level }}><a href="{{ post.link }}">{{ post.title }}</a></h{{ level }}>
-    <aside style="float:right">{{ post.pubDate }}</aside>
-    <aside style="float:left">{{ post.author }}</aside>
-    <iframe sandbox src="data:text/html,{{ post.description|escape:'uri' }}">
-      {{ post.description }}
-    </iframe>
+    {% if post.subtitle %}
+      <h{{ level|add:1 }}>{{ post.subtitle }}</h{{ level|add:1 }}>
+    {% endif %}
+
+    <aside style="float:right">
+      {{ post.pubDate|default:post.published }}
+      {% if post.updated %};
+        {% trans %}Updated{% endtrans %} {{ post.updated }}
+      {% endif %}
+    </aside>
+    <aside style="float:left">
+      {{ post|lookup:"author/(child::text()|name)"|default:post.author }}
+      {% if post.contributor %}; {% trans %}Contributors{% endtrans %}
+        {{ post|lookup:"contributor/name" }}
+      {% endif %}
+    </aside>
+
+    {% with text=post.description|default:post.content|text|default:post.summary %}
+      <iframe sandbox src="data:text/html,{{ text|escape:'uri' }}">
+        {{ text }}
+      </iframe>
+    {% endwith %}
     <nav>
-      {% for file in post|lookup:"attachment" %}
-        <a href="{{ file.url }}">
+      {% for file in post|lookup:"attachment|content[@src]" %}
+        <a href="{{ file.url|default:file.src }}">
           <img src="icon:32/{{ file.type|escape:'mimeicon' }}" {# TODO define mimeicon filter #}
                 alt="{{ file.type }}
                     {% filter escape:'html' %}{% mimeinfo file.type %}{% endfilter %}" />
@@ -37,21 +60,28 @@
     {% if img.link %}<a href="{{ img.link }}">{% endif %}
     <img src="{{ img.url }}" alt="{{ img.title }}" title="{{ img.title }}" />
     {% if img.link %}</a>{% endif %}
+  {% elif channel.logo %}
+    <img src="{{ channel.logo }}" />
   {% endif %}
 
   {% entry post=channel level=1 %}
-  <main>{% for post in channel|lookup:"item" %}
-    <section>{% entry level=2 %}</section>
+  <main>{% for post in channel|lookup:"item|entry" %}
+    <section>{% entry level=3 %}</section>
   {% endfor %}</main>
 
   <footer>
-    {{ channel.copyright }}
+    {{ channel.copyright|default:channel.rights }}
     {% if channel.managingEditor %}
       <a href="mailto:{{ channel.managingEditor }}">{% trans %}Editor{% endtrans %}</a>
     {% endif %}
     {% if channel.webMaster %}
       <a href="mailto:{{ channel.webMaster }}">{% trans %}Web Master{% endtrans %}</a>
     {% endif %}
+    {% for author in channel|lookup:"child::author[uri|email]" %}
+      <a href="{% if author.uri %}{{ author.uri }}{% else %}mailto:{{ author.email }}{% endif %}">
+        {{ author.name }}
+      </a>
+    {% endfor %}
   </footer>
 </body>
 </html>
