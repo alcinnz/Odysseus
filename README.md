@@ -12,7 +12,7 @@ aids that gently and unobtrusively guide you wherever you want to go online.
 In doing so Odysseus aims to help you focus on the webpages that matter to you,
 and to support the open decentralized web over the centralized services of today.
 
-[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.USER.REPO) or [download a stable release](https://github.com/alcinnz/Odysseus/releases)
+[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.alcinnz.odysseus.desktop) or [download a stable release](https://github.com/alcinnz/Odysseus/releases)
 
 Technical Architecture
 ----------------------
@@ -37,8 +37,6 @@ Then within the repository's root run the fullowing commands (or some OS-specifi
 Contributing
 ------------
 
-Help is always appreciated, so feel free to open a pull request! If you want to help but don't know what to do, take a look through Odysseus's issues. I'll be labelling several of them as "help-wanted" so I can focus on achieving the big picture described in this README.
+For anyone interested in contributing new features, fixes, etc to Odysseus, pull requests are always welcome and there is a discussion room on Matrix for you to discuss your ideas or get help. If you don't know where to start, try one of these [feature requests](https://github.com/alcinnz/Odysseus/issues?q=is%3Aopen+is%3Aissue+label%3AEasy+label%3A%22help+wanted%22).
 
-For developers, the coding convention for Vala is GNOME's naming conventions with 4 space indents, another 4 space line continuations, and no spaces between method calls & their argument lists. Other style guides are strawn across the repository.
-
-If you want to help teach Oddysseus a new language, please visit https://github.com/alcinnz/Odysseus/wiki/Localizing-Odysseus. 
+If you want to help teach Oddysseus a new language, please visit https://github.com/alcinnz/Odysseus/wiki/Localizing-Odysseus. Work is ongoing to make this easier.
