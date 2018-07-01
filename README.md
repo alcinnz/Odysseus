@@ -1,40 +1,16 @@
 Odysseus Web Browser
 ====================
 
-**Designed for elementary OS**
+A simple and performant yet powerful [elementary OS](https://elementary.io/)-[style](https://elementary.io/docs/human-interface-guidelines) window onto the open decentralized web.
 
-Odysseus aims to be a simple yet powerful web browser that makes surfing the web a breeze.
+Odysseus is already and will continue to be a convenient, privacy-respecting,
+[ethically designed](https://2017.ind.ie/ethical-design/), and opensource
+(under the GPLv3+ license) web browser that should run great on any free desktop.
+However work is ongoing to make Odysseus more convenient with handy navigation
+aids that gently and unobtrusively guide you wherever you want to go online.
 
-It's not there yet, but work is actively ongoing to ease your surfing with vital navigation aids. 
-
-Design Principles
------------------
-
-<dl>
-<dt>Oddysseus is a bridge between the elementary and Web user experiences.</dt>
-
-<dd>elementary's UX is clearly defined with toolbars, tabbars, and sidebars visually part of the window decoration. As far as possible Oddysseus tries to be just an elementary window onto The Web. </dd>
-
-<dd>The web's UX is less clear cut, but HTML's default styles and behaviours provide a distinct aesthetic. That said when designing pages don't be constrained to these defaults, if there's good usability or typography reason they can be overriden.</dd>
-
-<dt>Guide users where they want to go.</dt>
-
-<dd>As users try to go places, Odysseus should provide a gentle helping hand. It should avoid being burdensome and where it make sense pick up on subtle cues. </dd>
-
-<dd>Odysseus's behaviour towards this end should be trivial to understand, as a set of independant "tools"/"traits". </dd>
-
-<dt>Make the web as a whole better, not particular sites.</dt>
-
-<dd>Odysseus has no idea which sites you'll want to use with it, and it's developers wish to avoid giving an extra leg up to the already dominant sites. So Odysseus should avoid specially integrating any websites, and when it does the sites it integrates should similar aim to make the whole Web better.</dd>
-
-<dt>Give users control over their privacy, no matter their skills.</dt>
-
-<dd>Odysseus is a "User Agent", it serves it's users not webmasters. Give them the control over what's uploaded to the SEC (Someone Elses' Computers).</dd>
-
-<dd>For it's own uses Odysseus should feel free to capture data, but only share it online with informed consent. Odysseus shouldn't even upload any information to a service operated by the project, as that would be asking for blind faith. </dd>
-</dl>
-
-Where in doubt, consult elementary's HIG. 
+In doing so Odysseus aims to help you focus on the webpages that matter to you,
+and to support the open decentralized web over the centralized services of today.
 
 Technical Architecture
 ----------------------
