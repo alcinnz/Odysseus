@@ -20,21 +20,19 @@ In a nutshell Odysseus pulls together WebKitGTK and SQLite using GTK/Granite, sp
 
 At the same time Odysseus pulls together the same SQLite database, web-APIs, and more into a templating language. Which is then used to develop helpful error pages and handy navigation aids accessible via a custom `odysseus:` URI scheme.
 
-INSTALLING
+Building
 ----------
 
-The simple way is to [use the elementary AppCenter](https://appcenter.elementary.io/com.github.alcinnz.odysseus.desktop).
+First ensure Git, Meson, Ninja, and the Vala compiler are installed, along with the GTK+ 3, [Granite](https://github.com/elementary/granite), WebKit2 GTK, LibJSON GLib, LibSoup 2.4, SQLite 3, [LibUnity](https://launchpad.net/libunity), and LibAppStream developer packages.
 
-But if you're not running elementary OS (and hasn't been packaged for your operating system by a third party), or you simply want to contribute to the project:
+Then within the repository's root run the fullowing commands (or some OS-specific variation):
 
-    git clone https://github.com/alcinnz/Odysseus.git
     mkdir build
     cd build
     meson ..
     ninja
     sudo ninja install
-    
-(you will need to install Meson and Git for this to work). 
+
 
 Contributing
 ------------
