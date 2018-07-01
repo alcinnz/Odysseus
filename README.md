@@ -1,4 +1,4 @@
-Odysseus Web Browser
+Odysseus web browser
 ====================
 
 A simple and performant yet powerful [elementary OS](https://elementary.io/)-[style](https://elementary.io/docs/human-interface-guidelines) window onto the open decentralized web.
