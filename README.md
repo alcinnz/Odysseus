@@ -12,6 +12,8 @@ aids that gently and unobtrusively guide you wherever you want to go online.
 In doing so Odysseus aims to help you focus on the webpages that matter to you,
 and to support the open decentralized web over the centralized services of today.
 
+[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.USER.REPO) or [download a stable release](https://github.com/alcinnz/Odysseus/releases)
+
 Technical Architecture
 ----------------------
 In a nutshell Odysseus pulls together WebKitGTK and SQLite using GTK/Granite, splitting off minor enhancements to it's core UI into builtin "traits".
