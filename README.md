@@ -37,6 +37,6 @@ Then within the repository's root run the fullowing commands (or some OS-specifi
 Contributing
 ------------
 
-For anyone interested in contributing new features, fixes, etc to Odysseus, pull requests are always welcome and there is a discussion room on Matrix for you to discuss your ideas or get help. If you don't know where to start, try one of these [feature requests](https://github.com/alcinnz/Odysseus/issues?q=is%3Aopen+is%3Aissue+label%3AEasy+label%3A%22help+wanted%22).
+For anyone interested in contributing new features, fixes, etc to Odysseus, pull requests are always welcome and there is a discussion [Matrix room](https://riot.im/app/#/room/#odysseus-web:matrix.org) for you to discuss your ideas or get help. If you don't know where to start, try one of these [feature requests](https://github.com/alcinnz/Odysseus/issues?q=is%3Aopen+is%3Aissue+label%3AEasy+label%3A%22help+wanted%22).
 
 If you want to help teach Oddysseus a new language, please visit https://github.com/alcinnz/Odysseus/wiki/Localizing-Odysseus. Work is ongoing to make this easier.
