@@ -7,23 +7,21 @@
   <summary>Surf knowledge, entertainment, and services on The Web</summary>
 
   <description>
-    <p>Surf the Web with the controls you’re already familiar with from apps like Files and Scratch. With everything where you already expect them it is seamless to switch between Odysseus and other apps.</p>
-    <p>Features:</p>
+    <p>Odysseus is a convenient and privacy-respecting web browser, that increasingly,
+gently, and unobtrusively guides you wherever you want to go online. Through
+this well thought out simplicity Odysseus lets you focus on the webpages that
+matter to you.</p>
+    <p>High-level features:</p>
     <ul>
-      <li>Can present any webpage Apple's Safari or GNOME's Epiphany can handle.</li>
-      <li>Full elementary-style tabbar complete with tab pinning, duplicating, restoring, moving tabs, and more.</li>
-      <li>Quickly jump to any page in your tab history.</li>
-      <li>Videos, PDFs, and more open and stream into their respective apps.</li>
-      <li>Keeps your downloads folder organized by date.</li>
-      <li>Quickly and flexibly find text in webpages.</li>
-      <li>DuckDuckGo integration with search autocompletion.</li>
-      <li>Takes security seriously by defaulting to HTTPS and not uploading the web addresses you type anywhere.</li>
-      <li>Shows combined download progress in the dock for a quick glance.</li>
-      <li>Quick to start as it holds off on loading pages from your previous browsing session.</li>
-      <li>Easily skimmable browser history</li>
-      <li>And more to come…</li>
+      <li>Tabbed web browsing</li>
+      <li>Find-in-page</li>
+      <li>Downloads</li>
+      <li>Opens non-webpage links in 3rd party apps, or suggests ones to install</li>
+      <li>DuckDuckGo integration</li>
+      <li>Browser history</li>
+      <li>Topsites with initial hand-curated recommendations</li>
     </ul>
-    <p>Install Odysseus for links to the depicted pages from the screenshots.</p>
+    <p>These features are completed to a high degree of polish.</p>
   </description>
 
   <screenshots>

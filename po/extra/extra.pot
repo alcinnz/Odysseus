@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-28 21:20+1200\n"
+"POT-Creation-Date: 2018-07-02 14:23+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/com.github.alcinnz.odysseus-base.desktop:4
@@ -45,89 +45,64 @@ msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:10
 msgid ""
-"Surf the Web with the controls you’re already familiar with from apps like "
-"Files and Scratch. With everything where you already expect them it is "
-"seamless to switch between Odysseus and other apps."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:11
-msgid "Features:"
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:13
-msgid "Can present any webpage Apple's Safari or GNOME's Epiphany can handle."
+"Odysseus is a convenient and privacy-respecting web browser, that "
+"increasingly, gently, and unobtrusively guides you wherever you want to go "
+"online. Through this well thought out simplicity Odysseus lets you focus on "
+"the webpages that matter to you."
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:14
-msgid ""
-"Full elementary-style tabbar complete with tab pinning, duplicating, "
-"restoring, moving tabs, and more."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:15
-msgid "Quickly jump to any page in your tab history."
+msgid "High-level features:"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:16
-msgid "Videos, PDFs, and more open and stream into their respective apps."
+msgid "Tabbed web browsing"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:17
-msgid "Keeps your downloads folder organized by date."
+msgid "Find-in-page"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:18
-msgid "Quickly and flexibly find text in webpages."
+msgid "Downloads"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:19
-msgid "DuckDuckGo integration with search autocompletion."
+msgid "Opens non-webpage links in 3rd party apps, or suggests ones to install"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:20
-msgid ""
-"Takes security seriously by defaulting to HTTPS and not uploading the web "
-"addresses you type anywhere."
+msgid "DuckDuckGo integration"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:21
-msgid "Shows combined download progress in the dock for a quick glance."
+msgid "Browser history"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:22
-msgid ""
-"Quick to start as it holds off on loading pages from your previous browsing "
-"session."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:23
-msgid "Easily skimmable browser history"
+msgid "Topsites with initial hand-curated recommendations"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:24
-msgid "And more to come…"
+msgid "These features are completed to a high degree of polish."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:26
-msgid "Install Odysseus for links to the depicted pages from the screenshots."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:31
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:29
 msgid "Browser controls, find-in-page, and downloads progress."
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:35
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:33
 msgid "Autocompletion"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:39
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:37
 msgid "Jump to any spot in tab history"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:43
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:41
 msgid "The Application menu"
 msgstr ""
 
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:48
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:46
 msgid "Adrian Cochrane"
 msgstr ""
