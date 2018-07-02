@@ -3,8 +3,8 @@
   <id>com.github.alcinnz.odysseus.desktop</id>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0+</project_license>
-  <name>Odysseus</name>
-  <summary>Surf knowledge, entertainment, and services on The Web</summary>
+  <name>Odysseus web browser</name>
+  <summary>A simple and performant yet powerful window onto the open decentralized web.</summary>
 
   <description>
     <p>Odysseus is a convenient and privacy-respecting web browser, that increasingly,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-02 14:23+1200\n"
+"POT-Creation-Date: 2018-07-02 14:44+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/com.github.alcinnz.odysseus-base.desktop:4
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:6
 msgid "Odysseus"
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.desktop:5
-#: data/com.github.alcinnz.odysseus-base.appdata.xml:7
 msgid "Surf knowledge, entertainment, and services on The Web"
 msgstr ""
 
@@ -41,6 +39,15 @@ msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.desktop:22
 msgid "New Tab"
+msgstr ""
+
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:6
+msgid "Odysseus web browser"
+msgstr ""
+
+#: data/com.github.alcinnz.odysseus-base.appdata.xml:7
+msgid ""
+"A simple and performant yet powerful window onto the open decentralized web."
 msgstr ""
 
 #: data/com.github.alcinnz.odysseus-base.appdata.xml:10
