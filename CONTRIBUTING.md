@@ -3,7 +3,7 @@ So you have a feature you want integrated into Odysseus and are willing to put t
 
 To start join the [Matrix chatroom](https://riot.im/app/#/room/#odysseus-web:matrix.org), clone https://github.com/alcinnz/Odysseus.git, and optionally fork the repository on GitHub. If you do not want to sign up for GitHub you are welcome to contribute entirely via Matrix.
 
-If you need to discuss anything, feel free to do so via either the Matrix chatroom or the [issue tracker](https://github.com/alcinnz/Odysseus/issues).
+If you need to discuss anything or want to submit an issue, feel free to do so via either the Matrix chatroom or the [issue tracker](https://github.com/alcinnz/Odysseus/issues).
 
 Once you feel you're code is ready to contribute upstream (and there's no failures in [the Prosody tests](odysseus:debugging/test)) open a GitHub pull request or run [`git format-patch`](https://git-scm.com/docs/git-format-patch) and submit it to the Matrix chatroom.
 
