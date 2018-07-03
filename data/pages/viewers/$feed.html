@@ -70,18 +70,40 @@
   {% endfor %}</main>
 
   <footer>
-    {{ channel.copyright|default:channel.rights }}
-    {% if channel.managingEditor %}
-      <a href="mailto:{{ channel.managingEditor }}">{% trans %}Editor{% endtrans %}</a>
-    {% endif %}
-    {% if channel.webMaster %}
-      <a href="mailto:{{ channel.webMaster }}">{% trans %}Web Master{% endtrans %}</a>
-    {% endif %}
-    {% for author in channel|lookup:"child::author[uri|email]" %}
-      <a href="{% if author.uri %}{{ author.uri }}{% else %}mailto:{{ author.email }}{% endif %}">
-        {{ author.name }}
-      </a>
-    {% endfor %}
+    <nav>
+      {% if channel.complete %}
+        <em title="{% trans %}No more entries{% endtrans %}">
+          {% trans %}{# Shorthand for "no more entries" #}Fin.{% endtrans %}
+        </em>
+      {% else %}
+        {% macro page-link : link title label %}
+          {% if link %}<a href="{{ link.href }}" title="{{ title }}">label</a>{% endif %}
+        {% endmacro %}
+        {% page-link link=channel|lookup:'link[@rel="first"]'
+            title="First page"|trans label="↞" %}
+        {% page-link link=channel|lookup:'link[@rel="previous"|@rel="prev-archive"]'|first
+            title="Previous page"|trans label="↩" %}
+        <strong>⋅</strong>
+        {% page-link link=channel|lookup:'link[@rel="next"|@rel="next-archive"]'|first
+            title="Next page"|trans label="↪" %}
+        {% page-link link=channel|lookup:'link[@rel="last"]'
+            title="Last page"|trans label="↠" %}
+      {% endif %}
+    </nav>
+    <p>
+      {{ channel.copyright|default:channel.rights }}
+      {% if channel.managingEditor %}
+        <a href="mailto:{{ channel.managingEditor }}">{% trans %}Editor{% endtrans %}</a>
+      {% endif %}
+      {% if channel.webMaster %}
+        <a href="mailto:{{ channel.webMaster }}">{% trans %}Web Master{% endtrans %}</a>
+      {% endif %}
+      {% for author in channel|lookup:"child::author[uri|email]" %}
+        <a href="{% if author.uri %}{{ author.uri }}{% else %}mailto:{{ author.email }}{% endif %}">
+          {{ author.name }}
+        </a>
+      {% endfor %}
+    </p>
   </footer>
 </body>
 </html>
