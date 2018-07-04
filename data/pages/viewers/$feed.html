@@ -18,7 +18,8 @@
   {% if channel.icon %}<link rel="shortcut icon" href="{{ channel.icon }}" />{% endif %}
 </head>
 <body>
-  {% macro entry : post level %}
+  {% macro entry : post level %}{% if Q.tag in post|lookup:"category"
+      and Q.author in post|lookup:"(author|contributor)/(child::text()|name)" %}
     <h{{ level }}><a href="{{ post.link }}">{{ post.title }}</a></h{{ level }}>
     {% if post.subtitle %}
       <h{{ level|add:1 }}>{{ post.subtitle }}</h{{ level|add:1 }}>
@@ -51,10 +52,31 @@
         </a>
       {% endfor %}
       {% for tag in post|lookup:"category" %}
-        <a href="?tag={{ tag|escape:'url' }}">{{ tag }}</a>
+        <a href="?tag={{ tag|escape:'url' }}&url={{ url }}">{{ tag }}</a>
       {% endfor %}
     </nav>
-  {% endmacro %}
+  {% endif %}{% endmacro %}
+  {% macro filterbar : tags authors %}{% if tags|length > 1 or authors|length > 1 %}
+    <aside><form>
+      <input type="hidden" name="url" value="url" />
+      {% if authors|length > 1 %}
+        <h3>{% trans %}Authors{% endtrans %}</h3>
+        <ul>{% for author in authors %}
+          <li><input type="checkbox" name="author" value="{{ author }}"
+              checked="{{ author in Q.author }}" id="author-{{ author|slugify }}" />
+            <label for="author-{{ author }}">{{ author|title }}</label></li>
+        {% endfor %}</ul>
+      {% endif %}
+      {% if tags|length > 1 %}
+        <h3>{% trans %}Tags{% endtrans %}</h3>
+        <ul>{% for tag in tags %}
+          <li><input type="checkbox" name="tag" value="{{ tag }}"
+              checked="{{ tag in !.tag }}" id="tag-{{ tag|slugify }}" />
+            <label for="tag-{{ tag|slugify }}">{{ tag|title }}</label></li>
+        {% endfor %}</ul>
+      {% endif %}
+    </form></aside>
+  {% endif %}{% endmacro %}
 
   {% if channel.image and channel.image.url %}{% with img=channel.image %}
     {% if img.link %}<a href="{{ img.link }}">{% endif %}
@@ -65,6 +87,10 @@
   {% endif %}
 
   {% entry post=channel level=1 %}
+  {% filterbar tags=channel|lookup:"(item|entry)/category"|uniqsort
+      authors=channel|lookup:"
+          (item|entry)/(author|contributor)/(child::text()|name)
+      "|uniqsort %}
   <main>{% for post in channel|lookup:"item|entry" %}
     <section>{% entry level=3 %}</section>
   {% endfor %}</main>
@@ -79,11 +105,14 @@
         {% macro page-link : link title label %}
           {% if link %}<a href="{{ link.href }}" title="{{ title }}">label</a>{% endif %}
         {% endmacro %}
+        {% macro date-of : post %}{{ post.pubDate|default:post.published }}{% endmacro %}
         {% page-link link=channel|lookup:'link[@rel="first"]'
             title="First page"|trans label="↞" %}
         {% page-link link=channel|lookup:'link[@rel="previous"|@rel="prev-archive"]'|first
             title="Previous page"|trans label="↩" %}
-        <strong>⋅</strong>
+        <em>{% date-of channel|lookup:"item|entry"|first %}
+          &emdash;
+          {% date-of channel|lookup:"item|entry"|last %}</em>
         {% page-link link=channel|lookup:'link[@rel="next"|@rel="next-archive"]'|first
             title="Next page"|trans label="↪" %}
         {% page-link link=channel|lookup:'link[@rel="last"]'
