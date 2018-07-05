@@ -39,32 +39,33 @@
     </aside>
 
     {% with text=post.description|default:post.content|text|default:post.summary %}
-      <iframe sandbox src="data:text/html,{{ text|escape:'uri' }}">
+      <iframe sandbox src="data:text/html,{% autoescape url %}{{
+              '<base>'|cat:url|cat:'</base>'
+          }}{{ text }}{% autoescape end %}">
         {{ text }}
       </iframe>
     {% endwith %}
     <nav>
       {% for file in post|lookup:"attachment|content[@src]" %}
-        <a href="{{ file.url|default:file.src }}">
+        <a href="{{ file.url|default:file.src|base:url }}">
           <img src="icon:32/{{ file.type|escape:'mimeicon' }}" {# TODO define mimeicon filter #}
                 alt="{{ file.type }}
                     {% filter escape:'html' %}{% mimeinfo file.type %}{% endfilter %}" />
         </a>
       {% endfor %}
       {% for tag in post|lookup:"category" %}
-        <a href="?tag={{ tag|escape:'url' }}&url={{ url }}">{{ tag }}</a>
+        <a href="?tag={{ tag|escape:'url' }}">{{ tag }}</a>
       {% endfor %}
     </nav>
   {% endif %}{% endmacro %}
   {% macro filterbar : tags authors %}{% if tags|length > 1 or authors|length > 1 %}
     <aside><form>
-      <input type="hidden" name="url" value="url" />
       {% if authors|length > 1 %}
         <h3>{% trans %}Authors{% endtrans %}</h3>
         <ul>{% for author in authors %}
           <li><input type="checkbox" name="author" value="{{ author }}"
               checked="{{ author in Q.author }}" id="author-{{ author|slugify }}" />
-            <label for="author-{{ author }}">{{ author|title }}</label></li>
+            <label for="author-{{ author|slugify }}">{{ author|title }}</label></li>
         {% endfor %}</ul>
       {% endif %}
       {% if tags|length > 1 %}
@@ -163,4 +164,3 @@
   </script>
 </body>
 </html>
-{% endwith %}

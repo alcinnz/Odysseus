@@ -1,0 +1,14 @@
+{# Various MIMEtypes will have special meaning to Odysseus,
+  but renders really poorly in WebKit.
+
+So the viewers directory provides alternate renderers for those,
+  and this template loads the appropriate one. #}
+<!DOCTYPE html>
+{% with Q=uri.query url=uri.$path %}
+
+<base>odysseus:view${{ url }}</base>
+
+{% fetch %}{{ url }}
+{% each as page mime %}
+  {% include "odysseus:viewers/" mime %}
+{% endeach %}
