@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-{% with channel=page|lookup:"channel"|first|default:page %}
+{% with feed=page|lookup:"channel"|first|default:page %}
 <html>
 <head>
-  <title>{{ channel.title }}</title>
-  <link rel="alternate" type="{{ mime }}" href="{{ channel.link|default:url }}" />
+  <title>{{ feed.title }}</title>
+  <link rel="alternate" type="{{ mime }}" href="{{ feed.link|default:url|base:url }}" />
   <style>
     @import url("odysseus:butterick.css");
 
@@ -15,12 +14,12 @@
       resize: vertical;
     }
   </style>
-  {% if channel.icon %}<link rel="shortcut icon" href="{{ channel.icon }}" />{% endif %}
+  {% if feed.icon %}<link rel="shortcut icon" href="{{ feed.icon|base:url }}" />{% endif %}
 </head>
 <body>
   {% macro entry : post level %}{% if Q.tag in post|lookup:"category"
       and Q.author in post|lookup:"(author|contributor)/(child::text()|name)" %}
-    <h{{ level }}><a href="{{ post.link }}">{{ post.title }}</a></h{{ level }}>
+    <h{{ level }}><a href="{{ post.link|base:url }}">{{ post.title }}</a></h{{ level }}>
     {% if post.subtitle %}
       <h{{ level|add:1 }}>{{ post.subtitle }}</h{{ level|add:1 }}>
     {% endif %}
@@ -79,63 +78,66 @@
     </form></aside>
   {% endif %}{% endmacro %}
 
-  {% if channel.image and channel.image.url %}{% with img=channel.image %}
-    {% if img.link %}<a href="{{ img.link }}">{% endif %}
-    <img src="{{ img.url }}" alt="{{ img.title }}" title="{{ img.title }}" />
+  {% if feed.image and feed.image.url %}{% with img=feed.image %}
+    {% if img.link %}<a href="{{ img.link|base:url }}">{% endif %}
+    <img src="{{ img.url|base:url }}" alt="{{ img.title }}" title="{{ img.title }}" />
     {% if img.link %}</a>{% endif %}
-  {% elif channel.logo %}
-    <img src="{{ channel.logo }}" />
+  {% elif feed.logo %}
+    <img src="{{ feed.logo|base:url }}" />
   {% endif %}
 
-  {% entry post=channel level=1 %}
-  {% filterbar tags=channel|lookup:"(item|entry)/category"|uniqsort
-      authors=channel|lookup:"
+  {% entry post=feed level=1 %}
+  {% filterbar tags=feed|lookup:"(item|entry)/category"|uniqsort
+      authors=feed|lookup:"
           (item|entry)/(author|contributor)/(child::text()|name)
       "|uniqsort %}
-  <main>{% for post in channel|lookup:"item|entry" %}
+  <main>{% for post in feed|lookup:"item|entry" %}
     <section>{% entry level=3 %}</section>
   {% endfor %}
   {% macro q : k v %}{% for i in l %}&{{k}}={{i}}{% endfor %}{% endmacro %}
   {% if Q.author or Q.tag %}
     <nav><a id="js-loadmore"
-        href="odysseus:view?url={{ url }}{% q k='author' v=Q.author %}{% q k='tag' v=Q.tag %}">
+        href="odysseus:view${{
+            feed|lookup:'link[@rel="next"]@href'|base:url|escape:'url'
+        }}?{{ Q }}">
       {% trans %}Load more…{% endtrans %}
     </a></nav>
   {% endif %}</main>
 
   <footer>
     <nav>
-      {% if channel.complete %}
+      {% if feed.complete %}
         <em title="{% trans %}No more entries{% endtrans %}">
           {% trans %}{# Shorthand for "no more entries" #}Fin.{% endtrans %}
         </em>
       {% else %}
-        {% macro page-link : link title label %}
-          {% if link %}<a href="{{ link.href }}" title="{{ title }}">label</a>{% endif %}
-        {% endmacro %}
+        {% macro page-link : link title label %}{% if link %}
+          <a href="{{ link.href|base:url }}" title="{{ title }}">label</a>
+        {% endif %}{% endmacro %}
         {% macro date-of : post %}{{ post.pubDate|default:post.published }}{% endmacro %}
-        {% page-link link=channel|lookup:'link[@rel="first"]'
+
+        {% page-link link=feed|lookup:'link[@rel="first"]'
             title="First page"|trans label="↞" %}
-        {% page-link link=channel|lookup:'link[@rel="previous"|@rel="prev-archive"]'|first
+        {% page-link link=feed|lookup:'link[@rel="previous"|@rel="prev-archive"]'|first
             title="Previous page"|trans label="↩" %}
-        <em>{% date-of channel|lookup:"item|entry"|first %}
+        <em>{% date-of feed|lookup:"item|entry"|first %}
           &emdash;
-          {% date-of channel|lookup:"item|entry"|last %}</em>
-        {% page-link link=channel|lookup:'link[@rel="next"|@rel="next-archive"]'|first
+          {% date-of feed|lookup:"item|entry"|last %}</em>
+        {% page-link link=feed|lookup:'link[@rel="next"|@rel="next-archive"]'|first
             title="Next page"|trans label="↪" %}
-        {% page-link link=channel|lookup:'link[@rel="last"]'
+        {% page-link link=feed|lookup:'link[@rel="last"]'
             title="Last page"|trans label="↠" %}
       {% endif %}
     </nav>
     <p>
-      {{ channel.copyright|default:channel.rights }}
-      {% if channel.managingEditor %}
-        <a href="mailto:{{ channel.managingEditor }}">{% trans %}Editor{% endtrans %}</a>
+      {{ feed.copyright|default:feed.rights }}
+      {% if feed.managingEditor %}
+        <a href="mailto:{{ feed.managingEditor }}">{% trans %}Editor{% endtrans %}</a>
       {% endif %}
-      {% if channel.webMaster %}
-        <a href="mailto:{{ channel.webMaster }}">{% trans %}Web Master{% endtrans %}</a>
+      {% if feed.webMaster %}
+        <a href="mailto:{{ feed.webMaster }}">{% trans %}Web Master{% endtrans %}</a>
       {% endif %}
-      {% for author in channel|lookup:"child::author[uri|email]" %}
+      {% for author in feed|lookup:"child::author[uri|email]" %}
         <a href="{% if author.uri %}{{ author.uri }}{% else %}mailto:{{ author.email }}{% endif %}">
           {{ author.name }}
         </a>
