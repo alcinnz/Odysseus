@@ -93,7 +93,14 @@
       "|uniqsort %}
   <main>{% for post in channel|lookup:"item|entry" %}
     <section>{% entry level=3 %}</section>
-  {% endfor %}</main>
+  {% endfor %}
+  {% macro q : k v %}{% for i in l %}&{{k}}={{i}}{% endfor %}{% endmacro %}
+  {% if Q.author or Q.tag %}
+    <nav><a id="js-loadmore"
+        href="odysseus:view?url={{ url }}{% q k='author' v=Q.author %}{% q k='tag' v=Q.tag %}">
+      {% trans %}Load more…{% endtrans %}
+    </a></nav>
+  {% endif %}</main>
 
   <footer>
     <nav>
@@ -134,6 +141,26 @@
       {% endfor %}
     </p>
   </footer>
+
+  <script>
+    // When load more is clicked, query the next pages inline
+    //    until more results are found.
+    var a = document.querySelector('#js-loadmore')
+    a.click = () => {
+      var req = new XMLHttpRequest()
+      req.open("GET", a.href);
+      req.onload = () => {
+        var foundResults = false
+        for (var post of req.responseXML.querySelectorAll('main > section')) {
+          a.insertAdjacentElement('beforebegin', post)
+          foundResults = true
+        }
+        a.href = req.responseXML.querySelector('#js-loadmore').href
+
+        if (!foundResults) a.click()
+      }
+    }
+  </script>
 </body>
 </html>
 {% endwith %}
