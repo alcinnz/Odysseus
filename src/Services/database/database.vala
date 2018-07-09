@@ -44,6 +44,11 @@ namespace Odysseus.Database {
         if (err != Sqlite.OK)
             error("Failed to load UI state! " + main_db.errmsg());
 
+        // Register extended tags needed by templates.
+        // And register standard tags to avoid messing up their autoimport.
+        Templating.Std.register_standard_library();
+        Database.Prosody.register_query_tags();
+
         // Upgrade the database from whatever version it was
         var errmsg = "";
         int version = 0;

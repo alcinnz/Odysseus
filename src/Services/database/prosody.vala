@@ -29,13 +29,13 @@ namespace Odysseus.Database.Prosody {
 
             WordIter endtoken;
             var queryParams = new Gee.ArrayList<Variable>();
-            var query = compile_block(parser.parse("except each-row empty endquery", out endtoken), queryParams);
+            var query = compile_block(parser.parse("except each-row empty error endquery", out endtoken), queryParams);
             var endtag = endtoken.next();
 
             var exceptParams = new Gee.ArrayList<Variable>();
             var exceptQuery = "";
             if ("except" in endtag) {
-                exceptQuery = compile_block(parser.parse("each-row empty endquery", out endtoken), exceptParams);
+                exceptQuery = compile_block(parser.parse("each-row empty error endquery", out endtoken), exceptParams);
                 endtag = endtoken.next();
             }
 
@@ -43,7 +43,7 @@ namespace Odysseus.Database.Prosody {
             if ("each-row" in endtag) {
                 endtoken.assert_end();
 
-                loop_body = parser.parse("endquery empty", out endtoken);
+                loop_body = parser.parse("error endquery empty", out endtoken);
                 endtag = endtoken.next();
             }
 
@@ -51,13 +51,14 @@ namespace Odysseus.Database.Prosody {
             if ("empty" in endtag) {
                 endtoken.assert_end();
 
-                emptyblock = parser.parse("endquery", out endtoken);
+                emptyblock = parser.parse("error endquery", out endtoken);
+                endtag = endtoken.next();
             }
 
             if (endtoken == null)
                 throw new SyntaxError.UNBALANCED_TAGS("{%% query %%} must be balanced with an {%% endquery %%}");
 
-            return new QueryTag(query, queryParams, exceptQuery, exceptParams, loop_body, emptyblock, limit);
+            return new QueryTag(query, queryParams, exceptQuery, exceptParams, loop_body, emptyblock, limit, "silence-errors" in endtoken.next_value());
         }
 
         private string compile_block(Template ast, Gee.ArrayList<Variable> queryParams) throws SyntaxError {
@@ -121,9 +122,10 @@ namespace Odysseus.Database.Prosody {
         private Template loopBody;
         private Template emptyblock;
         private int limit;
+        private bool silent;
 
         public QueryTag(string query, Gee.List<Variable> qParams, string qExcept, Gee.List<Variable> exceptParams,
-                    Template loopBody, Template emptyblock, int limit = -1) throws SyntaxError {
+                    Template loopBody, Template emptyblock, int limit = -1, bool silent = false) throws SyntaxError {
             unowned Sqlite.Database db = get_database();
             this.query = new MultiStatement(db, query, qParams);
             this.except = qExcept.chug() == "" ? null :
@@ -131,6 +133,7 @@ namespace Odysseus.Database.Prosody {
             this.loopBody = loopBody;
             this.emptyblock = emptyblock;
             this.limit = limit;
+            this.silent = silent;
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
@@ -162,7 +165,7 @@ namespace Odysseus.Database.Prosody {
                 if (err != Sqlite.OK && err != Sqlite.DONE) break;
             }
 
-            if (err != Sqlite.OK && err != Sqlite.DONE) {
+            if (err != Sqlite.OK && err != Sqlite.DONE && !silent) {
                 // NOTE: If this yields messy markup, WebKit should be able to correct it.
                 yield output.writes("<h1 style='color: red;'><img src=icon:64/dialog-error />");
                 yield output.writes(get_database().errmsg());
