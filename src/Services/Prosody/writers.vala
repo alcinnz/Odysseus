@@ -148,14 +148,14 @@ namespace Odysseus.Templating {
         Mainly serves to abstract away the unsafe casts necessary for
             calling Posix.memcpy(). */
     private struct ArrayBuilder {
-        int write_head;
-        public ArrayBuilder(uint8[] target) {write_head = (int) target;}
+        unowned uint8[] write_head;
+        public ArrayBuilder(uint8[] target) {write_head = target;}
 
         // NOTE caller should ensure we don't write past the end of the array.
         //      or the program may segfault.
         public void append(uint8[] source) {
-            Posix.memcpy((void*) write_head, (void*) source, source.length);
-            write_head += source.length;
+            for (int i = 0; i < source.length; i++) write_head[i] = source[i];
+            write_head = write_head[source.length:write_head.length];
         }
     }
 }
