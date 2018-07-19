@@ -4,7 +4,7 @@
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>Odysseus web browser</name>
-  <summary>A simple and performant yet powerful window onto the open decentralized web.</summary>
+  <summary>A simple and performant yet powerful window onto the open decentralized web</summary>
   <summary lang="cs">Prohlížejte libovolný obsah na internetu</summary>
   <summary lang="fr">Explorez les savoirs, les divertissements, et les services du web</summary>
   <summary lang="pt">Pesquisar por conhecimento, entretenimento e serviços na web</summary>
@@ -157,6 +157,9 @@ matter to you.</p>
         <p>Topsites performance and design improvements.</p>
         <p>Add indicators for menuitems that are links.</p>
       </description>
+    </release>
+    <release version="1.5.1" date="2018-07-19">
+      <description><p>Fixes for Juno.</p></description>
     </release>
   </releases>
 </component>
