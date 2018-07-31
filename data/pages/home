@@ -22,6 +22,20 @@ and I take advantage of this page to promote project links. #}
   {% endfetch %}
 {% endquery %}
 
+{# Update the visit_counts index. This can take a little bit but not so much it is noticable.
+    Formulating it this way regularly gives control back to the GLib MainLoop,
+    such that the application remains responsive.
+    i.e. SQLite can freeze Odysseus, but Prosody cannot. #}
+{# visit_counts is a special index, akin to a materialized view, that optimizes
+    selecting/ordering pages based on number of visits. #}
+{% query %}SELECT uri, COUNT(*) AS count FROM page_visit GROUP BY uri;
+{% except %}SELECT * FROM visit_counts WHERE url = {{ uri }} AND count = {{ count }};
+{% each-row %}
+  <!-- Indexing {{ uri }} -->
+  {% query %}INSERT OR REPLACE INTO visit_counts(url, count)
+        VALUES ({{ uri }}, {{ count }});{% endquery %}
+{% endquery %}
+
 <html>
 <head>
   <title>[user-home] {% trans %}New Tab{% endtrans %}</title>
@@ -59,12 +73,6 @@ and I take advantage of this page to promote project links. #}
       SELECT uri, order_, "pinned" AS cat,
           {{"You 'pinned' this here"|trans}} AS help
         FROM topsites_whitelist ORDER BY order_ ASC;
-      {# These next two queries are the core of this list,
-          and are written using a special in-database cache to keep
-          the runtime under 0.1 seconds (which feels instantaneous). #}
-      INSERT OR REPLACE INTO visit_counts(url, count)
-        SELECT uri, COUNT(*) FROM page_visit GROUP BY uri
-        HAVING COUNT(*) NOT IN (SELECT count FROM visit_counts WHERE url = uri);
       SELECT url as uri, {% q-tailrank %}, "history" AS cat,
           {% trans %}"Frequently visited"{% endtrans %} AS help
         FROM visit_counts
