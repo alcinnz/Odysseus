@@ -905,6 +905,91 @@ TRUE|FALSE
 {% endtest %}
 {% test "|title" %}{{ "oDDitY twiCE"|title }}{% output %}Oddity Twice{% endtest %}
 
+  <h2>Tags & filters used by viewers</h2>
+  <p>Viewers make use of some addional extended tags. All of them are triggered
+    using an <code>include</code> tag. And the feed viewer needs these extra
+    facilities predominantly for filtering the results.</p>
+{% test "|base" %}
+  {{ "https://example.com/x/y/z"|base:"../a/b/c/" }}
+  {{ "https://example.com/a/b/c/"|base:"../x/y/z" }}
+{% output %}
+  https://example.com/x/a/b/c/
+  https://example.com/a/b/c/x/y/z
+{% endtest %}
+{% test "in operator" %}
+  {% if "matt smith" in doctors %}y{% else %}n{% endif %}
+  {% if DayOf_stars in doctors %}y{% else %}n{% endif %}
+  {% if TimeOf_stars in doctors %}y{% else %}n{% endif %}
+  {% if "christopher eccleston" in DayOf_stars %}y{% else %}n{% endif %}
+{% input %}{
+  "doctors" : ["christopher eccleston", "david tennant", "matt smith", "peter capaldi"],
+  "DayOf_stars" : ["matt smith", "david tennant", "john hurt"],
+  "TimeOf_stars" : ["matt smith", "peter capaldi"]
+}{% output %}
+  y
+  n
+  y
+  n
+{% endtest %}
+
+  <p>From <a href="https://github.com/django/django/blob/2366100872ec17dde06abc63c1ad74dcf746b134/tests/template_tests/filter_tests/test_slugify.py">Django's test suite</a>.</p>
+{% test "{% include %}" %}
+  {% include "view" "data" %}
+{% input %}{"data" :
+  {
+    "firstName": "John",
+    "lastName": "Smith",
+    "isAlive": true,
+    "age": 25,
+    "address": {
+      "streetAddress": "21 2nd Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10021-3100"
+    },
+    "phoneNumbers": [
+      {
+        "type": "home",
+        "number": "212 555-1234"
+      },
+      {
+        "type": "office",
+        "number": "646 555-4567"
+      },
+      {
+        "type": "mobile",
+        "number": "123 456-7890"
+      }
+    ],
+    "children": [],
+    "spouse": null
+  }
+} {% output %}
+  <dl>
+  <dt>firstName</dt>
+  <dd><details><summary>John</summary>
+<dl>
+  <dt>$0</dt>
+  <dd><details><summary>J</summary>
+  ...
+</dl></dd>
+  <dt>lastName</dt>
+  <dd><details><summary>Smith</summary>...</dd>
+  <dt>isAlive</dt>
+  <dd><details><summary>true</summary></dd>
+  <dt>age</dt>
+  <dd><details><summary>25</summary>...</dd>
+  <dt>address</dt>
+  <dd><details><summary>...</summary>
+    <dl>
+  <dt>streetAddress</dt>
+  <dd><details><summary>21 2nd Street</summary>
+    ...</details></dd>
+  <dt>city</dt>
+  ...
+{% endtest %}
+
+
   {% test-report %}
   <script src="odysseus:ext/highlight.pack.js"></script>
   <script>
