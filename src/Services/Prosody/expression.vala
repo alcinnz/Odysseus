@@ -51,6 +51,10 @@ namespace Odysseus.Templating.Expression {
         public virtual double num(Data.Data ctx) {
             return eval(ctx) ? 1.0 : 0.0;
         }
+        // Added to support the `in` operator.
+        public virtual Gee.SortedSet<string> items(Data.Data ctx) {
+            return Gee.SortedSet.empty<string>();
+        }
     }
 
     public abstract class Infix : Expression {
@@ -236,6 +240,15 @@ namespace Odysseus.Templating.Expression {
         public override bool eval(Data.Data d) {return x.num(d) != y.num(d);}
     }
 
+    private class In : Infix {
+        public override int lbp {get {return 40;}}
+        public override string name {get {return "in";}}
+
+        public override bool eval(Data.Data d) {
+            return y.items(d).contains_all(x.items(d));
+        }
+    }
+
     private class Remainder : Infix {
         public override int lbp {get {return 50;}}
         public override string name {get {return "%";}}
@@ -258,5 +271,8 @@ namespace Odysseus.Templating.Expression {
 
         public override bool eval(Data.Data d) {return exp.eval(d).exists;}
         public override double num(Data.Data d) {return exp.eval(d).to_double();}
+        public override Gee.SortedSet<string> items(Data.Data d) {
+            return exp.eval(d).items();
+        }
     }
 }

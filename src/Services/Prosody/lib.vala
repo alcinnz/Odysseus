@@ -300,6 +300,38 @@ namespace Odysseus.Templating.Std {
         public IfChangedContext? next;
     }
 
+    private class IncludeBuilder : TagBuilder, Object {
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            var variables = new Gee.ArrayList<Variable>();
+            foreach (var arg in args) variables.add(new Variable(arg));
+
+            return new IncludeTag(variables.to_array(), parser.path);
+        }
+    }
+    private class IncludeTag : Template {
+        private Variable[] vars;
+        private string @base;
+        public IncludeTag(Variable[] vars, string @base) {
+            this.vars = vars; this.@base = @base;
+        }
+
+        public override async void exec(Data.Data ctx, Writer output) {
+            // 1. Resolve path
+            var relative = new StringBuilder();
+            foreach (var variable in vars) relative.append(variable.eval(ctx).to_string());
+            var absolute = File.new_for_path(@base).resolve_relative_path(relative.str);
+
+            // 2. Render that template. This benefits heavily from caching.
+            ErrorData? error_data = null;
+            try {
+                yield get_for_resource(absolute.get_path(), ref error_data)
+                        .exec(ctx, output);
+            } catch (Error err) {
+                yield output.writes(@"<p style='color: red;'>$(err.message)</p>");
+            }
+        }
+    }
+
     /* This isn't tested, as it's intentionally non-determinate */
     private class RandomBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
@@ -404,6 +436,13 @@ namespace Odysseus.Templating.Std {
                 x >>= 1;
             }
             return new Data.Literal((int) ret);
+        }
+    }
+
+    private class BaseFilter : Filter {
+        public override Data.Data filter(Data.Data relative, Data.Data _base) {
+            var normalized = new Soup.URI.with_base(new Soup.URI(@"$_base"), @"$relative");
+            return new Data.Literal(normalized.to_string(false));
         }
     }
 
@@ -553,6 +592,21 @@ namespace Odysseus.Templating.Std {
         public override bool? should_escape() {return false;}
     }
 
+    private class SlugifyFilter : Filter {
+        public override Data.Data filter0(Data.Data text) {
+            var s = text.to_bytes();
+            var ret = new StringBuilder.sized(s.length);
+
+            var inspace = true;
+            for (var i = 0; i < s.length; i++) {
+                var c = (char) s[i];
+                if (c.isalnum()) {ret.append_c(c); inspace = false;}
+                else if (c.isspace() && !inspace) {ret.append_c(c); inspace = true;}
+            }
+            return new Data.Literal(ret.str);
+        }
+    }
+
     /* Explicit coercion potentially useful for working with SQL results or query params. */
     private class TextFilter : Filter {
         public override Data.Data filter0(Data.Data text) {
@@ -580,6 +634,18 @@ namespace Odysseus.Templating.Std {
             }
 
             return new Data.Literal(builder.str);
+        }
+    }
+
+    private class UniqSortFilter : Filter {
+        public override Data.Data filter0(Data.Data a) {
+            var strings = a.items();
+            var ret = new Data.Data[strings.size];
+
+            var i = 0;
+            foreach (var item in strings) ret[i++] = new Data.Literal(item);
+
+            return new Data.List.from_array(ret);
         }
     }
 

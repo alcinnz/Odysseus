@@ -56,6 +56,15 @@ namespace Odysseus.Templating.xJSON {
             range(cb, inner.get_length());
         }
 
+        public override Gee.SortedSet<string> items() {
+            var ret = new Gee.TreeSet<string>();
+            for (uint i = 0; i < inner.get_length(); i++) {
+                if (inner.get_string_element(i) != null)
+                    ret.add(inner.get_string_element(i));
+            }
+            return ret;
+        }
+
         public override int to_int(out bool is_length = null) {
             is_length = true;
             return (int) inner.get_length();

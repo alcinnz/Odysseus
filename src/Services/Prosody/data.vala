@@ -75,6 +75,12 @@ namespace Odysseus.Templating.Data {
             return ret.to_array();
         }
 
+        public virtual Gee.SortedSet<string> items() {
+            var ret = new Gee.TreeSet<string>();
+            ret.add(to_string());
+            return ret;
+        }
+
         /* These methods are used by a variety of filters */
         public virtual double to_double() {return (double) to_int(); }
         public virtual int to_int(out bool is_length = null) {
@@ -250,6 +256,11 @@ namespace Odysseus.Templating.Data {
         public override string to_string() {
             // This semantic is mostly useful for query parameters, as it nicely coerces between lists and arrays.
             return inner[0].to_string();
+        }
+        public override Gee.SortedSet<string> items() {
+            var ret = new Gee.TreeSet<string>();
+            foreach (var item in inner) ret.add(item.to_string());
+            return ret;
         }
         public override void foreach_map(Data.ForeachMap cb) {
             var index = 0;
