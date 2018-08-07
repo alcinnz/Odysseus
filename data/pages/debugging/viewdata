@@ -1,9 +1,0 @@
-{# This is a template mostly intended for use in testing the {% include %} tag,
-    though it could be useful for debugging as well. #}
-
-<dl>{% for key val in data %}
-  <dt>{{ key }}</dt>
-  <dd><details><summary>{{ val }}</summary>
-    {% with data=val %}{% include "viewdata" %}{% endwith %}
-  <details></dd>
-{% endfor %}</dl>

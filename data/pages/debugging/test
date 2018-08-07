@@ -933,60 +933,28 @@ TRUE|FALSE
 {% endtest %}
 
   <p>From <a href="https://github.com/django/django/blob/2366100872ec17dde06abc63c1ad74dcf746b134/tests/template_tests/filter_tests/test_slugify.py">Django's test suite</a>.</p>
+{% test "|slugify" %}
+  {{ "a & b"|slugify }}
+  {{ "a &amp; b"|slugify }}
+  {{ " Jack & Jill like numbers 1,2,3 and 4 and silly characters ?%.$!/"|slugify }}
+  {{ "Un \xe9l\xe9phant \xe0 l'or\xe9e du bois"|slugify }}
+{% output %}
+  a-b
+  a-amp-b
+  jack-jill-like-numbers-123-and-4-and-silly-characters
+  un-elephant-e-loree-du-bois
+{% endtest %}
 {% test "{% include %}" %}
-  {% include "view" "data" %}
-{% input %}{"data" :
-  {
-    "firstName": "John",
-    "lastName": "Smith",
-    "isAlive": true,
-    "age": 25,
-    "address": {
-      "streetAddress": "21 2nd Street",
-      "city": "New York",
-      "state": "NY",
-      "postalCode": "10021-3100"
-    },
-    "phoneNumbers": [
-      {
-        "type": "home",
-        "number": "212 555-1234"
-      },
-      {
-        "type": "office",
-        "number": "646 555-4567"
-      },
-      {
-        "type": "mobile",
-        "number": "123 456-7890"
-      }
-    ],
-    "children": [],
-    "spouse": null
-  }
-} {% output %}
-  <dl>
-  <dt>firstName</dt>
-  <dd><details><summary>John</summary>
-<dl>
-  <dt>$0</dt>
-  <dd><details><summary>J</summary>
-  ...
-</dl></dd>
-  <dt>lastName</dt>
-  <dd><details><summary>Smith</summary>...</dd>
-  <dt>isAlive</dt>
-  <dd><details><summary>true</summary></dd>
-  <dt>age</dt>
-  <dd><details><summary>25</summary>...</dd>
-  <dt>address</dt>
-  <dd><details><summary>...</summary>
-    <dl>
-  <dt>streetAddress</dt>
-  <dd><details><summary>21 2nd Street</summary>
-    ...</details></dd>
-  <dt>city</dt>
-  ...
+  {% with pong="boo!" %}{% include "include-" "test" %}{% endwith %}
+{% output %}
+  This is a template to test if it can be included using the `include` tag. Embedder said "boo!".
+{% endtest %}
+{% test "|uniqsort" %}
+  {% for c in data|uniqsort %}c{% endfor %}
+{% input %}
+  { "data" : ["a","b","r","a","c","a","d","a","b","r","a"] }
+{% output %}
+  abcdr
 {% endtest %}
 
 

@@ -1,0 +1,1 @@
+This is a template to test if it can be included using the `include` tag. Embedder said "{{ pong }}".
