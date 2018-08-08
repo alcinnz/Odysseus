@@ -47,30 +47,24 @@ namespace Odysseus.Templating.xTestRunner {
                 return new TestSyntaxError(caption, failed_token, e);
             }
             Slice endtag = endtoken.next();
-            endtoken.assert_end();
 
             Data.Data input = new Data.Empty();
             Slice input_text = new Slice();
             if ("input" in endtag) {
+                var type = endtoken.next_value();
+                endtoken.assert_end();
+                if (type == null) type = new Slice.s("json");
+
                 input_text = parser.scan_until("output", out endtoken);
                 endtag = endtoken.next();
-                endtoken.assert_end();
 
-                var json_parser = new Json.Parser();
-                try {
-                    json_parser.load_from_data((string) input_text.to_array(),
-                            input_text.length);
-                } catch (Error e) {
-                    throw new SyntaxError.UNEXPECTED_CHAR(
-                            "{%% test %%}: Content of the {%% input %%} block " +
-                            "must be valid JSON: %s", e.message);
-                }
-                input = xJSON.build(json_parser.get_root());
+                input = read_input(type, input_text.to_array());
             }
 
             if (endtag == null)
                 throw new SyntaxError.UNBALANCED_TAGS(
                         "{%% test %%} expects an {%% output %%} branch");
+            endtoken.assert_end();
             Slice output = parser.scan_until("endtest", out endtoken);
 
             if (endtoken == null)
@@ -79,6 +73,23 @@ namespace Odysseus.Templating.xTestRunner {
             endtoken.next(); endtoken.assert_end();
             return new TestTag(caption, testcase, test_source,
                     input, input_text, output);
+        }
+
+        private static Data.Data read_input(Slice type, uint8[] text) throws SyntaxError {
+            switch (@"$type") {
+            case "json":
+                var json_parser = new Json.Parser();
+                try {
+                    json_parser.load_from_data((string) text, text.length);
+                } catch (Error e) {
+                    throw new SyntaxError.UNEXPECTED_CHAR(
+                            "{%% test %%}: Content of the {%% input %%} block " +
+                            "must be valid JSON: %s", e.message);
+                }
+                return xJSON.build(json_parser.get_root());
+            default:
+                return new Data.Empty();
+            }
         }
     }
     private class TestTag : Template {

@@ -1052,7 +1052,85 @@ TRUE|FALSE
 {% output %}
   abcdfg
 {% endtest %}
-  <p>TODO better define how localization, stringify works.</p>
+
+{% test "XML localization" %}
+  {{ data.channel.post|join }}
+{% input xml %}
+  <data>
+    <channel xml:lang="cz">
+      <post>a</post>
+      <post xml:lang="fr">b</post>
+      <post xml:lang="en">c</post>
+    </channel>
+    <channel xml:lang="en">
+      <post xml:lang="cz">d</post>
+      <post xml:lang="en">e</post>
+      <post>f</post>
+    </channel>
+  </data>
+{% output %}
+  df
+{% endtest %}
+  <p>Please note the following tests requires data to be able to declare itself safe in HTML.</p>
+{% test "handling of type=xhtml" %}
+  {{ data }}
+  {{ data|text:"text" }}
+{% input xml %}
+  <data type="xhtml">
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  </data>
+{% output %}
+  <h1>Success</h1>
+  <p>If the above's a header, this test has passed</p>
+  <h1>Success</h1>
+  <p>If the above's a header, this test has passed</p>
+{% endtest %}
+{% test "handling of type=html" %}
+  {{ data }}
+  {{ data|text:"text" }}
+{% input xml %}
+  <data type="html">
+    &lt;h1>Success&lt;/h1>
+    &lt;p>If the above's a header, this test has passed&lt;/p>
+  </data>
+{% output %}
+  <h1>Success</h1>
+  <p>If the above's a header, this test has passed</p>
+  <h1>Success</h1>
+  <p>If the above's a header, this test has passed</p>
+{% endtest %}
+{% test "Can set fallback type=s to text coercion" %}
+  {{ data|text:"xhtml" }}
+  {{ data|text:"html" }}
+{% input xml %}
+  <data>
+    <h1>Success</h1>
+    <p>If the above's a &lt;strong>header&lt;/strong>, this test has passed</p>
+  </data>
+{% output %}
+  <h1>Success</h1>
+  <p>If the above's a &lt;strong>header&lt;/strong>, this test has passed</p>
+  Success
+  If the above's a <strong>header</strong>, this test has passed
+  Success
+  If the above's a &lt;strong>header&lt;/strong>, this test has passed
+{% endtest %}
+  <p>What output this gives isn't really important,
+    as long as it does not allow malformed HTML, script tags, and style tags in.</p>
+{% test "HTML sanitization" %}
+  {{ data.test|join:"\n" }}
+{% input xml %}
+  <data>
+    <test type="html">&lt;script>alert("Failed!");&lt;/script></test>
+    <test type="html">&lt;style>body {background: red;}&lt;/style></test>
+    <test type="html">&lt;/details></test>
+  </data>
+{% output %}
+  &lt;script&gt;alert("Failed!");&lt;/script&gt;
+&lt;style&gt;body {background: red;}&lt;/style&gt;
+&lt;/details&gt;
+{% endtest %}
 
 
   {% test-report %}
