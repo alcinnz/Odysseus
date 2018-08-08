@@ -956,6 +956,11 @@ TRUE|FALSE
 {% output %}
   abcdr
 {% endtest %}
+{% test "|md5" %}
+  {{ "odysseus"|md5 }}
+{% output %}
+  6077c7b4d82a2025d1af5335b6a2d312
+{% endtest %}
 
   <h2>Data Sources</h2>
   <p>The other tests used JSON as a datasource, but Prosody can parse others too. But they'll have to be integrated into the testrunner in order to be tested.</p>
