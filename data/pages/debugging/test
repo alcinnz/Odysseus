@@ -1052,7 +1052,6 @@ TRUE|FALSE
 {% output %}
   abcdfg
 {% endtest %}
-
 {% test "XML localization" %}
   {{ data.channel.post|join }}
 {% input xml %}
@@ -1071,6 +1070,7 @@ TRUE|FALSE
 {% output %}
   df
 {% endtest %}
+
   <p>Please note the following tests requires data to be able to declare itself safe in HTML.</p>
 {% test "handling of type=xhtml" %}
   {{ data }}

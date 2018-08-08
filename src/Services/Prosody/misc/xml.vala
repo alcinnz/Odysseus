@@ -46,8 +46,9 @@ namespace Odysseus.Templating.xXML {
         }
         public override bool exists {get {return true;}}
         public override void foreach_map(Data.ForeachMap cb) {
-            for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
-                if (cb(b(iter->name), new XML(iter))) return;
+            var _ = new Slice();
+            for (Xml.Node* iter = node; iter != null; iter = iter->next) {
+                if (iter->name == node->name) if (cb(_, new XML(iter))) return;
             }
         }
         public override double to_double() {return 0.0;}
@@ -56,6 +57,20 @@ namespace Odysseus.Templating.xXML {
             var ctx = new Xml.XPath.Context(node);
             return new XPathResult(ctx.eval(query));
         }
+
+        public static Gee.SortedSet<string> _items(Data.Data self) {
+            var ret = new Gee.TreeSet<string>();
+
+            var name = new Slice.s("name");
+            self.foreach_map((_, item_) => {
+                var namenode = item_[name];
+                if (namenode is Data.Empty) namenode = item_;
+                ret.add(@"$item_");
+            });
+
+            return ret;
+        }
+        public override Gee.SortedSet<string> items() {_items(this);}
     }
 
     private class XPathResult : Data {
@@ -78,5 +93,9 @@ namespace Odysseus.Templating.xXML {
         public override string to_string() {return inner->stringval;}
         public override bool exists {get {return inner->boolval;}}
         public override int to_double() {return inner->floatval;}
+
+        public override Gee.SortedSet<string> items() {
+            XML._items(this);
+        }
     }
 }
