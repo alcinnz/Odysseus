@@ -957,6 +957,103 @@ TRUE|FALSE
   abcdr
 {% endtest %}
 
+  <h2>Data Sources</h2>
+  <p>The other tests used JSON as a datasource, but Prosody can parse others too. But they'll have to be integrated into the testrunner in order to be tested.</p>
+
+  <h3>XML</h3>
+  <p>At the moment this is being used to support webfeeds. And it's specifically geared towards aiding with that.</p>
+
+{% test "XML attribute paths, ignores namespaces" %}
+  {{ data.foo|join }}
+  {{ data.sna|join }}
+  {{ data.hello|join }}
+  {{ data.v|join }}
+  {{ data.alpha|join }}
+{% input xml %}
+  <data xmlns:a="https://example.com/a" xmlns:b="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" a:sna="fu" hello="world!" b:alpha="a">
+    <a:v>x</v>
+    <foo>bar</foo>
+    <b:v>y</v>
+    <a:hello>kitty</hello>
+    <v>z</v>
+    <b:alpha>b</alpha>
+    <alpha>c</alpha>
+  </data>
+{% output %}
+  bar
+  fu
+  world!
+  xyz
+  a
+{% endtest %}
+<p>Taken from <a href="https://www.w3schools.com/xml/xpath_examples.asp">W3Schools' tutorial</a>.</p>
+{% test "XPath" %}
+  {{ bookstore|lookup:"/bookstore/book/title"|join:", " }}
+  {{ bookstore|lookup:"/bookstore/book[1]/title"|join:", " }}
+  {{ bookstore|lookup:"/bookstore/book/price[text()]"|join:", " }}
+  {{ bookstore|lookup:"/bookstore/book[price>35]/price"|join:", " }}
+  {{ bookstore|lookup:"/bookstore/book[price>35]/title"|join:", " }}
+{% input xml %}
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bookstore>
+
+<book category="cooking">
+  <title lang="en">Everyday Italian</title>
+  <author>Giada De Laurentiis</author>
+  <year>2005</year>
+  <price>30.00</price>
+</book>
+
+<book category="children">
+  <title lang="en">Harry Potter</title>
+  <author>J K. Rowling</author>
+  <year>2005</year>
+  <price>29.99</price>
+</book>
+
+<book category="web">
+  <title lang="en">XQuery Kick Start</title>
+  <author>James McGovern</author>
+  <author>Per Bothner</author>
+  <author>Kurt Cagle</author>
+  <author>James Linn</author>
+  <author>Vaidyanathan Nagarajan</author>
+  <year>2003</year>
+  <price>49.99</price>
+</book>
+
+<book category="web">
+  <title lang="en">Learning XML</title>
+  <author>Erik T. Ray</author>
+  <year>2003</year>
+  <price>39.95</price>
+</book>
+
+</bookstore>
+{% output %}
+  Everyday Italian, Harry Potter, XQuery Kick Start, Learning XML
+  Everyday Italian
+  30.00, 29.99, 49.99, 39.95
+  49.99, 39.95
+  XQuery Kick Start, Learning XML
+{% endtest %}
+{% test "|uniqsort" %}
+  {{ data.item|uniqsort|join }}
+{% input xml %}
+  <data>
+    <item>a</item>
+    <item><name>b</name></item>
+    <item name="c" />
+    <item name="d">e</item>
+    <item><name>f</name></item>
+    <item><name>g</name>h</item>
+  </data>
+{% output %}
+  abcdfg
+{% endtest %}
+  <p>TODO better define how localization, stringify works.</p>
+
 
   {% test-report %}
   <script src="odysseus:ext/highlight.pack.js"></script>
