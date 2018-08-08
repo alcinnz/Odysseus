@@ -54,7 +54,7 @@
   <h2>Canaries</h2>
   <p>If these fail it means the test runner isn't working right.</p>
 
-{% test "Without Input" reset %}
+{% test "Without Input" %}
 Beware of sirens!
 {% output %}
 Beware of sirens!
@@ -69,14 +69,14 @@ Beware of sirens!
 {% endtest %}
 
 {% test "Mismatch reporting" %} 
-  {% test "This should fail" ignore %}
+  {% test "This should fail" %}
     My name is Joe Smith
   {% output %}
     I am John Smith
   {% endtest %}
 {% output %} 
-  <details style='opacity: 75%;'>
-	<summary style='background: red;' title='Ignored FAILURE'>This should fail</summary>
+  <details>
+	<summary style='background: red;' title='FAILURE'>This should fail</summary>
 	<table>
 		<tr><th>Test Code</th><th>Test Input</th></tr>
 		<tr><td><pre>
@@ -92,14 +92,14 @@ Beware of sirens!
 </details>
 {% endtest %}
 {% test "Syntax error reporting" %}
-  {% test "This should fail" ignore %}
+  {% test "This should fail" %}
     {% 404 %}
   {% output %}
     
   {% endtest %}
 {% output %}
-  <details style='opacity: 75%'>
-	<summary style='background: yellow' title='Ignored ERROR'>This should fail</summary>
+  <details>
+	<summary style='background: yellow' title='ERROR'>This should fail</summary>
 	<h3>odysseus_templating_syntax_error-quark thrown :: While Parsing <code>{% 404 %}</code></h3>
 	<p>Unknown tag &apos;404&apos;</p>
 </details>

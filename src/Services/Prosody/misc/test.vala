@@ -23,17 +23,7 @@ namespace Odysseus.Templating.xTestRunner {
     public class TestBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
             var caption = args.next().parse();
-            var flag = args.next_value();
             args.assert_end();
-
-            bool reset = false;
-            bool ignore = false;
-            if (flag == null) {/* ignore */}
-            else if ("reset" in flag) reset = true;
-            else if ("ignore" in flag) ignore = true;
-            else throw new SyntaxError.INVALID_ARGS(
-                    "If specified, the flag argument must be either " +
-                    @"'reset' or 'ignore', got '$flag'");
 
             WordIter? endtoken;
             Slice test_source;
@@ -54,7 +44,7 @@ namespace Odysseus.Templating.xTestRunner {
                     throw new SyntaxError.UNBALANCED_TAGS(
                         "{%% test %%} must be closed with a {%% endtest %%} tag.");
 
-                return new TestSyntaxError(caption, failed_token, ignore, e);
+                return new TestSyntaxError(caption, failed_token, e);
             }
             Slice endtag = endtoken.next();
             endtoken.assert_end();
@@ -87,24 +77,19 @@ namespace Odysseus.Templating.xTestRunner {
                 throw new SyntaxError.UNBALANCED_TAGS(
                         "{%% test %%} requires a closing {%% endtest %%} tag");
             endtoken.next(); endtoken.assert_end();
-            return new TestTag(reset, ignore, caption, testcase, test_source,
+            return new TestTag(caption, testcase, test_source,
                     input, input_text, output);
         }
     }
     private class TestTag : Template {
-        private bool reset;
-        private bool ignore;
         private Slice caption;
         private Template testcase;
         private Slice test_source;
         private Data.Data input;
         private Slice input_text;
         private Slice output;
-        public TestTag(bool reset, bool ignore, string caption,
-                Template testcase, Slice test_source, Data.Data input,
-                Slice input_text, Slice output) {
-            this.reset = reset;
-            this.ignore = ignore;
+        public TestTag(string caption, Template testcase, Slice test_source,
+                Data.Data input, Slice input_text, Slice output) {
             this.caption = new Slice.s(caption);
             this.testcase = testcase;
             this.test_source = test_source;
@@ -113,15 +98,42 @@ namespace Odysseus.Templating.xTestRunner {
             this.output = output;
         }
 
-        public static int passed;
-        public static int count;
+        public class TestSuite {
+            public int passed = 0;
+            public int count = 0;
+            public bool success {get {return passed == count;}}
 
-        public override async void exec(Data.Data ctx, Writer stream) {
-            if (reset) {
-                passed = 0;
-                count = 0;
+            public weak Object key;
+            public TestSuite? next;
+
+            public void record(bool passed) {
+                this.count++; if (passed) this.passed++;
             }
 
+            public void clean_tail() {
+                var prev = this;
+                for (var entry = next; entry != null; prev = entry, entry = entry.next) {
+                    if (entry.key == null) prev.next = entry.next;
+                }
+            }
+        }
+        public static TestSuite? testsuites = null;
+        public static TestSuite testsuite(Object key, out TestSuite? prev = null) {
+            var int_id = (int) key;
+            prev = null;
+            for (var entry = testsuites; entry != null; prev = entry, entry = entry.next) {
+                if (((int) entry.key) == int_id) {return entry;}
+                if (entry.key == null) {
+                    if (prev == null) testsuites = entry.next;
+                    else prev.next = entry.next;
+                }
+            }
+
+            testsuites = new TestSuite() {key = key, next = testsuites};
+            return testsuites;
+        }
+
+        public override async void exec(Data.Data ctx, Writer stream) {
             var capture = new CaptureWriter();
             yield testcase.exec(input, capture);
             Slice computed = capture.grab_data();
@@ -138,21 +150,16 @@ namespace Odysseus.Templating.xTestRunner {
                 assert(!passed); // Do the fast & slow checks agree?
             }
 
-            if (!ignore) {
-                if (passed) TestTag.passed++;
-                TestTag.count++;
-            }
+            testsuite(stream).record(passed);
             yield format_results(passed, stream, computed, diff);
         }
 
         private async void format_results(bool passed, Writer stream,
             Slice computed, xDiff.Ranges diff)  {
             yield stream.writes("<details");
-            if (ignore) yield stream.writes(" style='opacity: 75%;'");
             yield stream.writes(">\n\t<summary style='background: ");
             yield stream.writes((passed ? "green" : "red"));
             yield stream.writes(";' title='");
-            if (ignore) yield stream.writes("Ignored ");
             yield stream.writes(passed ? "PASS" : "FAILURE");
             yield stream.writes("'>");
             yield stream.escaped(caption);
@@ -179,22 +186,17 @@ namespace Odysseus.Templating.xTestRunner {
     }
     private class TestSyntaxError : Template {
         private SyntaxError error;
-        private bool ignore;
         private Slice caption;
         private Slice failed_tag;
-        public TestSyntaxError(string caption, Slice failed_tag,
-            bool ignore, SyntaxError e) {
+        public TestSyntaxError(string caption, Slice failed_tag, SyntaxError e) {
             this.error = e;
-            this.ignore = ignore;
             this.caption = new Slice.s(caption);
             this.failed_tag = failed_tag;
         }
 
         public override async void exec(Data.Data ctx, Writer stream) {
             yield stream.writes("<details");
-            if (ignore) yield stream.writes(" style='opacity: 75%'");
             yield stream.writes(">\n\t<summary style='background: yellow' title='");
-            if (ignore) yield stream.writes("Ignored ");
             yield stream.writes("ERROR'>");
             yield stream.escaped(caption);
             yield stream.writes("</summary>\n\t<h3>");
@@ -205,8 +207,7 @@ namespace Odysseus.Templating.xTestRunner {
             yield stream.escaped(new Slice.s(error.message));
             yield stream.writes("</p>\n</details>");
 
-            // Report as failure to the stats
-            if (!ignore) TestTag.count++;
+            TestTag.testsuite(stream).record(false);
         }
     }
 
@@ -218,16 +219,22 @@ namespace Odysseus.Templating.xTestRunner {
     }
     private class TestReportTag : Template {
         public override async void exec(Data.Data ctx, Writer output) {
-            var passed = TestTag.passed == TestTag.count;
+            TestTag.TestSuite? prev_link;
+            var t = TestTag.testsuite(output, out prev_link);
             yield output.writes("<aside style='background: ");
-            yield output.writes(passed ? "green" : "red");
+            yield output.writes(t.success ? "green" : "red");
             yield output.writes("; position: fixed; top: 10px; right: 10px; ");
             yield output.writes("padding: 10px;'>");
-            yield output.writes(@"$(TestTag.passed)/$(TestTag.count)");
+            yield output.writes(@"$(t.passed)/$(t.count)");
             yield output.writes(" passed</aside>\n<script>document.title = '");
-            yield output.writes(passed ? "[process-completed] Tests PASSED" :
+            yield output.writes(t.success ? "[process-completed] Tests PASSED" :
                     "[process-stop] Tests FAILED");
             yield output.writes("';</script>");
+
+            // And clear away the test data.
+            t.clean_tail();
+            if (prev_link != null) prev_link.next = t.next;
+            else TestTag.testsuites = t.next;
         }
     }
 
