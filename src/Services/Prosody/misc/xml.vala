@@ -46,7 +46,18 @@ namespace Odysseus.Templating.xXML {
             return new Empty();
         }
         public override string to_string() {
-            return node->get_content();
+            // 1. Localize!
+            var self = this; Xml.Node* unlocalized = null;
+            for (; self != null; self = self->next) {
+                if (self->name != this->name) continue;
+                var lang = self->get_ns_prop("lang", "xml");
+                if (unlocalized == null && lang == null)
+                    unlocalized = self;
+                if (lang != null && lang in locale) break;
+            }
+            if (self == null) self = unlocalized;
+
+            return self.node->get_content();
         }
         public override bool exists {get {return true;}}
         public override void foreach_map(Data.ForeachMap cb) {
