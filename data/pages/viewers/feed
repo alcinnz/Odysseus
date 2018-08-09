@@ -36,11 +36,8 @@
       {% endif %}
     </aside>
 
-    {% with text=post.description|default:post.content|text|default:post.summary %}
-      <iframe sandbox src="data:text/html,{{ text|escape:"url" }}">
-        {{ text }}
-      </iframe>
-    {% endwith %}
+    {{ post.description|default:post.content|default:post.summary }}
+
     <nav>
       {% for file in post|lookup:"attachment|content[@src]" %}
         <a href="{{ file.url|default:file.src|base:url }}">
