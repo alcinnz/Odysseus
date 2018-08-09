@@ -26,17 +26,21 @@ namespace Odysseus.Templating.xXML {
 
     public class XML : Data {
         private Xml.Node *node;
-        public XML(Xml.Node *node) {this.node = node;}
+        string[] locale;
+        public XML(Xml.Node *node, string[] locale = Intl.get_language_names) {
+            this.node = node;
+            this.locale = locale;
+        }
 
         public override Data get(Slice property) {
             var prop = @"$property";
             // First lookup amongst the properties
             for (Xml.Attr *iter = node->properties; iter != null; iter = iter->next) {
-                if (iter->name == prop) return new XML(iter->children);
+                if (iter->name == prop) return new XML(iter->children, locale);
             }
             // Second lookup amongst child nodes
             for (Xml.Node *iter = node->children; iter != null; iter = iter->next) {
-                if (iter->name == prop) return new XML(iter);
+                if (iter->name == prop) return new XML(iter, locale);
             }
 
             return new Empty();
@@ -48,14 +52,19 @@ namespace Odysseus.Templating.xXML {
         public override void foreach_map(Data.ForeachMap cb) {
             var _ = new Slice();
             for (Xml.Node* iter = node; iter != null; iter = iter->next) {
-                if (iter->name == node->name) if (cb(_, new XML(iter))) return;
+                if (iter->name == node->name &&
+                        // localize!
+                        (!iter->has_ns_prop("lang", "xml") ||
+                        iter->get_ns_prop("lang", "xml") in locale)) {
+                    if (cb(_, new XML(iter, locale))) return;
+                }
             }
         }
         public override double to_double() {return 0.0;}
         // How you access the full XML datamodel: XPath
         public override Data lookup(string query) {
             var ctx = new Xml.XPath.Context(node);
-            return new XPathResult(ctx.eval(query));
+            return new XPathResult(ctx.eval(query), locale);
         }
 
         public static Gee.SortedSet<string> _items(Data.Data self) {
@@ -75,7 +84,10 @@ namespace Odysseus.Templating.xXML {
 
     private class XPathResult : Data {
         private Xml.XPath.Object *inner;
-        public XPathResult(Xml.XPath.Object *obj) {return this.inner = obj;}
+        private string[] locale;
+        public XPathResult(Xml.XPath.Object *obj, string[] locale) {
+            this.inner = obj; this.locale = locale;
+        }
 
         public override Data get(Slice property) {
             var property = @"$property_bytes";
@@ -83,7 +95,7 @@ namespace Odysseus.Templating.xXML {
             if (property[0] == '$' &&
                     uint64.try_parse(property[1:0], out index) &&
                     index < inner->nodesetval->length()) {
-                return new XML(inner->nodesetval->item((int) index));
+                return new XML(inner->nodesetval->item((int) index), locale);
             }
             return new Empty();
         }
