@@ -49,7 +49,6 @@ namespace Odysseus.Templating.xXML {
         }
 
         private XML get_localized() {
-            // 1. Localize!
             var ret = this; Xml.Node* unlocalized = null;
             for (; self != null; self = self->next) {
                 if (self->name != this->name) continue;
@@ -61,6 +60,11 @@ namespace Odysseus.Templating.xXML {
 
             return ret != null ? ret : unlocalized;
         }
+        private bool is_sanitary(Xml.Node *node) {
+            var ctx = new Xml.XPath.Context(node);
+            return ctx.eval("script|style")->nodesetval->is_empty();
+        }
+
         public override string to_string() {
             return get_localized().node->get_content();
         }
@@ -73,15 +77,19 @@ namespace Odysseus.Templating.xXML {
             text = new Slice.s(self.node->get_content());
             switch (type) {
             case "xhtml":
-                safe = true;
                 var output = new Xml.Buffer();
                 if (output.node_dump(self.node.doc, self.node, 0, 1) != 0)
                     text = new Slice.s(output.content());
-                return true;
+                return is_sanitary(self);
             case "html":
-                return true; // TODO sanitize HTML
+                var html = Html.Doc.read_doc(@"$text", "about:blank");
+                var str = "";
+                html->dump_memory(out str);
+                text = new Slice.s(str);
+
+                return is_sanitary(html->get_root_element());
             case "text":
-                return true;
+                return false;
             case "":
                 return false;
             default:

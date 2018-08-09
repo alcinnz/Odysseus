@@ -142,7 +142,7 @@ namespace Odysseus.Templating.xHTTP {
                 var b = new MemoryOutputStream.resizable();
                 yield b.splice_async(stream, 0);
                 var xml = Xml.Parser.parse_memory((char[]) b.data, b.get_data_size());
-                return new xXML.XML(xml);
+                return new xXML.XML(xml->get_root_element());
             }*/ else if (mime == "text/tsv" || mime == "text/tab-separated-values") {
                 return yield x.readTSV(new DataInputStream(stream));
             }
