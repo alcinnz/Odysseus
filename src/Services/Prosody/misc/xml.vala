@@ -25,12 +25,14 @@ namespace Odysseus.Templating.xXML {
     using Data;
 
     public class XML : Data {
-        private Xml.Node *node;
+        protected Xml.Node *node;
         string[] locale;
         public XML(Xml.Node *node, string[] locale = Intl.get_language_names) {
             this.node = node;
             this.locale = locale;
         }
+
+        public override bool exists {get {return true;}}
 
         public override Data get(Slice property) {
             var prop = @"$property";
@@ -45,9 +47,10 @@ namespace Odysseus.Templating.xXML {
 
             return new Empty();
         }
-        public override string to_string() {
+
+        private XML get_localized() {
             // 1. Localize!
-            var self = this; Xml.Node* unlocalized = null;
+            var ret = this; Xml.Node* unlocalized = null;
             for (; self != null; self = self->next) {
                 if (self->name != this->name) continue;
                 var lang = self->get_ns_prop("lang", "xml");
@@ -55,11 +58,37 @@ namespace Odysseus.Templating.xXML {
                     unlocalized = self;
                 if (lang != null && lang in locale) break;
             }
-            if (self == null) self = unlocalized;
 
-            return self.node->get_content();
+            return ret != null ? ret : unlocalized;
         }
-        public override bool exists {get {return true;}}
+        public override string to_string() {
+            return get_localized().node->get_content();
+        }
+        private static TYPE = new Slice.s("type");
+        public override bool show(string defaultType, out Slice text) {
+            var self = get_localized();
+            var typeData = self[TYPE];
+            var type = type is Data.Empty ? defaultType : @"$typeData";
+
+            text = new Slice.s(self.node->get_content());
+            switch (type) {
+            case "xhtml":
+                safe = true;
+                var output = new Xml.Buffer();
+                if (output.node_dump(self.node.doc, self.node, 0, 1) != 0)
+                    text = new Slice.s(output.content());
+                return true;
+            case "html":
+                return true; // TODO sanitize HTML
+            case "text":
+                return true;
+            case "":
+                return false;
+            default:
+                info("Encountered unsupported type= attribute.");
+                return false;
+        }
+
         public override void foreach_map(Data.ForeachMap cb) {
             var _ = new Slice();
             for (Xml.Node* iter = node; iter != null; iter = iter->next) {
@@ -71,7 +100,9 @@ namespace Odysseus.Templating.xXML {
                 }
             }
         }
+
         public override double to_double() {return 0.0;}
+
         // How you access the full XML datamodel: XPath
         public override Data lookup(string query) {
             var ctx = new Xml.XPath.Context(node);
