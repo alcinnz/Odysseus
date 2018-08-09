@@ -48,6 +48,10 @@ namespace Odysseus.Templating.Data {
         public virtual Slice to_bytes() {
             return new Slice.s(this.to_string());
         }
+        public virtual bool show(string arg, out Slice text) {
+            text = to_bytes();
+            return false; // UNSAFE!
+        }
 
         /* These methods/properties are used by important tags,
             as well as filters. */
@@ -119,9 +123,7 @@ namespace Odysseus.Templating.Data {
 
     public class Literal : Data {
         public Value data;
-        public Literal(Value v) {
-            this.data = v;
-        }
+        public Literal(Value v) {this.data = v;}
 
         public override void foreach_map(Data.ForeachMap cb) {
             if (data.holds(typeof(int)) || data.holds(typeof(double))) {
@@ -190,7 +192,8 @@ namespace Odysseus.Templating.Data {
 
     public class Substr : Data {
         Slice data;
-        public Substr(Slice b) {this.data = b;}
+        bool safe;
+        public Substr(Slice b, bool safe = false) {this.data = b; this.safe = safe;}
 
         public override void foreach_map(Data.ForeachMap cb) {
             var text = to_string();
@@ -210,6 +213,9 @@ namespace Odysseus.Templating.Data {
 
         public override string to_string() {return @"$data";}
         public override Slice to_bytes() {return data;}
+        public override bool show(string _, out Slice text) {
+            text = data; return safe;
+        }
         public override bool exists {get {return data.length > 0;}}
 
         public override int to_int(out bool is_length = null) {

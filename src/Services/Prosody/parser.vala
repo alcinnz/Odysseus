@@ -248,9 +248,9 @@ namespace Odysseus.Templating {
 
     public abstract class Filter : Object {
         public virtual bool? should_escape() {return null;}
-        // One of these methods must be overriden
+
         public virtual Data.Data filter(Data.Data a, Data.Data b) {return filter0(a);}
-        public virtual Data.Data filter0(Data.Data input) {return input;}
+        public virtual Data.Data filter0(Data.Data input) {return input;} // Shorthand method
     }
     private Map<Slice, Filter>? filter_lib;
 
@@ -438,6 +438,7 @@ namespace Odysseus.Templating {
         protected Slice[] path;
         protected Data.Data? literal;
         public Map<uint8,string> escapes; // public so firstOf can apply it.
+        private bool force_escapes = false;
 
         /* Useful global constants to be lazily compiled */
         // Placeholder filter argument when non's specified.
@@ -514,6 +515,7 @@ namespace Odysseus.Templating {
 
                 Filter cb = filter_lib[name];
                 if (cb.should_escape() != null) should_escape = cb.should_escape();
+                this.force_escapes = force_escapes || cb.should_escape() != null;
 
                 Variable filter_arg = nilvar;
                 if (arg_text != null) filter_arg = new Variable(arg_text, escapes);
@@ -535,7 +537,9 @@ namespace Odysseus.Templating {
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            yield output.escaped(eval(ctx).to_bytes(), escapes);
+            Slice text;
+            if (eval(ctx).show("", out text) && !force_escapes) yield output.write(text);
+            else yield output.escaped(text, escapes);
         }
 
         public Data.Data eval(Data.Data context) {

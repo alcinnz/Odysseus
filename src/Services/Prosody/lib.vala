@@ -609,8 +609,10 @@ namespace Odysseus.Templating.Std {
 
     /* Explicit coercion potentially useful for working with SQL results or query params. */
     private class TextFilter : Filter {
-        public override Data.Data filter0(Data.Data text) {
-            return new Data.Literal(text.to_string());
+        public override Data.Data filter(Data.Data text, Data.Data arg) {
+            Slice ret;
+            var safe = text.show(@"$arg", out ret);
+            return new Data.Substr(ret, safe);
         }
     }
 
