@@ -588,6 +588,13 @@ namespace Odysseus.Templating.Std {
         }
     }
 
+    private class MD5Filter : Filter {
+        public override Data.Data filter0(Data.Data text) {
+            var ret = Checksum.compute_for_bytes(ChecksumType.MD5, text.to_bytes()._);
+            return new Data.Literal(ret);
+        }
+    }
+
     private class SafeFilter : Filter {
         public override bool? should_escape() {return false;}
     }
