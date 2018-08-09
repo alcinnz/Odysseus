@@ -56,7 +56,7 @@
         <h3>{% trans %}Authors{% endtrans %}</h3>
         <ul>{% for author in authors %}
           <li><input type="checkbox" name="author" value="{{ author }}"
-              {% if author in Q.author %}checked{% endif %} id="author-{{ author|slugify }}" />
+              {% if author in Q.author %}checked{% endif %} id="author-{{ author|md5 }}" />
             <label for="author-{{ author|md5 }}">{{ author|title }}</label></li>
         {% endfor %}</ul>
       {% endif %}
@@ -64,7 +64,7 @@
         <h3>{% trans %}Tags{% endtrans %}</h3>
         <ul>{% for tag in tags %}
           <li><input type="checkbox" name="tag" value="{{ tag }}"
-              {% tag in Q.tag %}checked{% endif %} id="tag-{{ tag|slugify }}" />
+              {% tag in Q.tag %}checked{% endif %} id="tag-{{ tag|md5 }}" />
             <label for="tag-{{ tag|md5 }}">{{ tag|title }}</label></li>
         {% endfor %}</ul>
       {% endif %}
