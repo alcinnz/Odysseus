@@ -910,11 +910,11 @@ TRUE|FALSE
     using an <code>include</code> tag. And the feed viewer needs these extra
     facilities predominantly for filtering the results.</p>
 {% test "|base" %}
-  {{ "https://example.com/x/y/z"|base:"../a/b/c/" }}
-  {{ "https://example.com/a/b/c/"|base:"../x/y/z" }}
+  {{ "../a/b/c/"|base:"https://example.com/x/y/z" }}
+  {{ "../x/y/z"|base:"https://example.com/a/b/c/" }}
 {% output %}
   https://example.com/x/a/b/c/
-  https://example.com/a/b/c/x/y/z
+  https://example.com/a/b/x/y/z
 {% endtest %}
 {% test "in operator" %}
   {% if "matt smith" in doctors %}y{% else %}n{% endif %}
@@ -931,26 +931,14 @@ TRUE|FALSE
   y
   n
 {% endtest %}
-
-  <p>From <a href="https://github.com/django/django/blob/2366100872ec17dde06abc63c1ad74dcf746b134/tests/template_tests/filter_tests/test_slugify.py">Django's test suite</a>.</p>
-{% test "|slugify" %}
-  {{ "a & b"|slugify }}
-  {{ "a &amp; b"|slugify }}
-  {{ " Jack & Jill like numbers 1,2,3 and 4 and silly characters ?%.$!/"|slugify }}
-  {{ "Un \xe9l\xe9phant \xe0 l'or\xe9e du bois"|slugify }}
-{% output %}
-  a-b
-  a-amp-b
-  jack-jill-like-numbers-123-and-4-and-silly-characters
-  un-elephant-e-loree-du-bois
-{% endtest %}
 {% test "{% include %}" %}
   {% with pong="boo!" %}{% include "include-" "test" %}{% endwith %}
 {% output %}
   This is a template to test if it can be included using the `include` tag. Embedder said "boo!".
+
 {% endtest %}
 {% test "|uniqsort" %}
-  {% for c in data|uniqsort %}c{% endfor %}
+  {% for c in data|uniqsort %}{{ c }}{% endfor %}
 {% input %}
   { "data" : ["a","b","r","a","c","a","d","a","b","r","a"] }
 {% output %}

@@ -20,6 +20,7 @@
         <file>debugging/test</file>
         <file>debugging/index</file>
         <file>debugging/syntaxerror0</file>
+        <file>debugging/include-test</file>
 
         <file>ext/highlight.pack.js</file>
         <file>ext/highlight.pack.js.mime</file>

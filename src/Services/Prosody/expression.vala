@@ -126,6 +126,8 @@ namespace Odysseus.Templating.Expression {
                     token = new EqualTo();
                 else if (packed == 0x213D) /* "!=" */
                     token = new NotEqual();
+                else if (packed == 0x696E) /* "in" */
+                    token = new In();
                 else if (packed == 0x25) /* "%" */
                     token = new Remainder();
                 else

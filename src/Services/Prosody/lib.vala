@@ -319,7 +319,8 @@ namespace Odysseus.Templating.Std {
             // 1. Resolve path
             var relative = new StringBuilder();
             foreach (var variable in vars) relative.append(variable.eval(ctx).to_string());
-            var absolute = File.new_for_path(@base).resolve_relative_path(relative.str);
+            var basepath = File.new_for_path(this.@base).get_parent();
+            var absolute = basepath.resolve_relative_path(relative.str);
 
             // 2. Render that template. This benefits heavily from caching.
             ErrorData? error_data = null;
@@ -599,21 +600,6 @@ namespace Odysseus.Templating.Std {
         public override bool? should_escape() {return false;}
     }
 
-    private class SlugifyFilter : Filter {
-        public override Data.Data filter0(Data.Data text) {
-            var s = text.to_bytes();
-            var ret = new StringBuilder.sized(s.length);
-
-            var inspace = true;
-            for (var i = 0; i < s.length; i++) {
-                var c = (char) s[i];
-                if (c.isalnum()) {ret.append_c(c); inspace = false;}
-                else if (c.isspace() && !inspace) {ret.append_c(c); inspace = true;}
-            }
-            return new Data.Literal(ret.str);
-        }
-    }
-
     /* Explicit coercion potentially useful for working with SQL results or query params. */
     private class TextFilter : Filter {
         public override Data.Data filter(Data.Data text, Data.Data arg) {
@@ -671,6 +657,7 @@ namespace Odysseus.Templating.Std {
         register_tag("for", new ForBuilder());
         register_tag("if", new IfBuilder());
         register_tag("ifchanged", new IfChangedBuilder());
+        register_tag("include", new IncludeBuilder());
         register_tag("mimeinfo", new xMIMEInfo.MIMEInfoBuilder());
         register_tag("random", new RandomBuilder());
         register_tag("templatetag", new TemplateTagBuilder());
@@ -681,6 +668,7 @@ namespace Odysseus.Templating.Std {
 
         register_filter("add", new AddFilter());
         register_filter("alloc", new AllocateFilter());
+        register_filter("base", new BaseFilter());
         register_filter("capfirst", new CapFirstFilter());
         register_filter("cut", new CutFilter());
         register_filter("date", new DateFilter());
@@ -697,10 +685,12 @@ namespace Odysseus.Templating.Std {
         register_filter("length", new LengthFilter());
         register_filter("lengthis", new LengthIsFilter());
         register_filter("lower", new LowerFilter());
+        register_filter("md5", new MD5Filter());
         register_filter("safe", new SafeFilter());
         register_filter("text", new TextFilter());
         register_filter("title", new TitleFilter());
         register_filter("trans", new xI18n.TransFilter());
+        register_filter("uniqsort", new UniqSortFilter());
 
         escapes["off"] = Gee.Map.empty<char,string>();
         escapes["html"] = Writer.html();
