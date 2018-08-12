@@ -15,7 +15,8 @@ prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'slice']
 prosody_misc = ['json', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test',
         'AppStream', 'mimeinfo']
-prosody_misc = ['json', 'tsv', 'http', 'AppStream', 'mimeinfo', 'favicons',
+prosody_misc = ['http', 'AppStream', 'mimeinfo', 'favicons',
+        'json', 'tsv', 'xml',
         'diff', 'test', 'i18n']
 models = ['Download', 'DownloadSet', 'ImageUtil']
 
@@ -82,7 +83,8 @@ executable('com.github.alcinnz.odysseus',
         dependency('sqlite3'),
         dependency('unity'),
         dependency('appstream'),
-        posix_dep
+        posix_dep,
+        dependency('libxml-2.0')
     ],
     install: true
 )

@@ -136,14 +136,15 @@ namespace Odysseus.Templating.xHTTP {
                 var json = new Json.Parser();
                 yield json.load_from_stream_async(stream);
                 return xJSON.build(json.get_root());
-            } /*else if ("xml" in mime) {
+            } else if ("xml" in mime) {
                 // Unfortunately libxml cannot read from an InputStream,
                 // So read the entire response into a string.
                 var b = new MemoryOutputStream.resizable();
                 yield b.splice_async(stream, 0);
-                var xml = Xml.Parser.parse_memory((char[]) b.data, b.get_data_size());
-                return new xXML.XML(xml->get_root_element());
-            }*/ else if (mime == "text/tsv" || mime == "text/tab-separated-values") {
+                var text = b.steal_data();
+                return new xXML.XML.with_doc(Xml.Parser.parse_memory((string) text, text.length));
+                /*return new xXML.XML(xml->get_root_element());*/
+            } else if (mime == "text/tsv" || mime == "text/tab-separated-values") {
                 return yield x.readTSV(new DataInputStream(stream));
             }
             throw new HTTPError.UNSUPPORTED_FORMAT("Cannot read %s files!", mime);

@@ -22,19 +22,20 @@ For simple cases, this naively coerces to the Prosody data model (a coercion tha
     is actually helpful for handling RSS/Atom), but for more complex cases
     it exposes XPath support. */
 namespace Odysseus.Templating.xXML {
-    using Data;
-
-    public class XML : Data {
+    public class XML : Data.Data {
         protected Xml.Node *node;
         string[] locale;
-        public XML(Xml.Node *node, string[] locale = Intl.get_language_names) {
+        public XML(Xml.Node *node, string[] locale = Intl.get_language_names()) {
             this.node = node;
             this.locale = locale;
+        }
+        public XML.with_doc(Xml.Doc *node, string[] locale = Intl.get_language_names()) {
+            this(node->get_root_element(), locale);
         }
 
         public override bool exists {get {return true;}}
 
-        public override Data get(Slice property) {
+        public override Data.Data get(Slice property) {
             var prop = @"$property";
             // First lookup amongst the properties
             for (Xml.Attr *iter = node->properties; iter != null; iter = iter->next) {
@@ -45,40 +46,40 @@ namespace Odysseus.Templating.xXML {
                 if (iter->name == prop) return new XML(iter, locale);
             }
 
-            return new Empty();
+            return new Data.Empty();
         }
 
-        private XML get_localized() {
-            var ret = this; Xml.Node* unlocalized = null;
-            for (; self != null; self = self->next) {
-                if (self->name != this->name) continue;
-                var lang = self->get_ns_prop("lang", "xml");
+        private Xml.Node *get_localized() {
+            var ret = node; Xml.Node* unlocalized = null;
+            for (; ret != null; ret = ret->next) {
+                if (ret->name != node->name) continue;
+                var lang = ret->get_ns_prop("lang", "xml");
                 if (unlocalized == null && lang == null)
-                    unlocalized = self;
+                    unlocalized = ret;
                 if (lang != null && lang in locale) break;
             }
 
             return ret != null ? ret : unlocalized;
         }
         private bool is_sanitary(Xml.Node *node) {
-            var ctx = new Xml.XPath.Context(node);
+            var ctx = new Xml.XPath.Context(node->doc);
             return ctx.eval("script|style")->nodesetval->is_empty();
         }
 
         public override string to_string() {
-            return get_localized().node->get_content();
+            return get_localized()->get_content();
         }
-        private static TYPE = new Slice.s("type");
         public override bool show(string defaultType, out Slice text) {
             var self = get_localized();
-            var typeData = self[TYPE];
-            var type = type is Data.Empty ? defaultType : @"$typeData";
+            var type = "";
+            if (self->has_prop("type") != null) type = self->get_prop("type");
+            else type = defaultType;
 
-            text = new Slice.s(self.node->get_content());
+            text = new Slice.s(self->get_content());
             switch (type) {
             case "xhtml":
                 var output = new Xml.Buffer();
-                if (output.node_dump(self.node.doc, self.node, 0, 1) != 0)
+                if (output.node_dump(self->doc, self, 0, 1) != 0)
                     text = new Slice.s(output.content());
                 return is_sanitary(self);
             case "html":
@@ -95,14 +96,15 @@ namespace Odysseus.Templating.xXML {
             default:
                 info("Encountered unsupported type= attribute.");
                 return false;
+            }
         }
 
-        public override void foreach_map(Data.ForeachMap cb) {
+        public override void foreach_map(Data.Data.ForeachMap cb) {
             var _ = new Slice();
             for (Xml.Node* iter = node; iter != null; iter = iter->next) {
                 if (iter->name == node->name &&
                         // localize!
-                        (!iter->has_ns_prop("lang", "xml") ||
+                        (iter->has_ns_prop("lang", "xml") == null ||
                         iter->get_ns_prop("lang", "xml") in locale)) {
                     if (cb(_, new XML(iter, locale))) return;
                 }
@@ -112,8 +114,8 @@ namespace Odysseus.Templating.xXML {
         public override double to_double() {return 0.0;}
 
         // How you access the full XML datamodel: XPath
-        public override Data lookup(string query) {
-            var ctx = new Xml.XPath.Context(node);
+        public override Data.Data lookup(string query) {
+            var ctx = new Xml.XPath.Context(node->doc);
             return new XPathResult(ctx.eval(query), locale);
         }
 
@@ -125,21 +127,22 @@ namespace Odysseus.Templating.xXML {
                 var namenode = item_[name];
                 if (namenode is Data.Empty) namenode = item_;
                 ret.add(@"$item_");
+                return false;
             });
 
             return ret;
         }
-        public override Gee.SortedSet<string> items() {_items(this);}
+        public override Gee.SortedSet<string> items() {return _items(this);}
     }
 
-    private class XPathResult : Data {
+    private class XPathResult : Data.Data {
         private Xml.XPath.Object *inner;
         private string[] locale;
         public XPathResult(Xml.XPath.Object *obj, string[] locale) {
             this.inner = obj; this.locale = locale;
         }
 
-        public override Data get(Slice property) {
+        public override Data.Data get(Slice property_bytes) {
             var property = @"$property_bytes";
             uint64 index = 0;
             if (property[0] == '$' &&
@@ -147,17 +150,17 @@ namespace Odysseus.Templating.xXML {
                     index < inner->nodesetval->length()) {
                 return new XML(inner->nodesetval->item((int) index), locale);
             }
-            return new Empty();
+            return new Data.Empty();
         }
-        public override void foreach_map(Data.ForeachMap cb) {
-            range(cb, inner->nodesetval.length());
+        public override void foreach_map(Data.Data.Foreach cb) {
+            Data.range(cb, inner->nodesetval->length());
         }
         public override string to_string() {return inner->stringval;}
-        public override bool exists {get {return inner->boolval;}}
-        public override int to_double() {return inner->floatval;}
+        public override bool exists {get {return inner->boolval != 0;}}
+        public override double to_double() {return inner->floatval;}
 
         public override Gee.SortedSet<string> items() {
-            XML._items(this);
+            return XML._items(this);
         }
     }
 }

@@ -87,9 +87,11 @@ namespace Odysseus.Templating.xTestRunner {
                             "must be valid JSON: %s", e.message);
                 }
                 return xJSON.build(json_parser.get_root());
-            default:
-                return new Data.Empty();
+            case "xml":
+                var doc = Xml.Parser.parse_memory((string) text, text.length);
+                return new xXML.XML.with_doc(doc, {"en"});
             }
+            throw new SyntaxError.INVALID_ARGS(@"Invalid {%% input %%} data type $type");
         }
     }
     private class TestTag : Template {
