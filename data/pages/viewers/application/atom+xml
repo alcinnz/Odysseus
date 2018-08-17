@@ -1,0 +1,1 @@
+{% with format="xhtml" %}{% include "rss+xml" %}{% endwith %}

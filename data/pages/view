@@ -4,11 +4,16 @@
 So the viewers directory provides alternate renderers for those,
   and this template loads the appropriate one. #}
 <!DOCTYPE html>
-{% with Q=uri.query url=uri.$path %}
+{% if url.query.url %}
+    {% with uri=url Q=url.query url=url.query.url %}
 
-<base>odysseus:view${{ url }}</base>
+    <base>{{ url }}</base>
 
-{% fetch %}{{ url }}
-{% each as page mime %}
-  {% include "odysseus:viewers/" mime %}
-{% endeach %}
+    {% fetch %}{{ url|safe }}
+    {% each as page mime %}
+      {% include "viewers/" mime %}
+    {% endfetch %}
+    {% endwith %}
+{% else %}
+    <form><input type="text" name="url" value="{{ url.query.url }}" /></form>
+{% endif %}
