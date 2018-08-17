@@ -385,8 +385,6 @@ namespace Odysseus.Templating.Std {
 
             WordIter? endtoken;
             var body = parser.parse("endwith", out endtoken);
-            if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS(
-                    "{%% with %%} must be closed with a {%% endwith %%} tag.");
 
             return new WithTag(parameters, body);
         }
@@ -684,8 +682,10 @@ namespace Odysseus.Templating.Std {
         register_filter("last", new LastFilter());
         register_filter("length", new LengthFilter());
         register_filter("lengthis", new LengthIsFilter());
+        register_filter("lookup", new LookupFilter());
         register_filter("lower", new LowerFilter());
         register_filter("md5", new MD5Filter());
+        register_filter("mimeicon", new xMIMEInfo.MIMEIconFilter());
         register_filter("safe", new SafeFilter());
         register_filter("text", new TextFilter());
         register_filter("title", new TitleFilter());

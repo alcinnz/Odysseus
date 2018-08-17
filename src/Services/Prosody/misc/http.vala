@@ -43,6 +43,7 @@ namespace Odysseus.Templating.xHTTP {
                         "{%% fetch %%} must be contain a {%% each as _ %%} block!");
 
             var target = endtoken.next();
+            var mimetarget = endtoken.next_value();
             endtoken.assert_end();
 
             var loop = parser.parse("endfetch", out endtoken);
@@ -51,7 +52,7 @@ namespace Odysseus.Templating.xHTTP {
                         "{%% fetch %%} must be closed with an {%% endfetch %%}");
             endtoken.next(); endtoken.assert_end();
 
-            return new FetchTag(request, cache_flag == null, target, loop);
+            return new FetchTag(request, cache_flag == null, target, mimetarget, loop);
         }
     }
 
@@ -61,12 +62,14 @@ namespace Odysseus.Templating.xHTTP {
         private Template body;
         private Template loop;
         private Slice target;
+        private Slice? mimetarget;
         private bool nocache;
 
         private Mutex outputlock = new Mutex();
 
-        public FetchTag(Template body, bool nocache, Slice target, Template loop) {
-            this.body = body; this.nocache = nocache; this.target = target; this.loop = loop;
+        public FetchTag(Template body, bool nocache, Slice target, Slice? mimetarget, Template loop) {
+            this.body = body; this.nocache = nocache; this.target = target;
+            this.mimetarget = mimetarget; this.loop = loop;
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
@@ -126,7 +129,10 @@ namespace Odysseus.Templating.xHTTP {
             var resp = yield build_response_data(req.get_content_type(), response);
 
             yield outputlock.enter();
-            yield loop.exec(Data.Let.build(target, resp, ctx), output);
+            var coremime = req.get_content_type().split(";", 2)[0];
+            var loopctx = Data.Let.build(target, resp,
+                    Data.Let.build(mimetarget, new Data.Literal(coremime), ctx));
+            yield loop.exec(loopctx, output);
             outputlock.exit();
         }
 
@@ -143,7 +149,6 @@ namespace Odysseus.Templating.xHTTP {
                 yield b.splice_async(stream, 0);
                 var text = b.steal_data();
                 return new xXML.XML.with_doc(Xml.Parser.parse_memory((string) text, text.length));
-                /*return new xXML.XML(xml->get_root_element());*/
             } else if (mime == "text/tsv" || mime == "text/tab-separated-values") {
                 return yield x.readTSV(new DataInputStream(stream));
             }

@@ -36,14 +36,16 @@ namespace Odysseus.Templating.xXML {
         public override bool exists {get {return true;}}
 
         public override Data.Data get(Slice property) {
-            var prop = @"$property";
+            var self = get_localized(); // Only traverse localized nodes.
+            if (self == null) return new Data.Empty();
+
             // First lookup amongst the properties
-            for (Xml.Attr *iter = node->properties; iter != null; iter = iter->next) {
-                if (iter->name == prop) return new XML(iter->children, locale);
+            for (Xml.Attr *iter = self->properties; iter != null; iter = iter->next) {
+                if (iter->name in property) return new XML(iter->children, locale);
             }
             // Second lookup amongst child nodes
-            for (Xml.Node *iter = node->children; iter != null; iter = iter->next) {
-                if (iter->name == prop) return new XML(iter, locale);
+            for (Xml.Node *iter = self->children; iter != null; iter = iter->next) {
+                if (iter->name in property) return new XML(iter, locale);
             }
 
             return new Data.Empty();
@@ -53,7 +55,7 @@ namespace Odysseus.Templating.xXML {
             var ret = node; Xml.Node* unlocalized = null;
             for (; ret != null; ret = ret->next) {
                 if (ret->name != node->name) continue;
-                var lang = ret->get_ns_prop("lang", "xml");
+                var lang = ret->get_prop("lang");
                 if (unlocalized == null && lang == null)
                     unlocalized = ret;
                 if (lang != null && lang in locale) break;
@@ -67,26 +69,27 @@ namespace Odysseus.Templating.xXML {
         }
 
         public override string to_string() {
-            return get_localized()->get_content();
+            var self = get_localized();
+            return self == null ? "" : self->get_content();
         }
         public override bool show(string defaultType, out Slice text) {
             var self = get_localized();
-            var type = "";
-            if (self->has_prop("type") != null) type = self->get_prop("type");
-            else type = defaultType;
+            if (self == null) {text = new Slice(); return true;}
+            var type = self->get_prop("type");
+            if (type == null) type = defaultType;
 
             text = new Slice.s(self->get_content());
             switch (type) {
             case "xhtml":
                 var output = new Xml.Buffer();
-                if (output.node_dump(self->doc, self, 0, 1) != 0)
-                    text = new Slice.s(output.content());
+                for (var iter = self->children; iter != null; iter = iter->next) {
+                    if (output.node_dump(iter->doc, iter, 0, 1) == 0) return false;
+                }
+                text = new Slice.s(output.content());
                 return is_sanitary(self);
             case "html":
                 var html = Html.Doc.read_doc(@"$text", "about:blank");
-                var str = "";
-                html->dump_memory(out str);
-                text = new Slice.s(str);
+                if (html == null) return false;
 
                 return is_sanitary(html->get_root_element());
             case "text":
@@ -104,8 +107,8 @@ namespace Odysseus.Templating.xXML {
             for (Xml.Node* iter = node; iter != null; iter = iter->next) {
                 if (iter->name == node->name &&
                         // localize!
-                        (iter->has_ns_prop("lang", "xml") == null ||
-                        iter->get_ns_prop("lang", "xml") in locale)) {
+                        (iter->has_prop("lang") == null ||
+                        iter->get_prop("lang") in locale)) {
                     if (cb(_, new XML(iter, locale))) return;
                 }
             }
@@ -115,6 +118,7 @@ namespace Odysseus.Templating.xXML {
 
         // How you access the full XML datamodel: XPath
         public override Data.Data lookup(string query) {
+            if (node == null) return new Data.Empty();
             var ctx = new Xml.XPath.Context(node->doc);
             return new XPathResult(ctx.eval(query), locale);
         }
@@ -126,7 +130,7 @@ namespace Odysseus.Templating.xXML {
             self.foreach_map((_, item_) => {
                 var namenode = item_[name];
                 if (namenode is Data.Empty) namenode = item_;
-                ret.add(@"$item_");
+                ret.add(@"$namenode");
                 return false;
             });
 
@@ -146,13 +150,13 @@ namespace Odysseus.Templating.xXML {
             var property = @"$property_bytes";
             uint64 index = 0;
             if (property[0] == '$' &&
-                    uint64.try_parse(property[1:0], out index) &&
+                    uint64.try_parse(property[1:property.length], out index) &&
                     index < inner->nodesetval->length()) {
                 return new XML(inner->nodesetval->item((int) index), locale);
             }
             return new Data.Empty();
         }
-        public override void foreach_map(Data.Data.Foreach cb) {
+        public override void foreach(Data.Data.Foreach cb) {
             Data.range(cb, inner->nodesetval->length());
         }
         public override string to_string() {return inner->stringval;}

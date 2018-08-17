@@ -957,19 +957,19 @@ TRUE|FALSE
   <p>At the moment this is being used to support webfeeds. And it's specifically geared towards aiding with that.</p>
 
 {% test "XML attribute paths, ignores namespaces" %}
-  {{ data.foo|join }}
-  {{ data.sna|join }}
-  {{ data.hello|join }}
-  {{ data.v|join }}
-  {{ data.alpha|join }}
+  {{ foo|join }}
+  {{ sna|join }}
+  {{ hello|join }}
+  {{ v|join }}
+  {{ alpha|join }}
 {% input xml %}
   <data xmlns:a="https://example.com/a" xmlns:b="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" a:sna="fu" hello="world!" b:alpha="a">
-    <a:v>x</v>
+    <a:v>x</a:v>
     <foo>bar</foo>
-    <b:v>y</v>
-    <a:hello>kitty</hello>
+    <b:v>y</b:v>
+    <a:hello>kitty</a:hello>
     <v>z</v>
-    <b:alpha>b</alpha>
+    <b:alpha>b</b:alpha>
     <alpha>c</alpha>
   </data>
 {% output %}
@@ -981,14 +981,12 @@ TRUE|FALSE
 {% endtest %}
 <p>Taken from <a href="https://www.w3schools.com/xml/xpath_examples.asp">W3Schools' tutorial</a>.</p>
 {% test "XPath" %}
-  {{ bookstore|lookup:"/bookstore/book/title"|join:", " }}
-  {{ bookstore|lookup:"/bookstore/book[1]/title"|join:", " }}
-  {{ bookstore|lookup:"/bookstore/book/price[text()]"|join:", " }}
-  {{ bookstore|lookup:"/bookstore/book[price>35]/price"|join:", " }}
-  {{ bookstore|lookup:"/bookstore/book[price>35]/title"|join:", " }}
+  {{ book|lookup:"/bookstore/book/title"|join:", " }}
+  {{ book|lookup:"/bookstore/book[1]/title"|join:", " }}
+  {{ book|lookup:"/bookstore/book/price[text()]"|join:", " }}
+  {{ book|lookup:"/bookstore/book[price>35]/price"|join:", " }}
+  {{ book|lookup:"/bookstore/book[price>35]/title"|join:", " }}
 {% input xml %}
-<?xml version="1.0" encoding="UTF-8"?>
-
 <bookstore>
 
 <book category="cooking">
@@ -1032,7 +1030,7 @@ TRUE|FALSE
   XQuery Kick Start, Learning XML
 {% endtest %}
 {% test "|uniqsort" %}
-  {{ data.item|uniqsort|join }}
+  {{ item|uniqsort|join }}
 {% input xml %}
   <data>
     <item>a</item>
@@ -1046,7 +1044,7 @@ TRUE|FALSE
   abcdfg
 {% endtest %}
 {% test "XML localization" %}
-  {{ data.channel.post|join }}
+  {{ channel.post|join }}
 {% input xml %}
   <data>
     <channel xml:lang="cz">
@@ -1057,11 +1055,11 @@ TRUE|FALSE
     <channel xml:lang="en">
       <post xml:lang="cz">d</post>
       <post xml:lang="en">e</post>
-      <post>f</post>
+      <post>ff</post>
     </channel>
   </data>
 {% output %}
-  df
+  eff
 {% endtest %}
 
   <p>Please note the following tests requires data to be able to declare itself safe in HTML.</p>
@@ -1069,50 +1067,65 @@ TRUE|FALSE
   {{ data }}
   {{ data|text:"text" }}
 {% input xml %}
-  <data type="xhtml">
+  <root><data type="xhtml">
     <h1>Success</h1>
     <p>If the above's a header, this test has passed</p>
-  </data>
+  </data></root>
 {% output %}
-  <h1>Success</h1>
-  <p>If the above's a header, this test has passed</p>
-  <h1>Success</h1>
-  <p>If the above's a header, this test has passed</p>
+  
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  
+  
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  
 {% endtest %}
 {% test "handling of type=html" %}
   {{ data }}
   {{ data|text:"text" }}
 {% input xml %}
-  <data type="html">
+  <root><data type="html">
     &lt;h1>Success&lt;/h1>
     &lt;p>If the above's a header, this test has passed&lt;/p>
-  </data>
+  </data></root>
 {% output %}
-  <h1>Success</h1>
-  <p>If the above's a header, this test has passed</p>
-  <h1>Success</h1>
-  <p>If the above's a header, this test has passed</p>
+  
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  
+  
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  
 {% endtest %}
 {% test "Can set fallback type=s to text coercion" %}
   {{ data|text:"xhtml" }}
   {{ data|text:"html" }}
+  {{ data|text:"text" }}
 {% input xml %}
-  <data>
+  <root><data>
     <h1>Success</h1>
     <p>If the above's a &lt;strong>header&lt;/strong>, this test has passed</p>
-  </data>
+  </data></root>
 {% output %}
-  <h1>Success</h1>
-  <p>If the above's a &lt;strong>header&lt;/strong>, this test has passed</p>
-  Success
-  If the above's a <strong>header</strong>, this test has passed
-  Success
-  If the above's a &lt;strong>header&lt;/strong>, this test has passed
+  
+    <h1>Success</h1>
+    <p>If the above's a &lt;strong&gt;header&lt;/strong&gt;, this test has passed</p>
+  
+  
+    Success
+    If the above's a <strong>header</strong>, this test has passed
+  
+  
+    Success
+    If the above&apos;s a &lt;strong&gt;header&lt;/strong&gt;, this test has passed
+  
 {% endtest %}
   <p>What output this gives isn't really important,
     as long as it does not allow malformed HTML, script tags, and style tags in.</p>
 {% test "HTML sanitization" %}
-  {{ data.test|join:"\n" }}
+  {{ test|join:"\n" }}
 {% input xml %}
   <data>
     <test type="html">&lt;script>alert("Failed!");&lt;/script></test>
@@ -1120,7 +1133,7 @@ TRUE|FALSE
     <test type="html">&lt;/details></test>
   </data>
 {% output %}
-  &lt;script&gt;alert("Failed!");&lt;/script&gt;
+  &lt;script&gt;alert(&quot;Failed!&quot;);&lt;/script&gt;
 &lt;style&gt;body {background: red;}&lt;/style&gt;
 &lt;/details&gt;
 {% endtest %}

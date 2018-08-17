@@ -213,8 +213,8 @@ namespace Odysseus.Templating.Data {
 
         public override string to_string() {return @"$data";}
         public override Slice to_bytes() {return data;}
-        public override bool show(string _, out Slice text) {
-            text = data; return safe;
+        public override bool show(string _, out Slice output) {
+            output = data; return safe;
         }
         public override bool exists {get {return data.length > 0;}}
 

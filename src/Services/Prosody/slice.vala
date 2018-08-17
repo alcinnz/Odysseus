@@ -62,6 +62,8 @@ public class Slice : Gee.Hashable<Slice>, Object {
         var last_split = 0;
         for (var i = 0; i <= _.length; i++) {
             if (i != _.length && _[i] != split) continue;
+            if (i == last_split) continue;
+
             assert(last_split < i);
             ret[ret_ix++] = this[last_split:i];
             last_split = i + 1;

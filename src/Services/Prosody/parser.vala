@@ -77,6 +77,9 @@ namespace Odysseus.Templating {
                     next_char(); // open quote
                     while (get_char(c) != c) {
                         if (get_char() == '\\') next_char(); // escape
+                        if (get_char() == '\n')
+                            throw new SyntaxError.UNCLOSED_STRING(
+                                    "Multiline strings not allowed.");
                         next_char(); // string char
                     }
                     if (get_char(0) != c)
@@ -155,7 +158,7 @@ namespace Odysseus.Templating {
                     throw new SyntaxError.UNCLOSED_ARG("Unexpected end of file");
                 if (text[index + 1] != close)
                     throw new SyntaxError.UNEXPECTED_CHAR(
-                            "'%c' cannot be used within tag", text[index + 1]);
+                            "'%c' cannot be used within tag", text[index]);
                 next_char(2);
             } else {
                 // It's literal text

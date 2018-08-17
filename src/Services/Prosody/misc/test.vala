@@ -83,12 +83,13 @@ namespace Odysseus.Templating.xTestRunner {
                     json_parser.load_from_data((string) text, text.length);
                 } catch (Error e) {
                     throw new SyntaxError.UNEXPECTED_CHAR(
-                            "{%% test %%}: Content of the {%% input %%} block " +
-                            "must be valid JSON: %s", e.message);
+                            "{%% test %%}: Invalid JSON in {%% input %%} block: %s", e.message);
                 }
                 return xJSON.build(json_parser.get_root());
             case "xml":
                 var doc = Xml.Parser.parse_memory((string) text, text.length);
+                if (doc == null) throw new SyntaxError.UNEXPECTED_CHAR(
+                        "{%% test %%}: Invalid XML in {%% input %%} block!");
                 return new xXML.XML.with_doc(doc, {"en"});
             }
             throw new SyntaxError.INVALID_ARGS(@"Invalid {%% input %%} data type $type");
