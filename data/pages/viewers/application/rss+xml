@@ -3,16 +3,18 @@
 <head>
   <title>{{ feed.title }}</title>
   <link rel="alternate" type="{{ mime }}" href="{{ feed.link|default:url }}" />
+  <base href="{{ url }}" />
   <style>
     @import url("odysseus:butterick.css");
 
-    a[href^="mailto:"]:before {content: url(icon:16/tag);}
-    a[href^="?tag="]:before {content: url(icon:16/mail-send);}
+    a[href^="mailto:"]:before {content: url(icon:16/mail-send);}
+    a[href^="?tag="]:before {content: url(icon:16/tag);}
     iframe {
       width: 100%;
       height: 200px;
       resize: vertical;
     }
+    blockquote {clear: both; white-space: pre-wrap;}
   </style>
   {% if feed.icon %}<link rel="shortcut icon" href="{{ feed.icon }}" />{% endif %}
 </head>
@@ -36,7 +38,9 @@
       {% endif %}
     </aside>
 
-    {{ post.description|default:post.content|default:post.summary|text:format }}
+    <blockquote>
+        {{ post.description|default:post.content|default:post.summary|text:format }}
+    </blockquote>
 
     <nav>
       {% for file in post|lookup:"attachment|content[@src]" %}
@@ -45,9 +49,9 @@
                     {% filter escape:'html' %}{% mimeinfo file.type %}{% endfilter %}" />
         </a>
       {% endfor %}
-      {% for tag in post.category %}
-        <a href="?tag={{ tag|escape:'url' }}">{{ tag }}</a>
-      {% endfor %}
+      {% for tag in post.category %}{% with tag=tag.text|default:tag %}
+        <a href="?tag={{ tag|escape:'url' }}&url={{ url|escape:'url' }}">{{ tag }}</a>
+      {% endwith %}{% endfor %}
     </nav>
   {% endmacro %}
   {% macro filterbar : tags authors %}{% if tags|length > 1 or authors|length > 1 %}
@@ -82,7 +86,7 @@
 
   {% entry post=feed level=1 %}
   {% filterbar tags=feed|lookup:"category"|uniqsort authors=feed|lookup:"author|contributor"|uniqsort %}
-  <main>{% for post in feed|lookup:"item|entry" %}
+  <main>{% for post in feed.item|default:feed.entry %}
     {% if Q.tag in post.category
         and (Q.author in post.author or Q.author in post.contributor) %}
       <section>{% entry level=3 %}</section>
@@ -112,7 +116,7 @@
         {% page-link link=feed|lookup:'link[@rel="previous"|@rel="prev-archive"]'|first
             title="Previous page"|trans label="↩" %}
         <em>{% date-of feed|lookup:"item|entry"|first %}
-          &emdash;
+          &mdash;
           {% date-of feed|lookup:"item|entry"|last %}</em>
         {% page-link link=feed|lookup:'link[@rel="next"|@rel="next-archive"]'|first
             title="Next page"|trans label="↪" %}
@@ -140,7 +144,7 @@
     // When load more is clicked, query the next pages inline
     //    until more results are found.
     var a = document.querySelector('#js-loadmore')
-    a.click = () => {
+    if (a) a.click = () => {
       var req = new XMLHttpRequest()
       req.open("GET", a.href);
       req.onload = () => {

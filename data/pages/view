@@ -7,8 +7,6 @@ So the viewers directory provides alternate renderers for those,
 {% if url.query.url %}
     {% with uri=url Q=url.query url=url.query.url %}
 
-    <base>{{ url }}</base>
-
     {% fetch %}{{ url|safe }}
     {% each as page mime %}
       {% include "viewers/" mime %}

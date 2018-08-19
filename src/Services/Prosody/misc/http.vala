@@ -136,6 +136,16 @@ namespace Odysseus.Templating.xHTTP {
             outputlock.exit();
         }
 
+        private static async string read_stream(InputStream stream) throws IOError {
+            var ret = new StringBuilder();
+            var buffer = new uint8[256];
+            ssize_t size = 0;
+            while ((size = yield stream.read_async(buffer)) > 0) {
+                ret.append_len((string) buffer, size);
+            }
+            return ret.str;
+        }
+
         private const string ACCEPTS = "application/json, text/tsv, text/tab-separated-values";
         private async Data.Data build_response_data(string mime, InputStream stream) throws Error {
             if ("json" in mime) {
@@ -145,10 +155,8 @@ namespace Odysseus.Templating.xHTTP {
             } else if ("xml" in mime) {
                 // Unfortunately libxml cannot read from an InputStream,
                 // So read the entire response into a string.
-                var b = new MemoryOutputStream.resizable();
-                yield b.splice_async(stream, 0);
-                var text = b.steal_data();
-                return new xXML.XML.with_doc(Xml.Parser.parse_memory((string) text, text.length));
+                var text = yield read_stream(stream);
+                return new xXML.XML.with_doc(Xml.Parser.parse_memory(text, text.length));
             } else if (mime == "text/tsv" || mime == "text/tab-separated-values") {
                 return yield x.readTSV(new DataInputStream(stream));
             }
