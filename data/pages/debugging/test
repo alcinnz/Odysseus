@@ -949,6 +949,54 @@ TRUE|FALSE
 {% output %}
   6077c7b4d82a2025d1af5335b6a2d312
 {% endtest %}
+{% test "|lookup" %}
+  {% for item in data|lookup:"hello" %}{{ item }}{% endfor %}
+{% input %}
+  {
+    "data": {
+      "hello": {
+        "foo": "bar",
+        "hello": "world",
+        "sna": "fu"
+      },
+      "foo": [
+        {"hello": "foo"},
+        {"sna": "fu"}
+      ],
+      "bar": {
+        "hello": "bar",
+        "what": {
+          "hello": "baz"
+        }
+      }
+    }
+  }
+{% output %}
+  {
+	foo =&gt; bar
+	hello =&gt; world
+	sna =&gt; fu}worldfoobarbaz
+{% endtest %}
+{% test "|filter" %}
+  {% for book in data|filter:"price < 35" %}
+    {{ book.title }}
+  {% endfor %}
+{% input %}
+  {
+    "data": [
+      {"price": 30, "title": "Everyday Italian"},
+      {"price": 29.99, "title": "Harry Potter"},
+      {"price": 49.99, "title": "XQuery Kickstart"},
+      {"price": 39.95, "title": "Learning XML"}
+    ]
+  }
+{% output %}
+  
+    Everyday Italian
+  
+    Harry Potter
+  
+{% endtest %}
 
   <h2>Data Sources</h2>
   <p>The other tests used JSON as a datasource, but Prosody can parse others too. But they'll have to be integrated into the testrunner in order to be tested.</p>
@@ -980,14 +1028,14 @@ TRUE|FALSE
   a
 {% endtest %}
 <p>Taken from <a href="https://www.w3schools.com/xml/xpath_examples.asp">W3Schools' tutorial</a>.</p>
-{% test "XPath" %}
-  {{ book|lookup:"/bookstore/book/title"|join:", " }}
-  {{ book|lookup:"/bookstore/book[1]/title"|join:", " }}
-  {{ book|lookup:"/bookstore/book/price[text()]"|join:", " }}
-  {{ book|lookup:"/bookstore/book[price>35]/price"|join:", " }}
-  {{ book|lookup:"/bookstore/book[price>35]/title"|join:", " }}
+{% test "|lookup & |filter" %}
+  {{ bookstore|lookup:"title"|join:", " }}
+  {{ bookstore|lookup:"book"|first|lookup:"title"|join:", " }}
+  {{ bookstore|lookup:"price"|join:", " }}
+  {{ bookstore|lookup:"book"|filter:"price > 35"|lookup:"price"|join:", " }}
+  {{ bookstore|lookup:"book"|filter:"price > 35"|lookup:"title"|join:", " }}
 {% input xml %}
-<bookstore>
+<data><bookstore>
 
 <book category="cooking">
   <title lang="en">Everyday Italian</title>
@@ -1021,7 +1069,7 @@ TRUE|FALSE
   <price>39.95</price>
 </book>
 
-</bookstore>
+</bookstore></data>
 {% output %}
   Everyday Italian, Harry Potter, XQuery Kick Start, Learning XML
   Everyday Italian

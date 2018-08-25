@@ -498,6 +498,25 @@ namespace Odysseus.Templating.Std {
         }
     }
 
+    private class FilterFilter : Filter {
+        public override Data.Data filter(Data.Data items, Data.Data condition) {
+            var lexed = smart_split(condition.to_bytes(), " \t");
+            Expression.Expression cond;
+            try {
+                cond = new Expression.Parser(lexed).expression();
+            } catch (SyntaxError err) {
+                return items;
+            }
+            var ret = new Gee.ArrayList<Data.Data>();
+
+            items.@foreach_map((_, item) => {
+                if (cond.eval(item)) ret.add(item);
+                return false;
+            });
+            return new Data.List(ret);
+        }
+    }
+
     private class FirstFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
             Data.Data ret = new Data.Empty();
@@ -576,8 +595,11 @@ namespace Odysseus.Templating.Std {
     }
 
     private class LookupFilter : Filter {
-        public override Data.Data filter(Data.Data a, Data.Data expression) {
-            return a.lookup(@"$expression");
+        public override Data.Data filter(Data.Data a, Data.Data items) {
+            var ret = new Gee.ArrayList<Data.Data>();
+            foreach (var item in @"$items".split(" "))
+                a.lookup(item, (d) => ret.add(d));
+            return new Data.List(ret);
         }
     }
 
@@ -676,6 +698,7 @@ namespace Odysseus.Templating.Std {
         register_filter("escapeURI", new EscapeURIFilter());
         register_filter("favicon", new x.FaviconFilter());
         register_filter("filesize", new FileSizeFormatFilter());
+        register_filter("filter", new FilterFilter());
         register_filter("first", new FirstFilter());
         register_filter("force-escape", new ForceEscape() {modes = escapes});
         register_filter("join", new JoinFilter());

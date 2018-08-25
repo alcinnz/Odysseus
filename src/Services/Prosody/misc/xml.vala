@@ -114,20 +114,23 @@ namespace Odysseus.Templating.xXML {
             }
         }
 
-        public override double to_double() {return 0.0;}
+        public override double to_double() {return double.parse(node->get_content());}
 
-        // How you access the full XML datamodel: XPath
-        public override Data.Data lookup(string query) {
-            if (node == null) return new Data.Empty();
-            var ctx = new Xml.XPath.Context(node->doc);
-            return new XPathResult(ctx.eval(query), locale);
+        private void lookup_internal(Xml.Node *self, string query, Data.Data.LookupCallback cb) {
+            for (Xml.Node *iter = self->children; iter != null; iter = iter->next) {
+                if (iter->name == query) cb(new XML(iter, locale));
+                lookup_internal(iter, query, cb);
+            }
+        }
+        public override void lookup(string query, Data.Data.LookupCallback cb) {
+            lookup_internal(node, query, cb);
         }
 
-        public static Gee.SortedSet<string> _items(Data.Data self) {
+        public override Gee.SortedSet<string> items() {
             var ret = new Gee.TreeSet<string>();
 
             var name = new Slice.s("name");
-            self.foreach_map((_, item_) => {
+            foreach_map((_, item_) => {
                 var namenode = item_[name];
                 if (namenode is Data.Empty) namenode = item_;
                 ret.add(@"$namenode");
@@ -135,36 +138,6 @@ namespace Odysseus.Templating.xXML {
             });
 
             return ret;
-        }
-        public override Gee.SortedSet<string> items() {return _items(this);}
-    }
-
-    private class XPathResult : Data.Data {
-        private Xml.XPath.Object *inner;
-        private string[] locale;
-        public XPathResult(Xml.XPath.Object *obj, string[] locale) {
-            this.inner = obj; this.locale = locale;
-        }
-
-        public override Data.Data get(Slice property_bytes) {
-            var property = @"$property_bytes";
-            uint64 index = 0;
-            if (property[0] == '$' &&
-                    uint64.try_parse(property[1:property.length], out index) &&
-                    index < inner->nodesetval->length()) {
-                return new XML(inner->nodesetval->item((int) index), locale);
-            }
-            return new Data.Empty();
-        }
-        public override void foreach(Data.Data.Foreach cb) {
-            Data.range(cb, inner->nodesetval->length());
-        }
-        public override string to_string() {return inner->stringval;}
-        public override bool exists {get {return inner->boolval != 0;}}
-        public override double to_double() {return inner->floatval;}
-
-        public override Gee.SortedSet<string> items() {
-            return XML._items(this);
         }
     }
 }

@@ -94,13 +94,13 @@ namespace Odysseus.Templating.Data {
         // Exposes (through a filter) traversal-based query languages
         //        for the particular data format.
         // Defaults to using our Variable syntax.
-        public virtual Data lookup(string query) {
-            try {
-                return new Variable(new Slice.s(query)).eval(this);
-            } catch (SyntaxError e) {
-                warning("Invalid syntax expression: %s", e.message);
-                return new Empty();
-            }
+        public delegate void LookupCallback(Data d);
+        public virtual void lookup(string query, LookupCallback cb) {
+            foreach_map((key, val) => {
+                if (query in key) cb(val);
+                val.lookup(query, cb);
+                return false;
+            });
         }
     }
 
@@ -188,6 +188,8 @@ namespace Odysseus.Templating.Data {
                 }
             }
         }
+
+        public override void lookup(string query, Data.LookupCallback cb) {/* pass */}
     }
 
     public class Substr : Data {
