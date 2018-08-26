@@ -921,11 +921,15 @@ TRUE|FALSE
   {% if DayOf_stars in doctors %}y{% else %}n{% endif %}
   {% if TimeOf_stars in doctors %}y{% else %}n{% endif %}
   {% if "christopher eccleston" in DayOf_stars %}y{% else %}n{% endif %}
+  {% if "matt smith" , "david tennant" in DayOf_stars %}y{% else %}n{% endif %}
+  {% if "matt smith" , "peter capaldi" in DayOf_stars %}y{% else %}n{% endif %}
 {% input %}{
   "doctors" : ["christopher eccleston", "david tennant", "matt smith", "peter capaldi"],
   "DayOf_stars" : ["matt smith", "david tennant", "john hurt"],
   "TimeOf_stars" : ["matt smith", "peter capaldi"]
 }{% output %}
+  y
+  n
   y
   n
   y

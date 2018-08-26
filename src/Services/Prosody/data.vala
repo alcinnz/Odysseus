@@ -119,6 +119,7 @@ namespace Odysseus.Templating.Data {
         public override int to_int(out bool is_length = null) {
             is_length = false; return 0;
         }
+        public override Gee.SortedSet<string> items() {return new Gee.TreeSet<string>();}
     }
 
     public class Literal : Data {

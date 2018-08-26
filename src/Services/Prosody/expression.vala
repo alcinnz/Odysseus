@@ -130,6 +130,8 @@ namespace Odysseus.Templating.Expression {
                     token = new In();
                 else if (packed == 0x25) /* "%" */
                     token = new Remainder();
+                else if (packed == 0x2C) /* "," */
+                    token = new Union();
                 else
                     token = new Value(arg);
             }
@@ -258,6 +260,20 @@ namespace Odysseus.Templating.Expression {
         public override double num(Data.Data d) {
             var a = (int) x.num(d); var b = (int) y.num(d);
             return (double) (a % b);
+        }
+    }
+
+    private class Union : Infix {
+        public override int lbp {get {return 199;}}
+        public override string name {get {return ",";}}
+
+        public override Gee.SortedSet<string> items(Data.Data d) {
+            var ret = x.items(d);
+            ret.add_all(y.items(d));
+            return ret;
+        }
+        public override double num(Data.Data d) {
+            return items(d).size;
         }
     }
 

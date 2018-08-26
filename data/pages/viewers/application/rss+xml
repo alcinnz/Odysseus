@@ -8,13 +8,14 @@
     @import url("odysseus:butterick.css");
 
     a[href^="mailto:"]:before {content: url(icon:16/mail-send);}
-    a[href^="?tag="]:before {content: url(icon:16/tag);}
+    a[href^="odysseus:view?tag="]:before {content: url(icon:16/tag);}
     iframe {
       width: 100%;
       height: 200px;
       resize: vertical;
     }
     blockquote {clear: both; white-space: pre-wrap;}
+    img {max-width: 100%; max-height: 200px;}
   </style>
   {% if feed.icon %}<link rel="shortcut icon" href="{{ feed.icon }}" />{% endif %}
 </head>
@@ -50,29 +51,31 @@
         </a>
       {% endfor %}
       {% for tag in post.category %}{% with tag=tag.text|default:tag %}
-        <a href="?tag={{ tag|escape:'url' }}&url={{ url|escape:'url' }}">{{ tag }}</a>
+        <a href="odysseus:view?tag={{ tag|escape:'url' }}&url={{ url|escape:'url' }}">{{ tag }}</a>
       {% endwith %}{% endfor %}
     </nav>
   {% endmacro %}
   {% macro filterbar : tags authors %}{% if tags|length > 1 or authors|length > 1 %}
-    <aside><form target="odysseus:view">
-      <input type="hidden" name="uri" value="{{ url }}" />
+    <aside><form action="odysseus:view" method="GET">
+      <input type="hidden" name="url" value="{{ url }}" />
+      <dl>
       {% if authors|length > 1 %}
-        <h3>{% trans %}Authors{% endtrans %}</h3>
-        <ul>{% for author in authors %}
-          <li><input type="checkbox" name="author" value="{{ author }}"
+        <dt>{% trans %}Authors{% endtrans %}</dt>
+        {% for author in authors %}
+          <dd><input type="checkbox" name="author" value="{{ author }}"
               {% if author in Q.author %}checked{% endif %} id="author-{{ author|md5 }}" />
-            <label for="author-{{ author|md5 }}">{{ author|title }}</label></li>
-        {% endfor %}</ul>
+            <label for="author-{{ author|md5 }}">{{ author|title }}</label></dd>
+        {% endfor %}
       {% endif %}
       {% if tags|length > 1 %}
-        <h3>{% trans %}Tags{% endtrans %}</h3>
-        <ul>{% for tag in tags %}
-          <li><input type="checkbox" name="tag" value="{{ tag }}"
+        <dt>{% trans %}Tags{% endtrans %}</dt>
+        {% for tag in tags %}
+          <dd><input type="checkbox" name="tag" value="{{ tag }}"
               {% if tag in Q.tag %}checked{% endif %} id="tag-{{ tag|md5 }}" />
-            <label for="tag-{{ tag|md5 }}">{{ tag|title }}</label></li>
-        {% endfor %}</ul>
+            <label for="tag-{{ tag|md5 }}">{{ tag|title }}</label></dd>
+        {% endfor %}
       {% endif %}
+      <button type="submit"><img src="icon:16/system-search-symbolic" /> Search</button>
     </form></aside>
   {% endif %}{% endmacro %}
 
@@ -87,14 +90,13 @@
   {% entry post=feed level=1 %}
   {% filterbar tags=feed|lookup:"category"|uniqsort authors=feed|lookup:"author contributor"|uniqsort %}
   <main>{% for post in feed.item|default:feed.entry %}
-    {% if Q.tag in post.category
-        and (Q.author in post.author or Q.author in post.contributor) %}
+    {% if Q.tag in post.category and Q.author in post.author , post.contributor %}
       <section>{% entry level=3 %}</section>
     {% endif %}
   {% endfor %}
   {% if Q.author or Q.tag %}
     <nav><a id="js-loadmore"
-        {% with link=feed.link|filter:'"next" in rel' %}
+        {% with link=feed.link|filter:'rel in "next" , "next-archive"' %}
         href="odysseus:view?url={{ link.href|base:url|escape:"url" }}&{{ Q }}">
         {% endwith %}
       {% trans %}Load more…{% endtrans %}
@@ -116,12 +118,12 @@
         {% macro date-of : $0=post %}{{ $0.pubDate|default:$0.published }}{% endmacro %}
 
         {% page-link cond="'first' in rel" title="First page"|trans label="↞" %}
-        {% page-link cond="'previous' , 'prev-archive' in rel"
+        {% page-link cond="rel in 'previous' , 'prev-archive'"
             title="Previous page"|trans label="↩" %}
         <em>{% date-of feed|lookup:"item entry"|first %}
           &mdash;
           {% date-of feed|lookup:"item entry"|last %}</em>
-        {% page-link cond="'next' , 'next-archive' in rel"
+        {% page-link cond="rel in 'next' , 'next-archive'"
             title="Next page"|trans label="↪" %}
         {% page-link cond="'last' in rel"
             title="Last page"|trans label="↠" %}
