@@ -100,5 +100,6 @@
         <file>view</file>
         <file>viewers/application/rss+xml</file>
         <file>viewers/application/atom+xml</file>
+        <file>viewers/text/xml</file>
     </gresource>
 </gresources>
