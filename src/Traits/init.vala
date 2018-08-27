@@ -42,6 +42,7 @@ namespace Odysseus.Traits {
     }
 
     public void setup_webview(WebTab tab) {
+        setup_other_mimetypes(tab); // Absolute first, overrides autodownload.
         setup_autodownload(tab); // This most come first, so as to cancel errors.
         setup_newtab_shortcuts(tab.web);
 
