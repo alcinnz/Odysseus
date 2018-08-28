@@ -27,12 +27,9 @@ namespace Odysseus.Database {
 
             /* FIXME This is deprecated, but the alternative isn't accessible
                 on the currently released version of WebKit. */
-            var fields = form.get_text_fields();
-            var keys = new Gee.ArrayList<string>();
-            var values = new Gee.ArrayList<string>();
-            fields.for_each((key, val) => {
-                keys.add((string) key); values.add((string) val);
-            });
+            GenericArray<string> keys;
+            GenericArray<string> values;
+            if (!form.list_text_fields(out keys, out values)) return;
 
             var builder = new StringBuilder();
 
@@ -41,7 +38,7 @@ namespace Odysseus.Database {
             // Build up attr list (assume pages are trusted).
             var table_index = -1;
             var first = true;
-            for (var i = 0; i < keys.size; i++) {
+            for (var i = 0; i < keys.length; i++) {
                 if (keys[i] == "$") {table_index = i;first = true;}
                 else {
                     if (!first) builder.append(", ");
@@ -57,7 +54,7 @@ namespace Odysseus.Database {
             // Now value list (this isn't trusted)
             var table_name = "";
             first = true;
-            for (var i = 0; i < values.size; i++) {
+            for (var i = 0; i < values.length; i++) {
                 if (i == table_index) {
                     table_name = values[i];
                     first = true; // Don't double up on seperators

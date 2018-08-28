@@ -154,7 +154,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
                     foreach (var uri in prompt_file(Gtk.FileChooserAction.SAVE, _("_Save As")))
                         web.save_to_file.begin(File.new_for_uri(uri), WebKit.SaveMode.MHTML, null);
                 }, Gdk.Key.S);
-            menu.link(_("_View Source"), "viewsource:…", (_) => viewsource_activated.begin(), Gdk.Key.U);
+            menu.link(_("_View Source"), "viewsource:///…", (_) => viewsource_activated.begin(), Gdk.Key.U);
             menu.separate();
             menu.add(_("Zoom In"), () => web.zoom_level += 0.1, Gdk.Key.plus);
             tools.shortcut(Gdk.Key.equal, () => web.zoom_level += 0.1);
