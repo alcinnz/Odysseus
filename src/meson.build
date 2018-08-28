@@ -5,7 +5,7 @@ header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
 overlay_widgets = ['FindToolbar', 'InfoContainer']
 traits = ['init', 'download-progress', 'download-window']
 nav_traits = ['viewsource', 'errors', 'autodownload', 'persist-tab-history',
-        'newtab', 'history']
+        'newtab', 'history', 'other-types']
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll',
         'fix-plus.google.com', 'fix-bg-videos']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
@@ -15,7 +15,8 @@ prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'slice']
 prosody_misc = ['json', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test',
         'AppStream', 'mimeinfo']
-prosody_misc = ['json', 'tsv', 'http', 'AppStream', 'mimeinfo', 'favicons',
+prosody_misc = ['http', 'AppStream', 'mimeinfo', 'favicons',
+        'json', 'tsv', 'xml',
         'diff', 'test', 'i18n']
 models = ['Download', 'DownloadSet', 'ImageUtil']
 
@@ -82,7 +83,8 @@ executable('com.github.alcinnz.odysseus',
         dependency('sqlite3'),
         dependency('unity'),
         dependency('appstream'),
-        posix_dep
+        posix_dep,
+        dependency('libxml-2.0')
     ],
     install: true
 )

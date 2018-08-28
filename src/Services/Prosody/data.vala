@@ -48,6 +48,10 @@ namespace Odysseus.Templating.Data {
         public virtual Slice to_bytes() {
             return new Slice.s(this.to_string());
         }
+        public virtual bool show(string arg, out Slice text) {
+            text = to_bytes();
+            return false; // UNSAFE!
+        }
 
         /* These methods/properties are used by important tags,
             as well as filters. */
@@ -75,6 +79,12 @@ namespace Odysseus.Templating.Data {
             return ret.to_array();
         }
 
+        public virtual Gee.SortedSet<string> items() {
+            var ret = new Gee.TreeSet<string>();
+            ret.add(to_string());
+            return ret;
+        }
+
         /* These methods are used by a variety of filters */
         public virtual double to_double() {return (double) to_int(); }
         public virtual int to_int(out bool is_length = null) {
@@ -84,13 +94,13 @@ namespace Odysseus.Templating.Data {
         // Exposes (through a filter) traversal-based query languages
         //        for the particular data format.
         // Defaults to using our Variable syntax.
-        public virtual Data lookup(string query) {
-            try {
-                return new Variable(new Slice.s(query)).eval(this);
-            } catch (SyntaxError e) {
-                warning("Invalid syntax expression: %s", e.message);
-                return new Empty();
-            }
+        public delegate void LookupCallback(Data d);
+        public virtual void lookup(string query, LookupCallback cb) {
+            foreach_map((key, val) => {
+                if (query in key) cb(val);
+                val.lookup(query, cb);
+                return false;
+            });
         }
     }
 
@@ -109,13 +119,12 @@ namespace Odysseus.Templating.Data {
         public override int to_int(out bool is_length = null) {
             is_length = false; return 0;
         }
+        public override Gee.SortedSet<string> items() {return new Gee.TreeSet<string>();}
     }
 
     public class Literal : Data {
         public Value data;
-        public Literal(Value v) {
-            this.data = v;
-        }
+        public Literal(Value v) {this.data = v;}
 
         public override void foreach_map(Data.ForeachMap cb) {
             if (data.holds(typeof(int)) || data.holds(typeof(double))) {
@@ -180,11 +189,14 @@ namespace Odysseus.Templating.Data {
                 }
             }
         }
+
+        public override void lookup(string query, Data.LookupCallback cb) {/* pass */}
     }
 
     public class Substr : Data {
         Slice data;
-        public Substr(Slice b) {this.data = b;}
+        bool safe;
+        public Substr(Slice b, bool safe = false) {this.data = b; this.safe = safe;}
 
         public override void foreach_map(Data.ForeachMap cb) {
             var text = to_string();
@@ -204,6 +216,9 @@ namespace Odysseus.Templating.Data {
 
         public override string to_string() {return @"$data";}
         public override Slice to_bytes() {return data;}
+        public override bool show(string _, out Slice output) {
+            output = data; return safe;
+        }
         public override bool exists {get {return data.length > 0;}}
 
         public override int to_int(out bool is_length = null) {
@@ -250,6 +265,11 @@ namespace Odysseus.Templating.Data {
         public override string to_string() {
             // This semantic is mostly useful for query parameters, as it nicely coerces between lists and arrays.
             return inner[0].to_string();
+        }
+        public override Gee.SortedSet<string> items() {
+            var ret = new Gee.TreeSet<string>();
+            foreach (var item in inner) ret.add(item.to_string());
+            return ret;
         }
         public override void foreach_map(Data.ForeachMap cb) {
             var index = 0;

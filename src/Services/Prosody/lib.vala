@@ -300,6 +300,39 @@ namespace Odysseus.Templating.Std {
         public IfChangedContext? next;
     }
 
+    private class IncludeBuilder : TagBuilder, Object {
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            var variables = new Gee.ArrayList<Variable>();
+            foreach (var arg in args) variables.add(new Variable(arg));
+
+            return new IncludeTag(variables.to_array(), parser.path);
+        }
+    }
+    private class IncludeTag : Template {
+        private Variable[] vars;
+        private string @base;
+        public IncludeTag(Variable[] vars, string @base) {
+            this.vars = vars; this.@base = @base;
+        }
+
+        public override async void exec(Data.Data ctx, Writer output) {
+            // 1. Resolve path
+            var relative = new StringBuilder();
+            foreach (var variable in vars) relative.append(variable.eval(ctx).to_string());
+            var basepath = File.new_for_path(this.@base).get_parent();
+            var absolute = basepath.resolve_relative_path(relative.str);
+
+            // 2. Render that template. This benefits heavily from caching.
+            ErrorData? error_data = null;
+            try {
+                yield get_for_resource(absolute.get_path(), ref error_data)
+                        .exec(ctx, output);
+            } catch (Error err) {
+                yield output.writes(@"<p style='color: red;'>$(err.message)</p>");
+            }
+        }
+    }
+
     /* This isn't tested, as it's intentionally non-determinate */
     private class RandomBuilder : TagBuilder, Object {
         public Template? build(Parser parser, WordIter args) throws SyntaxError {
@@ -352,8 +385,6 @@ namespace Odysseus.Templating.Std {
 
             WordIter? endtoken;
             var body = parser.parse("endwith", out endtoken);
-            if (endtoken == null) throw new SyntaxError.UNBALANCED_TAGS(
-                    "{%% with %%} must be closed with a {%% endwith %%} tag.");
 
             return new WithTag(parameters, body);
         }
@@ -407,6 +438,13 @@ namespace Odysseus.Templating.Std {
         }
     }
 
+    private class BaseFilter : Filter {
+        public override Data.Data filter(Data.Data relative, Data.Data _base) {
+            var normalized = new Soup.URI.with_base(new Soup.URI(@"$_base"), @"$relative");
+            return new Data.Literal(normalized.to_string(false));
+        }
+    }
+
     private class CapFirstFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
             var text = a.to_string();
@@ -457,6 +495,25 @@ namespace Odysseus.Templating.Std {
     private class FileSizeFormatFilter : Filter {
         public override Data.Data filter0(Data.Data a) {
             return new Data.Literal(format_size(a.to_int()));
+        }
+    }
+
+    private class FilterFilter : Filter {
+        public override Data.Data filter(Data.Data items, Data.Data condition) {
+            var lexed = smart_split(condition.to_bytes(), " \t");
+            Expression.Expression cond;
+            try {
+                cond = new Expression.Parser(lexed).expression();
+            } catch (SyntaxError err) {
+                return items;
+            }
+            var ret = new Gee.ArrayList<Data.Data>();
+
+            items.@foreach_map((_, item) => {
+                if (cond.eval(item)) ret.add(item);
+                return false;
+            });
+            return new Data.List(ret);
         }
     }
 
@@ -538,8 +595,11 @@ namespace Odysseus.Templating.Std {
     }
 
     private class LookupFilter : Filter {
-        public override Data.Data filter(Data.Data a, Data.Data expression) {
-            return a.lookup(@"$expression");
+        public override Data.Data filter(Data.Data a, Data.Data items) {
+            var ret = new Gee.ArrayList<Data.Data>();
+            foreach (var item in @"$items".split(" "))
+                a.lookup(item, (d) => ret.add(d));
+            return new Data.List(ret);
         }
     }
 
@@ -549,14 +609,23 @@ namespace Odysseus.Templating.Std {
         }
     }
 
+    private class MD5Filter : Filter {
+        public override Data.Data filter0(Data.Data text) {
+            var ret = Checksum.compute_for_bytes(ChecksumType.MD5, text.to_bytes()._);
+            return new Data.Literal(ret);
+        }
+    }
+
     private class SafeFilter : Filter {
         public override bool? should_escape() {return false;}
     }
 
     /* Explicit coercion potentially useful for working with SQL results or query params. */
     private class TextFilter : Filter {
-        public override Data.Data filter0(Data.Data text) {
-            return new Data.Literal(text.to_string());
+        public override Data.Data filter(Data.Data text, Data.Data arg) {
+            Slice ret;
+            var safe = text.show(@"$arg", out ret);
+            return new Data.Substr(ret, safe);
         }
     }
 
@@ -583,6 +652,18 @@ namespace Odysseus.Templating.Std {
         }
     }
 
+    private class UniqSortFilter : Filter {
+        public override Data.Data filter0(Data.Data a) {
+            var strings = a.items();
+            var ret = new Data.Data[strings.size];
+
+            var i = 0;
+            foreach (var item in strings) ret[i++] = new Data.Literal(item);
+
+            return new Data.List.from_array(ret);
+        }
+    }
+
 
 
 
@@ -596,6 +677,7 @@ namespace Odysseus.Templating.Std {
         register_tag("for", new ForBuilder());
         register_tag("if", new IfBuilder());
         register_tag("ifchanged", new IfChangedBuilder());
+        register_tag("include", new IncludeBuilder());
         register_tag("mimeinfo", new xMIMEInfo.MIMEInfoBuilder());
         register_tag("random", new RandomBuilder());
         register_tag("templatetag", new TemplateTagBuilder());
@@ -606,6 +688,7 @@ namespace Odysseus.Templating.Std {
 
         register_filter("add", new AddFilter());
         register_filter("alloc", new AllocateFilter());
+        register_filter("base", new BaseFilter());
         register_filter("capfirst", new CapFirstFilter());
         register_filter("cut", new CutFilter());
         register_filter("date", new DateFilter());
@@ -615,17 +698,22 @@ namespace Odysseus.Templating.Std {
         register_filter("escapeURI", new EscapeURIFilter());
         register_filter("favicon", new x.FaviconFilter());
         register_filter("filesize", new FileSizeFormatFilter());
+        register_filter("filter", new FilterFilter());
         register_filter("first", new FirstFilter());
         register_filter("force-escape", new ForceEscape() {modes = escapes});
         register_filter("join", new JoinFilter());
         register_filter("last", new LastFilter());
         register_filter("length", new LengthFilter());
         register_filter("lengthis", new LengthIsFilter());
+        register_filter("lookup", new LookupFilter());
         register_filter("lower", new LowerFilter());
+        register_filter("md5", new MD5Filter());
+        register_filter("mimeicon", new xMIMEInfo.MIMEIconFilter());
         register_filter("safe", new SafeFilter());
         register_filter("text", new TextFilter());
         register_filter("title", new TitleFilter());
         register_filter("trans", new xI18n.TransFilter());
+        register_filter("uniqsort", new UniqSortFilter());
 
         escapes["off"] = Gee.Map.empty<char,string>();
         escapes["html"] = Writer.html();

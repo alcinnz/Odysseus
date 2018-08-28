@@ -40,4 +40,11 @@ namespace Odysseus.Templating.xMIMEInfo {
             yield output.writes(@"($desc)");
         }
     }
+
+    public class MIMEIconFilter : Filter {
+        public override Data.Data filter0(Data.Data mime) {
+            var ret = ContentType.get_generic_icon_name(@"$mime");
+            return new Data.Literal(ret == null ? "unknown" : ret);
+        }
+    }
 }

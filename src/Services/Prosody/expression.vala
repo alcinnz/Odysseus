@@ -51,6 +51,10 @@ namespace Odysseus.Templating.Expression {
         public virtual double num(Data.Data ctx) {
             return eval(ctx) ? 1.0 : 0.0;
         }
+        // Added to support the `in` operator.
+        public virtual Gee.SortedSet<string> items(Data.Data ctx) {
+            return Gee.SortedSet.empty<string>();
+        }
     }
 
     public abstract class Infix : Expression {
@@ -122,8 +126,12 @@ namespace Odysseus.Templating.Expression {
                     token = new EqualTo();
                 else if (packed == 0x213D) /* "!=" */
                     token = new NotEqual();
+                else if (packed == 0x696E) /* "in" */
+                    token = new In();
                 else if (packed == 0x25) /* "%" */
                     token = new Remainder();
+                else if (packed == 0x2C) /* "," */
+                    token = new Union();
                 else
                     token = new Value(arg);
             }
@@ -236,6 +244,15 @@ namespace Odysseus.Templating.Expression {
         public override bool eval(Data.Data d) {return x.num(d) != y.num(d);}
     }
 
+    private class In : Infix {
+        public override int lbp {get {return 40;}}
+        public override string name {get {return "in";}}
+
+        public override bool eval(Data.Data d) {
+            return y.items(d).contains_all(x.items(d));
+        }
+    }
+
     private class Remainder : Infix {
         public override int lbp {get {return 50;}}
         public override string name {get {return "%";}}
@@ -243,6 +260,20 @@ namespace Odysseus.Templating.Expression {
         public override double num(Data.Data d) {
             var a = (int) x.num(d); var b = (int) y.num(d);
             return (double) (a % b);
+        }
+    }
+
+    private class Union : Infix {
+        public override int lbp {get {return 199;}}
+        public override string name {get {return ",";}}
+
+        public override Gee.SortedSet<string> items(Data.Data d) {
+            var ret = x.items(d);
+            ret.add_all(y.items(d));
+            return ret;
+        }
+        public override double num(Data.Data d) {
+            return items(d).size;
         }
     }
 
@@ -258,5 +289,8 @@ namespace Odysseus.Templating.Expression {
 
         public override bool eval(Data.Data d) {return exp.eval(d).exists;}
         public override double num(Data.Data d) {return exp.eval(d).to_double();}
+        public override Gee.SortedSet<string> items(Data.Data d) {
+            return exp.eval(d).items();
+        }
     }
 }

@@ -20,6 +20,7 @@
         <file>debugging/test</file>
         <file>debugging/index</file>
         <file>debugging/syntaxerror0</file>
+        <file>debugging/include-test</file>
 
         <file>ext/highlight.pack.js</file>
         <file>ext/highlight.pack.js.mime</file>
@@ -95,5 +96,10 @@
         <file>errors/no-source</file>
         <file>errors/schema</file>
         <file>errors/uri</file>
+
+        <file>view</file>
+        <file>viewers/application/rss+xml</file>
+        <file>viewers/application/atom+xml</file>
+        <file>viewers/text/xml</file>
     </gresource>
 </gresources>

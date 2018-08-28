@@ -29,7 +29,7 @@ namespace Odysseus.Traits {
             return "odysseus:errors/no-source"; // Don't go through
         }
 
-        var url = "source:" + source.get_main_resource().uri;
+        var url = "source:///" + source.get_main_resource().uri;
         if (sources == null) sources = new Gee.HashMap<string, Source>();
         sources[url] = data;
         return url;

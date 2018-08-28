@@ -1,0 +1,3 @@
+{# Try to infer type if server responds with an XML file. Otherwise viewsource. #}
+{% if page.channel %}{% include "../application/rss+xml" %}
+{% else %}{{ xml|text:"xhtml" }}{% endif %}

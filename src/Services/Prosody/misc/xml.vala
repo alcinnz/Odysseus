@@ -22,61 +22,122 @@ For simple cases, this naively coerces to the Prosody data model (a coercion tha
     is actually helpful for handling RSS/Atom), but for more complex cases
     it exposes XPath support. */
 namespace Odysseus.Templating.xXML {
-    using Data;
+    public class XML : Data.Data {
+        protected Xml.Node *node;
+        string[] locale;
+        public XML(Xml.Node *node, string[] locale = Intl.get_language_names()) {
+            this.node = node;
+            this.locale = locale;
+        }
+        public XML.with_doc(Xml.Doc *node, string[] locale = Intl.get_language_names()) {
+            this(node->get_root_element(), locale);
+        }
 
-    public class XML : Data {
-        private Xml.Node *node;
-        public XML(Xml.Node *node) {this.node = node;}
+        public override bool exists {get {return true;}}
 
-        public override Data get(Slice property) {
-            var prop = @"$property";
+        public override Data.Data get(Slice property) {
+            var self = get_localized(); // Only traverse localized nodes.
+            if (self == null) return new Data.Empty();
+
             // First lookup amongst the properties
-            for (Xml.Attr *iter = node->properties; iter != null; iter = iter->next) {
-                if (iter->name == prop) return new XML(iter->children);
+            for (Xml.Attr *iter = self->properties; iter != null; iter = iter->next) {
+                if (iter->name in property) return new XML(iter->children, locale);
             }
             // Second lookup amongst child nodes
-            for (Xml.Node *iter = node->children; iter != null; iter = iter->next) {
-                if (iter->name == prop) return new XML(iter);
+            for (Xml.Node *iter = self->children; iter != null; iter = iter->next) {
+                if (iter->name in property) return new XML(iter, locale);
             }
 
-            return new Empty();
+            return new Data.Empty();
         }
+
+        private Xml.Node *get_localized() {
+            var ret = node; Xml.Node* unlocalized = null;
+            for (; ret != null; ret = ret->next) {
+                if (ret->name != node->name) continue;
+                var lang = ret->get_prop("lang");
+                if (unlocalized == null && lang == null)
+                    unlocalized = ret;
+                if (lang != null && lang in locale) break;
+            }
+
+            return ret != null ? ret : unlocalized;
+        }
+        private bool is_sanitary(Xml.Node *node) {
+            var ctx = new Xml.XPath.Context(node->doc);
+            return ctx.eval("script|style")->nodesetval->is_empty();
+        }
+
         public override string to_string() {
-            return node->get_content();
+            var self = get_localized();
+            return self == null ? "" : self->get_content();
         }
-        public override bool exists {get {return true;}}
-        public override void foreach_map(Data.ForeachMap cb) {
-            for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
-                if (cb(b(iter->name), new XML(iter))) return;
+        public override bool show(string defaultType, out Slice text) {
+            var self = get_localized();
+            if (self == null) {text = new Slice(); return true;}
+            var type = self->get_prop("type");
+            if (type == null) type = defaultType;
+
+            text = new Slice.s(self->get_content());
+            switch (type) {
+            case "xhtml":
+                var output = new Xml.Buffer();
+                for (var iter = self->children; iter != null; iter = iter->next) {
+                    if (output.node_dump(iter->doc, iter, 0, 1) == 0) return false;
+                }
+                text = new Slice.s(output.content());
+                return is_sanitary(self);
+            case "html":
+                var html = Html.Doc.read_doc(@"$text", "about:blank");
+                if (html == null) return false;
+
+                return is_sanitary(html->get_root_element());
+            case "text":
+                return false;
+            case "":
+                return false;
+            default:
+                info("Encountered unsupported type= attribute.");
+                return false;
             }
         }
-        public override double to_double() {return 0.0;}
-        // How you access the full XML datamodel: XPath
-        public override Data lookup(string query) {
-            var ctx = new Xml.XPath.Context(node);
-            return new XPathResult(ctx.eval(query));
-        }
-    }
 
-    private class XPathResult : Data {
-        private Xml.XPath.Object *inner;
-        public XPathResult(Xml.XPath.Object *obj) {return this.inner = obj;}
-
-        public override Data get(Slice property) {
-            var property = @"$property_bytes";
-            uint64 index = 0;
-            if (property[0] == '$' &&
-                    uint64.try_parse(property[1:0], out index) &&
-                    index < inner->nodesetval->length()) {
-                return new XML(inner->nodesetval->item((int) index));
+        public override void foreach_map(Data.Data.ForeachMap cb) {
+            var _ = new Slice();
+            for (Xml.Node* iter = node; iter != null; iter = iter->next) {
+                if (iter->name == node->name &&
+                        // localize!
+                        (iter->has_prop("lang") == null ||
+                        iter->get_prop("lang") in locale)) {
+                    if (cb(_, new XML(iter, locale))) return;
+                }
             }
-            return new Empty();
         }
-        public override void foreach_map(Data.ForeachMap cb) {
-            range(cb, inner->nodesetval.length());
+
+        public override double to_double() {return double.parse(node->get_content());}
+
+        private void lookup_internal(Xml.Node *self, string query, Data.Data.LookupCallback cb) {
+            for (Xml.Node *iter = self->children; iter != null; iter = iter->next) {
+                if (iter->name == query) cb(new XML(iter, locale));
+                lookup_internal(iter, query, cb);
+            }
         }
-        public override string to_string() {return inner->stringval;}
-        public override bool exists {get {return inner->boolval;}}
-        public override int to_double() {return inner->floatval;}
+        public override void lookup(string query, Data.Data.LookupCallback cb) {
+            lookup_internal(node, query, cb);
+        }
+
+        public override Gee.SortedSet<string> items() {
+            var ret = new Gee.TreeSet<string>();
+
+            var name = new Slice.s("name");
+            foreach_map((_, item_) => {
+                var namenode = item_[name];
+                if (namenode is Data.Empty) namenode = item_;
+                ret.add(@"$namenode");
+                return false;
+            });
+
+            return ret;
+        }
     }
 }

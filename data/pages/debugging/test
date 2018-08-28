@@ -54,7 +54,7 @@
   <h2>Canaries</h2>
   <p>If these fail it means the test runner isn't working right.</p>
 
-{% test "Without Input" reset %}
+{% test "Without Input" %}
 Beware of sirens!
 {% output %}
 Beware of sirens!
@@ -69,14 +69,14 @@ Beware of sirens!
 {% endtest %}
 
 {% test "Mismatch reporting" %} 
-  {% test "This should fail" ignore %}
+  {% test "This should fail" %}
     My name is Joe Smith
   {% output %}
     I am John Smith
   {% endtest %}
 {% output %} 
-  <details style='opacity: 75%;'>
-	<summary style='background: red;' title='Ignored FAILURE'>This should fail</summary>
+  <details>
+	<summary style='background: red;' title='FAILURE'>This should fail</summary>
 	<table>
 		<tr><th>Test Code</th><th>Test Input</th></tr>
 		<tr><td><pre>
@@ -92,14 +92,14 @@ Beware of sirens!
 </details>
 {% endtest %}
 {% test "Syntax error reporting" %}
-  {% test "This should fail" ignore %}
+  {% test "This should fail" %}
     {% 404 %}
   {% output %}
     
   {% endtest %}
 {% output %}
-  <details style='opacity: 75%'>
-	<summary style='background: yellow' title='Ignored ERROR'>This should fail</summary>
+  <details>
+	<summary style='background: yellow' title='ERROR'>This should fail</summary>
 	<h3>odysseus_templating_syntax_error-quark thrown :: While Parsing <code>{% 404 %}</code></h3>
 	<p>Unknown tag &apos;404&apos;</p>
 </details>
@@ -904,6 +904,292 @@ TRUE|FALSE
 <b>O</b><i>ddyssey</i>
 {% endtest %}
 {% test "|title" %}{{ "oDDitY twiCE"|title }}{% output %}Oddity Twice{% endtest %}
+
+  <h2>Tags & filters used by viewers</h2>
+  <p>Viewers make use of some addional extended tags. All of them are triggered
+    using an <code>include</code> tag. And the feed viewer needs these extra
+    facilities predominantly for filtering the results.</p>
+{% test "|base" %}
+  {{ "../a/b/c/"|base:"https://example.com/x/y/z" }}
+  {{ "../x/y/z"|base:"https://example.com/a/b/c/" }}
+{% output %}
+  https://example.com/x/a/b/c/
+  https://example.com/a/b/x/y/z
+{% endtest %}
+{% test "in operator" %}
+  {% if "matt smith" in doctors %}y{% else %}n{% endif %}
+  {% if DayOf_stars in doctors %}y{% else %}n{% endif %}
+  {% if TimeOf_stars in doctors %}y{% else %}n{% endif %}
+  {% if "christopher eccleston" in DayOf_stars %}y{% else %}n{% endif %}
+  {% if "matt smith" , "david tennant" in DayOf_stars %}y{% else %}n{% endif %}
+  {% if "matt smith" , "peter capaldi" in DayOf_stars %}y{% else %}n{% endif %}
+{% input %}{
+  "doctors" : ["christopher eccleston", "david tennant", "matt smith", "peter capaldi"],
+  "DayOf_stars" : ["matt smith", "david tennant", "john hurt"],
+  "TimeOf_stars" : ["matt smith", "peter capaldi"]
+}{% output %}
+  y
+  n
+  y
+  n
+  y
+  n
+{% endtest %}
+{% test "{% include %}" %}
+  {% with pong="boo!" %}{% include "include-" "test" %}{% endwith %}
+{% output %}
+  This is a template to test if it can be included using the `include` tag. Embedder said "boo!".
+
+{% endtest %}
+{% test "|uniqsort" %}
+  {% for c in data|uniqsort %}{{ c }}{% endfor %}
+{% input %}
+  { "data" : ["a","b","r","a","c","a","d","a","b","r","a"] }
+{% output %}
+  abcdr
+{% endtest %}
+{% test "|md5" %}
+  {{ "odysseus"|md5 }}
+{% output %}
+  6077c7b4d82a2025d1af5335b6a2d312
+{% endtest %}
+{% test "|lookup" %}
+  {% for item in data|lookup:"hello" %}{{ item }}{% endfor %}
+{% input %}
+  {
+    "data": {
+      "hello": {
+        "foo": "bar",
+        "hello": "world",
+        "sna": "fu"
+      },
+      "foo": [
+        {"hello": "foo"},
+        {"sna": "fu"}
+      ],
+      "bar": {
+        "hello": "bar",
+        "what": {
+          "hello": "baz"
+        }
+      }
+    }
+  }
+{% output %}
+  {
+	foo =&gt; bar
+	hello =&gt; world
+	sna =&gt; fu}worldfoobarbaz
+{% endtest %}
+{% test "|filter" %}
+  {% for book in data|filter:"price < 35" %}
+    {{ book.title }}
+  {% endfor %}
+{% input %}
+  {
+    "data": [
+      {"price": 30, "title": "Everyday Italian"},
+      {"price": 29.99, "title": "Harry Potter"},
+      {"price": 49.99, "title": "XQuery Kickstart"},
+      {"price": 39.95, "title": "Learning XML"}
+    ]
+  }
+{% output %}
+  
+    Everyday Italian
+  
+    Harry Potter
+  
+{% endtest %}
+
+  <h2>Data Sources</h2>
+  <p>The other tests used JSON as a datasource, but Prosody can parse others too. But they'll have to be integrated into the testrunner in order to be tested.</p>
+
+  <h3>XML</h3>
+  <p>At the moment this is being used to support webfeeds. And it's specifically geared towards aiding with that.</p>
+
+{% test "XML attribute paths, ignores namespaces" %}
+  {{ foo|join }}
+  {{ sna|join }}
+  {{ hello|join }}
+  {{ v|join }}
+  {{ alpha|join }}
+{% input xml %}
+  <data xmlns:a="https://example.com/a" xmlns:b="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" a:sna="fu" hello="world!" b:alpha="a">
+    <a:v>x</a:v>
+    <foo>bar</foo>
+    <b:v>y</b:v>
+    <a:hello>kitty</a:hello>
+    <v>z</v>
+    <b:alpha>b</b:alpha>
+    <alpha>c</alpha>
+  </data>
+{% output %}
+  bar
+  fu
+  world!
+  xyz
+  a
+{% endtest %}
+<p>Taken from <a href="https://www.w3schools.com/xml/xpath_examples.asp">W3Schools' tutorial</a>.</p>
+{% test "|lookup & |filter" %}
+  {{ bookstore|lookup:"title"|join:", " }}
+  {{ bookstore|lookup:"book"|first|lookup:"title"|join:", " }}
+  {{ bookstore|lookup:"price"|join:", " }}
+  {{ bookstore|lookup:"book"|filter:"price > 35"|lookup:"price"|join:", " }}
+  {{ bookstore|lookup:"book"|filter:"price > 35"|lookup:"title"|join:", " }}
+{% input xml %}
+<data><bookstore>
+
+<book category="cooking">
+  <title lang="en">Everyday Italian</title>
+  <author>Giada De Laurentiis</author>
+  <year>2005</year>
+  <price>30.00</price>
+</book>
+
+<book category="children">
+  <title lang="en">Harry Potter</title>
+  <author>J K. Rowling</author>
+  <year>2005</year>
+  <price>29.99</price>
+</book>
+
+<book category="web">
+  <title lang="en">XQuery Kick Start</title>
+  <author>James McGovern</author>
+  <author>Per Bothner</author>
+  <author>Kurt Cagle</author>
+  <author>James Linn</author>
+  <author>Vaidyanathan Nagarajan</author>
+  <year>2003</year>
+  <price>49.99</price>
+</book>
+
+<book category="web">
+  <title lang="en">Learning XML</title>
+  <author>Erik T. Ray</author>
+  <year>2003</year>
+  <price>39.95</price>
+</book>
+
+</bookstore></data>
+{% output %}
+  Everyday Italian, Harry Potter, XQuery Kick Start, Learning XML
+  Everyday Italian
+  30.00, 29.99, 49.99, 39.95
+  49.99, 39.95
+  XQuery Kick Start, Learning XML
+{% endtest %}
+{% test "|uniqsort" %}
+  {{ item|uniqsort|join }}
+{% input xml %}
+  <data>
+    <item>a</item>
+    <item><name>b</name></item>
+    <item name="c" />
+    <item name="d">e</item>
+    <item><name>f</name></item>
+    <item><name>g</name>h</item>
+  </data>
+{% output %}
+  abcdfg
+{% endtest %}
+{% test "XML localization" %}
+  {{ channel.post|join }}
+{% input xml %}
+  <data>
+    <channel xml:lang="cz">
+      <post>a</post>
+      <post xml:lang="fr">b</post>
+      <post xml:lang="en">c</post>
+    </channel>
+    <channel xml:lang="en">
+      <post xml:lang="cz">d</post>
+      <post xml:lang="en">e</post>
+      <post>ff</post>
+    </channel>
+  </data>
+{% output %}
+  eff
+{% endtest %}
+
+  <p>Please note the following tests requires data to be able to declare itself safe in HTML.</p>
+{% test "handling of type=xhtml" %}
+  {{ data }}
+  {{ data|text:"text" }}
+{% input xml %}
+  <root><data type="xhtml">
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  </data></root>
+{% output %}
+  
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  
+  
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  
+{% endtest %}
+{% test "handling of type=html" %}
+  {{ data }}
+  {{ data|text:"text" }}
+{% input xml %}
+  <root><data type="html">
+    &lt;h1>Success&lt;/h1>
+    &lt;p>If the above's a header, this test has passed&lt;/p>
+  </data></root>
+{% output %}
+  
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  
+  
+    <h1>Success</h1>
+    <p>If the above's a header, this test has passed</p>
+  
+{% endtest %}
+{% test "Can set fallback type=s to text coercion" %}
+  {{ data|text:"xhtml" }}
+  {{ data|text:"html" }}
+  {{ data|text:"text" }}
+{% input xml %}
+  <root><data>
+    <h1>Success</h1>
+    <p>If the above's a &lt;strong>header&lt;/strong>, this test has passed</p>
+  </data></root>
+{% output %}
+  
+    <h1>Success</h1>
+    <p>If the above's a &lt;strong&gt;header&lt;/strong&gt;, this test has passed</p>
+  
+  
+    Success
+    If the above's a <strong>header</strong>, this test has passed
+  
+  
+    Success
+    If the above&apos;s a &lt;strong&gt;header&lt;/strong&gt;, this test has passed
+  
+{% endtest %}
+  <p>What output this gives isn't really important,
+    as long as it does not allow malformed HTML, script tags, and style tags in.</p>
+{% test "HTML sanitization" %}
+  {{ test|join:"\n" }}
+{% input xml %}
+  <data>
+    <test type="html">&lt;script>alert("Failed!");&lt;/script></test>
+    <test type="html">&lt;style>body {background: red;}&lt;/style></test>
+    <test type="html">&lt;/details></test>
+  </data>
+{% output %}
+  &lt;script&gt;alert(&quot;Failed!&quot;);&lt;/script&gt;
+&lt;style&gt;body {background: red;}&lt;/style&gt;
+&lt;/details&gt;
+{% endtest %}
+
 
   {% test-report %}
   <script src="odysseus:ext/highlight.pack.js"></script>

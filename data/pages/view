@@ -1,0 +1,17 @@
+{# Various MIMEtypes will have special meaning to Odysseus,
+  but renders really poorly in WebKit.
+
+So the viewers directory provides alternate renderers for those,
+  and this template loads the appropriate one. #}
+<!DOCTYPE html>
+{% if url.query.url %}
+    {% with uri=url Q=url.query url=url.query.url %}
+
+    {% fetch %}{{ url|safe }}
+    {% each as page mime %}
+      {% include "viewers/" mime %}
+    {% endfetch %}
+    {% endwith %}
+{% else %}
+    <form><input type="text" name="url" value="{{ url.query.url }}" /></form>
+{% endif %}
