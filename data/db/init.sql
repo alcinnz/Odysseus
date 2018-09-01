@@ -50,9 +50,6 @@
   ALTER TABLE tab ADD COLUMN historical_id DEFAULT 0;
 {% endif %}
 
-{% query %}{# Must be loaded for each process.#}
-  SELECT load_extension('/usr/share/Odysseus/libfts5.so');
-{% endquery silence-errors %}
 {% if v < 3 %}
   CREATE VIRTUAL TABLE history_fts USING fts5(uri, title,
     tokenize = 'porter unicode61', content = 'page_visit',

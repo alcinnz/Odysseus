@@ -1,4 +1,0 @@
-This directory contains third party code outside of Odysseus's executable file.
-
-Currently it just contains SQLite's FTS5 extension, which is used to implement
-all the conveniences of history search. 
