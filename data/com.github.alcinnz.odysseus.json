@@ -94,15 +94,6 @@
             ]
         },
         {
-            "name" : "libstemmer",
-            "sources" : [
-                {
-                    "type" : "git",
-                    "url" : "https://github.com/snowballstem/snowball.git"
-                }
-            ]
-        },
-        {
             "name" : "appstream",
             "buildsystem" : "meson",
             "sources" : [
@@ -110,6 +101,10 @@
                     "type" : "git",
                     "url" : "https://github.com/ximion/appstream.git"
                 }
+            ],
+            "config-opts" : [
+                "-Dstemming=false",
+                "-Dvapi=true"
             ]
         },
         {
