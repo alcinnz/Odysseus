@@ -25,6 +25,13 @@ Building
 
 First ensure Git, Meson, Ninja, and the Vala compiler are installed, along with the GTK+ 3, [Granite](https://github.com/elementary/granite), WebKit2 GTK, LibJSON GLib, LibSoup 2.4, SQLite 3, [LibUnity](https://launchpad.net/libunity), and LibAppStream developer packages.
 
+On elementary OS these dependencies can be installed with:
+
+    sudo apt install meson valac libgtk-3-dev libsqlite3-dev libwebkit2gtk-4.0-dev
+    sudo apt install libgranite-dev libjson-glib-dev libsoup2.4-dev libunity-dev libappstream-dev
+
+If your on other Debian-based distributions these commands should still work, except you may find the libgranite-dev package is unavailable. You may need to follow their [installation instructions](https://github.com/elementary/granite).
+
 Then within the repository's root run the fullowing commands (or some OS-specific variation):
 
     mkdir build
