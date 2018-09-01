@@ -22,8 +22,12 @@ namespace Odysseus.Templating.x {
         public override Data.Data filter0(Data.Data a) {
             var db = get_web_context().get_favicon_database();
             var uri = db.get_favicon_uri(@"$a");
-            return new Data.Literal(uri == null ?
-                "icon:16/text-x-generic" : uri);
+            if (uri == null) {
+                var soup = new Soup.URI(@"$a");
+                soup = new Soup.URI.with_base(soup, "/favicon.ico");
+                uri = soup.to_string(false);
+            }
+            return new Data.Literal(uri);
         }
     }
 }
