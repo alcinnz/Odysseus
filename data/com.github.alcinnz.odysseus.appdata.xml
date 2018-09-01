@@ -73,47 +73,46 @@ matter to you.</p>
   </provides>
 
   <releases>
-    <release version="1.0.4" date="2017-12-23">
+    <release version="1.5.2" date="2018-07-28">
       <description>
-        <p>Offers a very smooth browsing and downloads experience.</p>
-        <p>First AppCenter release, so Merry Christmas!</p>
+        <p>Renders nice previews for webfeeds.</p>
+        <p>Fixes regressions with topsites interactions and viewsource.</p>
       </description>
     </release>
-    <release version="1.0.7" date="2017-12-29">
+    <release version="1.5.1" date="2018-07-19">
+      <description><p>Fixes for Juno.</p></description>
+    </release>
+    <release version="1.5.0" date="2018-06-29">
       <description>
-        <p>Disable broken WebInspector for now.</p>
-        <p>If you have the know-how to fix https://github.com/alcinnz/Odysseus/issues/54, please help.</p>
+        <p>Topsites performance and design improvements.</p>
+        <p>Add indicators for menuitems that are links.</p>
       </description>
     </release>
-    <release version="1.0.8" date="2017-12-29">
+    <release version="1.4.1" date="2018-06-04">
       <description>
-        <p>Bugfix: a tab always remains open in each window.</p>
+        <p>Major performance improvements in regards to internal pages. i.e. stops wasting time wasting memory.</p>
+        <p>Recommends apps for unsupported URL and file types.</p>
+        <p>Improved accessibility of the downloads bar.</p>
       </description>
     </release>
-    <release version="1.0.10" date="2017-12-29">
+    <release version="1.4.0" date="2018-05-26">
       <description>
-        <p>Hopefully this makes it display better in AppCenter.</p>
+        <p>Fills in gaps within the topsites display with my recommendations.</p>
+        <p>More succinct text in download notifications.</p>
       </description>
     </release>
-    <release version="1.0.11" date="2018-01-02">
+    <release version="1.3.0" date="2010-04-13">
       <description>
-        <p>Adds more keyboard and middle click shortcuts.</p>
-        <p>Fixes links displayed in AppCenter.</p>
+        <p>You can customize the topsites on odysseus:home!</p>
+        <p>Minor optimizations to odysseus:history.</p>
       </description>
     </release>
-    <release version="1.0.12" date="2018-01-03">
+    <release version="1.2.3" date="2018-03-27">
       <description>
-        <p>Now speaks Czech.</p>
-        <p>Tabs now open in background.</p>
-        <p>Short-term style fix for plus.google.com.</p>
-        <p>Preparations for more localization.</p>
-      </description>
-    </release>
-    <release version="1.2.0" date="2018-03-18">
-      <description>
-        <p>Natural search of your browser history</p>
-        <p>Added useful "hints" to the footer of the newtab page, which may link to a new credits page.</p>
-        <p>Reduced prevalance of the "loading" message.</p>
+        <p>Your most visited pages are now linked to from the newtab page.</p>
+        <p>Now speaks French and Portuguese.</p>
+        <p>Added credits page to thank contributors.</p>
+        <p>More minor UI corrections.</p>
       </description>
     </release>
     <release version="1.2.2" date="2018-03-21">
@@ -125,46 +124,47 @@ matter to you.</p>
         <p>Added a privacy notice.</p>
       </description>
     </release>
-    <release version="1.2.3" date="2018-03-27">
+    <release version="1.2.0" date="2018-03-18">
       <description>
-        <p>Your most visited pages are now linked to from the newtab page.</p>
-        <p>Now speaks French and Portuguese.</p>
-        <p>Added credits page to thank contributors.</p>
-        <p>More minor UI corrections.</p>
+        <p>Natural search of your browser history</p>
+        <p>Added useful "hints" to the footer of the newtab page, which may link to a new credits page.</p>
+        <p>Reduced prevalance of the "loading" message.</p>
       </description>
     </release>
-    <release version="1.3.0" date="2010-04-13">
+    <release version="1.0.12" date="2018-01-03">
       <description>
-        <p>You can customize the topsites on odysseus:home!</p>
-        <p>Minor optimizations to odysseus:history.</p>
+        <p>Now speaks Czech.</p>
+        <p>Tabs now open in background.</p>
+        <p>Short-term style fix for plus.google.com.</p>
+        <p>Preparations for more localization.</p>
       </description>
     </release>
-    <release version="1.4.0" date="2018-05-26">
+    <release version="1.0.11" date="2018-01-02">
       <description>
-        <p>Fills in gaps within the topsites display with my recommendations.</p>
-        <p>More succinct text in download notifications.</p>
+        <p>Adds more keyboard and middle click shortcuts.</p>
+        <p>Fixes links displayed in AppCenter.</p>
       </description>
     </release>
-    <release version="1.4.1" date="2018-06-04">
+    <release version="1.0.10" date="2017-12-29">
       <description>
-        <p>Major performance improvements in regards to internal pages. i.e. stops wasting time wasting memory.</p>
-        <p>Recommends apps for unsupported URL and file types.</p>
-        <p>Improved accessibility of the downloads bar.</p>
+        <p>Hopefully this makes it display better in AppCenter.</p>
       </description>
     </release>
-    <release version="1.5.0" date="2018-06-29">
+    <release version="1.0.8" date="2017-12-29">
       <description>
-        <p>Topsites performance and design improvements.</p>
-        <p>Add indicators for menuitems that are links.</p>
+        <p>Bugfix: a tab always remains open in each window.</p>
       </description>
     </release>
-    <release version="1.5.1" date="2018-07-19">
-      <description><p>Fixes for Juno.</p></description>
-    </release>
-    <release version="1.5.2" date="2018-07-28">
+    <release version="1.0.7" date="2017-12-29">
       <description>
-        <p>Renders nice previews for webfeeds.</p>
-        <p>Fixes regressions with topsites interactions and viewsource.</p>
+        <p>Disable broken WebInspector for now.</p>
+        <p>If you have the know-how to fix https://github.com/alcinnz/Odysseus/issues/54, please help.</p>
+      </description>
+    </release>
+    <release version="1.0.4" date="2017-12-23">
+      <description>
+        <p>Offers a very smooth browsing and downloads experience.</p>
+        <p>First AppCenter release, so Merry Christmas!</p>
       </description>
     </release>
   </releases>
