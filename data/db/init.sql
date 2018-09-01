@@ -20,6 +20,8 @@
 --      the user_version pragma on the last line.
 -- Please note the piping into SQLite requires the SQL statements to be
 --      unbroken by Prosody templating tags/variables.
+BEGIN TRANSACTION;
+
 {% if v < 1 %}
   CREATE TABLE window(
     x, y, width, height, state,
@@ -85,3 +87,4 @@
 {% endif %}
 
 PRAGMA user_version = 6;
+END TRANSACTION;
