@@ -108,6 +108,19 @@
             ]
         },
         {
+            "name" : "sqlite3+FTS5",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://sqlite.org/2018/sqlite-autoconf-3240000.tar.gz",
+                    "sha1" : "da68915e3563b5244cbcdb6c7e20fb35559bcfc6"
+                }
+            ],
+            "config-opts" : [
+                "--enable-fts5"
+            ]
+        },
+        {
             "name" : "Odysseus",
             "buildsystem" : "meson",
             "sources" : [
