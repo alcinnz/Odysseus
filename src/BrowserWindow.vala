@@ -19,6 +19,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     private WebKit.WebView web {get {return tabs.web;}}
     public WebNotebook tabs;
     private DownloadsBar downloads;
+    public Odysseus.Header.AddressBar addressbar; // So it can be autofocused.
 
     public bool closing = false;
 
@@ -131,7 +132,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         tools.pack_start(reload_stop);
 
-        var addressbar = new Odysseus.Header.AddressBar();
+        addressbar = new Odysseus.Header.AddressBar();
         tools.size_allocate.connect((box) => addressbar.max_width = box.width);
         addressbar.tooltip_text = _("Current web address") + " (Ctrl+L)";
         addressbar.navigate_to.connect((url) => web.load_uri(url));

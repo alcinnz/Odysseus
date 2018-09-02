@@ -53,6 +53,7 @@ namespace Odysseus.Traits {
         fix_google_plus(tab.web);
         setup_history_tracker(tab);
         Database.setup_pseudorest(tab);
+        setup_addressbar_autofocus(tab);
     }
 
     public void setup_autosuggest() {
