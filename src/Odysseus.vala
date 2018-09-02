@@ -46,6 +46,14 @@ public class Odysseus.Application : Granite.Application {
                 "Is ~/.config readonly?");
         }
 
+        // Make sure odysseus:special/restore is parsed only once
+        // by priming the cache.
+        try {
+            Templating.ErrorData? error_data = null;
+            var path = "/io/github/alcinnz/Odysseus/odysseus:/special/restore";
+            Templating.get_for_resource(path, ref error_data);
+        } catch {/* This error will be reported again later. */}
+
         // Setup application-unique resources.
         var is_first_start = Odysseus.Database.setup_database();
         Odysseus.Traits.setup_autosuggest();
