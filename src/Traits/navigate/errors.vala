@@ -124,9 +124,17 @@ namespace Odysseus.Traits {
         web.authenticate.connect((request) => {
             report_error("401", web.uri, tab);
             connect_form(web, (req) => {
-                var data = (HashTable<string, string>) req.get_text_fields();
-                var creds = new WebKit.Credential(data["username"],
-                        data["password"],
+                GenericArray<string> keys;
+                GenericArray<string> values;
+                if (!req.list_text_fields(out keys, out values)) return;
+
+                var username = ""; var password = "";
+                for (var i = 0; i < keys.length; i++) {
+                    if (keys[i] == "username") username = values[i];
+                    else if (keys[i] == "password") password = values[i];
+                }
+
+                var creds = new WebKit.Credential(username, password,
                         WebKit.CredentialPersistence.FOR_SESSION);
                 request.authenticate(creds);
             });

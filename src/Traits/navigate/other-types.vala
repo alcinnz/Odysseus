@@ -37,7 +37,7 @@ namespace Odysseus.Traits {
             var data = Data.Let.builds("url", Data.Let.builds("query", query),
                     new Data.Literal("odysseus:view"));
 
-            if (supports_mime) Services.render_alternate_html(tab, "view",
+            if (supports_mime) Services.render_alternate_html.begin(tab, "view",
                     null, true, data);
 
             return supports_mime;
