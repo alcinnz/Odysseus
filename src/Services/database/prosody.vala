@@ -146,6 +146,11 @@ namespace Odysseus.Database.Prosody {
                 while ((err = query.step()) == Sqlite.ROW) {
                     var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
 
+                    // SQLite doesn't return control flow to the mainloop, so do so here.
+                    //      This frequently manifests as a freeze.
+                    Idle.add(exec.callback);
+                    yield;
+
                     // Mostly just useful for odysseus:home's topsites.
                     var skip = false;
                     for (var except = this.except; except != null; except = except.next) {
