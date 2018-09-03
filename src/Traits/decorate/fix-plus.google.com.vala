@@ -21,7 +21,7 @@ Not really something I want to build into Odysseus as I'd rather focus it should
     this only covers the symptoms, and not the real issue. */
 namespace Odysseus.Traits {
     public void fix_google_plus(WebKit.WebView web) {
-        var css = new WebKit.UserStyleSheet("* {-webkit-font-smoothing: subpixel-anialiased;}",
+        var css = new WebKit.UserStyleSheet("* {-webkit-font-smoothing: subpixel-antialiased;}",
                 WebKit.UserContentInjectedFrames.ALL_FRAMES,
                 WebKit.UserStyleLevel.USER,
                 new string[] {"*"}, new string[0]);
