@@ -146,7 +146,7 @@ namespace Odysseus.Templating.xHTTP {
             return ret.str;
         }
 
-        private const string ACCEPTS = "application/json, text/tsv, text/tab-separated-values";
+        private const string ACCEPTS = "text/xml, application/json, text/tsv, text/tab-separated-values";
         private async Data.Data build_response_data(string mime, InputStream stream) throws Error {
             if ("json" in mime) {
                 var json = new Json.Parser();
