@@ -13,7 +13,7 @@ Currently Odysseus is governed by a BDFL, Adrian Cochrane. Though that may adjus
 While he'll welcome any and all features into Odysseus, all contributions will be reviewed not just on a code quality basis but a usability and privacy. But as long as you keep the following concerns in mind your contribution is likely to be accepted:
 
 * Is your new feature more useful than the complexity (in terms of both UI and performance) it adds?
-* Are you sending information over the Internet? Have you gained concent? Can you minimize how much can be inferred from it?
+* Are you sending information over the Internet? Have you gained consent? Can you minimize how much can be inferred from it?
 * Are relying on any particular website? Please minimize that.
 * Can you allow more than a single site/page to be integrated into Odysseus via your feature?
 * Which open standards are relevant to it?
