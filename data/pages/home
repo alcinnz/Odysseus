@@ -15,7 +15,6 @@ and I take advantage of this page to promote project links. #}
   {% each as links %}
     {% for section in links %}{% for link in section %}
       {% query %}
-        INSERT OR IGNORE INTO screenshot_v2(uri, image) VALUES ({{ link }}, "");
         INSERT OR IGNORE INTO recommendations(uri, weight) VALUES ({{ link }}, 1.0/{{ section|length }});
       {% endquery %}
     {% endfor %}{% endfor %}
@@ -85,17 +84,16 @@ and I take advantage of this page to promote project links. #}
         ORDER BY random() * weight;
     {% except %}
       SELECT 1 WHERE {{ uri }} NOT IN (SELECT uri FROM topsites_blacklist);
-      SELECT 1 WHERE {{ uri }} IN (SELECT uri FROM screenshot_v2);
     {% each-row %}
       <figure class="{{ cat }}" tooltip="{{ cat }}" style="width: 132px; height: 132px;">
         <a href="{{ uri }}" title="{{ help }}
 {{ uri }}">
           <img {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
-                {% each-row %}{% if "" not in image %}
+                {% each-row %}
                   src="data:image/png;base64,{{ image }}"
-                {% else %}
-                  src="https://alcinnz.github.io/Odysseus-recommendations/screenshot/{{ uri|md5 }}.png
-                {% endif %}{% endquery %}
+                {% empty %}
+                  src="https://alcinnz.github.io/Odysseus-recommendations/screenshot/{{ uri|md5 }}.png"
+                {% endquery %}
                 height="128" width="128" />
         </a>
         <form><input aria-hidden name="$" value="topsites_whitelist" />
