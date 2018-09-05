@@ -13,12 +13,12 @@ and I take advantage of this page to promote project links. #}
       https://alcinnz.github.io/Odysseus-recommendations/tsv/{{ lang }}.tsv
     {% endfor %}
   {% each as links %}
-    {% for link in links %}
+    {% for section in links %}{% for link in section %}
       {% query %}
-        INSERT OR IGNORE INTO screenshot_v2(uri, image) VALUES ({{ link.$1 }}, {{ link.$2 }});
-        INSERT OR IGNORE INTO recommendations(uri, weight) VALUES ({{ link.$1 }}, {{ link.$0 }});
+        INSERT OR IGNORE INTO screenshot_v2(uri, image) VALUES ({{ link }}, "");
+        INSERT OR IGNORE INTO recommendations(uri, weight) VALUES ({{ link }}, 1.0/{{ section|length }});
       {% endquery %}
-    {% endfor %}
+    {% endfor %}{% endfor %}
   {% endfetch %}
 {% endquery %}
 
@@ -91,7 +91,11 @@ and I take advantage of this page to promote project links. #}
         <a href="{{ uri }}" title="{{ help }}
 {{ uri }}">
           <img {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
-                {% each-row %}src="data:image/png;base64,{{ image }}"{% endquery %}
+                {% each-row %}{% if "" not in image %}
+                  src="data:image/png;base64,{{ image }}"
+                {% else %}
+                  src="https://alcinnz.github.io/Odysseus-recommendations/screenshot/{{ uri|md5 }}.png
+                {% endif %}{% endquery %}
                 height="128" width="128" />
         </a>
         <form><input aria-hidden name="$" value="topsites_whitelist" />
