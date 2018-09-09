@@ -25,11 +25,11 @@ namespace Odysseus.Templating.xXML {
     public class XML : Data.Data {
         protected Xml.Node *node;
         string[] locale;
-        public XML(Xml.Node *node, string[] locale = Intl.get_language_names()) {
+        public XML(Xml.Node *node, string[] locale = I18n.get_locales()) {
             this.node = node;
             this.locale = locale;
         }
-        public XML.with_doc(Xml.Doc *node, string[] locale = Intl.get_language_names()) {
+        public XML.with_doc(Xml.Doc *node, string[] locale = I18n.get_locales()) {
             this(node->get_root_element(), locale);
         }
 

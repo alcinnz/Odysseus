@@ -60,7 +60,7 @@ namespace Odysseus.Services {
         }
 
 		// And add content-negotiation header
-        var langs = Intl.get_language_names();
+        var langs = I18n.get_locales();
         var langs_data = new Data.Data[langs.length];
         for (var i = 0; i < langs.length; i++) {
             langs_data[i] = new Data.Literal(langs[i]);
