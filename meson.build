@@ -23,3 +23,7 @@ config_h_dir = include_directories('.')
 subdir('data')
 subdir('po')
 subdir('src')
+if get_option('nofts5')
+else
+    subdir('ext')
+endif

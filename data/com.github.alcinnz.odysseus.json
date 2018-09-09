@@ -128,7 +128,8 @@
                     "type" : "git",
                     "url" : "https://github.com/alcinnz/Odysseus"
                 }
-            ]
+            ],
+            "config-opts" : ["-Dnofts5=true"]
         }
     ]
 }
