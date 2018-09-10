@@ -257,9 +257,7 @@ namespace Odysseus.Templating.Data {
 
     public class List : Data {
         private Data[] inner;
-        public List(Gee.List<Data> inner) {
-            this.inner = inner.to_array();
-        }
+        public List(Gee.List<Data> inner) {this.inner = inner.to_array();}
         public List.from_array(Data[] inner) {this.inner = inner;}
 
         public override string to_string() {
@@ -377,7 +375,7 @@ namespace Odysseus.Templating.Data {
         private Data fallback;
 
         private Let() {}
-        public static Data build(Slice key, Data val, Data fallback = new Empty()) {
+        public static Data build(Slice? key, Data val, Data fallback = new Empty()) {
             if (key == null || key.length == 0) return fallback;
 
             var self = new Let();
