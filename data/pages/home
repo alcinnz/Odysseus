@@ -10,7 +10,7 @@ and I take advantage of this page to promote project links. #}
 {% empty %}
   {% fetch %}
     {% for lang in LOCALE %}
-      https://alcinnz.github.io/Odysseus-recommendations/tsv/{{ lang }}.tsv
+      https://alcinnz.github.io/Odysseus-recommendations/links/{{ lang }}.tsv
     {% endfor %}
   {% each as links %}
     {% for section in links %}{% for link in section %}
