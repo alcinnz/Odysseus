@@ -28,20 +28,18 @@ It is triggered by odysseus:home upon finding a `null` screenshot. */
         the surfers' privacy. As that'll help entice people. */
 namespace Odysseus.Traits {
     public void handle_odysseusproxy_uri(WebKit.URISchemeRequest request) {
-        async_handle_odysseusproxy_uri.begin(request.get_uri(), (response) => {
-            request.finish(response, -1, "image/png");
-        }, (obj, res) => {
+        async_handle_odysseusproxy_uri.begin(request.get_uri(), (obj, res) => {
             try {
-                async_handle_odysseusproxy_uri.end(res);
+                request.finish(async_handle_odysseusproxy_uri.end(res), -1, "image/png");
             } catch (Error err) {
+                stderr.printf("\t%s\n", err.message);
                 request.finish_error(err);
             }
         });
     }
     private delegate void YieldResponse(InputStream response);
-    errordomain HTTPError {STATUS}
-    private async void async_handle_odysseusproxy_uri(string request,
-            YieldResponse cb) throws Error {
+    errordomain HTTPError {STATUS, CACHE}
+    private async InputStream async_handle_odysseusproxy_uri(string request) throws Error {
         var uri = request["odysseusproxy:///".length:request.length];
         var hash = Checksum.compute_for_string(ChecksumType.MD5, uri);
         var proxy = "https://alcinnz.github.io/Odysseus-recommendations/screenshot/";
@@ -52,13 +50,13 @@ namespace Odysseus.Traits {
         var response = yield https.send_async(null);
         if (https.get_message().status_code != 200)
             throw new HTTPError.STATUS("HTTP %u", https.get_message().status_code);
-        cb(response);
 
         /* Now cache it for greater speed and privacy!
             Afterall that's why this URI scheme is needed...*/
         // Start by reading the entire response in.
         var memory = new MemoryOutputStream.resizable();
         yield memory.splice_async(response, 0);
+        memory.close();
         // The other APIs don't give a proper Vala array
         var binary = memory.steal_as_bytes().get_data();
 
@@ -68,9 +66,11 @@ namespace Odysseus.Traits {
         var sql = "INSERT INTO screenshot_v2(uri, image) VALUES (?, ?);";
         Sqlite.Statement query;
         if (Database.get_database().prepare_v2(sql, -1, out query) != Sqlite.OK)
-            return;
+            throw new HTTPError.CACHE("Failed to cache %s", proxy);
         query.bind_text(1, uri);
         query.bind_text(2, base64);
         query.step();
+
+        return new MemoryInputStream.from_data(binary);
     }
 }

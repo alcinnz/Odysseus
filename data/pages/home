@@ -91,8 +91,8 @@ and I take advantage of this page to promote project links. #}
           <img {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
                 {% each-row %}
                   src="data:image/png;base64,{{ image }}"
-                {% empty %}
-                  src="https://alcinnz.github.io/Odysseus-recommendations/screenshot/{{ uri|md5 }}.png"
+                {% empty %}{# Custom URI scheme that caches the HTTP responses in this table. #}
+                  src="odysseusproxy:///{{ uri }}"
                 {% endquery %}
                 height="128" width="128" />
         </a>
