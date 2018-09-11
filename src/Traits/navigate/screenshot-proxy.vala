@@ -29,17 +29,17 @@ It is triggered by odysseus:home upon finding a `null` screenshot. */
 namespace Odysseus.Traits {
     public void handle_odysseusproxy_uri(WebKit.URISchemeRequest request) {
         async_handle_odysseusproxy_uri.begin(request.get_uri(), (response) => {
-            request.finish(stream, -1, "image/png");
+            request.finish(response, -1, "image/png");
         }, (obj, res) => {
             try {
                 async_handle_odysseusproxy_uri.end(res);
             } catch (Error err) {
                 request.finish_error(err);
             }
-        }
+        });
     }
-    private delegate YieldResponse(InputStream response);
-    errordomain HTTPError {STATUS};
+    private delegate void YieldResponse(InputStream response);
+    errordomain HTTPError {STATUS}
     private async void async_handle_odysseusproxy_uri(string request,
             YieldResponse cb) throws Error {
         var uri = request["odysseusproxy:///".length:request.length];
@@ -51,14 +51,14 @@ namespace Odysseus.Traits {
         var https = session.request_http("GET", proxy);
         var response = yield https.send_async(null);
         if (https.get_message().status_code != 200)
-            throw new HTTPError.STATUS("HTTP %i", https.get_message().status_code);
+            throw new HTTPError.STATUS("HTTP %u", https.get_message().status_code);
         cb(response);
 
         /* Now cache it for greater speed and privacy!
             Afterall that's why this URI scheme is needed...*/
         // Start by reading the entire response in.
         var memory = new MemoryOutputStream.resizable();
-        yield memory.splice_async(response);
+        yield memory.splice_async(response, 0);
         // The other APIs don't give a proper Vala array
         var binary = memory.steal_as_bytes().get_data();
 

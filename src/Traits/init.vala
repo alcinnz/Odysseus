@@ -33,6 +33,8 @@ namespace Odysseus.Traits {
         ctx.register_uri_scheme("source", handle_source_uri);
         ctx.register_uri_scheme("icon", Services.handle_sysicon_uri);
         sec.register_uri_scheme_as_secure("icon");
+        ctx.register_uri_scheme("odysseusproxy", handle_odysseusproxy_uri);
+        sec.register_uri_scheme_as_secure("odysseusproxy");
 
         configure_context(ctx);
         DownloadSet.setup_ctx(ctx);
