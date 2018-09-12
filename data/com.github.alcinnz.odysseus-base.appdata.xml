@@ -60,6 +60,12 @@ matter to you.</p>
   </provides>
 
   <releases>
+    <release version="1.5.5" date="2018-09-13">
+      <description>
+        <p>Performance fixes and better labelling on topsites display.</p>
+        <p>Hides downloads bar in fullscreen.</p>
+      </description>
+    </release>
     <release version="1.5.2" date="2018-07-28">
       <description>
         <p>Renders nice previews for webfeeds.</p>
