@@ -65,9 +65,10 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
         // Don't show tabbar when fullscreen
         window_state_event.connect((evt) => {
-            if (Gdk.WindowState.FULLSCREEN in evt.new_window_state)
+            if (Gdk.WindowState.FULLSCREEN in evt.new_window_state) {
                 tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.NEVER;
-            else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
+                downloads.expand = false;
+            } else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
             return false;
         });
         container.add(tabs);
