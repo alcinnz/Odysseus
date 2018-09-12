@@ -40,11 +40,12 @@ and I take advantage of this page to promote project links. #}
   <title>[user-home] {% trans %}New Tab{% endtrans %}</title>
   <style>
     @import url(odysseus:butterick.css);
-    main {color: #ddd; text-align: center;}
+    main {text-align: center;}
     main hr {border: none; border-bottom: thin solid; }
     footer {position: fixed; bottom: 0; background: #fffa;}
 
-    main nav {width: 720px; /* Fits 5 128px thumbnails + spacing */}
+    main {width: auto; max-width: 800px;/* Fits 5 128px thumbnails + spacing */}
+    main nav {width: auto;}
     main nav img {box-shadow: 2px 2px 2px; margin: 5px;}
     main nav img:hover {box-shadow: 4px 4px 4px;}
 
@@ -63,32 +64,33 @@ and I take advantage of this page to promote project links. #}
     <img src="icon:16/document-open-recent" />{% trans %}Browser History{% endtrans %}
   </a></aside>
 
-  <main style="max-width: 720px;"><!-- FIXME ugly code forcing this style --><nav>
+  <main><nav>
     {% macro q-tailrank %}(SELECT COUNT(*) FROM topsites_whitelist
         WHERE uri NOT IN (SELECT uri FROM topsites_blacklist))
       AS order_
     {% endmacro %}
     {% query 20 %}
       SELECT uri, order_, "pinned" AS cat,
-          {{"You 'pinned' this here"|trans}} AS help
+          {{"You 'pinned' this here"|trans}} AS help, {{"Pinned"|trans}} AS caption
         FROM topsites_whitelist ORDER BY order_ ASC;
       SELECT url as uri, {% q-tailrank %}, "history" AS cat,
-          {% trans %}"Frequently visited"{% endtrans %} AS help
+          {% trans %}"Frequently visited"{% endtrans %} AS help, {{"History"|trans}} AS caption
         FROM visit_counts
         WHERE count >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY count DESC;
       SELECT uri, {% q-tailrank %}, "recommendation" AS cat,
-          {% trans %}"Recommended by Adrian Cochrane"{% endtrans %} AS help
+          {{"Recommended by Adrian Cochrane"|trans}} AS help, {{"Recommended"|trans}} AS caption
         FROM recommendations
         WHERE uri NOT IN (SELECT uri FROM page_visit) -- Only recommend new links.
         ORDER BY random() * weight;
     {% except %}
       SELECT 1 WHERE {{ uri }} NOT IN (SELECT uri FROM topsites_blacklist);
     {% each-row %}
-      <figure class="{{ cat }}" tooltip="{{ cat }}" style="width: 132px; height: 132px;">
+      <figure class="{{ cat }}" tooltip="{{ cat }}">
         <a href="{{ uri }}" title="{{ help }}
 {{ uri }}">
-          <img {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
+          <img style="width: 132px; height: 132px;"
+                {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
                 {% each-row %}
                   src="data:image/png;base64,{{ image }}"
                 {% empty %}{# Custom URI scheme that caches the HTTP responses in this table. #}
@@ -96,15 +98,18 @@ and I take advantage of this page to promote project links. #}
                 {% endquery %}
                 height="128" width="128" />
         </a>
-        <form><input aria-hidden name="$" value="topsites_whitelist" />
-          <input aria-hidden name="uri" value="{{ uri }}" />
-          <input type="number" name="order_" value="{{ order_ }}" />
-          <button type="submit" title="Keep this link on this page.">&check;</button>
-        </form>
-        <form><input aria-hidden name="$" value="topsites_blacklist" />
-          <input aria-hidden name="uri" value="{{ uri }}" />
-          <button type="submit" title="Remove this link from this page.">x</button>
-        </form>
+        <legend>
+          <form><input aria-hidden name="$" value="topsites_whitelist" />
+            <input aria-hidden name="uri" value="{{ uri }}" />
+            <input type="number" name="order_" value="{{ order_ }}" />
+            <button type="submit" title="Keep this link on this page.">&check;</button>
+          </form>
+          {{ caption }}
+          <form><input aria-hidden name="$" value="topsites_blacklist" />
+            <input aria-hidden name="uri" value="{{ uri }}" />
+            <button type="submit" title="Remove this link from this page.">x</button>
+          </form>
+        </legend>
       </figure>
     {% endquery %}
   </nav></main>
