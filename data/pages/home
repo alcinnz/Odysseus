@@ -6,6 +6,7 @@ and I take advantage of this page to promote project links. #}
 <!DOCTYPE html>
 
 {# Ensure the appropriate recommendations are downloaded. #}
+{% query %}BEGIN TRANSACTION;{% endquery %}
 {% query %}SELECT * FROM recommendations;
 {% empty %}
   {% fetch %}
@@ -34,6 +35,7 @@ and I take advantage of this page to promote project links. #}
   {% query %}INSERT OR REPLACE INTO visit_counts(url, count)
         VALUES ({{ uri }}, {{ count }});{% endquery %}
 {% endquery %}
+{% query %}END TRANSACTION;{% endquery %}
 
 <html>
 <head>
