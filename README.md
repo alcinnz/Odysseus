@@ -1,6 +1,8 @@
 Odysseus web browser
 ====================
 
+[![Build Status](https://travis-ci.com/alcinnz/Odysseus.svg?branch=master)](https://travis-ci.com/alcinnz/Odysseus)
+
 A simple and performant yet powerful [elementary OS](https://elementary.io/)-[style](https://elementary.io/docs/human-interface-guidelines) window onto the open decentralized web.
 
 Odysseus is already and will continue to be a convenient, privacy-respecting,
