@@ -137,11 +137,11 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         tools.size_allocate.connect((box) => addressbar.max_width = box.width);
         addressbar.tooltip_text = _("Current web address") + " (Ctrl+L)";
         addressbar.navigate_to.connect((url) => web.load_uri(url));
-        tabs.bind_property("uri", addressbar, "text", BindingFlags.SYNC_CREATE);
-        tabs.bind_property("favicon", addressbar, "primary-icon-gicon", BindingFlags.SYNC_CREATE);
-        tabs.bind_property("progress", addressbar, "progress-fraction", BindingFlags.SYNC_CREATE);
+        tabs.bind_property("uri", addressbar.entry, "text", BindingFlags.SYNC_CREATE);
+        tabs.bind_property("favicon", addressbar.entry, "primary-icon-gicon", BindingFlags.SYNC_CREATE);
+        tabs.bind_property("progress", addressbar.entry, "progress-fraction", BindingFlags.SYNC_CREATE);
         tools.set_custom_title(addressbar);
-        tools.shortcut(Gdk.Key.L, () => addressbar.grab_focus());
+        tools.shortcut(Gdk.Key.L, () => addressbar.entry.grab_focus());
 
         tools.add_item_right("open-menu", _("Menu"), 0, null, (menu) => {
             menu.add(_("_New Window"), () => {

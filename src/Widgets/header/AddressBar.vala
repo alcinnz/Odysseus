@@ -14,8 +14,11 @@
 * You should have received a copy of the GNU General Public License
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
-public class Odysseus.Header.AddressBar : Gtk.Entry {
+public class Odysseus.Header.AddressBar : Gtk.Grid {
     private Services.Completer completer = new Services.Completer();
+    public Gtk.Entry entry = new Gtk.Entry();
+    private Gtk.Container statusbar;
+
     private Gtk.Popover popover;
     private Gtk.ListBox list;
     private int selected = 0;
@@ -28,10 +31,16 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
     construct {
         this.margin_start = 20;
         this.margin_end = 20;
+        orientation = Gtk.Orientation.HORIZONTAL;
 
         // GTK BUG: This code should expand this to fill, but it doesn't.
-        this.hexpand = true;
-        this.halign = Gtk.Align.FILL;
+        entry.hexpand = true;
+        entry.halign = Gtk.Align.FILL;
+        add(entry);
+
+        statusbar = new Gtk.Grid();
+        statusbar.@set("orientation", Gtk.Orientation.HORIZONTAL);
+        add(statusbar);
 
         build_dropdown();
         connect_events();
@@ -45,23 +54,23 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
     }
     
     private void connect_events() {
-        changed.connect(autocomplete);
+        entry.changed.connect(autocomplete);
 
-        this.focus_in_event.connect((evt) => {
+        entry.focus_in_event.connect((evt) => {
             popover.show_all();
             autocomplete();
 
             Idle.add(() => {
-                this.select_region(0, -1);
+                entry.select_region(0, -1);
                 return false;
             }, Priority.HIGH); // To aid retyping URLs, copy+paste
             return false;
         });
-        this.focus_out_event.connect((evt) => {
+        entry.focus_out_event.connect((evt) => {
             popover.hide();
             return false;
         });
-        this.key_press_event.connect((evt) => {
+        entry.key_press_event.connect((evt) => {
             switch (evt.keyval) {
             case Gdk.Key.Up:
             case Gdk.Key.KP_Up:
@@ -81,7 +90,7 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
             list.select_row(list.get_row_at_index(selected));
             return true;
         });
-        this.activate.connect(() => {
+        entry.activate.connect(() => {
             var row = list.get_selected_row();
             if (row == null) return;
             string url;
@@ -102,7 +111,7 @@ public class Odysseus.Header.AddressBar : Gtk.Entry {
     private void autocomplete() {
         list.@foreach((widget) => {list.remove(widget);});
 
-        completer.suggest(this.text, (url, label) => {
+        completer.suggest(entry.text, (url, label) => {
             list.add(this.build_dropdown_row(url, label));
 
             /* Ensure a row is selected. */
