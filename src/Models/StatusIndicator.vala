@@ -26,26 +26,39 @@ public class Odysseus.StatusIndicator : Object {
     }
     public Gtk.Widget build_ui() {
         Icon icon = new ThemedIcon(icon);
+        Gdk.RGBA colour = Gdk.RGBA();
         switch (status) {
         case Classification.SECURITY:
             icon = emblem(icon, "process-completed");
+            colour.parse("#68b723");
             break;
         case Classification.ERROR:
             if (this.icon != "error" && this.icon != "error-symbolic")
                 icon = emblem(icon, "error");
+            colour.parse("#c6262e");
             break;
         case Classification.ENABLED:
             icon = emblem(icon, "list-remove");
+            colour.parse("#3689e6");
             break;
         case Classification.DISABLED:
             icon = emblem(icon, "list-add");
+            colour.parse("#333333");
             break;
         case Classification.ACTIVE:
-            icon = emblem(icon, "open-menu");
+            colour.parse("#f37329");
             break;
         }
 
-        return new Gtk.Image.from_gicon(icon, Gtk.IconSize.SMALL_TOOLBAR);
+        var iconinfo = Gtk.IconTheme.get_default().lookup_by_gicon(icon, 16,
+                Gtk.IconLookupFlags.FORCE_SYMBOLIC);
+        try {
+            var coloured_icon = iconinfo.load_symbolic(colour);
+
+            return new Gtk.Image.from_pixbuf(coloured_icon);
+        } catch (Error err) {
+            return new Gtk.Image.from_gicon(icon, Gtk.IconSize.SMALL_TOOLBAR);
+        }
     }
     private static Icon emblem(Icon icon, string name) {
         return new EmblemedIcon(icon, new Emblem(new ThemedIcon(name + "-symbolic")));
