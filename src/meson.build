@@ -18,7 +18,7 @@ prosody_misc = ['json', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test',
 prosody_misc = ['http', 'AppStream', 'mimeinfo', 'favicons',
         'json', 'tsv', 'xml',
         'diff', 'test', 'i18n']
-models = ['Download', 'DownloadSet', 'ImageUtil', 'I18nUtil']
+models = ['Download', 'DownloadSet', 'ImageUtil', 'I18nUtil', 'StatusIndicator']
 
 foreach f : header_widgets
     widgets += ['header/' + f]

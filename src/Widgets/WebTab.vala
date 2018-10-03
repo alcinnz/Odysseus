@@ -22,6 +22,8 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     public int64 tab_id;
     public int order = -1;
 
+    public Gee.List<StatusIndicator> indicators = new Gee.ArrayList<StatusIndicator>();
+
     public string url {
         get {return web.uri;}
     }
