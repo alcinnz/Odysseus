@@ -17,7 +17,7 @@
 public class Odysseus.StatusIndicator : Object {
     public string icon;
     public enum Classification {
-        SECURITY, ERROR, ENABLED, DISABLED, ACTIVE
+        SECURE, ERROR, ENABLED, DISABLED, ACTIVE
     }
     public Classification status {get; set;}
 
@@ -28,7 +28,7 @@ public class Odysseus.StatusIndicator : Object {
         Icon icon = new ThemedIcon(icon);
         Gdk.RGBA colour = Gdk.RGBA();
         switch (status) {
-        case Classification.SECURITY:
+        case Classification.SECURE:
             icon = emblem(icon, "process-completed");
             colour.parse("#68b723");
             break;
