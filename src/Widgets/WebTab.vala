@@ -23,6 +23,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     public int order = -1;
 
     public Gee.List<StatusIndicator> indicators = new Gee.ArrayList<StatusIndicator>();
+    public signal void populate_indicators(Gee.List<StatusIndicator> indicators, WebKit.WebView web);
 
     public string url {
         get {return web.uri;}
@@ -135,7 +136,13 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
             } else status = default_status;
         });
 
-        web.load_changed.connect((load_evt) => Persist.on_browse());
+        web.load_changed.connect((load_evt) => {
+            Persist.on_browse();
+            if (load_evt != WebKit.LoadEvent.COMMITTED) return;
+
+            indicators.clear();
+            populate_indicators(indicators, web);
+        });
     }
 
     private static Sqlite.Statement? Qinsert_new;
