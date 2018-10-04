@@ -28,6 +28,7 @@ namespace Odysseus.Traits {
         }
         if (!is_local) return;
 
-        indicators.add(new StatusIndicator("incognito computer", StatusIndicator.Classification.SECURE));
+        // FIXME fallback to "computer"
+        indicators.add(new StatusIndicator("view-private", StatusIndicator.Classification.SECURE));
     }
 }
