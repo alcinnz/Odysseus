@@ -47,6 +47,12 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
         notify["max-width"].connect(queue_resize);
     }
 
+    public void show_indicators(Gee.List<StatusIndicator> indicators) {
+        statusbar.forall((widget) => widget.destroy());
+        foreach (var indicator in indicators) statusbar.add(indicator.build_ui());
+        statusbar.show_all();
+    }
+
     /* This approximates the expand to fill effect. */
     public override void get_preferred_width(out int min_width, out int nat_width) {
         min_width = 20; // Meh

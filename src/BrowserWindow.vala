@@ -140,6 +140,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         tabs.bind_property("uri", addressbar.entry, "text", BindingFlags.SYNC_CREATE);
         tabs.bind_property("favicon", addressbar.entry, "primary-icon-gicon", BindingFlags.SYNC_CREATE);
         tabs.bind_property("progress", addressbar.entry, "progress-fraction", BindingFlags.SYNC_CREATE);
+        tabs.indicators_loaded.connect(addressbar.show_indicators);
         tools.set_custom_title(addressbar);
         tools.shortcut(Gdk.Key.L, () => addressbar.entry.grab_focus());
 
