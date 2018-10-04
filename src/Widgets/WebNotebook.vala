@@ -30,6 +30,8 @@ public class Odysseus.WebNotebook : DynamicNotebook {
     public Icon favicon {get; set;}
     public string title {get; set;}
 
+    public signal void indicators_loaded(Gee.List<StatusIndicator> indicators);
+
     public WebKit.WebView? web {
         get {
             if (current == null) return null;
@@ -107,6 +109,7 @@ public class Odysseus.WebNotebook : DynamicNotebook {
 
     private Gee.List<Binding> bindings = new Gee.ArrayList<Binding>();
     private Gee.List<ulong> handlers = new Gee.ArrayList<ulong>();
+    private ulong indicators_handler = 0;
 
     private void connect_webview(WebTab tab) {
         var web = tab.web;
@@ -149,6 +152,9 @@ public class Odysseus.WebNotebook : DynamicNotebook {
             web.bind_property("is-loading", this, "is-loading",
                 BindingFlags.SYNC_CREATE));
 
+        indicators_loaded(tab.indicators);
+        indicators_handler = tab.indicators_loaded.connect((x) => indicators_loaded(x));
+
         can_go_back = web.can_go_back();
         can_go_forward = web.can_go_forward();
         if (progress == 1.0) progress = 0.0;
@@ -165,6 +171,7 @@ public class Odysseus.WebNotebook : DynamicNotebook {
         foreach (var handler in handlers) {
             web.disconnect(handler);
         }
+        tab.disconnect(indicators_handler);
         handlers.clear();
     }
 }

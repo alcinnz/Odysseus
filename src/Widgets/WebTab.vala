@@ -24,6 +24,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     public Gee.List<StatusIndicator> indicators = new Gee.ArrayList<StatusIndicator>();
     public signal void populate_indicators(Gee.List<StatusIndicator> indicators, WebKit.WebView web);
+    public signal void indicators_loaded(Gee.List<StatusIndicator> indicators);
 
     public string url {
         get {return web.uri;}
@@ -142,6 +143,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
             indicators.clear();
             populate_indicators(indicators, web);
+            indicators_loaded(indicators);
         });
     }
 
