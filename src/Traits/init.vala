@@ -56,6 +56,10 @@ namespace Odysseus.Traits {
         setup_history_tracker(tab);
         Database.setup_pseudorest(tab);
         setup_addressbar_autofocus(tab);
+
+        // Indicators
+        tab.populate_indicators.connect(report_https);
+        tab.populate_indicators.connect(report_local);
     }
 
     public void setup_autosuggest() {

@@ -9,6 +9,7 @@ nav_traits = ['autodownload', 'persist-tab-history', 'newtab', 'history',
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll',
         'fix-plus.google.com', 'fix-bg-videos', 'addressbar-autofocus']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
+indicators = ['https', 'local']
 services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
@@ -38,6 +39,9 @@ foreach f : decor_traits
 endforeach
 foreach f : complete_traits
     traits += ['autocomplete/' + f]
+endforeach
+foreach f : indicators
+    traits += ['status/' + f]
 endforeach
 foreach f : traits
     sources += ['Traits/' + f]

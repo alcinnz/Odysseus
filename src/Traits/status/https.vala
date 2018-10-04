@@ -16,12 +16,14 @@
 */
 /* Communicates that the connection to a page is secure, and
     (TODO) the certification for such. */
-public void report_https(Gee.List<StatusIndicator> indicators, WebKit.WebView web) {
-    TlsCertificate cert;
-    TlsCertificateFlags errors;
+namespace Odysseus.Traits {
+    public void report_https(Gee.List<StatusIndicator> indicators, WebKit.WebView web) {
+        TlsCertificate cert;
+        TlsCertificateFlags errors;
 
-    if (web.get_tls_info(out certificate, out errors)) return;
-    if (errors == 0)
-        indicators.add(new StatusIndicator("security-high", StatusIndicator.Classification.SECURE));
-    else indicators.add(new StatusIndicator("security-low", StatusIndicator.Classification.ERROR));
+        if (web.get_tls_info(out cert, out errors)) return;
+        if (errors == 0)
+            indicators.add(new StatusIndicator("security-high", StatusIndicator.Classification.SECURE));
+        else indicators.add(new StatusIndicator("security-low", StatusIndicator.Classification.ERROR));
+    }
 }

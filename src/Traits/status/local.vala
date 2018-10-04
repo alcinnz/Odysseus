@@ -15,17 +15,19 @@
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 /** Indicates local resources as being "super-secure" */
-public void report_local(Gee.List<StatusIndicator> indicators, WebKit.WebView web) {
-    var local_prefixes = ("odysseus viewsource icon about " + 
-            "https://127.0.0.1 http://127.0.0.1 https://localhost http://localhost"
-        ).split(" ");
-    var is_local = false;
-    foreach (var prefix in prefixes) {
-        is_local ||= web.uri.has_prefix(prefix + ":");
-        is_local ||= web.uri.has_prefix(prefix + "/");
-        if (is_local) break;
-    }
-    if (!is_local) return;
+namespace Odysseus.Traits {
+    public void report_local(Gee.List<StatusIndicator> indicators, WebKit.WebView web) {
+        var local_prefixes = ("odysseus viewsource icon about " + 
+                "https://127.0.0.1 http://127.0.0.1 https://localhost http://localhost"
+            ).split(" ");
+        var is_local = false;
+        foreach (var prefix in local_prefixes) {
+            var uri = web.uri;
+            is_local = uri.has_prefix(prefix + ":") || uri.has_prefix(prefix + "/");
+            if (is_local) break;
+        }
+        if (!is_local) return;
 
-    indicators.add(new StatusIndicator("incognito computer", StatusIndicator.Classification.SECURE));
+        indicators.add(new StatusIndicator("incognito computer", StatusIndicator.Classification.SECURE));
+    }
 }
