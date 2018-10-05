@@ -22,8 +22,16 @@ namespace Odysseus.Traits {
         TlsCertificateFlags errors;
 
         if (!web.get_tls_info(out cert, out errors)) return;
+
+        var msg = _("Your connection to %s is secure from eavesdroppers,") + "\n";
+        msg += _("Your activity can be seen by the admins and hosting companies for this site.");
         if (errors == 0)
-            indicators.add(new StatusIndicator("security-high", Status.SECURE));
-        else indicators.add(new StatusIndicator("security-low", Status.ERROR));
+            indicators.add(new StatusIndicator("security-high", Status.SECURE,
+                    msg.printf(new Soup.URI(web.uri).host)
+                ));
+        else indicators.add(new StatusIndicator("security-low", Status.ERROR,
+                // FIXME provide more information about the error.
+                _("Certificate validation failed! This site may be an imposter.")
+            ));
     }
 }

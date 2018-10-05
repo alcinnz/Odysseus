@@ -20,9 +20,10 @@ public enum Odysseus.Status {
 public class Odysseus.StatusIndicator : Object {
     public string icon;
     public Status status {get; set;}
+    public string text;
 
-    public StatusIndicator(string icon, Status status) {
-        this.icon = icon; this.status = status;
+    public StatusIndicator(string icon, Status status, string text) {
+        this.icon = icon; this.status = status; this.text = text;
     }
     public Gtk.Widget build_ui() {
         Icon icon = new ThemedIcon.from_names(icon.split(" "));
@@ -64,6 +65,7 @@ public class Odysseus.StatusIndicator : Object {
         ret.halign = Gtk.Align.CENTER;
         ret.valign = Gtk.Align.BASELINE;
         ret.margin = 4;
+        ret.tooltip_text = text;
         return ret;
     }
     private static Icon emblem(Icon icon, string name) {

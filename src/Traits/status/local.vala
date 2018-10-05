@@ -28,6 +28,8 @@ namespace Odysseus.Traits {
         }
         if (!is_local) return;
 
-        indicators.add(new StatusIndicator("view-private computer", Status.SECURE));
+        indicators.add(new StatusIndicator("view-private computer", Status.SECURE,
+            _("This page was loaded from your computer. Noone else knows you're here.")
+        ));
     }
 }
