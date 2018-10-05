@@ -32,6 +32,7 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
         this.margin_start = 20;
         this.margin_end = 20;
         orientation = Gtk.Orientation.HORIZONTAL;
+        get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
 
         // GTK BUG: This code should expand this to fill, but it doesn't.
         entry.hexpand = true;
@@ -40,6 +41,7 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
 
         statusbar = new Gtk.Grid();
         statusbar.@set("orientation", Gtk.Orientation.HORIZONTAL);
+        statusbar.get_style_context().add_class("entry");
         add(statusbar);
 
         build_dropdown();
@@ -50,7 +52,8 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
     public void show_indicators(Gee.List<StatusIndicator> indicators) {
         statusbar.forall((widget) => widget.destroy());
         foreach (var indicator in indicators) statusbar.add(indicator.build_ui());
-        statusbar.show_all();
+        if (indicators.size > 0) statusbar.show_all();
+        else statusbar.hide();
     }
 
     /* This approximates the expand to fill effect. */

@@ -14,51 +14,57 @@
 * You should have received a copy of the GNU General Public License
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
+public enum Odysseus.Status {
+    SECURE, ERROR, ENABLED, DISABLED, ACTIVE
+}
 public class Odysseus.StatusIndicator : Object {
     public string icon;
-    public enum Classification {
-        SECURE, ERROR, ENABLED, DISABLED, ACTIVE
-    }
-    public Classification status {get; set;}
+    public Status status {get; set;}
 
-    public StatusIndicator(string icon, Classification status) {
+    public StatusIndicator(string icon, Status status) {
         this.icon = icon; this.status = status;
     }
     public Gtk.Widget build_ui() {
-        Icon icon = new ThemedIcon(icon);
+        Icon icon = new ThemedIcon.from_names(icon.split(" "));
         Gdk.RGBA colour = Gdk.RGBA();
         switch (status) {
-        case Classification.SECURE:
+        case Status.SECURE:
             icon = emblem(icon, "process-completed");
             colour.parse("#68b723");
             break;
-        case Classification.ERROR:
+        case Status.ERROR:
             if (this.icon != "error" && this.icon != "error-symbolic")
                 icon = emblem(icon, "error");
             colour.parse("#c6262e");
             break;
-        case Classification.ENABLED:
+        case Status.ENABLED:
             icon = emblem(icon, "list-remove");
             colour.parse("#3689e6");
             break;
-        case Classification.DISABLED:
+        case Status.DISABLED:
             icon = emblem(icon, "list-add");
             colour.parse("#333333");
             break;
-        case Classification.ACTIVE:
+        case Status.ACTIVE:
             colour.parse("#f37329");
             break;
         }
 
         var iconinfo = Gtk.IconTheme.get_default().lookup_by_gicon(icon, 16,
                 Gtk.IconLookupFlags.FORCE_SYMBOLIC);
+        Gtk.Widget ret;
         try {
             var coloured_icon = iconinfo.load_symbolic(colour);
 
-            return new Gtk.Image.from_pixbuf(coloured_icon);
+            ret = new Gtk.Image.from_pixbuf(coloured_icon);
         } catch (Error err) {
-            return new Gtk.Image.from_gicon(icon, Gtk.IconSize.SMALL_TOOLBAR);
+            ret = new Gtk.Image.from_gicon(icon, Gtk.IconSize.SMALL_TOOLBAR);
         }
+
+        ret.halign = Gtk.Align.CENTER;
+        ret.valign = Gtk.Align.BASELINE;
+        ret.margin = 4;
+        return ret;
     }
     private static Icon emblem(Icon icon, string name) {
         return new EmblemedIcon(icon, new Emblem(new ThemedIcon(name + "-symbolic")));

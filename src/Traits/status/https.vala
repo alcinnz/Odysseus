@@ -23,7 +23,7 @@ namespace Odysseus.Traits {
 
         if (web.get_tls_info(out cert, out errors)) return;
         if (errors == 0)
-            indicators.add(new StatusIndicator("security-high", StatusIndicator.Classification.SECURE));
-        else indicators.add(new StatusIndicator("security-low", StatusIndicator.Classification.ERROR));
+            indicators.add(new StatusIndicator("security-high", Status.SECURE));
+        else indicators.add(new StatusIndicator("security-low", Status.ERROR));
     }
 }
