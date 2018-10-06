@@ -22,8 +22,20 @@ public class Odysseus.StatusIndicator : Object {
     public Status status {get; set;}
     public string text;
 
-    public StatusIndicator(string icon, Status status, string text) {
+    public delegate Gtk.Popover? OnPressed(StatusIndicator self);
+    public OnPressed? on_pressed;
+
+    public StatusIndicator(string icon, Status status, string text,
+            OnPressed? on_pressed = null) {
         this.icon = icon; this.status = status; this.text = text;
+        this.on_pressed = on_pressed;
+    }
+    public Gtk.Popover? tooltip_popover() {
+        var label = new Gtk.Label(this.text);
+        label.margin = 20;
+        var popover = new Gtk.Popover(null);
+        popover.add(label);
+        return popover;
     }
 
     public void bullet_point(string msg) {
@@ -31,6 +43,24 @@ public class Odysseus.StatusIndicator : Object {
     }
 
     public Gtk.Widget build_ui() {
+        var ret = new Gtk.Button();
+        ret.image = build_image();
+        ret.relief = Gtk.ReliefStyle.NONE;
+        ret.clicked.connect(() => {
+            var popover = on_pressed != null ? on_pressed(this) : tooltip_popover();
+            ret.image = build_image();
+
+            if (popover == null) return;
+            popover.relative_to = ret;
+            popover.show_all();
+        });
+
+        ret.halign = Gtk.Align.CENTER;
+        ret.valign = Gtk.Align.BASELINE;
+        ret.tooltip_text = text;
+        return ret;
+    }
+    private Gtk.Image build_image() {
         Icon icon = new ThemedIcon.from_names(icon.split(" "));
         Gdk.RGBA colour = Gdk.RGBA();
         switch (status) {
@@ -58,20 +88,13 @@ public class Odysseus.StatusIndicator : Object {
 
         var iconinfo = Gtk.IconTheme.get_default().lookup_by_gicon(icon, 16,
                 Gtk.IconLookupFlags.FORCE_SYMBOLIC);
-        Gtk.Widget ret;
         try {
             var coloured_icon = iconinfo.load_symbolic(colour);
 
-            ret = new Gtk.Image.from_pixbuf(coloured_icon);
+            return new Gtk.Image.from_pixbuf(coloured_icon);
         } catch (Error err) {
-            ret = new Gtk.Image.from_gicon(icon, Gtk.IconSize.SMALL_TOOLBAR);
+            return new Gtk.Image.from_gicon(icon, Gtk.IconSize.SMALL_TOOLBAR);
         }
-
-        ret.halign = Gtk.Align.CENTER;
-        ret.valign = Gtk.Align.BASELINE;
-        ret.margin = 4;
-        ret.tooltip_text = text;
-        return ret;
     }
     private static Icon emblem(Icon icon, string name) {
         return new EmblemedIcon(icon, new Emblem(new ThemedIcon(name + "-symbolic")));
