@@ -25,13 +25,31 @@ namespace Odysseus.Traits {
 
         var msg = _("Your connection to %s is secure from eavesdroppers,") + "\n";
         msg += _("Your activity can be seen by the admins and hosting companies for this site.");
+        StatusIndicator status;
         if (errors == 0)
-            indicators.add(new StatusIndicator("security-high", Status.SECURE,
+            status = new StatusIndicator("security-high", Status.SECURE,
                     msg.printf(new Soup.URI(web.uri).host)
-                ));
-        else indicators.add(new StatusIndicator("security-low", Status.ERROR,
+                );
+        else status = new StatusIndicator("security-low", Status.ERROR,
                 // FIXME provide more information about the error.
                 _("Certificate validation failed! This site may be an imposter.")
-            ));
+            );
+
+        if (TlsCertificateFlags.UNKNOWN_CA in errors)
+            status.bullet_point(_("Unknown certificate authority"));
+        if (TlsCertificateFlags.BAD_IDENTITY in errors)
+            status.bullet_point(_("Wrong site named in certificate"));
+        if (TlsCertificateFlags.NOT_ACTIVATED in errors)
+            status.bullet_point(_("Not yet active certificate"));
+        if (TlsCertificateFlags.EXPIRED in errors)
+            status.bullet_point(_("Expired certificate"));
+        if (TlsCertificateFlags.REVOKED in errors)
+            status.bullet_point(_("Known bad certificate"));
+        if (TlsCertificateFlags.INSECURE in errors)
+            status.bullet_point(_("Broken encryption scheme."));
+        if (TlsCertificateFlags.GENERIC_ERROR in errors)
+            status.bullet_point(_("Unknown error…"));
+
+        indicators.add(status);
     }
 }

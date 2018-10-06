@@ -25,6 +25,11 @@ public class Odysseus.StatusIndicator : Object {
     public StatusIndicator(string icon, Status status, string text) {
         this.icon = icon; this.status = status; this.text = text;
     }
+
+    public void bullet_point(string msg) {
+        text += "\n • " + msg;
+    }
+
     public Gtk.Widget build_ui() {
         Icon icon = new ThemedIcon.from_names(icon.split(" "));
         Gdk.RGBA colour = Gdk.RGBA();
