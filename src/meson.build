@@ -69,7 +69,7 @@ foreach f : sources
 endforeach
 
 
-c_args = ['-include', 'config.h']
+c_args = ['-DGCR_API_SUBJECT_TO_CHANGE', '-include', 'config.h']
 posix_dep = meson.get_compiler('vala').find_library('posix')
 
 executable('com.github.alcinnz.odysseus',
@@ -88,7 +88,8 @@ executable('com.github.alcinnz.odysseus',
         dependency('unity'),
         dependency('appstream'),
         posix_dep,
-        dependency('libxml-2.0')
+        dependency('libxml-2.0'),
+        dependency('gcr-3')
     ],
     install: true
 )

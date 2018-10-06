@@ -22,7 +22,7 @@ public class Odysseus.StatusIndicator : Object {
     public Status status {get; set;}
     public string text;
 
-    public delegate Gtk.Popover? OnPressed(StatusIndicator self);
+    public delegate Gtk.Popover? OnPressed();
     public OnPressed? on_pressed;
 
     public StatusIndicator(string icon, Status status, string text,
@@ -47,7 +47,7 @@ public class Odysseus.StatusIndicator : Object {
         ret.image = build_image();
         ret.relief = Gtk.ReliefStyle.NONE;
         ret.clicked.connect(() => {
-            var popover = on_pressed != null ? on_pressed(this) : tooltip_popover();
+            var popover = on_pressed != null ? on_pressed() : tooltip_popover();
             ret.image = build_image();
 
             if (popover == null) return;

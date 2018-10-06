@@ -50,6 +50,55 @@ namespace Odysseus.Traits {
         if (TlsCertificateFlags.GENERIC_ERROR in errors)
             status.bullet_point(_("Unknown error…"));
 
+        status.on_pressed = () => build_certificate_popover(status.text, cert);
         indicators.add(status);
+    }
+
+    private Gtk.Popover build_certificate_popover(string summary, TlsCertificate cert) {
+        var ret = new Gtk.Popover(null);
+        var grid = new Gtk.Grid();
+        grid.orientation = Gtk.Orientation.VERTICAL;
+        ret.add(grid);
+
+        var header = new Gtk.Label(summary);
+        header.margin = 20;
+        grid.add(header);
+        var scrolled = new Odysseus.Header.AutomaticScrollBox();
+        grid.add(scrolled);
+        var list = new Gtk.ListBox();
+        scrolled.add(list);
+        list.selection_mode = Gtk.SelectionMode.NONE;
+
+        for (var chain = cert; chain != null; chain = cert.issuer) {
+            var gcr = new Gcr.SimpleCertificate (chain.certificate.data);
+            list.add(build_certificate_row(gcr));
+        }
+
+        return ret;
+    }
+
+    private Gtk.Widget build_certificate_row(Gcr.Certificate cert) {
+        var ret = new Gtk.Grid();
+        ret.column_spacing = 10; ret.row_spacing = 10;
+        ret.attach(styled_label(cert.subject, "weight='bold' size='x-large'"), 0, 0);
+        ret.attach(new Gtk.Image.from_gicon(cert.icon, Gtk.IconSize.LARGE_TOOLBAR), 1, 0);
+        ret.attach(styled_label(cert.description), 0, 1, 2);
+        var signature_style = "font='Daniel, cursive' underline='single'";
+        ret.attach(styled_label(cert.issuer, signature_style), 0, 2);
+
+        var expires_buf = new char[200];
+        var format = Granite.DateTime.get_default_date_format(false, true, true);
+        var expires_len = cert.expiry.strftime(expires_buf, format);
+        var expires_str = (string) expires_buf[0:expires_len];
+        ret.attach(styled_label(_("Expires %s").printf(expires_str)), 1, 2);
+
+        return ret;
+    }
+    private Gtk.Label styled_label(string text, string style = "") {
+        var ret = new Gtk.Label(text);
+        ret.set_markup(Markup.printf_escaped("<span " + style + ">%s</span>", text));
+        ret.justify = Gtk.Justification.LEFT;
+        ret.halign = Gtk.Align.START;
+        return ret;
     }
 }
