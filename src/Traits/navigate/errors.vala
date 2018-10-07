@@ -66,6 +66,13 @@ namespace Odysseus.Traits {
         var web = tab.web;
 
         web.load_failed_with_tls_errors.connect((uri, certificate, error) => {
+            ulong handler = 0;
+            handler = tab.populate_indicators.connect((indicators, web) => {
+                report_https_certificate(indicators, new Soup.URI(web.uri).host,
+                        certificate, error);
+                tab.disconnect(handler);
+            });
+
             report_error("bad-certificate", uri, tab);
             // This is to debug potential hostname parsing problems.
             connect_form(web, (req) => {

@@ -21,14 +21,18 @@ namespace Odysseus.Traits {
         TlsCertificate cert;
         TlsCertificateFlags errors;
 
-        if (!web.get_tls_info(out cert, out errors)) return;
+        if (web.get_tls_info(out cert, out errors))
+            report_https_certificate(indicators, new Soup.URI(web.uri).host, cert, errors);
+    }
 
+    public void report_https_certificate(Gee.List<StatusIndicator> indicators,
+            string host, TlsCertificate cert, TlsCertificateFlags errors) {
         var msg = _("Your connection to %s is secure from eavesdroppers,") + "\n";
         msg += _("Your activity can be seen by the admins and hosting companies for this site.");
         StatusIndicator status;
         if (errors == 0)
             status = new StatusIndicator("security-high", Status.SECURE,
-                    msg.printf(new Soup.URI(web.uri).host)
+                    msg.printf(host)
                 );
         else status = new StatusIndicator("security-low", Status.ERROR,
                 // FIXME provide more information about the error.
