@@ -97,6 +97,7 @@ namespace Odysseus.Traits {
     private Gtk.Label styled_label(string text, string style = "") {
         var ret = new Gtk.Label(text);
         ret.set_markup(Markup.printf_escaped("<span " + style + ">%s</span>", text));
+        ret.tooltip_text = text;
         ret.justify = Gtk.Justification.LEFT;
         ret.halign = Gtk.Align.START;
         return ret;
