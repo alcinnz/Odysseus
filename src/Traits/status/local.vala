@@ -17,7 +17,7 @@
 /** Indicates local resources as being "super-secure" */
 namespace Odysseus.Traits {
     public void report_local(Gee.List<StatusIndicator> indicators, WebKit.WebView web) {
-        var local_prefixes = ("odysseus viewsource icon about " + 
+        var local_prefixes = ("odysseus source icon about " + 
                 "https://127.0.0.1 http://127.0.0.1 https://localhost http://localhost"
             ).split(" ");
         var is_local = false;
