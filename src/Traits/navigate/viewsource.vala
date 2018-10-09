@@ -49,7 +49,7 @@ namespace Odysseus.Traits {
             var url = request.get_uri();
             var data = Let.builds("source", new Substr(resource.code),
                     Let.builds("title", new Literal(resource.title),
-                    Let.builds("url", new Literal(url["source:".length:url.length]))));
+                    Let.builds("url", new Literal(url["source:///".length:url.length]))));
 
             try {
                 ErrorData? ignored = null;

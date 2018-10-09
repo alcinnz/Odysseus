@@ -25,7 +25,7 @@ namespace Odysseus.Traits {
             var win = tab.get_toplevel() as BrowserWindow;
             if (win == null) return;
 
-            win.addressbar.grab_focus();
+            win.addressbar.entry.grab_focus();
         });
     }
 }
