@@ -28,23 +28,30 @@ namespace Odysseus.Traits {
         var opts = new Overlay.InfoContainer.MessageOptions();
         opts.type = Gtk.MessageType.WARNING;
         opts.ok_text = _("Allow"); opts.cancel_text = _("Deny");
+        var icon = "";
 
         if (req is WebKit.GeolocationPermissionRequest) {
             msg = _("This page wants to know where you currently are.");
+            icon = "find-location"; // FIXME non-standard.
         } else if (req is WebKit.NotificationPermissionRequest) {
             msg = _("This page wants the ability to show you notifications.");
+            icon = "notification"; // FIXME non-standard.
         } else if (req is WebKit.UserMediaPermissionRequest) {
             var media_req = req as WebKit.UserMediaPermissionRequest;
             var listens = media_req.is_for_audio_device;
             var watches = media_req.is_for_video_device;
             if (listens && watches) {
                 msg = _("This page wants to watch and listen to you.");
+                icon = "camera-photo";
             } else if (listens) {
                 msg = _("This page wants to listen to you.");
+                icon = "audio-input-microphone";
             } else if (watches) {
                 msg = _("This page wants to watch you.");
+                icon = "camera-video";
             } else return false;
         } else if (req is WebKit.InstallMissingMediaPluginsPermissionRequest) {
+            icon = "media-icon-start";
             var install_req = req as
                     WebKit.InstallMissingMediaPluginsPermissionRequest;
             msg = _("Additional software is required to play media on this page:");
@@ -52,6 +59,9 @@ namespace Odysseus.Traits {
             opts.ok_text = _("Install");
         }
 
+        // FIXME Should be disabled and turn active.
+        tab.indicators.add(new StatusIndicator(icon, Status.ACTIVE, msg));
+        tab.indicators_loaded(tab.indicators);
         return yield tab.info.message(msg, opts);
     }
 
