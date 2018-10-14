@@ -12,7 +12,8 @@ Build-Depends: meson,
                libsoup2.4-dev (>= 2.52.2),
                libsqlite3-dev (>= 3.11.0),
                libunity-dev (>= 7.1.4),
-               libappstream-dev (>= 0.10)
+               libappstream-dev (>= 0.10),
+               libgcr-3-dev
 Standards-Version: 3.9.3
 
 Package: com.github.alcinnz.odysseus
