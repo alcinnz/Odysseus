@@ -17,8 +17,26 @@
 
 using Odysseus.Services;
 namespace Odysseus.Traits {
-    private void report_error(string error_, string uri, WebTab tab) {
+    private bool use_site_errors = false;
+    private void report_error(string error_, string uri, WebTab tab, bool force = false) {
         string error = error_;
+
+        ulong hook = 0;
+        hook = tab.populate_indicators.connect((indicators, web) => {
+            var indicator = new StatusIndicator("error", Status.ERROR, error);
+            if (!force) {
+                if (use_site_errors) indicator.status = Status.ACTIVE;
+                indicator.text += "\n" + _("Click to toggle error message.");
+                indicator.on_pressed = () => {
+                    use_site_errors = !use_site_errors;
+                    web.reload();
+                    return null;
+                };
+            }
+            indicators.add(indicator);
+            tab.disconnect(hook);
+        });
+        if (use_site_errors && !force) return;
 
         var test_path = "/" + Path.build_path("/",
                 "io", "github", "alcinnz", "Odysseus", "odysseus:", "errors",
@@ -73,7 +91,7 @@ namespace Odysseus.Traits {
                 tab.disconnect(handler);
             });
 
-            report_error("bad-certificate", uri, tab);
+            report_error("bad-certificate", uri, tab, true);
             // This is to debug potential hostname parsing problems.
             connect_form(web, (req) => {
                 var host = parse_hostname(uri);
@@ -106,12 +124,10 @@ namespace Odysseus.Traits {
                 }
             }
 
-            report_error(error, uri, tab);
+            report_error(error, uri, tab, true);
             return true;
         });
-        // FIXME Overrides site-provided pages too often.
-        //      I think this needs to be fixed in WebKitGTK (but not WebCore)
-        /*web.decide_policy.connect((decision, type) => {
+        web.decide_policy.connect((decision, type) => {
             if (type == WebKit.PolicyDecisionType.RESPONSE) {
                 var response_decision = (WebKit.ResponsePolicyDecision) decision;
                 var response = response_decision.response;
@@ -127,9 +143,9 @@ namespace Odysseus.Traits {
                 }
             }
             return false;
-        });*/
+        });
         web.authenticate.connect((request) => {
-            report_error("401", web.uri, tab);
+            report_error("401", web.uri, tab, true);
             connect_form(web, (req) => {
                 GenericArray<string> keys;
                 GenericArray<string> values;
