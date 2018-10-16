@@ -18,10 +18,12 @@
 using Odysseus.Services;
 namespace Odysseus.Traits {
     private bool use_site_errors = false;
-    private void report_error(string error_, string uri, WebTab tab, bool force = false) {
+    private void report_error(string error_, string uri, WebTab tab,
+            bool force = false, int num_loads = 1) {
         string error = error_;
 
         ulong hook = 0;
+        var load_count = 0;
         hook = tab.populate_indicators.connect((indicators, web) => {
             var indicator = new StatusIndicator("error", Status.ERROR, error);
             if (!force) {
@@ -34,7 +36,9 @@ namespace Odysseus.Traits {
                 };
             }
             indicators.add(indicator);
-            tab.disconnect(hook);
+
+            load_count++;
+            if (load_count == num_loads) tab.disconnect(hook);
         });
         if (use_site_errors && !force) return;
 
@@ -135,7 +139,7 @@ namespace Odysseus.Traits {
                         response.uri == web.uri &&
                         response.status_code != 200) {
                     report_error(response.status_code.to_string(), response.uri,
-                            tab);
+                            tab, false, 2);
                     return true;
                 } else {
                     // So we don't get stuck with the error icon
