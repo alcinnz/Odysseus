@@ -23,7 +23,7 @@ namespace Odysseus.Traits {
     // Services.register_mime_indicator("application/xml+atom application/xml+rss",
     //      _("Subscribe to page updates."),
     //      "webfeed-subscribe", webfeed_indicator);
-    public Gtk.Popover? webfeed_indicator(Gee.List<string> links) {
+    public Gtk.Popover? webfeed_indicator(Gee.List<string> links, StatusIndicator ind) {
         return null;
     }
 
