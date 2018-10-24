@@ -19,8 +19,8 @@ Standards-Version: 3.9.3
 Package: com.github.alcinnz.odysseus
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: The Web Browser designed specifically for elementary OS!
- Designed in accordance to the elementary HIG Odysseus boasts unique desktop
- integrations, chrome that's instantly familiar to users of elementary's
- Scratch and Files applications, recommend links on first start, and fast
- restoration of your previous browsing sessions with delayed loading of pages.
+Description: A simple and performant yet powerful window onto the open decentralized web
+ Odysseus is a convenient and privacy-respecting web browser, that increasingly,
+ gently, and unobtrusively guides you wherever you want to go online.
+ Through this well thought out simplicity Odysseus lets you focus on the webpages
+ that matter to you.
