@@ -38,7 +38,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
     public delegate void Action();
     public delegate void BuildMenu(MenuBuilder builder);
     public ButtonWithMenu build_tool_item(string icon, string tooltip,
-            int key, owned Action? action, owned BuildMenu build_menu,
+            uint key, owned Action? action, owned BuildMenu build_menu,
             Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK,
             bool dynamic_menu = false) {
         var item = new ButtonWithMenu.from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR);
@@ -81,7 +81,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
         return item;
     }
     public ButtonWithMenu add_item_left(string icon, string tooltip,
-            int key, owned Action? action, owned BuildMenu build_menu,
+            uint key, owned Action? action, owned BuildMenu build_menu,
             bool dynamic_menu = false) {
         var item = build_tool_item(icon, tooltip, key, action, build_menu,
                 Gdk.ModifierType.CONTROL_MASK, dynamic_menu);
@@ -89,7 +89,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
         return item;
     }
     public ButtonWithMenu add_item_right(string icon, string tooltip,
-            int key, owned Action? action, owned BuildMenu build_menu,
+            uint key, owned Action? action, owned BuildMenu build_menu,
             bool dynamic_menu = false) {
         var item = build_tool_item(icon, tooltip, key, action, build_menu,
                 Gdk.ModifierType.CONTROL_MASK, dynamic_menu);
@@ -101,7 +101,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
         public Gtk.Menu menu = new Gtk.Menu();
         public Gtk.AccelGroup? accel_group = null;
 
-        public Gtk.ImageMenuItem add(string title, owned Action action, int key = 0,
+        public Gtk.ImageMenuItem add(string title, owned Action action, uint key = 0,
                 Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK) {
             var item = new Gtk.ImageMenuItem.with_mnemonic(title);
             item.activate.connect(() => {action();});
@@ -123,7 +123,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
         public delegate void OpenLink(string url);
         public Gtk.ImageMenuItem link(string title, string url,
                 owned OpenLink action = Granite.Services.System.open_uri,
-                int key = 0, Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK) {
+                uint key = 0, Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK) {
             var item = add(title, () => action(url), key, modifier);
             item.always_show_image = true;
             item.image = new Gtk.Image.from_icon_name("emblem-symbolic-link",
@@ -137,7 +137,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
         }
     }
 
-    public void shortcut(int key, owned Action action,
+    public void shortcut(uint key, owned Action action,
             Gdk.ModifierType mod = Gdk.ModifierType.CONTROL_MASK) {
         accel_group.connect(key, mod, Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
                 (group, acceleratable, key, modifier) => {
