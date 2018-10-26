@@ -620,6 +620,17 @@ namespace Odysseus.Templating.Std {
         public override bool? should_escape() {return false;}
     }
 
+    private class SplitFilter : Filter {
+        public override Data.Data filter(Data.Data text, Data.Data sep) {
+            var texts = @"$text".split(@"$sep");
+
+            var ret = new Data.Data[texts.length];
+            for (var i = 0; i < texts.length; i++)
+                ret[i] = new Data.Literal(texts[i]);
+            return new Data.List.from_array(ret);
+        }
+    }
+
     /* Explicit coercion potentially useful for working with SQL results or query params. */
     private class TextFilter : Filter {
         public override Data.Data filter(Data.Data text, Data.Data arg) {
@@ -710,6 +721,7 @@ namespace Odysseus.Templating.Std {
         register_filter("md5", new MD5Filter());
         register_filter("mimeicon", new xMIMEInfo.MIMEIconFilter());
         register_filter("safe", new SafeFilter());
+        register_filter("split", new SplitFilter());
         register_filter("text", new TextFilter());
         register_filter("title", new TitleFilter());
         register_filter("trans", new xI18n.TransFilter());

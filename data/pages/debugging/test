@@ -904,6 +904,26 @@ TRUE|FALSE
 <b>O</b><i>ddyssey</i>
 {% endtest %}
 {% test "|title" %}{{ "oDDitY twiCE"|title }}{% output %}Oddity Twice{% endtest %}
+{% test "|split" %}
+{% for doctor in doctors|split:" " %}
+{{ doctor|title }}{% endfor %}
+{% input %}
+  {"doctors" : "hartnell troughton pertwee baker davison baker mccoy eccleston tennant smith capaldi whittaker"}
+{% output %}
+
+Hartnell
+Troughton
+Pertwee
+Baker
+Davison
+Baker
+Mccoy
+Eccleston
+Tennant
+Smith
+Capaldi
+Whittaker
+{% endtest %}
 
   <h2>Tags & filters used by viewers</h2>
   <p>Viewers make use of some addional extended tags. All of them are triggered

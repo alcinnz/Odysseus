@@ -13,6 +13,9 @@ and I take advantage of this page to promote project links. #}
     {% if distro.ID %}
       http://recommendations.adrian.geek.nz/links/{{ distro.ID }}.tsv
     {% endif %}
+    {% for distro in distro.ID_LIKE|split:" " %}
+      http://recommendations.adrian.geek.nz/links/{{ distro }}.tsv
+    {% endfor %}
     {% for lang in LOCALE %}
       http://recommendations.adrian.geek.nz/links/{{ lang }}.tsv
     {% endfor %}
