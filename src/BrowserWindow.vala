@@ -186,9 +186,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
     public SList<string> prompt_file(Gtk.FileChooserAction type, string ok_text,
             string selected_path = "") {
-        var chooser = new Gtk.FileChooserDialog(ok_text, this, type,
-                _("_Cancel"), Gtk.ResponseType.CANCEL,
-                ok_text, Gtk.ResponseType.OK);
+        var chooser = new Gtk.FileChooserNative(ok_text.replace("_", ""),
+                this, type, ok_text, null);
         if (selected_path != "") chooser.set_filename(selected_path);
 
         var ret = new SList<string>();
