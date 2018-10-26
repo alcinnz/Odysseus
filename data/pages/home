@@ -10,6 +10,9 @@ and I take advantage of this page to promote project links. #}
 {% query %}SELECT * FROM recommendations;
 {% empty %}
   {% fetch %}
+    {% if distro.ID %}
+      http://recommendations.adrian.geek.nz/links/{{ distro.ID }}.tsv
+    {% endif %}
     {% for lang in LOCALE %}
       http://recommendations.adrian.geek.nz/links/{{ lang }}.tsv
     {% endfor %}

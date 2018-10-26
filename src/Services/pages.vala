@@ -19,6 +19,29 @@
 namespace Odysseus.Services {
     using Templating;
 
+    private Data.Mapping? distro_data;
+    private Data.Data get_distro_data() {
+        if (distro_data != null) return distro_data;
+
+        distro_data = new Data.Mapping();
+        var file = File.new_for_path("/etc/os-release");
+        try {
+            var input = new DataInputStream(file.read());
+            string line;
+            while ((line = input.read_line()) != null) {
+                var osrel_component = line.split ("=", 2);
+                if (osrel_component.length == 2) {
+                    var val = osrel_component[1].replace ("\"", "");
+                    distro_data[osrel_component[0]] = new Data.Literal(val);
+                }
+            }
+        } catch (Error err) {
+            /* Let the templates deal with it if it's a problem.*/
+        }
+
+        return distro_data;
+    }
+
     private Data.Data parse_url_to_prosody(string url_text) {
         var url = new Data.Mapping(null, url_text);
         var parser = new Soup.URI(url_text);
@@ -67,7 +90,8 @@ namespace Odysseus.Services {
         }
 
         return Data.Let.builds("url", url,
-                Data.Let.builds("LOCALE", new Data.List.from_array(langs_data)));
+                Data.Let.builds("LOCALE", new Data.List.from_array(langs_data),
+                Data.Let.builds("distro", get_distro_data())));
     }
 
     private void render_error(WebKit.URISchemeRequest request, string error,
