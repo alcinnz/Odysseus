@@ -98,7 +98,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     }
 
     private void build_toolbar(Header.HeaderBarWithMenus tools) {
-        var back = tools.add_item_left("go-previous-symbolic", _("Go to previously viewed page"),
+        var back = tools.add_item_left("go-previous", _("Go to previously viewed page"),
                 Gdk.Key.comma, () => web.go_back(), (menu) => {
             web.get_back_forward_list().get_back_list().@foreach((item) => {
                 var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
@@ -106,7 +106,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             });
         }, true);
         tabs.bind_property("can-go-back", back, "sensitive", BindingFlags.SYNC_CREATE);
-        var forward = tools.add_item_left("go-next-symbolic", _("Go to next viewed page"),
+        var forward = tools.add_item_left("go-next", _("Go to next viewed page"),
                 Gdk.Key.period, () => web.go_forward(), (menu) => {
             web.get_back_forward_list().get_forward_list().@foreach((item) => {
                 var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
@@ -115,12 +115,12 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         }, true);
         tabs.bind_property("can-go-forward", forward, "sensitive", BindingFlags.SYNC_CREATE);
 
-        var reload = tools.build_tool_item("view-refresh-symbolic", _("Load this page from the website again"),
+        var reload = tools.build_tool_item("view-refresh", _("Load this page from the website again"),
                 Gdk.Key.r, () => web.reload(), (menu) => {
             menu.add(_("Ignore cache"), () => web.reload_bypass_cache(), Gdk.Key.r,
                     Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK);
         });
-        var stop = tools.build_tool_item("process-stop-symbolic", _("Stop loading this page"),
+        var stop = tools.build_tool_item("process-stop", _("Stop loading this page"),
                 Gdk.Key.q, () => web.stop_loading(), (menu) => {
             menu.add(_("Stop And Reload"), () => {web.stop_loading(); web.reload();});
         });

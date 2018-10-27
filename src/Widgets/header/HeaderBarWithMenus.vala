@@ -41,7 +41,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
             uint key, owned Action? action, owned BuildMenu build_menu,
             Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK,
             bool dynamic_menu = false) {
-        var item = new ButtonWithMenu.from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR);
+        var item = new ButtonWithMenu.from_icon_name(icon + "-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
         item.tooltip_text = tooltip;
         if (key != 0) item.tooltip_text += " (%s)".printf(
                 Gtk.accelerator_get_label(key, modifier));
