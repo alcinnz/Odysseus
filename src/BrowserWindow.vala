@@ -157,14 +157,14 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
                     foreach (var uri in prompt_file(Gtk.FileChooserAction.SAVE, _("_Save As")))
                         web.save_to_file.begin(File.new_for_uri(uri), WebKit.SaveMode.MHTML, null);
                 }, Gdk.Key.S);
-            menu.link(_("_View Source"), "viewsource:///…", (_) => viewsource_activated.begin(), Gdk.Key.U);
+            menu.add(_("_View Source"), () => viewsource_activated.begin(), Gdk.Key.U);
             menu.separate();
             menu.add(_("Zoom In"), () => web.zoom_level += 0.1, Gdk.Key.plus);
             tools.shortcut(Gdk.Key.equal, () => web.zoom_level += 0.1);
             menu.add(_("Zoom Out"), () => web.zoom_level -= 0.1, Gdk.Key.minus);
             tools.shortcut(Gdk.Key.@0, () => web.zoom_level = 1.0);
             menu.separate();
-            menu.link(_("_History"), "odysseus:history", new_tab, Gdk.Key.H);
+            menu.add(_("_History"), () => new_tab("odysseus:history"), Gdk.Key.H);
             menu.separate();
             menu.add(_("_Find In Page"), () => (tabs.current as WebTab).find_in_page(), Gdk.Key.F);
             tools.shortcut(Gdk.Key.Escape, () => {
@@ -174,7 +174,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("_Print"), () => new WebKit.PrintOperation(web).run_dialog(this), Gdk.Key.P);
             menu.separate();
             menu.add(_("Show Downloads"), () => downloads.set_reveal_child(true), Gdk.Key.D);
-            menu.link(_("About Odysseus"), "appstream://com.github.alcinnz.odysseus.desktop");
+            var about_link = "appstream://com.github.alcinnz.odysseus";
+            menu.add(_("About Odysseus"), () => Granite.Services.System.open_uri(about_link));
         });
         tools.shortcut(Gdk.Key.T, () => new_tab());
     }
