@@ -16,13 +16,13 @@
 */
 public class Odysseus.DownloadButton : Odysseus.ProgressBin {
     private Odysseus.Download download;
-    
+
     private Gtk.Button button;
     private Gtk.Image fileicon;
     private Gtk.Label filename;
     private Gtk.Label filesize;
     private Gtk.Label remaining;
-    
+
     private Gtk.Menu menu;
     private Gtk.MenuItem open_item;
     private Gtk.CheckMenuItem open_automatic_item;
@@ -30,35 +30,35 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
     public DownloadButton(Odysseus.Download download) {
         this.download = download;
         this.sensitive = true;
-        
+
         setup_ui();
         connect_events();
         create_menu();
         show_all();
     }
-    
+
     private void setup_ui() {
         // NOTE I'm populating the values as data comes in,
         // because we don't know enough yet.
         button = new Gtk.Button();
         add(button);
-        
+
         var container = new Gtk.Grid();
         button.add(container);
 
         fileicon = new Gtk.Image.from_icon_name("document-save-as",
                         Gtk.IconSize.LARGE_TOOLBAR);
         container.attach(fileicon, 0, 0, 1, 2);
-        
+
         filename = new Gtk.Label(_("[Download]"));
         filename.get_style_context().add_class("h3");
         filename.halign = Gtk.Align.CENTER;
         container.attach(filename, 1, 0, 2, 1);
-        
+
         filesize = new Gtk.Label("-");
         filesize.halign = Gtk.Align.START;
         container.attach(filesize, 1, 1, 1, 1);
-        
+
         remaining = new Gtk.Label("-");
         remaining.halign = Gtk.Align.END;
         container.attach(remaining, 2, 1, 1, 1);
@@ -116,20 +116,20 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
                 download.destination = uri;
         });
         menu.add(save_item);
-        
+
         menu.add(new Gtk.SeparatorMenuItem());
 
         var cancel_item = new Gtk.MenuItem.with_mnemonic(_("_Cancel"));
         cancel_item.activate.connect(() => download.cancel());
         menu.add(cancel_item);
-        
+
         menu.show_all();
     }
 
     private void show_menu(Gdk.EventButton? evt) {
         uint button = 0;
         uint32 activate_time = Gtk.get_current_event_time();
-        
+
         if (evt != null) {
             button = evt.button;
             activate_time = evt.get_time();
@@ -137,6 +137,6 @@ public class Odysseus.DownloadButton : Odysseus.ProgressBin {
         open_item.sensitive = download.completed;
         open_automatic_item.sensitive = !download.completed;
         open_automatic_item.active = download.auto_open;
-        menu.popup(null, null, null, button, activate_time);
+        menu.popup_at_widget(this, Gdk.Gravity.NORTH, Gdk.Gravity.SOUTH, evt);
     }
 }
