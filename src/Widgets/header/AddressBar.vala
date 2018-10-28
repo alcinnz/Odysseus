@@ -34,15 +34,18 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
         orientation = Gtk.Orientation.HORIZONTAL;
         get_style_context().add_class(Gtk.STYLE_CLASS_LINKED);
 
-        // GTK BUG: This code should expand this to fill, but it doesn't.
         entry.hexpand = true;
         entry.halign = Gtk.Align.FILL;
         add(entry);
 
         statusbar = new Gtk.Grid();
         statusbar.@set("orientation", Gtk.Orientation.HORIZONTAL);
-        statusbar.get_style_context().add_class("entry");
-        add(statusbar);
+
+        // Necessary to get the linked controls looking right.
+        var statusbutton = new Gtk.Button();
+        statusbutton.get_style_context().add_class("entry");
+        statusbutton.add(statusbar);
+        add(statusbutton);
 
         build_dropdown();
         connect_events();
@@ -61,7 +64,7 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
         min_width = 20; // Meh
         nat_width = max_width;
     }
-    
+
     private void connect_events() {
         entry.changed.connect(autocomplete);
 
@@ -116,7 +119,7 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
             navigate_to(url);
         });
     }
-    
+
     private void autocomplete() {
         list.@foreach((widget) => {list.remove(widget);});
 
@@ -130,7 +133,7 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
             }
         });
     }
-    
+
     public void build_dropdown() {
         list = new Gtk.ListBox();
         list.activate_on_single_click = true;
@@ -157,7 +160,7 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
                 0, 1);
         return new CompletionRow(row, url);
     }
-    
+
     private Gtk.Label build_label(string style, string text) {
         var label = new Gtk.Label(text);
         var markup = Markup.printf_escaped("<span "+style+">%s</span>", text);
