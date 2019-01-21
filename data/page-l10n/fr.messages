@@ -1,0 +1,171 @@
+{% msg /home:26 %} New Tab {% trans %} Nouvel Onglet {% endmsg %}
+{% msg /home:49 %} Browser History {% trans %} Historique de navigation {% endmsg %}
+{% msg /home:59 %} You 'pinned' this here {% trans %} Vous avez épinglé ceci ici {% endmsg %}
+{% msg /home:68 %} "Frequently visited" {% trans %} « Fréquemment visités » {% endmsg %}
+{% msg /home:73 %} "Recommended by Adrian Cochrane" {% trans %} « Recommendé par Adrian Cochrane » {% endmsg %}
+{% msg /home:122 %} Browse faster with
+        <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
+          keyboard shortcuts</a>! {% trans %} Naviguez plus rapidement avec les <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">raccourcis clavier</a> !{% endmsg %}
+{% msg /home:126 %} {# Translators: Use this entry to sell your translation project! #} 
+        Do you know another language? Then do your friends a favour and
+        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">teach Odysseus it</a>! {% trans %} Connaissez-vous une autre langue ? Alors rendez service à vos amis et <a href="https://www.transifex.com/none-483/odysseus/dashboard/">apprenez-le à Odysseus</a> ! {% endmsg %}
+{% msg /home:130 %} Don't know where to go? Here's some
+        <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>. {% trans %} Vous êtes perdu ? Voici quelques <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>{% endmsg %}
+{% msg /home:133 %} Want to help
+        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>? {% trans %} Envie de contribuer <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">rendre Odysseus encore meilleur</a> ? {% endmsg %}
+{% msg /home:136 %} Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>. {% trans %} Des questions ? Trouvez les réponses <a href="https://alcinnz.github.io/Odysseus-support/">ici</a>.{% endmsg %}
+{% msg /home:138 %} Designed and coded with <a href="odysseus:credits">help</a> & ♥ by Adrian Lyall Cochrane in NZ. {% trans %} Conçu et développé avec <a href="odysseus:credits">aide</a> & ♥ par Adrian Lyall Cochrane en NZ. {% endmsg %}
+{% msg /home:140 %} History search not powerful enough for you?
+        I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>! {% trans %} La recherche dans l'hitorique n'est pas assez puissante pour vous ? <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">Je m'en doutais<a> !{% endmsg %}
+{% msg /home:143 %} While Odysseus does store information about your browsing,
+        that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you. {% trans %} Bien qu'Odysseus stocke des informations sur votre navigation, cela <a href="odysseus:privacy">ne signifie pas</a> que nous les partageons avec d'autres personnes que vous. {% endmsg %}
+{% msg /home:146 %} FYI: None of the links on this page were sponsered, no one paid for any of them. {% trans %} Pour info : Aucun des liens sur cette page n'a été sponsorisé, personne n'a payé pour aucun d'entre eux. {% endmsg %}
+{% msg /SERVER-ERROR:9 %} Internal Error {% trans %} Erreur interne {% endmsg %}
+{% msg /SERVER-ERROR:21 %} This Is Bad… {% trans %} C'est terrible… {% endmsg %}
+{% msg /SERVER-ERROR:22 %} I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message. {% trans %} Je ne comprends pas mon propre code. Si vous êtes développeur Odysseus, vous trouverez plus d'informations (en anglais) ci-dessous. Si ce n'est pas le cas, veuillez <a href="https://github.com/alcinnz/Odysseus/issues/new">nous décrire le problème </a>. Cela peut aidez si vous enregistrez et joignez cette page à votre message. {% endmsg %}
+{% msg /NOT-FOUND:9 %} Tool Not Found {% trans %} Outil Non Trouvé {% endmsg %}
+{% msg /NOT-FOUND:14 %} This Page (<code>{{ url }} </code>) Does Not Exist <br />
+        (and probably never has) {% trans %} Cette page (<code>{{ url }} </code>) n'existe pas <br/> (et ne l'a probablement jamais été) {% endmsg %}
+{% msg /NOT-FOUND:16 %} Maybe you meant one of these other internal pages? {% trans %} Vous parliez peut-être d'une de ces pages internes ? {% endmsg %}
+{% msg /NOT-FOUND:19 %} Credits {% trans %} Crédits {% endmsg %}
+{% msg /NOT-FOUND:20 %} The people you should thank for this gorgeous browsing experience. {% trans %} Les personnes que vous devriez remercier pour cette magnifique expérience de navigation. {% endmsg %}
+{% msg /NOT-FOUND:21 %} Odysseus Debugging {% trans %} Débogage d'Odysseus {% endmsg %}
+{% msg /NOT-FOUND:22 %} Tools for ensuring your browser is working correctly. {% trans %} Outils pour vous assurer que votre navigateur fonctionne correctement. {% endmsg %}
+{% msg /NOT-FOUND:23 /history:29 /history:46 %} History {% trans %} Historique {% endmsg %}
+{% msg /NOT-FOUND:24 %} The pages you've visited before. {% trans %} Les pages que vous avez visité précédemment {% endmsg %}
+{% msg /NOT-FOUND:25 %} Odysseus's homepage {% trans %} Page d'accueil d'Odysseus {% endmsg %}
+{% msg /NOT-FOUND:26 %} Includes links to the pages you visit most. {% trans %} Inclut les liens vers les pages que vous visitez le plus. {% endmsg %}
+{% msg /NOT-FOUND:27 %} This is what you see when you open a new tab. {% trans %} C'est ce que vous voyez lorsque vous ouvrez un nouvel onglet. {% endmsg %}
+{% msg /NOT-FOUND:28 %} Privacy Policy {% trans %} Politique de confidentialité {% endmsg %}
+{% msg /NOT-FOUND:29 %} The privacy situation around Odysseus. {% trans %} La situation de la vie privée concernant Odysseus. {% endmsg %}
+{% msg /history:63 %} Visited from: {% trans %} Visité depuis : {% endmsg %}
+{% msg /history:70 %} No results for this search or on this page! {% trans %} Aucun résultat pour cette recherche ou pour cette page ! {% endmsg %}
+{% msg /history:98 %} Wow! No history. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Go explore</a>! {% trans %} Wouah ! Aucun historique. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Partez explorer</a> !{% endmsg %}
+{% msg /INVALID-FORM:4 /errors/405:4 %} INVALID FORM SUBMISSION {% trans %} FORMULAIRE INVALIDE {% endmsg %}
+{% msg /INVALID-FORM:12 %} Invalid form submission {% trans %} Soumission de formulaire non valide {% endmsg %}
+{% msg /INVALID-FORM:13 %} The form you just submitted was invalid! While you <em>could</em>
+      be to blame, this is probably <span title="Odysseus's">my</span> fault. {% trans %} Le formulaire que vous venez d'envoyer n'était pas valide ! C'est <em>peut-être</em> de votre faute, mais c'est probablement de <span title="Odysseus's">ma</span> faute. {% endmsg %}
+{% msg /INVALID-FORM:17 %} Please
+      <a href="https://github.com/alcinnz/odysseus/issues/new">report this to
+        <span title="the Odysseus developers">us</span></a> and attach a copy of
+      this page (use the "Save As" option). More information (in English) is below. {% trans %} Veuillez <a href="https://github.com/alcinnz/odysseus/issues/new"><span title="Les développeurs d'Odysseus">nous</span> le signaler</a> et joignez une copie de cette page (utilisez l'option "Enregistrer sous"). Plus d'informations (en anglais) sont disponibles ci-dessous. {% endmsg %}
+{% msg /feedreaders:4 %} Available feedreaders {% trans %} Lecteurs de flux disponibles {% endmsg %}
+{% msg /feedreaders:12 %} No <a href="https://en.wikipedia.org/wiki/News_aggregator">feed readers</a> are installed {% trans %} Aucun <a href="https://fr.wikipedia.org/wiki/Agr%C3%A9gateur">lecteur de flux</a> n'est installé {% endmsg %}
+{% msg /feedreaders:15 %} In order to subscribe to a <a href="https://en.wikipedia.org/wiki/Web_feed">webfeed</a>,
+      please install one first. {% trans %} Pour pouvoir vous abonner à un <a href="https://fr.wikipedia.org/wiki/Flux_web">flux web</a>, veuillez en installer un d'abord. {% endmsg %}
+{% msg /filetype:4 %} CAN'T OPEN {{ filetype }}  FILES {% trans %} IMPOSSIBLE D'OUVRIR DES FICHIERS {{ filetype }} {% endmsg %}
+{% msg /filetype:18 %} {% filetype %}  files cannot be opened with any software on this computer {% trans %} Les fichiers {% filetype %} ne peuvent être ouverts avec aucune application sur cet ordinateur {% endmsg %}
+{% msg /filetype:22 %} You must install a compatible app before your download will open. {% trans %} Vous devez installer une application compatible avant que votre téléchargement ne puisse s'ouvrir. {% endmsg %}
+{% msg /credits:9 %} Logo critiques {% trans %} Critiques du Logo {% endmsg %}
+{% msg /credits:12 %} Feature suggesions & bug reports {% trans %} Suggestions de fonctionnalités et rapports de bugs {% endmsg %}
+{% msg /credits:17 %} Translation {% trans %} Traduction {% endmsg %}
+{% msg /credits:29 %} External Projects {% trans %} Projets externes {% endmsg %}
+{% msg /credits:30 %} If it weren't for these projects Odysseus wouldn't exist,
+    it'd just be too hard to develop. So <em>thank you</em> to everyone who has
+    worked on these projects, and a special thanks to those who guide their development. {% trans %} Sans ces projets, Odysseus n'existerait pas, ce serait trop difficile à développer. Donc <em>merci</em> à tous ceux qui ont travaillé sur ces projets, et un merci tout particulier à ceux qui ont guidé leur développement. {% endmsg %}
+{% msg /credits:42 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
+    and everyone who's ever published anything to the Web. You're what makes it all worthwhile! {% trans %} Et <em>un grand merci</em> à <a href="https://elementary.io">elementary OS</a> et à tous ceux qui ont déjà publié quelque chose sur le Web. C'est vous qui en valez la peine ! {% endmsg %}
+{% msg /errors/schema:5 %} CAN'T OPEN {{ url.scheme }} : LINKS {% trans %} IMPOSSIBLE D'OUVRIR LES LIENS {{ url.scheme }} {% endmsg %}
+{% msg /errors/schema:19 %} {% urischema %}  links cannot be opened with any software on this computer {% trans %} Les liens {% urischema %} ne peuvent être ouverts avec aucune application sur cet ordinateur {% endmsg %}
+{% msg /errors/schema:23 %} You must install a compatible app before opening <a href="{{ url }} ">this link</a>. {% trans %} Vous devez installer une application compatible avant d'ouvrir <a href="{{ url }} ">ce lien</a>.{% endmsg %}
+{% msg /errors/200:4 /errors/204:4 %} NO CONTENT {% trans %} PAS DE CONTENU {% endmsg %}
+{% msg /errors/200:9 %} No content received {% trans %} Pas de contenu reçu {% endmsg %}
+{% msg /errors/401:4 %} Log-in Required {% trans %} Connexion requise {% endmsg %}
+{% msg /errors/401:9 %} Please Log In {% trans %} Veuillez vous connecter {% endmsg %}
+{% msg /errors/401:10 %} You need to log in to access this page. {% trans %} Vous devez vous connecter pour accéder à cette page. {% endmsg %}
+{% msg /errors/401:16 %} Username {% trans %} Nom d'utilisateur {% endmsg %}
+{% msg /errors/401:20 %} Password {% trans %} Mot de passe {% endmsg %}
+{% msg /errors/401:25 %} Log In {% trans %} Se connecter {% endmsg %}
+{% msg /errors/404:4 %} NOT FOUND {% trans %} NON TROUVÉ {% endmsg %}
+{% msg /errors/404:9 %} This Page Does Not Exist {% trans %} Cette page n'existe pas {% endmsg %}
+{% msg /errors/404:10 %} Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them. {% trans %} Vous l'avez peut-être mal tapé ou suivi un lien invalide. Ou peut-être que le site que vous visitez a déplacé des pages sans réflexion ou les a même supprimées. {% endmsg %}
+{% msg /errors/404:12 /errors/451:12 /errors/410:12 %} Try <a href="/">their homepage</a>, or: {% trans %} Essayez <a href="/">leur page d'accueil</a>, ou : {% endmsg %}
+{% msg /errors/405:9 %} The Form You Submitted Was Invalid {% trans %} Le formulaire que vous avez envoyé était invalide {% endmsg %}
+{% msg /errors/405:10 %} Please take this up with the website's developers. {% trans %} Veuillez le signaler aux développeurs du site web. {% endmsg %}
+{% msg /errors/protocol:4 %} INVALID SITE {% trans %} SITE INVALIDE {% endmsg %}
+{% msg /errors/protocol:9 %} I Cannot Work With This Website {% trans %} Je ne peux pas me connecter à ce site web {% endmsg %}
+{% msg /errors/protocol:10 %} It doesn't speak the same language I do. {% trans %} Il ne parle pas la même langue que moi. {% endmsg %}
+{% msg /errors/507:3 /errors/dns:4 %} CAN'T CONTACT {% trans %} COMMUNICATION IMPOSSIBLE {% endmsg %}
+{% msg /errors/507:8 /errors/dns:9 %} Could Not Contact {{ url.host }} {% trans %} Impossible de communiquer avec {{ url.host }} {% endmsg %}
+{% msg /errors/507:9 /errors/dns:10 %} This may be due to a network failure or a broken link. {% trans %} Cela peut être dû à une panne de réseau ou à un lien cassé. {% endmsg %}
+{% msg /errors/507:12 /errors/network:11 /errors/dns:14 %} Network Settings {% trans %} Paramètres réseau {% endmsg %}
+{% msg /errors/506:4 %} NEGOTIATION FAIL {% trans %} ÉCHEC DE NÉGOCIATION {% endmsg %}
+{% msg /errors/506:9 %} Failed To Decide on a File Format {% trans %} Échec de la décision sur un format de fichier {% endmsg %}
+{% msg /errors/423:4 %} LOCKED {% trans %} VERROUILLÉ {% endmsg %}
+{% msg /errors/423:9 %} This WebDAV Page is Locked {% trans %} Cette page WebDAV est verrouillée {% endmsg %}
+{% msg /errors/423:10 %} Try making your changes again later, or take it up with your group. {% trans %} Essayez d'apporter vos modifications plus tard, ou signalez-le votre groupe. {% endmsg %}
+{% msg /errors/bad-certificate:9 %} INVALID CERTIFICATE {% trans %} CERTIFICAT INVALIDE {% endmsg %}
+{% msg /errors/bad-certificate:16 %} This site may not be who it appears to be {% trans %} Ce site n'est peut-être pas celui qu'il semble être {% endmsg %}
+{% msg /errors/bad-certificate:17 %} It has failed to <a href="https://en.wikipedia.org/wiki/Public_key_certificate">assert</a> it's own identity.
+      This may be due to its configuration, or it may be because someone's actively trying to <strong>spy</strong> on you. {% trans %} Il n'a pas réussi à <a href="https://fr.wikipedia.org/wiki/Certificat_%C3%A9lectronique">certifier</a> son identité. Cela peut être dû à sa configuration, ou peut-être parce que quelqu'un essaie activement de vous <strong>espionner</strong>. {% endmsg %}
+{% msg /errors/bad-certificate:20 %} Details available by clicking the
+      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
+            onerror="this.src = 'icon:16/security-medium-symbolic'" />
+      in the addressbar. {% trans %} Détails disponibles en cliquant sur <img src="icon:16/channel-insecure-symbolic" alt="Icône de connexion non sécurisée"
+            onerror="this.src = 'icon:16/security-medium-symbolic'" /> dans la barre d'adresse. {% endmsg %}
+{% msg /errors/bad-certificate:27 %} Load {{ url }}  despite this warning {% trans %} Charger {{ url }} malgré cet avertissement {% endmsg %}
+{% msg /errors/bad-certificate:30 %} {# People have to click this to bypass certificate warnings #} 
+            I Don't Trust <code>{{ url.host }} </code> Anyways {% trans %} Je ne fais pas confiance à <code>{{ url.host }} {% endmsg %}
+{% msg /errors/bad-certificate:34 %} Try insecure connection {% trans %} Essayer la connexion non sécurisée {% endmsg %}
+{% msg /errors/204:9 %} This Page Has Been Intentionally Left Empty {% trans %} Cette page à été laissée vide intentionnellement {% endmsg %}
+{% msg /errors/204:10 %} Until <span title="Odysseus browser">I</a> added this content to let you know so. {% trans %} Jusqu'à ce que <span title="Odysseus browser">j</a>'ajoute ce contenu pour vous le faire savoir. {% endmsg %}
+{% msg /errors/418:4 %} I'm A Teapot {% trans %}{% endmsg %}
+{% msg /errors/418:12 %} {# Easter-egg 418: verse 1 of "I'm A Teapot" nursery rhyme #} t
+      I'm a little teapot<br />
+      Short and stout<br />
+      Here is my handle<br />
+      And here is my spout {% trans %}Je suis une petite théière<br />Courte et robuste<br />Voici ma poignée<br />Et voici mon bec verseur {% endmsg %}
+{% msg /errors/418:17 %} {# Easter-egg 418: verse 2 of "I'm A Teapot" nursery rhyme #} t
+      When I get all steamed up<br />
+      Hear me shout<br />
+      "Tip me over<br />
+      And pour me out!" {% trans %}Quand je suis à toute vapeur<br/>Entends-moi crier<br/>« Incline-moi<br/>Et verse-moi ! »{% endmsg %}
+{% msg /errors/418:22 %} {# Easter-egg 418: attribution #} 
+      <strong>April Fools!</strong>
+      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% trans %}<strong>Poisson d'avril !</strong> Tiré de <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% endmsg %}
+{% msg /errors/409:4 %} EDIT CONFLICT {% trans %} CONFLIT DE MODIFICATION {% endmsg %}
+{% msg /errors/409:9 %} Your Action Conflicted With Someone Else's {% trans %} Votre action s'est trouvée en conflit avec celle de quelqu'un d'autre. {% endmsg %}
+{% msg /errors/409:10 %} Please <a href="javascript:history.back()">go back</a> and try again. {% trans %} Veuillez <a href="javascript:history.back()">revenir en arrière</a> et réessayez{% endmsg %}
+{% msg /errors/crashed:3 %} CRASHED {% trans %} PLANTAGE {% endmsg %}
+{% msg /errors/400:3 %} BAD REQUEST {% trans %} MAUVAISE DEMANDE {% endmsg %}
+{% msg /errors/400:8 %} This Is Apparently <span title="Odysseus Browser">Our</span> Fault {% trans %} C'est visiblement de <span title="Navigateur Odysseus">notre</title> faute {% endmsg %}
+{% msg /errors/400:9 %} Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and <span title="Odysseus developers">we'll</span> see what we can do about it. {% trans %} Veuillez <a href="https://github.com/alcinnz/Odysseus/issues/new">raporter le problème</a> et <span title="Les développeurs d'Odysseus">nous</span> allons voir ce que nous pouvons faire à propos de ça. {% endmsg %}
+{% msg /errors/network:3 %} CAN'T CONNECT {% trans %} CONNEXION IMPOSSIBLE {% endmsg %}
+{% msg /errors/network:8 %} Could Not Connect To The Internet {% trans %} Impossible de se connecter à Internet {% endmsg %}
+{% msg /errors/501:4 %} UNSUPPORTED {% trans %} NON SUPPORTÉ {% endmsg %}
+{% msg /errors/501:9 %} Feature Not Supported {% trans %} Fonctionnalité non supportée {% endmsg %}
+{% msg /errors/501:10 %} Though it might be in the future. {% trans %} Même si ça pourrait l'être dans le futur. {% endmsg %}
+{% msg /errors/503:3 %} SERVICE UNAVAILABLE {% trans %} SERVICE INDISPONIBLE {% endmsg %}
+{% msg /errors/503:8 %} Service Temporarily Unavailable {% trans %} Service temporairement indisponible {% endmsg %}
+{% msg /errors/503:9 %} Please try again later. {% trans %} Veuillez rééssayer plus tard. {% endmsg %}
+{% msg /errors/503:14 /errors/429:14 /errors/408:14 %} Reload {% trans %} Recharger {% endmsg %}
+{% msg /errors/429:3 %} SITE'S TOO BUSY {% trans %} SITE SURCHARGÉ {% endmsg %}
+{% msg /errors/429:8 %} The Website Is Too Busy Serving Others {% trans %} Le site Web est trop occupé à servir les autres {% endmsg %}
+{% msg /errors/429:9 %} You'll just have to wait. {% trans %} Vous n'avez qu'à attendre. {% endmsg %}
+{% msg /errors/uri:4 %} INVALID LINK {% trans %} LIEN INVALIDE {% endmsg %}
+{% msg /errors/uri:14 %} Could not read link {% url %} {% trans %} Impossible de lire le lien {% url %} {% endmsg %}
+{% msg /errors/uri:16 %} Please report this issue to whoever gave you this link, they messed up! {% trans %} Veuillez signaler ce problème à celui qui vous a donné ce lien, ils ont tout gâché ! {% endmsg %}
+{% msg /errors/424:4 %} REPEATED ERRORS {% trans %} ERREURS RÉPETÉES {% endmsg %}
+{% msg /errors/424:9 %} Follow On From a Previous Error {% trans %} Suite d'une erreur précédente {% endmsg %}
+{% msg /errors/451:4 %} LEGAL TAKEDOWN {% trans %} RETRAIT LÉGAL {% endmsg %}
+{% msg /errors/451:9 %} This Page Has Been Removed For Legal Reasons {% trans %} Cette page a été supprimée pour des raisons légales {% endmsg %}
+{% msg /errors/451:10 %} This page has been purposefully removed, and may not return. {% trans %} Cette page a été volontairement supprimée, et peut ne jamais revenir. {% endmsg %}
+{% msg /errors/dns:11 %} Or it could be simply that <em>this site does not exist</em>. {% trans %} Ou simplement que <em>ce site n'existe pas</em>. {% endmsg %}
+{% msg /errors/500:4 %} WEBSITE PROBLEMS {% trans %} PROBLÈMES DU SITE {% endmsg %}
+{% msg /errors/500:9 %} The Website Experienced An Error {% trans %} Le site web a rencontré une erreur {% endmsg %}
+{% msg /errors/500:10 %} This shouldn't be happening, and you should report it. {% trans %} Cela ne devrait pas se produire, et vous devriez le signaler. {% endmsg %}
+{% msg /errors/403:4 %} FORBIDDEN {% trans %} INTERDIT {% endmsg %}
+{% msg /errors/403:9 %} Permission Denied {% trans %} Permission refusée {% endmsg %}
+{% msg /errors/403:10 %} You are not allowed to access this webpage. Try their <a href="/">homepage</a>. {% trans %} Vous n'êtes pas autorisé à accéder à cette page web. Essayez leur <a href="/">page d'accueil</a>. {% endmsg %}
+{% msg /errors/408:3 %} REQUEST TIMED OUT {% trans %} DÉLAI DÉPASSÉ {% endmsg %}
+{% msg /errors/408:8 %} Timed Out While Asking For This Page {% trans %} Délai écoulé pendant la demande de cette page {% endmsg %}
+{% msg /errors/408:9 %} Try reloading it later. {% trans %} Essayez de la recharger plus tard. {% endmsg %}
+{% msg /errors/410:4 %} DOES NOT EXIST {% trans %} INEXISTANT {% endmsg %}
+{% msg /errors/410:9 %} This Page Has Been Removed {% trans %} Cette page a été supprimée {% endmsg %}
+{% msg /errors/410:10 %} This page has been purposefully removed, and will not return. {% trans %} Cette page a été volontairement supprimée, et ne reviendra jamais. {% endmsg %}
+{% msg /errors/xxx:1 %} Something went wrong! {% trans %} Quelque chose s'est mal passé ! {% endmsg %}
+{% msg /errors/xxx:3 %} But <span title="The Odysseus browser">I</span> don't understand what it was. {% trans %} Mais <span title="Le navigateur Odysseus">je</span> ne comprend pas ce que c'était. {% endmsg %}
+{% msg /special/restore:8 %} Loading… {% trans %} Chargement… {% endmsg %}
+{% msg /special/applist:1 %} Compatible apps {% trans %} Applications compatibles {% endmsg %}
+{% msg /special/applist:5 %} View in {{ pacman }} . {% trans %} Voir dans {{ pacman }} . {% endmsg %}
+{% msg /special/applist:10 %} No compatible apps found in {{ pacman }} . {% trans %} Pas d'application compatible trouvée dans {{ pacman }} . {% endmsg %}
