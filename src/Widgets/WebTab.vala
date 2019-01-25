@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2018).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2019).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
 
     public Gee.List<StatusIndicator> indicators = new Gee.ArrayList<StatusIndicator>();
     public signal void populate_indicators(Gee.List<StatusIndicator> indicators, WebKit.WebView web);
+    public signal void links_parsed(Model.Link[] links, Gee.List<StatusIndicator> indicators);
     public signal void indicators_loaded(Gee.List<StatusIndicator> indicators);
 
     public string url {
@@ -137,7 +138,9 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
             } else status = default_status;
         });
 
+        var page_active = new Cancellable();
         web.load_changed.connect((load_evt) => {
+            page_active.cancel();
             Persist.on_browse();
             if (load_evt != WebKit.LoadEvent.COMMITTED) return;
 
@@ -145,6 +148,22 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
             populate_indicators(indicators, web);
             indicators_loaded(indicators);
         });
+        // This handler uses `hxwls` to scan a page for links.
+        //      This is used to discover webfeeds, etc and to approximate
+        //      personalized suggestions.
+        web.load_changed.connect((load_evt) => {
+            if (load_evt != WebKit.LoadEvent.FINISHED) return;
+            page_active.reset();
+            parse_links.begin(page_active, null);
+        });
+    }
+
+    private async void parse_links(Cancellable cancellable = null) {
+        var source = yield web.get_main_resource().get_data(cancellable);
+        var links = yield Model.parse_links(source);
+
+        links_parsed(links, indicators);
+        indicators_loaded(indicators);
     }
 
     private static Sqlite.Statement? Qinsert_new;
