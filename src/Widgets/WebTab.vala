@@ -158,12 +158,16 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
         });
     }
 
-    private async void parse_links(Cancellable cancellable = null) {
-        var source = yield web.get_main_resource().get_data(cancellable);
-        var links = yield Model.parse_links(source);
+    private async void parse_links(Cancellable? cancellable = null) {
+        try {
+            var source = yield web.get_main_resource().get_data(cancellable);
+            var links = yield Model.parse_links(source);
 
-        links_parsed(links, indicators);
-        indicators_loaded(indicators);
+            links_parsed(links, indicators);
+            indicators_loaded(indicators);
+        } catch (Error err) {
+            warning("Failed to get source for link extraction: %s", err.message);
+        }
     }
 
     private static Sqlite.Statement? Qinsert_new;

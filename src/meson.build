@@ -9,7 +9,7 @@ nav_traits = ['autodownload', 'persist-tab-history', 'newtab', 'history',
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll',
         'fix-plus.google.com', 'fix-bg-videos', 'addressbar-autofocus']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
-indicators = ['https', 'local']
+indicators = ['https', 'local', 'webfeed']
 services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',

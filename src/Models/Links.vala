@@ -16,8 +16,8 @@
 */
 namespace Odysseus.Model {
     public class Link {
-        string rel;
-        string href;
+        public string rel;
+        public string href;
         public Link(string rel, string href) {
             this.rel = rel; this.href = href;
         }

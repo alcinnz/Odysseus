@@ -23,10 +23,18 @@ namespace Odysseus.Traits {
     // Services.register_mime_indicator("application/xml+atom application/xml+rss",
     //      _("Subscribe to page updates."),
     //      "webfeed-subscribe", webfeed_indicator);
-    public Gtk.Popover? webfeed_indicator(Gee.List<string> links, StatusIndicator ind) {
-        return null;
-    }
+    public void discover_webfeeds(Model.Link[] links,
+            Gee.List<StatusIndicator> indicators) {
+        // FIXME Determine that these actually ARE webfeeds,
+        //      and determine the type of their attachments (for menu improvements).
+        var alternatives = new Gee.ArrayList<string>();
+        foreach (var link in links) if (link.rel == "alternate")
+            alternatives.add(link.href);
 
-    // FIXME register_mime_indicator needs to be implemented.
-    // FIXME webfeed-subscribe needs to be installed.
+        if (alternatives.size > 0) {
+            indicators.add(new StatusIndicator(
+                    "webfeed-subscribe", Status.DISABLED,
+                    _("Subscribe to page updates")));
+        }
+    }
 }
