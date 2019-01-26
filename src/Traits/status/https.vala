@@ -54,7 +54,7 @@ namespace Odysseus.Traits {
         if (TlsCertificateFlags.GENERIC_ERROR in errors)
             status.bullet_point(_("Unknown error…"));
 
-        status.on_pressed = () => build_certificate_popover(status.text, cert);
+        status.on_pressed = (_) => build_certificate_popover(status.text, cert);
         indicators.add(status);
     }
 

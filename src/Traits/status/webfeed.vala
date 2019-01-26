@@ -28,9 +28,26 @@ namespace Odysseus.Traits {
             alternatives.add(link.href);
 
         if (alternatives.size > 0) {
-            indicators.add(new StatusIndicator(
+            var indicator = new StatusIndicator(
                     "webfeed-subscribe", Status.DISABLED,
-                    _("Subscribe to page updates")));
+                    _("Subscribe to webfeeds"),
+                    (alts) => build_subscribe_popover(alts as Gee.List<string>));
+            indicator.user_data = alternatives;
+            indicators.add(indicator);
         }
+    }
+
+    public Gtk.Popover build_subscribe_popover(Gee.List<string> links) {
+        // FIXME download these so I can determine if they actually are webfeeds,
+        //      If there's a better label, and the best apps to suggest subscribing via.
+        var grid = new Gtk.Grid();
+        foreach (var link in links) {
+            var label = new Gtk.Label(link);
+            grid.add(label);
+        }
+
+        var popover = new Gtk.Popover(null);
+        popover.add(grid);
+        return popover;
     }
 }
