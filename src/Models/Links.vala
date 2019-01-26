@@ -37,20 +37,15 @@ namespace Odysseus.Model {
                     out stdin,
                     out stdout,
                     null);
-            var hxwls_in = new IOChannel.unix_new(stdin);
-            var hxwls_out = new IOChannel.unix_new(stdout);
+            var hxwls_in = new UnixOutputStream(stdin, true);
+            var hxwls_out = new DataInputStream(new UnixInputStream(stdout, true));
 
-            var page_src = (char[]) src;
-            size_t bytes_written;
-            while (hxwls_in.write_chars(page_src, out bytes_written) != 0) {
-                if (bytes_written >= page_src.length) break;
-                page_src = page_src[bytes_written:page_src.length];
-            }
+            yield hxwls_in.write_all_async(src, Priority.DEFAULT, null, null);
+            yield hxwls_in.close_async(Priority.DEFAULT, null);
 
             var links = new Gee.ArrayList<Link>();
             string line;
-            hxwls_out.read_line(out line, null, null);
-            while (line != null) {
+            while ((line = yield hxwls_out.read_line_async()) != null) {
                 var record = line.split("\t");
                 links.add(new Link(record[1], record[2]));
             }

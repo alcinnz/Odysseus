@@ -19,10 +19,6 @@
     This will build upon an (as yet unwritten) service capable of parsing out
     <link> tags. */
 namespace Odysseus.Traits {
-    // Initialize with:
-    // Services.register_mime_indicator("application/xml+atom application/xml+rss",
-    //      _("Subscribe to page updates."),
-    //      "webfeed-subscribe", webfeed_indicator);
     public void discover_webfeeds(Model.Link[] links,
             Gee.List<StatusIndicator> indicators) {
         // FIXME Determine that these actually ARE webfeeds,

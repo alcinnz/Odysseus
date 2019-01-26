@@ -36,6 +36,8 @@ public class Odysseus.Application : Granite.Application {
     }
 
     public void initialize() {
+        Gtk.IconTheme.get_default().add_resource_path("/io/github/alcinnz/Odysseus/odysseus:/");
+
         // Ensure configuration folder exists
         try {
             var config = File.new_for_path(Environment.get_user_config_dir());
