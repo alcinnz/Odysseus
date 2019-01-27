@@ -37,17 +37,62 @@ namespace Odysseus.Traits {
         }
     }
 
-    public Gtk.Popover build_subscribe_popover(Gee.List<string> links) {
+    private Gtk.Popover build_subscribe_popover(Gee.List<string> links) {
         // FIXME download these so I can determine if they actually are webfeeds,
         //      If there's a better label, and the best apps to suggest subscribing via.
         var grid = new Gtk.Grid();
+        var session = FeedRow.build_session();
         foreach (var link in links) {
-            var label = new Gtk.Label(link);
+            var label = new FeedRow(session, link);
             grid.add(label);
         }
 
         var popover = new Gtk.Popover(null);
         popover.add(grid);
         return popover;
+    }
+
+    private class FeedRow : Gtk.Grid {
+        Gtk.Label label = new Gtk.Label("");
+        Gtk.Spinner spinner = new Gtk.Spinner();
+        construct {
+            orientation = Gtk.Orientation.HORIZONTAL;
+
+            add(label);
+            add(spinner);
+        }
+
+        public FeedRow(Soup.Session session, string link) {
+            label.label = link;
+            fetch_details.begin(session, link, null);
+        }
+
+        public static Soup.Session build_session() {
+            var ret = new Soup.Session();
+            ret.user_agent = Templating.xHTTP.FetchTag.user_agent;
+            ret.add_feature(new Soup.ContentSniffer());
+            return ret;
+        }
+
+        private async void fetch_details(Soup.Session session, string link) {
+            try {
+                spinner.start();
+                var req = session.request_http("GET", link);
+                req.get_message().request_headers.append(
+                        "Accept", "application/rss+xml, application/atom+xml");
+                var response = yield req.send_async(null);
+                spinner.stop();
+
+                if (req.get_message().status_code != 200) {destroy(); return;}
+                var mime = req.get_content_type();
+                if (!mime.has_prefix("application/rss+xml") &&
+                        !mime.has_prefix("application/atom+xml")) {
+                    destroy();
+                    return;
+                }
+            } catch (Error err) {
+                destroy();
+            }
+        }
     }
 }
