@@ -15,8 +15,8 @@ X-GNOME-UsesNotifications=true
 
 [Desktop Action NewWindow]
 Name=New Window
-Exec=com.github.alcinnz.odysseus odysseus:NewWindow
+Exec=com.github.alcinnz.odysseus --window
 
 [Desktop Action NewTab]
 Name=New Tab
-Exec=com.github.alcinnz.odysseus odysseus:home
+Exec=com.github.alcinnz.odysseus --tab

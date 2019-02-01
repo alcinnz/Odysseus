@@ -35,6 +35,30 @@ public class Odysseus.Application : Granite.Application {
         }
     }
 
+    protected override int command_line (ApplicationCommandLine command_line) {
+        activate();
+
+        var window = get_active_window() as BrowserWindow;
+        var args = command_line.get_arguments();
+        for (var i = 1; i < args.length; i++) {
+            var arg = args[i];
+            if (arg == "--tab") arg = "odysseus:home";
+            else if (arg == "--search") {
+                i++;
+                arg = "https://ddg.gg/?q=" + Soup.URI.encode(args[i], null);
+            } else if (arg == "--window") {
+                var win = new BrowserWindow.from_new_entry();
+                win.new_tab();
+                win.show_all();
+                continue;
+            }
+
+            window.new_tab(arg);
+        }
+
+        return 0;
+    }
+
     public void initialize() {
         Gtk.IconTheme.get_default().add_resource_path("/io/github/alcinnz/Odysseus/odysseus:/");
 
@@ -66,20 +90,6 @@ public class Odysseus.Application : Granite.Application {
             window.new_tab();
             window.show_all();
         } else Persist.restore_application();
-    }
-
-    public override void open(File[] files, string hint) {
-        activate(); // To gaurantee the application is initialized.
-
-        var window = get_active_window() as BrowserWindow;
-        foreach (var file in files) {
-            if (file.get_uri() == "odysseus:///NewWindow" ||
-                    file.get_uri() == "odysseus:NewWindow") {
-                window = new BrowserWindow.from_new_entry();
-                window.new_tab();
-                window.show_all();
-            } else window.new_tab(file.get_uri());
-        }
     }
 
     private bool initialized = false;

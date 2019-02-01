@@ -90,6 +90,8 @@ namespace Odysseus.Traits {
                     destroy();
                     return;
                 }
+
+                // TODO parse out /title/text(), enclosure@type, content@type
             } catch (Error err) {
                 destroy();
             }

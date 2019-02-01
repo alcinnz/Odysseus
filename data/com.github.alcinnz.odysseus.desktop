@@ -23,11 +23,11 @@ Name=New Window
 Name[cs]=Nové okno
 Name[fr]=Nouvelle fenêtre
 Name[pt]=Nova janela
-Exec=com.github.alcinnz.odysseus odysseus:NewWindow
+Exec=com.github.alcinnz.odysseus --window
 
 [Desktop Action NewTab]
 Name=New Tab
 Name[cs]=Nový panel
 Name[fr]=Nouvel onglet
 Name[pt]=Nova aba
-Exec=com.github.alcinnz.odysseus odysseus:home
+Exec=com.github.alcinnz.odysseus --tab
