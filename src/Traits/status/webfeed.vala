@@ -74,6 +74,16 @@ namespace Odysseus.Traits {
             return ret;
         }
 
+        private static async string read_stream(InputStream stream) throws IOError {
+            var ret = new StringBuilder();
+            var buffer = new uint8[256];
+            ssize_t size = 0;
+            while ((size = yield stream.read_async(buffer)) > 0) {
+                ret.append_len((string) buffer, size);
+            }
+            return ret.str;
+        }
+
         private async void fetch_details(Soup.Session session, string link) {
             try {
                 spinner.start();
@@ -91,10 +101,96 @@ namespace Odysseus.Traits {
                     return;
                 }
 
-                // TODO parse out /title/text(), enclosure@type, content@type
+                var response_text = yield read_stream(response);
+                var info = new WebFeedParser();
+                info.parse(response_text);
+                // TODO do something with info
+
+                populate_subscribe_buttons();
             } catch (Error err) {
                 destroy();
             }
+        }
+
+        private void populate_subscribe_buttons() {
+            var feedreaders = AppInfo.get_all_for_type("application/atom+xml");
+            var is_empty = true;
+
+            feedreaders.@foreach((feedreader) => {
+                // Verify it's a supported app.
+                if (!feedreader.supports_uris()) return;
+                if (!("application/rss+xml" in feedreader.get_supported_types()))
+                    return;
+                is_empty = false;
+
+                // Add toggle button for feedreader.
+                var button = new Gtk.ToggleButton();
+                button.image = new Gtk.Image.from_gicon(feedreader.get_icon(),
+                        Gtk.IconSize.MENU);
+                button.always_show_image = true;
+                button.relief = Gtk.ReliefStyle.NONE;
+                button.tooltip_text = _("Subscribe via %s").printf(feedreader.get_name());
+                add(button);
+            });
+
+            if (is_empty) {
+                var button = new Gtk.Button();
+                button.image = new Gtk.Image.from_icon_name("system-software-install",
+                        Gtk.IconSize.MENU);
+                button.always_show_image = true;
+                button.relief = Gtk.ReliefStyle.NONE;
+                button.tooltip_text = _("Install a feedreader to subscribe");
+                add(button);
+            }
+        }
+    }
+
+    private string strip_ns(string name) {
+        return ":" in name ? name.split(":")[1] : name;
+    }
+
+    private class WebFeedParser {
+        int depth = 0;
+        public Gee.Set<string> types = new Gee.HashSet<string>();
+        public string title = "";
+        bool in_title = true;
+
+        private void visit_start(MarkupParseContext context, string name,
+                string[] attr_names, string[] attr_values) throws MarkupError {
+            depth++;
+            if (strip_ns(name) == "enclosure" || strip_ns(name) == "content") {
+                for (var i = 0; i < attr_names.length; i++) {
+                    if (strip_ns(attr_names[i]) == "type")
+                        types.add(attr_values[i]);
+                }
+            } else if (depth == 1 && strip_ns(name) == "title") {
+                in_title = true;
+                title = "";
+            }
+        }
+
+        private void visit_end(MarkupParseContext context, string name) throws MarkupError {
+            depth--;
+            in_title = false;
+        }
+
+        private void visit_text(MarkupParseContext context,
+                string text, size_t text_len) throws MarkupError {
+            title = title + text;
+        }
+
+        private void visit_passthrough(MarkupParseContext context,
+                string text, size_t text_len) throws MarkupError {/* Do nothing */}
+
+        public bool parse(string markup) throws MarkupError {
+            var parser = MarkupParser() {
+                start_element = visit_start,
+                end_element = visit_end,
+                text = visit_text,
+                passthrough = visit_passthrough
+            };
+            var context = new MarkupParseContext(parser, 0, this, null);
+            return context.parse(markup, -1);
         }
     }
 }
