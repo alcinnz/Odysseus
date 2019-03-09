@@ -73,6 +73,11 @@ that matter to you.</p>
   </provides>
 
   <releases>
+    <release version="1.5.11" date="2019-03-09">
+      <description>
+        <p>Enable MSE, full French translations.</p>
+      </description>
+    </release>
     <release version="1.5.10" date="2018-10-28">
       <description>
         <p>Minor visual corrections.</p>
