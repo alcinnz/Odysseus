@@ -40,10 +40,13 @@ namespace Odysseus.Templating.xI18n {
         var basepath = SEP + Path.build_path(SEP, "usr", "share", "Odysseus", "l10n");
 
         foreach (var lang in I18n.get_locales()) {
+            stdout.printf("lang: %s\n", lang);
             var path = Path.build_path(SEP, basepath, lang);
-            if (File.new_for_path(path).query_exists())
+            if (File.new_for_path(path).query_exists()) {
+                stdout.printf("locale exists!\n");
                 FileUtils.get_data(path, out catalogue);
                 return new Slice.a(catalogue);
+            }
         }
 
         // If control flow reaches here, bail out!

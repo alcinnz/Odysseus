@@ -1,8 +1,8 @@
 {% msg /home:26 %} New Tab {% trans %} Nouvel Onglet {% endmsg %}
 {% msg /home:49 %} Browser History {% trans %} Historique de navigation {% endmsg %}
 {% msg /home:59 %} You 'pinned' this here {% trans %} Vous avez épinglé ceci ici {% endmsg %}
-{% msg /home:68 %} "Frequently visited" {% trans %} « Fréquemment visités » {% endmsg %}
-{% msg /home:73 %} "Recommended by Adrian Cochrane" {% trans %} « Recommendé par Adrian Cochrane » {% endmsg %}
+{% msg /home:68 %} "Frequently visited" {% trans %} "Fréquemment visités" {% endmsg %}
+{% msg /home:73 %} "Recommended by Adrian Cochrane" {% trans %} "Recommendé par Adrian Cochrane" {% endmsg %}
 {% msg /home:122 %} Browse faster with
         <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
           keyboard shortcuts</a>! {% trans %} Naviguez plus rapidement avec les <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">raccourcis clavier</a> !{% endmsg %}
