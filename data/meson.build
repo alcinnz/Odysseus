@@ -7,7 +7,7 @@ foreach i : icon_sizes
     )
 endforeach
 
-languages = []
+languages = ['fr']
 foreach lang : languages
     install_data(
         join_paths('page-l10n', lang),
