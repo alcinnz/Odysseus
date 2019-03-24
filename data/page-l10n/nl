@@ -1,25 +1,38 @@
-{% msg /home:26 %} Nieuw tabblad {% trans %}{% endmsg %}
-{% msg /home:49 %} Surfgeschiedenis {% trans %}{% endmsg %}
-{% msg /home:59 %} Je hebt dit item hier 'vastgemaakt' {% trans %}{% endmsg %}
-{% msg /home:68 %} "Regelmatig bezocht" {% trans %}{% endmsg %}
-{% msg /home:73 %} "Aanbevolen door Adrian Cochrane" {% trans %}{% endmsg %}
-{% msg /home:122 %} Surf sneller met behulp van
+{% msg /home:26 %} New Tab {% trans %} Nieuw tabblad {% endmsg %}
+{% msg /home:49 %} Browser History {% trans %} Surfgeschiedenis {% endmsg %}
+{% msg /home:59 %} You 'pinned' this here {% trans %} Je hebt dit item hier 'vastgemaakt' {% endmsg %}
+{% msg /home:68 %} "Frequently visited" {% trans %} "Regelmatig bezocht" {% endmsg %}
+{% msg /home:73 %} "Recommended by Adrian Cochrane" {% trans %} "Aanbevolen door Adrian Cochrane" {% endmsg %}
+{% msg /home:122 %} Browse faster with
         <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
-          sneltoetsen</a>! {% trans %}{% endmsg %}
+          keyboard shortcuts</a>! {% trans %} Surf sneller met behulp van
+        <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
+          sneltoetsen</a>! {% endmsg %}
 {% msg /home:126 %} {# Translators: Use this entry to sell your translation project! #} 
+        Do you know another language? Then do your friends a favour and
+        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">teach Odysseus it</a>! {% trans %}
         Beheers je een andere taal? Help dan je vrienden en
-        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">leer Odysseus deze taal</a>! {% trans %}{% endmsg %}
-{% msg /home:130 %} Weet je niet waar je moet beginnen? Hier zijn enkele
-        <a href="https://alcinnz.github.io/Odysseus-recommendations/">aanbevelingen</a>. {% trans %}{% endmsg %}
-{% msg /home:133 %} Wil je helpen
-        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">Odysseus nóg geweldiger te maken</a>? {% trans %}{% endmsg %}
-{% msg /home:136 %} Heb je vragen? Stel ze en <a href="https://alcinnz.github.io/Odysseus-support/">krijg antwoord</a>. {% trans %}{% endmsg %}
-{% msg /home:138 %} Ontworpen en geprogrammeerd met <a href="odysseus:credits">hulp van</a> en ♥ door Adrian Lyall Cochrane in NZ. {% trans %}{% endmsg %}
-{% msg /home:140 %} Vind je de zoekfunctie in de geschiedenis niet krachtig genoeg?
-        Dan heb je het <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">mis</a>! {% trans %}{% endmsg %}
-{% msg /home:143 %} Odysseus slaat informatie op over je surfgedrag,
-        maar we delen dit met <a href="odysseus:privacy">niemand</a>. {% trans %}{% endmsg %}
-{% msg /home:146 %} Voor de duidelijkheid: geen enkele link op deze pagina is gesponsord; niemand ervoor betaald. {% trans %}{% endmsg %}
+        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">leer Odysseus deze taal</a>! {% endmsg %}
+{% msg /home:130 %} Don't know where to go? Here's some
+        <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>.
+        {% trans %} Weet je niet waar je moet beginnen? Hier zijn enkele
+        <a href="https://alcinnz.github.io/Odysseus-recommendations/">aanbevelingen</a>. {% endmsg %}
+{% msg /home:133 %} Want to help
+        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>?
+        {% trans %} Wil je helpen
+        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">Odysseus nóg geweldiger te maken</a>? {% endmsg %}
+{% msg /home:136 %} Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>. {% trans %} Heb je vragen? Stel ze en <a href="https://alcinnz.github.io/Odysseus-support/">krijg antwoord</a>. {% endmsg %}
+{% msg /home:138 %} Designed and coded with <a href="odysseus:credits">help</a> & ♥ by Adrian Lyall Cochrane in NZ. {% trans %} Ontworpen en geprogrammeerd met <a href="odysseus:credits">hulp van</a> en ♥ door Adrian Lyall Cochrane in NZ. {% endmsg %}
+{% msg /home:140 %} History search not powerful enough for you?
+        I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>!
+        {% trans %} Vind je de zoekfunctie in de geschiedenis niet krachtig genoeg?
+        Dan heb je het <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">mis</a>! {% endmsg %}
+{% msg /home:143 %} While Odysseus does store information about your browsing,
+        that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you.
+        {% trans %} Odysseus slaat informatie op over je surfgedrag,
+        maar we delen dit met <a href="odysseus:privacy">niemand</a>. {% endmsg %}
+{% msg /home:146 %} FYI: None of the links on this page were sponsered, no one paid for any of them.
+        {% trans %} Voor de duidelijkheid: geen enkele link op deze pagina is gesponsord; niemand ervoor betaald. {% endmsg %}
 {% msg /SERVER-ERROR:9 %} Interne fout {% trans %}{% endmsg %}
 {% msg /SERVER-ERROR:21 %} Dit ziet er slecht uit… {% trans %}{% endmsg %}
 {% msg /SERVER-ERROR:22 %} Ik begrijp mijn eigen code niet. Als je een Odysseus-ontwikkelaar bent, dan vind je hieronder meer informatie (in het Engels). Als je geen ontwikkelaar bent, <a href="https://github.com/alcinnz/Odysseus/issues/new">licht ons dan in</a>. Sla, om ons te helpen, deze pagina op en voeg hem toe als bijlage aan je probleemomschrijving. {% trans %}{% endmsg %}
