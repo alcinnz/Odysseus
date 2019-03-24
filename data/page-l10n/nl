@@ -80,15 +80,20 @@
 {% msg /filetype:18 %} {% filetype %} files cannot be opened with any software on this computer. {% trans %}
       {% filetype %}  bestanden kunnen niet worden geopend met de op deze computer aanwezige software {% endmsg %}
 {% msg /filetype:22 %} You must install a compatible app before your download will open. {% trans %} Installeer een compatibele app. {% endmsg %}
-{% msg /credits:9 %} Logo-opmerkingen {% trans %}{% endmsg %}
-{% msg /credits:12 %} Ideeën en fouten (bugs) melden {% trans %}{% endmsg %}
-{% msg /credits:17 %} Vertalen {% trans %}{% endmsg %}
-{% msg /credits:29 %} Externe projecten {% trans %}{% endmsg %}
-{% msg /credits:30 %} Zonder deze projecten zou Odysseus niet bestaan;
+{% msg /credits:9 %} Logo critiques {% trans %} Logo-opmerkingen {% endmsg %}
+{% msg /credits:12 %} Feature suggesions and bug reports {% trans %} Ideeën en fouten (bugs) melden {% endmsg %}
+{% msg /credits:17 %} Translation {% trans %} Vertalen {% endmsg %}
+{% msg /credits:29 %} External Projects {% trans %} Externe projecten {% endmsg %}
+{% msg /credits:30 %} If it weren't for these projects Odysseus wouldn't exist,
+    it'd just be too hard to develop. So <em>thank you</em> to everyone who has
+    worked on these projects, and a special thanks to those who guide their development. {% trans %}
+    Zonder deze projecten zou Odysseus niet bestaan;
     het zou dan simpelweg té moeilijk zijn geweest. Dus <em>dank</em> aan iedereen die heeft gewerkt
-    aan deze projecten, en nog meer dank aan de hoofdontwikkelaars. {% trans %}{% endmsg %}
-{% msg /credits:42 %} En <em>hartelijk dank</em> aan <a href="https://elementary.io">elementary OS</a>
-    en iedereen die ooit iets heeft gepubliceerd op het internet. Dankzij jullie is het de moeite waard! {% trans %}{% endmsg %}
+    aan deze projecten, en nog meer dank aan de hoofdontwikkelaars. {% endmsg %}
+{% msg /credits:42 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
+    and everyone who's ever published anything to the Web. You're what makes it all worthwhile! {% trans %}
+    En <em>hartelijk dank</em> aan <a href="https://elementary.io">elementary OS</a>
+    en iedereen die ooit iets heeft gepubliceerd op het internet. Dankzij jullie is het de moeite waard! {% endmsg %}
 {% msg /errors/schema:5 %} KAN GEEN {{ url.scheme }} :-LINKS OPENEN {% trans %}{% endmsg %}
 {% msg /errors/schema:19 %} {% urischema %}-links kunnen niet worden geopend met de op deze computer aanwezige software {% trans %}{% endmsg %}
 {% msg /errors/schema:23 %} Installeer een compatibele app voordat je <a href="{{ url }} ">deze link</a> opnieuw opent. {% trans %}{% endmsg %}
