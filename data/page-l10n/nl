@@ -53,9 +53,10 @@
 {% msg /NOT-FOUND:27 %} This is what you see when you open a new tab. {% trans %} Dit zie je als je een nieuw tabblad opent. {% endmsg %}
 {% msg /NOT-FOUND:28 %} Privacy Policy {% trans %} Privacybeleid {% endmsg %}
 {% msg /NOT-FOUND:29 %} The privacy situation around Odysseus. {% trans %} De privacysituatie omtrent Odysseus. {% endmsg %}
-{% msg /history:63 %} Bezocht van: {% trans %}{% endmsg %}
-{% msg /history:70 %} Geen resultaten voor je zoekopdracht of op deze pagina! {% trans %}{% endmsg %}
-{% msg /history:98 %} Wat? Geen geschiedenis?! <a href="https://alcinnz.github.io/Odysseus-recommendations/">Ga op avontuur</a>! {% trans %}{% endmsg %}
+{% msg /history:63 %} Visited from: {% trans %} Bezocht van: {% endmsg %}
+{% msg /history:70 %} No results for this search or on this page! {% trans %} Geen resultaten voor je zoekopdracht of op deze pagina! {% endmsg %}
+{% msg /history:98 %} Wow! No history. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Go explore</a>! {% trans %}
+        Wat? Geen geschiedenis?! <a href="https://alcinnz.github.io/Odysseus-recommendations/">Ga op avontuur</a>! {% endmsg %}
 {% msg /INVALID-FORM:4 /errors/405:4 %} INVALID FORM SUBMISSION {% trans %} ONGELDIG FORMULIER {% endmsg %}
 {% msg /INVALID-FORM:12 %} Invalid form submission {% trans %} Ongeldig formulier {% endmsg %}
 {% msg /INVALID-FORM:13 %} The form you just submitted was invalid! While you <em>could</em>
@@ -69,13 +70,16 @@
       <a href="https://github.com/alcinnz/odysseus/issues/new">Meld het
         <span title="the Odysseus-ontwikkelaars">ons</span></a> en voeg een kopie bij
       van deze pagina (gebruik hiervoor de optie "Opslaan als"). Hieronder vind je meer informatie (in het Engels). {% endmsg %}
-{% msg /feedreaders:4 %} Beschikbare feedlezers {% trans %}{% endmsg %}
-{% msg /feedreaders:12 %} Er zijn geen <a href="https://nl.wikipedia.org/wiki/Feedreader">feedlezers</a> geïnstalleerd {% trans %}{% endmsg %}
-{% msg /feedreaders:15 %} Als je je wilt abonneren op een <a href="https://nl.wikipedia.org/wiki/Webfeed">webfeed</a>,
-      dan moet je een feedlezer installeren. {% trans %}{% endmsg %}
-{% msg /filetype:4 %} KAN GEEN {{ filetype }}-BESTANDEN OPENEN {% trans %}{% endmsg %}
-{% msg /filetype:18 %} {% filetype %}  bestanden kunnen niet worden geopend met de op deze computer aanwezige software {% trans %}{% endmsg %}
-{% msg /filetype:22 %} Installeer een compatibele app. {% trans %}{% endmsg %}
+{% msg /feedreaders:4 %} Available feedreaders {% trans %} Beschikbare feedlezers {% endmsg %}
+{% msg /feedreaders:12 %} No <a href="https://en.wikipedia.org/wiki/News_aggregator">feed readers</a> installed. {% trans %}
+      Er zijn geen <a href="https://nl.wikipedia.org/wiki/Feedreader">feedlezers</a> geïnstalleerd {% endmsg %}
+{% msg /feedreaders:15 %} In order to subscribe to a <a href="https://en.wikipedia.org/wiki/Web_feed">webfeed</a>,
+      please install one first. {% trans %} Als je je wilt abonneren op een <a href="https://nl.wikipedia.org/wiki/Webfeed">webfeed</a>,
+      dan moet je een feedlezer installeren. {% endmsg %}
+{% msg /filetype:4 %} CAN'T OPEN {{ filetype }} FILES {% trans %} KAN GEEN {{ filetype }}-BESTANDEN OPENEN {% endmsg %}
+{% msg /filetype:18 %} {% filetype %} files cannot be opened with any software on this computer. {% trans %}
+      {% filetype %}  bestanden kunnen niet worden geopend met de op deze computer aanwezige software {% endmsg %}
+{% msg /filetype:22 %} You must install a compatible app before your download will open. {% trans %} Installeer een compatibele app. {% endmsg %}
 {% msg /credits:9 %} Logo-opmerkingen {% trans %}{% endmsg %}
 {% msg /credits:12 %} Ideeën en fouten (bugs) melden {% trans %}{% endmsg %}
 {% msg /credits:17 %} Vertalen {% trans %}{% endmsg %}
