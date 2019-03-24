@@ -178,41 +178,47 @@
 {% msg /errors/400:3 %} BAD REQUEST {% trans %} ONGELDIG VERZOEK {% endmsg %}
 {% msg /errors/400:8 %} This Is Apparently <span title="Odysseus Browser">Our</span> Fault {% trans %} Dit is <span title="Odysseus Browser">onze</span> fout {% endmsg %}
 {% msg /errors/400:9 %} Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and <span title="Odysseus developers">we'll</span> see what we can do about it. {% trans %} <a href="https://github.com/alcinnz/Odysseus/issues/new">Meld het probleem</a> en dan zullen <span title="Odysseus developers">we</span> ernaar kijken. {% trans %}{% endmsg %}
-{% msg /errors/network:3 %} KAN GEEN VERBINDING MAKEN {% trans %}{% endmsg %}
-{% msg /errors/network:8 %} Kan geen verbinding maken met het internet {% trans %}{% endmsg %}
-{% msg /errors/501:4 %} NIET-ONDERSTEUND {% trans %}{% endmsg %}
-{% msg /errors/501:9 %} Deze functie wordt niet ondersteund {% trans %}{% endmsg %}
-{% msg /errors/501:10 %} Maar misschien in de toekomst wél. {% trans %}{% endmsg %}
-{% msg /errors/503:3 %} DIENST NIET BESCHIKBAAR {% trans %}{% endmsg %}
-{% msg /errors/503:8 %} De dienst is tijdelijk niet beschikbaar {% trans %}{% endmsg %}
-{% msg /errors/503:9 %} Probeer het later opnieuw. {% trans %}{% endmsg %}
-{% msg /errors/503:14 /errors/429:14 /errors/408:14 %} Herladen {% trans %}{% endmsg %}
-{% msg /errors/429:3 %} WEBSITE IS BEZIG {% trans %}{% endmsg %}
-{% msg /errors/429:8 %} De website is te druk bezig met andere mensen {% trans %}{% endmsg %}
-{% msg /errors/429:9 %} Je zult dus even moeten wachten. {% trans %}{% endmsg %}
-{% msg /errors/uri:4 %} ONGELDIGE LINK {% trans %}{% endmsg %}
-{% msg /errors/uri:14 %} Kan de link {% url %} niet uitlezen {% trans %}{% endmsg %}
-{% msg /errors/uri:16 %} Meld dit probleem aan degene die je de link heeft gestuurd; ze hebben een foutje gemaakt! {% trans %}{% endmsg %}
-{% msg /errors/424:4 %} TERUGKERENDE FOUTEN {% trans %}{% endmsg %}
-{% msg /errors/424:9 %} De pagina blijft fout na fout geven {% trans %}{% endmsg %}
-{% msg /errors/451:4 %} UIT DE LUCHT GEHAALD {% trans %}{% endmsg %}
-{% msg /errors/451:9 %} Deze website is omwille van juridische redenen uit de lucht gehaald {% trans %}{% endmsg %}
-{% msg /errors/451:10 %} Deze pagina is opzettelijk verwijderd en keert mogelijk niet terug. {% trans %}{% endmsg %}
-{% msg /errors/dns:11 %} Of misschien <em>bestaat deze site gewoon niet</em>. {% trans %}{% endmsg %}
-{% msg /errors/500:4 %} WEBSITEPROBLEMEN {% trans %}{% endmsg %}
-{% msg /errors/500:9 %} Er is een fout opgetreden op de website {% trans %}{% endmsg %}
-{% msg /errors/500:10 %} Dit zou niet mogen gebeuren. Meld deze fout! {% trans %}{% endmsg %}
-{% msg /errors/403:4 %} GEEN TOEGANG {% trans %}{% endmsg %}
-{% msg /errors/403:9 %} Toegang geweigerd {% trans %}{% endmsg %}
-{% msg /errors/403:10 %} Je bent niet gemachtigd om deze pagina te bekijken. Probeer hun <a href="/">startpagina</a>. {% trans %}{% endmsg %}
-{% msg /errors/408:3 %} VERZOEK VERLOPEN {% trans %}{% endmsg %}
-{% msg /errors/408:8 %} Het verzoek is tijdens het opvragen verlopen {% trans %}{% endmsg %}
-{% msg /errors/408:9 %} Herlaad de pagina later nog eens. {% trans %}{% endmsg %}
-{% msg /errors/410:4 %} BESTAAT NIET {% trans %}{% endmsg %}
-{% msg /errors/410:9 %} Deze pagina is verwijderd {% trans %}{% endmsg %}
-{% msg /errors/410:10 %} Deze pagina is opzettelijk verwijderd en keert niet meer terug. {% trans %}{% endmsg %}
-{% msg /errors/xxx:1 %} Er is iets misgegaan! {% trans %}{% endmsg %}
-{% msg /errors/xxx:3 %} Maar <span title="The Odysseus browser">ik</span> weet niet wat. {% trans %}{% endmsg %}
+{% msg /errors/network:3 %} CAN'T CONNECT {% trans %} KAN GEEN VERBINDING MAKEN {% endmsg %}
+{% msg /errors/network:8 %} Could Not Connect To The Internet {% trans %} Kan geen verbinding maken met het internet {% endmsg %}
+{% msg /errors/501:4 %} UNSUPPORTED {% trans %} NIET-ONDERSTEUND {% endmsg %}
+{% msg /errors/501:9 %} Feature Not Supported {% trans %} Deze functie wordt niet ondersteund {% endmsg %}
+{% msg /errors/501:10 %} Though it might be in the future {% trans %} Maar misschien in de toekomst wél. {% endmsg %}
+{% msg /errors/503:3 %} SERVICE UNAVAILABLE {% trans %} DIENST NIET BESCHIKBAAR {% endmsg %}
+{% msg /errors/503:8 %} Service Temporarily Unavailable {% trans %} De dienst is tijdelijk niet beschikbaar {% endmsg %}
+{% msg /errors/503:9 %} Please try again later {% trans %} Probeer het later opnieuw. {% endmsg %}
+{% msg /errors/503:14 /errors/429:14 /errors/408:14 %} Reload {% trans %} Herladen {% endmsg %}
+{% msg /errors/429:3 %} SITE'S TOO BUSY {% trans %} WEBSITE IS BEZIG {% endmsg %}
+{% msg /errors/429:8 %} The Website Is Too Busy Serving Others {% trans %} De website is te druk bezig met andere mensen {% endmsg %}
+{% msg /errors/429:9 %} You'll just have to wait. {% trans %} Je zult dus even moeten wachten. {% endmsg %}
+{% msg /errors/uri:4 %} INVALID LINK {% trans %} ONGELDIGE LINK {% endmsg %}
+{% msg /errors/uri:14 %} Could not read link {% url %} {% trans %} Kan de link {% url %} niet uitlezen {% endmsg %}
+{% msg /errors/uri:16 %} Please report this issue to whoever gave you this link, they messed up! {% trans %}
+        Meld dit probleem aan degene die je de link heeft gestuurd; ze hebben een foutje gemaakt! {% endmsg %}
+{% msg /errors/424:4 %} REPEATED ERRORS {% trans %} TERUGKERENDE FOUTEN {% endmsg %}
+{% msg /errors/424:9 %} Follow On From a Previous Error {% trans %} De pagina blijft fout na fout geven {% endmsg %}
+{% msg /errors/451:4 %} LEGAL TAKEDOWN {% trans %} UIT DE LUCHT GEHAALD {% endmsg %}
+{% msg /errors/451:9 %} This Page Has Been Removed For Legal Reasons {% trans %}
+        Deze website is omwille van juridische redenen uit de lucht gehaald {% endmsg %}
+{% msg /errors/451:10 %} This page has been purposefully removed, and may not return. {% trans %}
+        Deze pagina is opzettelijk verwijderd en keert mogelijk niet terug. {% endmsg %}
+{% msg /errors/dns:11 %} Or it could be simply that <em>this site does not exist</em>. {% trans %} Of misschien <em>bestaat deze site gewoon niet</em>. {% endmsg %}
+{% msg /errors/500:4 %} WEBSITE PROBLEMS {% trans %} WEBSITEPROBLEMEN {% endmsg %}
+{% msg /errors/500:9 %} The Website Experienced An Error {% trans %} Er is een fout opgetreden op de website {% endmsg %}
+{% msg /errors/500:10 %} This shouldn't be happening, and you should report it. {% trans %} Dit zou niet mogen gebeuren. Meld deze fout! {% endmsg %}
+{% msg /errors/403:4 %} FORBIDDEN {% trans %} GEEN TOEGANG {% endmsg %}
+{% msg /errors/403:9 %} Permission Denied {% trans %} Toegang geweigerd {% endmsg %}
+{% msg /errors/403:10 %} You are not allowed to access this webpage. Try their <a href="/">homepage</a>. {% trans %}
+        Je bent niet gemachtigd om deze pagina te bekijken. Probeer hun <a href="/">startpagina</a>. {% endmsg %}
+{% msg /errors/408:3 %} REQUEST TIMED OUT {% trans %} VERZOEK VERLOPEN {% endmsg %}
+{% msg /errors/408:8 %} Timed Out While Asking For This Page {% trans %} Het verzoek is tijdens het opvragen verlopen {% endmsg %}
+{% msg /errors/408:9 %} Try reloading it later. {% trans %} Herlaad de pagina later nog eens. {% endmsg %}
+{% msg /errors/410:4 %} DOES NOT EXIST {% trans %} BESTAAT NIET {% endmsg %}
+{% msg /errors/410:9 %} This Page Has Been Removed {% trans %} Deze pagina is verwijderd {% endmsg %}
+{% msg /errors/410:10 %} This page has been purposefully removed, and will not return. {% trans %}
+        Deze pagina is opzettelijk verwijderd en keert niet meer terug. {% endmsg %}
+{% msg /errors/xxx:1 %} Something went wrong! {% trans %} Er is iets misgegaan! {% endmsg %}
+{% msg /errors/xxx:3 %} But <span title="The Odysseus browser">I</span> don't understand what it was. {% trans %}
+        Maar <span title="The Odysseus browser">ik</span> weet niet wat. {% endmsg %}
 {% msg /special/restore:8 %} Bezig met laden… {% trans %}{% endmsg %}
 {% msg /special/applist:1 %} Compatibele apps {% trans %}{% endmsg %}
 {% msg /special/applist:5 %} Bekijken in {{ pacman }} . {% trans %}{% endmsg %}
