@@ -127,41 +127,57 @@
 {% msg /errors/423:9 %} This WebDAV page is locked {% trans %} Deze WebDAV-pagina is vergrendeld {% endmsg %}
 {% msg /errors/423:10 %} Try making your changes again later, or take it up with your group. {% trans %}
         Probeer je wijzigingen op een later moment opnieuw aan te brengen of neem contact op met je groep. {% endmsg %}
-{% msg /errors/bad-certificate:9 %} ONGELDIG CERTIFICAAT {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:16 %} Mogelijk doet deze site zich voor als een ander {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:17 %} De eigen identiteit kan niet worden <a href="https://nl.wikipedia.org/wiki/Certificaat_(PKI)">vastgesteld</a>.
+{% msg /errors/bad-certificate:9 %} INVALID CERTIFICATE {% trans %} ONGELDIG CERTIFICAAT {% endmsg %}
+{% msg /errors/bad-certificate:16 %} This site may not be who it appears to be {% trans %} Mogelijk doet deze site zich voor als een ander {% endmsg %}
+{% msg /errors/bad-certificate:17 %} It has failed to <a href="https://en.wikipedia.org/wiki/Public_key_certificate">assert</a> it's own identity.
+      This may be due to its configuration, or it may be because someone's actively trying to <strong>spy</strong> on you. {% trans %}
+      De eigen identiteit kan niet worden <a href="https://nl.wikipedia.org/wiki/Certificaat_(PKI)">vastgesteld</a>.
       Dit kan liggen aan de websiteconfiguratie of omdat iemand je probeert <strong>af te luisteren</strong>. {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:20 %} Bekijk de details door te klikken op het pictogram
+{% msg /errors/bad-certificate:20 %} Details available by clicking the
       <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
             onerror="this.src = 'icon:16/security-medium-symbolic'" />
-      in de adresbalk. {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:27 %} Negeer deze waarschuwing en ga door met het laden van {{ url }} {% trans %}{% endmsg %}
+      in the addressbar. {% trans %} Bekijk de details door te klikken op het pictogram
+      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
+            onerror="this.src = 'icon:16/security-medium-symbolic'" />
+      in de adresbalk. {% endmsg %}
+{% msg /errors/bad-certificate:27 %} Load {{ url }}  despite this warning {% trans %} Negeer deze waarschuwing en ga door met het laden van {{ url }} {% endmsg %}
 {% msg /errors/bad-certificate:30 %} {# People have to click this to bypass certificate warnings #} 
+            I Don't Trust <code>{{ url.host }} </code> Anyways {% trans %}
             Ik vertrouw <code>{{ url.host }} </code> niet {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:34 %} Onveilige verbinding proberen {% trans %}{% endmsg %}
-{% msg /errors/204:9 %} Deze pagina is met opzet leeggelaten {% trans %}{% endmsg %}
-{% msg /errors/204:10 %} Totdat <span title="Odysseus browser">ik</a> deze inhoud heb toegevoegd om je op de hoogte te brengen. {% trans %}{% endmsg %}
-{% msg /errors/418:4 %} 'k Ben een kleine theepot {% trans %}{% endmsg %}
+{% msg /errors/bad-certificate:34 %} Try insecure connection {% trans %} Onveilige verbinding proberen {% endmsg %}
+{% msg /errors/204:9 %} This Page Has Been Intentionally Left Empty {% trans %} Deze pagina is met opzet leeggelaten {% endmsg %}
+{% msg /errors/204:10 %} Until <span title="Odysseus browser">I</a> added this content to let you know so. {% trans %} Totdat <span title="Odysseus browser">ik</a> deze inhoud heb toegevoegd om je op de hoogte te brengen. {% endmsg %}
+{% msg /errors/418:4 %} I'm A Teapot {% trans %} 'k Ben een kleine theepot {% trans %}{% endmsg %}
 {% msg /errors/418:12 %} {# Easter-egg 418: verse 1 of "I'm A Teapot" nursery rhyme #} t
+      I'm a little teapot<br />
+      Short and stout<br />
+      Here is my handle<br />
+      And here is my spout {% trans %}
       ‘k Ben een kleine theepot<br />
       rond van buik<br />
       Dit is mijn oor<br />
       en dat is mijn tuit {% trans %}{% endmsg %}
 {% msg /errors/418:17 %} {# Easter-egg 418: verse 2 of "I'm A Teapot" nursery rhyme #} t
+      When I get all steamed up<br />
+      Hear me shout<br />
+      "Tip me over<br />
+      And pour me out!" {% trans %}
       Als het water kookt<br />
       dan roep ik luid<br />
       "Til me op<br />
-      en schenk me uit!" {% trans %}{% endmsg %}
+      en schenk me uit!" {% endmsg %}
 {% msg /errors/418:22 %} {# Easter-egg 418: attribution #} 
+      <strong>April Fools!</strong>
+      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% trans %}
       <strong>1 april!</strong>
-      Van <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% trans %}{% endmsg %}
-{% msg /errors/409:4 %} BEWERKCONFLICT {% trans %}{% endmsg %}
-{% msg /errors/409:9 %} Je actie conflicteert met die van iemand anders {% trans %}{% endmsg %}
-{% msg /errors/409:10 %} <a href="javascript:history.back()">Ga terug</a> en probeer het opnieuw. {% trans %}{% endmsg %}
-{% msg /errors/crashed:3 %} GECRASHT {% trans %}{% endmsg %}
-{% msg /errors/400:3 %} ONGELDIG VERZOEK {% trans %}{% endmsg %}
-{% msg /errors/400:8 %} Dit is <span title="Odysseus Browser">onze</span> fout {% trans %}{% endmsg %}
-{% msg /errors/400:9 %} <a href="https://github.com/alcinnz/Odysseus/issues/new">Meld het probleem</a> en dan zullen <span title="Odysseus developers">we</span> ernaar kijken. {% trans %}{% endmsg %}
+      Van <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% endmsg %}
+{% msg /errors/409:4 %} EDIT CONFLICT {% trans %} BEWERKCONFLICT {% endmsg %}
+{% msg /errors/409:9 %} Your Action Conflicted With Someone Else's {% trans %} Je actie conflicteert met die van iemand anders {% endmsg %}
+{% msg /errors/409:10 %} Please <a href="javascript:history.back()">go back</a> and try again. {% trans %} <a href="javascript:history.back()">Ga terug</a> en probeer het opnieuw. {% endmsg %}
+{% msg /errors/crashed:3 %} CRASHED {% trans %} GECRASHT {% endmsg %}
+{% msg /errors/400:3 %} BAD REQUEST {% trans %} ONGELDIG VERZOEK {% endmsg %}
+{% msg /errors/400:8 %} This Is Apparently <span title="Odysseus Browser">Our</span> Fault {% trans %} Dit is <span title="Odysseus Browser">onze</span> fout {% endmsg %}
+{% msg /errors/400:9 %} Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and <span title="Odysseus developers">we'll</span> see what we can do about it. {% trans %} <a href="https://github.com/alcinnz/Odysseus/issues/new">Meld het probleem</a> en dan zullen <span title="Odysseus developers">we</span> ernaar kijken. {% trans %}{% endmsg %}
 {% msg /errors/network:3 %} KAN GEEN VERBINDING MAKEN {% trans %}{% endmsg %}
 {% msg /errors/network:8 %} Kan geen verbinding maken met het internet {% trans %}{% endmsg %}
 {% msg /errors/501:4 %} NIET-ONDERSTEUND {% trans %}{% endmsg %}
