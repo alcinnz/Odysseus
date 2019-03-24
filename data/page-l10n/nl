@@ -33,35 +33,42 @@
         maar we delen dit met <a href="odysseus:privacy">niemand</a>. {% endmsg %}
 {% msg /home:146 %} FYI: None of the links on this page were sponsered, no one paid for any of them.
         {% trans %} Voor de duidelijkheid: geen enkele link op deze pagina is gesponsord; niemand ervoor betaald. {% endmsg %}
-{% msg /SERVER-ERROR:9 %} Interne fout {% trans %}{% endmsg %}
-{% msg /SERVER-ERROR:21 %} Dit ziet er slecht uit… {% trans %}{% endmsg %}
-{% msg /SERVER-ERROR:22 %} Ik begrijp mijn eigen code niet. Als je een Odysseus-ontwikkelaar bent, dan vind je hieronder meer informatie (in het Engels). Als je geen ontwikkelaar bent, <a href="https://github.com/alcinnz/Odysseus/issues/new">licht ons dan in</a>. Sla, om ons te helpen, deze pagina op en voeg hem toe als bijlage aan je probleemomschrijving. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:9 %} Hulpmiddel niet aangetroffen {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:14 %} Deze pagina (<code>{{ url }} </code>) bestaat niet <br />
-        (en mogelijk heeft deze ook nooit bestaan) {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:16 %} Was je op zoek naar één van deze interne pagina's? {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:19 %} Met dank aan {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:20 %} De personen die je moet bedanken voor deze geweldige surfervaring. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:21 %} Odysseus-foutopsporing {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:22 %} Hulpmiddelen om je browser te inspecteren. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:23 /history:29 /history:46 %} Geschiedenis {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:24 %} De pagina's die je ooit bezocht hebt. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:25 %} Odysseus-website {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:26 %} Bevat links naar pagina's die je regelmatig bezoekt. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:27 %} Dit zie je als je een nieuw tabblad opent. {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:28 %} Privacybeleid {% trans %}{% endmsg %}
-{% msg /NOT-FOUND:29 %} De privacysituatie omtrent Odysseus. {% trans %}{% endmsg %}
+{% msg /SERVER-ERROR:9 %} Internal Error {% trans %} Interne fout {% endmsg %}
+{% msg /SERVER-ERROR:21 %} This Is Bad… {% trans %} Dit ziet er slecht uit… {% endmsg %}
+{% msg /SERVER-ERROR:22 %} I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message.
+        {% trans %} Ik begrijp mijn eigen code niet. Als je een Odysseus-ontwikkelaar bent, dan vind je hieronder meer informatie (in het Engels). Als je geen ontwikkelaar bent, <a href="https://github.com/alcinnz/Odysseus/issues/new">licht ons dan in</a>. Sla, om ons te helpen, deze pagina op en voeg hem toe als bijlage aan je probleemomschrijving. {% endmsg %}
+{% msg /NOT-FOUND:9 %} Tool Not Found {% trans %} Hulpmiddel niet aangetroffen {% endmsg %}
+{% msg /NOT-FOUND:14 %} This Page (<code>{{ url }} </code>) Does Not Exist <br />
+        (and probably never has) {% trans %} Deze pagina (<code>{{ url }} </code>) bestaat niet <br />
+        (en mogelijk heeft deze ook nooit bestaan) {% endmsg %}
+{% msg /NOT-FOUND:16 %} Maybe you meant one of these other internal pages? {% trans %} Was je op zoek naar één van deze interne pagina's? {% endmsg %}
+{% msg /NOT-FOUND:19 %} Credits {% trans %} Met dank aan {% endmsg %}
+{% msg /NOT-FOUND:20 %} The people you should thank for this gorgeous browsing experience. {% trans %} De personen die je moet bedanken voor deze geweldige surfervaring. {% endmsg %}
+{% msg /NOT-FOUND:21 %} Odysseus Debugging {% trans %} Odysseus-foutopsporing {% endmsg %}
+{% msg /NOT-FOUND:22 %} Tools for ensuring your browser is working correctly. {% trans %} Hulpmiddelen om je browser te inspecteren. {% endmsg %}
+{% msg /NOT-FOUND:23 /history:29 /history:46 %} History {% trans %} Geschiedenis {% endmsg %}
+{% msg /NOT-FOUND:24 %} The pages you've visited before. {% trans %} De pagina's die je ooit bezocht hebt. {% endmsg %}
+{% msg /NOT-FOUND:25 %} Odysseus's Homepage {% trans %} Odysseus-website {% endmsg %}
+{% msg /NOT-FOUND:26 %} Includes links to the pages you visit most. {% trans %} Bevat links naar pagina's die je regelmatig bezoekt. {% endmsg %}
+{% msg /NOT-FOUND:27 %} This is what you see when you open a new tab. {% trans %} Dit zie je als je een nieuw tabblad opent. {% endmsg %}
+{% msg /NOT-FOUND:28 %} Privacy Policy {% trans %} Privacybeleid {% endmsg %}
+{% msg /NOT-FOUND:29 %} The privacy situation around Odysseus. {% trans %} De privacysituatie omtrent Odysseus. {% endmsg %}
 {% msg /history:63 %} Bezocht van: {% trans %}{% endmsg %}
 {% msg /history:70 %} Geen resultaten voor je zoekopdracht of op deze pagina! {% trans %}{% endmsg %}
 {% msg /history:98 %} Wat? Geen geschiedenis?! <a href="https://alcinnz.github.io/Odysseus-recommendations/">Ga op avontuur</a>! {% trans %}{% endmsg %}
-{% msg /INVALID-FORM:4 /errors/405:4 %} ONGELDIG FORMULIER {% trans %}{% endmsg %}
-{% msg /INVALID-FORM:12 %} Ongeldig formulier {% trans %}{% endmsg %}
-{% msg /INVALID-FORM:13 %} Het zojuist ingestuurde formulier is ongeldig! Misschien was <em>could</em>
-      het jouw fout, maar waarschijnlijk was het <span title="Odysseus's">mijn</span> fout. {% trans %}{% endmsg %}
-{% msg /INVALID-FORM:17 %}
+{% msg /INVALID-FORM:4 /errors/405:4 %} INVALID FORM SUBMISSION {% trans %} ONGELDIG FORMULIER {% endmsg %}
+{% msg /INVALID-FORM:12 %} Invalid form submission {% trans %} Ongeldig formulier {% endmsg %}
+{% msg /INVALID-FORM:13 %} The form you just submitted was invalid! While you <em>could</em>
+      be to blame, this is probably <span title="Odysseus's">my</span> fault.
+      {% trans %} Het zojuist ingestuurde formulier is ongeldig! Misschien was <em>could</em>
+      het jouw fout, maar waarschijnlijk was het <span title="Odysseus's">mijn</span> fout. {% endmsg %}
+{% msg /INVALID-FORM:17 %} Please
+      <a href="https://github.com/alcinnz/odysseus/issues/new">report this to
+        <span title="the Odysseus developers">us</span></a> and attach a copy of
+      this page (use the "Save As" option). More information (in English) is below. {% trans %}
       <a href="https://github.com/alcinnz/odysseus/issues/new">Meld het
         <span title="the Odysseus-ontwikkelaars">ons</span></a> en voeg een kopie bij
-      van deze pagina (gebruik hiervoor de optie "Opslaan als"). Hieronder vind je meer informatie (in het Engels). {% trans %}{% endmsg %}
+      van deze pagina (gebruik hiervoor de optie "Opslaan als"). Hieronder vind je meer informatie (in het Engels). {% endmsg %}
 {% msg /feedreaders:4 %} Beschikbare feedlezers {% trans %}{% endmsg %}
 {% msg /feedreaders:12 %} Er zijn geen <a href="https://nl.wikipedia.org/wiki/Feedreader">feedlezers</a> geïnstalleerd {% trans %}{% endmsg %}
 {% msg /feedreaders:15 %} Als je je wilt abonneren op een <a href="https://nl.wikipedia.org/wiki/Webfeed">webfeed</a>,
