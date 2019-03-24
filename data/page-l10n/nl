@@ -94,35 +94,39 @@
     and everyone who's ever published anything to the Web. You're what makes it all worthwhile! {% trans %}
     En <em>hartelijk dank</em> aan <a href="https://elementary.io">elementary OS</a>
     en iedereen die ooit iets heeft gepubliceerd op het internet. Dankzij jullie is het de moeite waard! {% endmsg %}
-{% msg /errors/schema:5 %} KAN GEEN {{ url.scheme }} :-LINKS OPENEN {% trans %}{% endmsg %}
-{% msg /errors/schema:19 %} {% urischema %}-links kunnen niet worden geopend met de op deze computer aanwezige software {% trans %}{% endmsg %}
-{% msg /errors/schema:23 %} Installeer een compatibele app voordat je <a href="{{ url }} ">deze link</a> opnieuw opent. {% trans %}{% endmsg %}
-{% msg /errors/200:4 /errors/204:4 %} GEEN INHOUD {% trans %}{% endmsg %}
-{% msg /errors/200:9 %} Geen inhoud doorgekregen {% trans %}{% endmsg %}
-{% msg /errors/401:4 %} Inloggen vereist {% trans %}{% endmsg %}
-{% msg /errors/401:9 %} Inloggen {% trans %}{% endmsg %}
-{% msg /errors/401:10 %} Je moet inloggen om deze pagina te kunnen openen. {% trans %}{% endmsg %}
-{% msg /errors/401:16 %} Gebruikersnaam {% trans %}{% endmsg %}
-{% msg /errors/401:20 %} Wachtwoord {% trans %}{% endmsg %}
-{% msg /errors/401:25 %} Inloggen {% trans %}{% endmsg %}
-{% msg /errors/404:4 %} NIET GEVONDEN {% trans %}{% endmsg %}
-{% msg /errors/404:9 %} Deze pagina bestaat niet {% trans %}{% endmsg %}
-{% msg /errors/404:10 %} Misschien heb je een typfout gemaakt of een ongeldige link gevolgd. Of misschien ligt het wel aan de site: de pagina is wellicht ondoordacht verplaatst of zelfs verwijded. {% trans %}{% endmsg %}
-{% msg /errors/404:12 /errors/451:12 /errors/410:12 %} Probeer hun <a href="/">startpagina</a>, of: {% trans %}{% endmsg %}
-{% msg /errors/405:9 %} Het ingediende formulier is ongeldig {% trans %}{% endmsg %}
-{% msg /errors/405:10 %} Neem contact op met de ontwikkelaars van de website. {% trans %}{% endmsg %}
-{% msg /errors/protocol:4 %} ONGELDIGE WEBSITE {% trans %}{% endmsg %}
-{% msg /errors/protocol:9 %} Met deze website kan ik niks beginnen {% trans %}{% endmsg %}
-{% msg /errors/protocol:10 %} Hij spreekt een andere taal dan ik. {% trans %}{% endmsg %}
-{% msg /errors/507:3 /errors/dns:4 %} KAN GEEN VERBINDING MAKEN {% trans %}{% endmsg %}
-{% msg /errors/507:8 /errors/dns:9 %} Kan geen verbinding maken met {{ url.host }} {% trans %}{% endmsg %}
-{% msg /errors/507:9 /errors/dns:10 %} Wellicht is er een netwerkfout opgetreden of is de link kapotgegaan. {% trans %}{% endmsg %}
-{% msg /errors/507:12 /errors/network:11 /errors/dns:14 %} Netwerkinstellingen {% trans %}{% endmsg %}
-{% msg /errors/506:4 %} ONDERHANDELING MISLUKT {% trans %}{% endmsg %}
-{% msg /errors/506:9 %} Kan geen beslissing nemen over het bestandsformaat {% trans %}{% endmsg %}
-{% msg /errors/423:4 %} VERGRENDELD {% trans %}{% endmsg %}
-{% msg /errors/423:9 %} Deze WebDAV-pagina is vergrendeld {% trans %}{% endmsg %}
-{% msg /errors/423:10 %} Probeer je wijzigingen op een later moment opnieuw aan te brengen of neem contact op met je groep. {% trans %}{% endmsg %}
+{% msg /errors/schema:5 %} CAN'T OPEN {{ url.scheme }} : LINKS {% trans %} KAN GEEN {{ url.scheme }} :-LINKS OPENEN {% endmsg %}
+{% msg /errors/schema:19 %} {% urischema %}  links cannot be opened with any software on this computer {% trans %}
+        {% urischema %}-links kunnen niet worden geopend met de op deze computer aanwezige software {% endmsg %}
+{% msg /errors/schema:23 %} You must install a compatible app before opening <a href="{{ url }} ">this link</a>.
+        {% trans %} Installeer een compatibele app voordat je <a href="{{ url }} ">deze link</a> opnieuw opent. {% endmsg %}
+{% msg /errors/200:4 /errors/204:4 %} NO CONTENT {% trans %} GEEN INHOUD {% endmsg %}
+{% msg /errors/200:9 %} No content received {% trans %} Geen inhoud doorgekregen {% endmsg %}
+{% msg /errors/401:4 %} Login required {% trans %} Inloggen vereist {% trans %}{% endmsg %}
+{% msg /errors/401:9 %} Please Log In {% trans %} Inloggen {% endmsg %}
+{% msg /errors/401:10 %} You need to log in to access this page {% trans %} Je moet inloggen om deze pagina te kunnen openen. {% endmsg %}
+{% msg /errors/401:16 %} Username {% trans %} Gebruikersnaam {% endmsg %}
+{% msg /errors/401:20 %} Password {% trans %} Wachtwoord {% endmsg %}
+{% msg /errors/401:25 %} Log In {% trans %} Inloggen {% endmsg %}
+{% msg /errors/404:4 %} NOT FOUND {% trans %} NIET GEVONDEN {% trans %}{% endmsg %}
+{% msg /errors/404:9 %} This Page Does Not Exist {% trans %} Deze pagina bestaat niet {% endmsg %}
+{% msg /errors/404:10 %} Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them.
+        {% trans %} Misschien heb je een typfout gemaakt of een ongeldige link gevolgd. Of misschien ligt het wel aan de site: de pagina is wellicht ondoordacht verplaatst of zelfs verwijded. {% endmsg %}
+{% msg /errors/404:12 /errors/451:12 /errors/410:12 %} Try <a href="/">their homepage</a>, or: {% trans %} Probeer hun <a href="/">startpagina</a>, of: {% endmsg %}
+{% msg /errors/405:9 %} The Form You Submitted Was Invalid {% trans %} Het ingediende formulier is ongeldig {% endmsg %}
+{% msg /errors/405:10 %} Please take this up with the website's developers {% trans %} Neem contact op met de ontwikkelaars van de website. {% endmsg %}
+{% msg /errors/protocol:4 %} INVALID SITE {% trans %} ONGELDIGE WEBSITE {% endmsg %}
+{% msg /errors/protocol:9 %} I Cannot Work With This Website {% trans %} Met deze website kan ik niks beginnen {% endmsg %}
+{% msg /errors/protocol:10 %} It doesn't speek the same language I do. {% trans %} Hij spreekt een andere taal dan ik. {% endmsg %}
+{% msg /errors/507:3 /errors/dns:4 %} CON't CONTACT {% trans %} KAN GEEN VERBINDING MAKEN {% endmsg %}
+{% msg /errors/507:8 /errors/dns:9 %} Could not contact {{ url.host }} {% trans %} Kan geen verbinding maken met {{ url.host }} {% endmsg %}
+{% msg /errors/507:9 /errors/dns:10 %} This may be due to a network failure or a broken link. {% trans %} Wellicht is er een netwerkfout opgetreden of is de link kapotgegaan. {% endmsg %}
+{% msg /errors/507:12 /errors/network:11 /errors/dns:14 %} Network Settings {% trans %} Netwerkinstellingen {% endmsg %}
+{% msg /errors/506:4 %} NEGOTIATION FAIL {% trans %} ONDERHANDELING MISLUKT {% endmsg %}
+{% msg /errors/506:9 %} Failed To Decide on a File Format {% trans %} Kan geen beslissing nemen over het bestandsformaat {% endmsg %}
+{% msg /errors/423:4 %} LOCKED {% trans %} VERGRENDELD {% endmsg %}
+{% msg /errors/423:9 %} This WebDAV page is locked {% trans %} Deze WebDAV-pagina is vergrendeld {% endmsg %}
+{% msg /errors/423:10 %} Try making your changes again later, or take it up with your group. {% trans %}
+        Probeer je wijzigingen op een later moment opnieuw aan te brengen of neem contact op met je groep. {% endmsg %}
 {% msg /errors/bad-certificate:9 %} ONGELDIG CERTIFICAAT {% trans %}{% endmsg %}
 {% msg /errors/bad-certificate:16 %} Mogelijk doet deze site zich voor als een ander {% trans %}{% endmsg %}
 {% msg /errors/bad-certificate:17 %} De eigen identiteit kan niet worden <a href="https://nl.wikipedia.org/wiki/Certificaat_(PKI)">vastgesteld</a>.
