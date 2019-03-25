@@ -219,7 +219,8 @@
 {% msg /errors/xxx:1 %} Something went wrong! {% trans %} Er is iets misgegaan! {% endmsg %}
 {% msg /errors/xxx:3 %} But <span title="The Odysseus browser">I</span> don't understand what it was. {% trans %}
         Maar <span title="The Odysseus browser">ik</span> weet niet wat. {% endmsg %}
-{% msg /special/restore:8 %} Bezig met laden… {% trans %}{% endmsg %}
-{% msg /special/applist:1 %} Compatibele apps {% trans %}{% endmsg %}
-{% msg /special/applist:5 %} Bekijken in {{ pacman }} . {% trans %}{% endmsg %}
-{% msg /special/applist:10 %} Geen compatibele apps aangetroffen in {{ pacman }} . {% trans %}{% endmsg %}
+{% msg /special/restore:8 %} Loading… {% trans %} Bezig met laden… {% endmsg %}
+{% msg /special/applist:1 %} Compatible apps {% trans %} Compatibele apps {% endmsg %}
+{% msg /special/applist:5 %} View in {{ pacman }} . {% trans %} Bekijken in {{ pacman }} . {% endmsg %}
+{% msg /special/applist:10 %} No compatible apps found in {{ pacman }} . {% trans %}
+        Geen compatibele apps aangetroffen in {{ pacman }} . {% endmsg %}
