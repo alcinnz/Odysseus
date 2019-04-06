@@ -84,7 +84,7 @@ and I take advantage of this page to promote project links. #}
       SELECT url as uri, {% q-tailrank %}, "history" AS cat,
           {% trans %}"Frequently visited"{% endtrans %} AS help, {{"History"|trans}} AS caption
         FROM visit_counts
-        WHERE count >= 20 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
+        WHERE count >= 10 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY count DESC;
       SELECT uri, {% q-tailrank %}, "recommendation" AS cat,
           {{"Recommended by Adrian Cochrane"|trans}} AS help, {{"Recommended"|trans}} AS caption
@@ -107,13 +107,13 @@ and I take advantage of this page to promote project links. #}
                 height="128" width="128" />
         </a>
         <legend>
-          <form><input aria-hidden name="$" value="topsites_whitelist" />
+          <form method="POST"><input aria-hidden name="$" value="topsites_whitelist" />
             <input aria-hidden name="uri" value="{{ uri }}" />
             <input type="number" name="order_" value="{{ order_ }}" />
             <button type="submit" title="Keep this link on this page.">&check;</button>
           </form>
           {{ caption }}
-          <form><input aria-hidden name="$" value="topsites_blacklist" />
+          <form method="POST"><input aria-hidden name="$" value="topsites_blacklist" />
             <input aria-hidden name="uri" value="{{ uri }}" />
             <button type="submit" title="Remove this link from this page.">x</button>
           </form>
