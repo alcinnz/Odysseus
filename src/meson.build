@@ -63,7 +63,7 @@ endforeach
 foreach f : models
     sources += ['Models/' + f]
 endforeach
-source_files = [about_pages, sql_scripts]
+source_files = [about_pages, sql_scripts, l10n_pages]
 foreach f : sources
     source_files += [f + '.vala']
 endforeach

@@ -14,6 +14,10 @@ sql_scripts = gnome.compile_resources(
     'sql-scripts', 'data/db/database.gresource.xml',
     source_dir: 'data/db',
     c_name: 'sqlscripts')
+l10n_pages = gnome.compile_resources(
+    'page-l10n', 'data/page-l10n/l10n.gresource.xml',
+    source_dir: 'data/page-l10n',
+    c_name: 'pagel10n')
 
 conf = configuration_data()
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
