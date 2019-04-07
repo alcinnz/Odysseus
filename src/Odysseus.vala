@@ -59,6 +59,11 @@ public class Odysseus.Application : Granite.Application {
         return 0;
     }
 
+    public override void open(File[] files, string hint) {
+        var window = get_active_window() as BrowserWindow;
+        foreach (var file in files) window.new_tab(file.get_uri());
+    }
+
     public void initialize() {
         Gtk.IconTheme.get_default().add_resource_path("/io/github/alcinnz/Odysseus/odysseus:/");
 
