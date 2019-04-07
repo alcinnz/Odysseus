@@ -7,14 +7,6 @@ foreach i : icon_sizes
     )
 endforeach
 
-languages = []
-foreach lang : languages
-    install_data(
-        join_paths('page-l10n', lang),
-        install_dir: '/usr/share/Odysseus/l10n'
-    )
-endforeach
-
 
 TODO = 'Apply internationalization to these'
 install_data(

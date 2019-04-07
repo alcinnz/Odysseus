@@ -1,0 +1,291 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.alcinnz.odysseus package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.alcinnz.odysseus\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-02 14:43+1200\n"
+"PO-Revision-Date: 2019-03-19 17:37+0100\n"
+"Language-Team: Dutch <vistausss@outlook.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.1.1\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Language: nl_NL\n"
+
+#: src/BrowserWindow.vala:82
+msgid "Make Default"
+msgstr "Instellen als standaardbrowser"
+
+#: src/BrowserWindow.vala:84
+msgid "Odysseus is not your default browser."
+msgstr "Odysseus is niet je standaardbrowser."
+
+#: src/BrowserWindow.vala:99
+msgid "Go to previously viewed page"
+msgstr "Ga naar de vorige pagina"
+
+#: src/BrowserWindow.vala:107
+msgid "Go to next viewed page"
+msgstr "Ga naar de volgende pagina"
+
+#: src/BrowserWindow.vala:116
+msgid "Load this page from the website again"
+msgstr "Herlaad deze pagina helemaal opnieuw"
+
+#: src/BrowserWindow.vala:118
+msgid "Ignore cache"
+msgstr "Cache negeren"
+
+#: src/BrowserWindow.vala:121
+msgid "Stop loading this page"
+msgstr "Stoppen met laden"
+
+#: src/BrowserWindow.vala:123
+msgid "Stop And Reload"
+msgstr "Stoppen en herladen"
+
+#: src/BrowserWindow.vala:136
+msgid "Current web address"
+msgstr "Huidig website-adres"
+
+#: src/BrowserWindow.vala:144
+msgid "Menu"
+msgstr "Menu"
+
+#: src/BrowserWindow.vala:145
+msgid "_New Window"
+msgstr "_Nieuw venster"
+
+#: src/BrowserWindow.vala:150 src/BrowserWindow.vala:151
+#: src/Widgets/DownloadButton.vala:100
+msgid "_Open"
+msgstr "_Openen"
+
+#: src/BrowserWindow.vala:153
+msgid "_Save"
+msgstr "Op_slaan"
+
+#. TRANSLATORS _ precedes shortcut key
+#: src/BrowserWindow.vala:154 src/Widgets/DownloadButton.vala:110
+#: src/Widgets/DownloadButton.vala:114
+msgid "_Save As"
+msgstr "Opslaan al_s"
+
+#: src/BrowserWindow.vala:157
+msgid "_View Source"
+msgstr "_Broncode bekijken"
+
+#: src/BrowserWindow.vala:159
+msgid "Zoom In"
+msgstr "Inzoomen"
+
+#: src/BrowserWindow.vala:161
+msgid "Zoom Out"
+msgstr "Uitzoomen"
+
+#: src/BrowserWindow.vala:164
+msgid "_History"
+msgstr "Gesc_hiedenis"
+
+#: src/BrowserWindow.vala:166
+msgid "_Find In Page"
+msgstr "_Zoeken op pagina"
+
+#: src/BrowserWindow.vala:171
+msgid "_Print"
+msgstr "_Afdrukken"
+
+#: src/BrowserWindow.vala:173
+msgid "Show Downloads"
+msgstr "Downloads tonen"
+
+#: src/BrowserWindow.vala:174
+msgid "About Odysseus"
+msgstr "Over Odysseus"
+
+#: src/BrowserWindow.vala:187 src/Widgets/DownloadButton.vala:122
+msgid "_Cancel"
+msgstr "_Annuleren"
+
+#: src/Models/Download.vala:107
+#, c-format
+msgid ""
+"Error moving download to %s.\n"
+"It has been left in your Downloads folder"
+msgstr ""
+"Kan download niet verplaatsen naar %s.\n"
+"Het bestand is achtergelaten in je Downloads-map"
+
+#. / TRANSLATORS: "%i" seconds
+#: src/Models/Download.vala:120
+#, c-format
+msgid "%is"
+msgstr "%is"
+
+#. / TRANSLATORS: "%i" minutes
+#: src/Models/Download.vala:125
+#, c-format
+msgid "%im"
+msgstr "%im"
+
+#. / TRANSLATORS: "%i" hours and "%i" minutes,
+#: src/Models/Download.vala:130
+#, c-format
+msgid "%ih %im"
+msgstr "%iu %im"
+
+#: src/Widgets/DownloadBar.vala:34
+msgid "View all downloads"
+msgstr "Alle downloads tonen"
+
+#: src/Widgets/DownloadBar.vala:36
+msgid "Close downloads bar"
+msgstr "Downloadsbalk sluiten"
+
+#: src/Widgets/DownloadButton.vala:53
+msgid "[Download]"
+msgstr "[Download]"
+
+#: src/Widgets/DownloadButton.vala:93
+msgid "DONE"
+msgstr "AFGEROND"
+
+#: src/Widgets/DownloadButton.vala:105
+msgid "Open _Automatically"
+msgstr "_Automatisch openen"
+
+#: src/Widgets/WebTab.vala:88
+#, c-format
+msgid "%u match of \"%s\" found"
+msgid_plural "%u matches of \"%s\" found"
+msgstr[0] "%u overeenkomst gevonden voor \"%s\""
+msgstr[1] "%u overeenkomsten gevonden voor \"%s\""
+
+#: src/Widgets/WebTab.vala:206
+msgid "Press [esc] to leave fullscreen"
+msgstr "Druk op [esc] om volledig scherm af te sluiten"
+
+#: src/Widgets/Chromeless.vala:24
+msgid "Web Inspector"
+msgstr "Webinspecteur"
+
+#: src/Widgets/overlays/FindToolbar.vala:44
+msgid "Find in page..."
+msgstr "Zoeken op pagina..."
+
+#: src/Widgets/overlays/FindToolbar.vala:86
+msgid "Find previous match"
+msgstr "Vorige overeenkomst zoeken"
+
+#: src/Widgets/overlays/FindToolbar.vala:98
+msgid "View search options"
+msgstr "Zoekopties tonen"
+
+#: src/Widgets/overlays/FindToolbar.vala:128
+msgid "Match Uppercase"
+msgstr "Hoofdlettergevoelig"
+
+#: src/Widgets/overlays/FindToolbar.vala:135
+msgid "Ignore Uppercase"
+msgstr "Hoofdletters negeren"
+
+#: src/Widgets/overlays/FindToolbar.vala:142
+msgid "Auto"
+msgstr "Automatisch"
+
+#: src/Widgets/overlays/FindToolbar.vala:152
+msgid "Cyclic Search"
+msgstr "Doorlopend zoeken"
+
+#: src/Widgets/overlays/FindToolbar.vala:159
+msgid "Match Word Start"
+msgstr "Overeenkomen met begin van woord"
+
+#. If the user doesn't know what CamelCase means,
+#. they probably don't want this option. (note the hint in it's name)
+#: src/Widgets/overlays/FindToolbar.vala:167
+msgid "Match CamelCase"
+msgstr "Overeenkomen met CamelCase"
+
+#: src/Widgets/overlays/InfoContainer.vala:49
+#: src/Widgets/overlays/InfoContainer.vala:65
+msgid "OK"
+msgstr "Oké"
+
+#: src/Widgets/overlays/InfoContainer.vala:50
+#: src/Widgets/overlays/InfoContainer.vala:65
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: src/Traits/download-progress.vala:47
+msgid "Web Download Completed"
+msgstr "Download afgerond"
+
+#: src/Traits/download-window.vala:27
+msgid "Downloads Are In Progress…"
+msgstr "Bezig met downloaden…"
+
+#: src/Traits/download-window.vala:34
+msgid "Click a download to cancel or alter it"
+msgstr "Klik op een download om deze af te breken of aan te passen"
+
+#: src/Traits/decorate/alert.vala:40
+msgid "Leave"
+msgstr "Verlaten"
+
+#: src/Traits/decorate/alert.vala:40
+msgid "Stay"
+msgstr "Blijven"
+
+#. Disallow interacting with the page while dialog is active.
+#: src/Traits/decorate/alert.vala:58
+msgid "Close the message to continue interacting with this page"
+msgstr "Sluit dit bericht om de pagina te bedienen"
+
+#: src/Traits/decorate/permit.vala:30
+msgid "Allow"
+msgstr "Toestaan"
+
+#: src/Traits/decorate/permit.vala:30
+msgid "Deny"
+msgstr "Afwijzen"
+
+#: src/Traits/decorate/permit.vala:33
+msgid "This page wants to know where you currently are."
+msgstr "Deze pagina wil je huidige locatie opvragen."
+
+#: src/Traits/decorate/permit.vala:35
+msgid "This page wants the ability to show you notifications."
+msgstr "Deze pagina wil meldingen kunnen tonen."
+
+#: src/Traits/decorate/permit.vala:41
+msgid "This page wants to watch and listen to you."
+msgstr "Deze pagina wil je zien en horen."
+
+#: src/Traits/decorate/permit.vala:43
+msgid "This page wants to listen to you."
+msgstr "Deze pagina wil je horen."
+
+#: src/Traits/decorate/permit.vala:45
+msgid "This page wants to watch you."
+msgstr "Deze pagina wil je zien."
+
+#: src/Traits/decorate/permit.vala:50
+msgid "Additional software is required to play media on this page:"
+msgstr "Extra software benodigd om de media op deze pagina af te spelen:"
+
+#: src/Traits/decorate/permit.vala:52
+msgid "Install"
+msgstr "Installeren"
+
+#. If we're not viewing alternate HTML under this schema,
+#. close any tabs that have persisted.
+#: src/Traits/navigate/viewsource.vala:70
+msgid "Please go through the \"View Source\" menu item."
+msgstr "Ga naar het menu-item 'Broncode bekijken'."

@@ -20,11 +20,11 @@ msgstr ""
 
 #: src/BrowserWindow.vala:82
 msgid "Make Default"
-msgstr ""
+msgstr "Définir par défaut"
 
 #: src/BrowserWindow.vala:84
 msgid "Odysseus is not your default browser."
-msgstr ""
+msgstr "Odysseurs n'est pas votre navigateur par défaut."
 
 #: src/BrowserWindow.vala:99
 msgid "Go to previously viewed page"
@@ -69,13 +69,13 @@ msgstr "_Ouvrir"
 
 #: src/BrowserWindow.vala:153
 msgid "_Save"
-msgstr "Enregi_strer"
+msgstr "_Enregistrer"
 
 #. TRANSLATORS _ precedes shortcut key
 #: src/BrowserWindow.vala:154 src/Widgets/DownloadButton.vala:109
 #: src/Widgets/DownloadButton.vala:113
 msgid "_Save As"
-msgstr "Enregi_strer sous"
+msgstr "_Enregistrer sous"
 
 #: src/BrowserWindow.vala:157
 msgid "_View Source"
@@ -91,7 +91,7 @@ msgstr "Zoom arrière"
 
 #: src/BrowserWindow.vala:164
 msgid "_History"
-msgstr ""
+msgstr "_Historique"
 
 #: src/BrowserWindow.vala:166
 msgid "_Find In Page"
@@ -99,7 +99,7 @@ msgstr "_Chercher dans la page"
 
 #: src/BrowserWindow.vala:168
 msgid "_Print"
-msgstr "Im_primer"
+msgstr "_Imprimer"
 
 #: src/BrowserWindow.vala:170
 msgid "Show Downloads"
@@ -107,7 +107,7 @@ msgstr "Afficher les téléchargements"
 
 #: src/BrowserWindow.vala:171
 msgid "About Odysseus"
-msgstr ""
+msgstr "À propos d'Odysseus"
 
 #: src/BrowserWindow.vala:185 src/Widgets/DownloadButton.vala:121
 msgid "_Cancel"
@@ -143,7 +143,7 @@ msgstr "%ih %im"
 #. Disallow interacting with the page while dialog is active.
 #: src/Traits/decorate/alert.vala:60
 msgid "Close the message to continue interacting with this page"
-msgstr "Fermer le message pour continuer d'interagir avec la page"
+msgstr "Fermez le message pour continuer d'interagir avec la page"
 
 #: src/Widgets/DownloadBar.vala:34
 msgid "View all downloads"

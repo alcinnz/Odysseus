@@ -30,20 +30,13 @@ namespace Odysseus.Templating.xI18n {
 // So maintain a weak map to the translated templates from their source language.
 
 // Combine with the {% with %} tag, and that should get us everything we need.
-    private const string SEP = Path.DIR_SEPARATOR_S;
-
-    // Singleton for avoiding expensive disk access as a routine part of
-    //      message translation.
-    private static uint8[]? catalogue = null;
     private Slice load_catalogue() throws Error {
-        if (catalogue != null) return new Slice.a(catalogue);
-        var basepath = SEP + Path.build_path(SEP, "usr", "share", "Odysseus", "l10n");
+        var basepath = "/io/github/alcinnz/Odysseus/page-l10n/";
 
         foreach (var lang in I18n.get_locales()) {
-            var path = Path.build_path(SEP, basepath, lang);
-            if (File.new_for_path(path).query_exists())
-                FileUtils.get_data(path, out catalogue);
-                return new Slice.a(catalogue);
+            try {
+                return new Slice.b(resources_lookup_data(basepath + lang, 0));
+            } catch (Error err) {continue;}
         }
 
         // If control flow reaches here, bail out!

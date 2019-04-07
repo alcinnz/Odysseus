@@ -38,6 +38,7 @@ namespace Odysseus.Traits {
         settings.enable_html5_local_storage = true;
         settings.enable_java = false;
         settings.enable_javascript = true;
+        settings.enable_mediasource = true;
         settings.enable_offline_web_application_cache = true;
         settings.enable_page_cache = true;
         settings.enable_plugins = false;

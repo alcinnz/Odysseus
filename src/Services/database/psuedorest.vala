@@ -83,8 +83,6 @@ namespace Odysseus.Database {
                 data["error"] = new Templating.Data.Literal(msg);
                 data["sql"] = new Templating.Data.Literal(builder.str);
                 Services.render_alternate_html.begin(tab, "INVALID-FORM", null, true, data);
-            } else {
-                web.reload(); // So we can see the changes.
             }
         });
     }

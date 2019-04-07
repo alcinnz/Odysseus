@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/io/github/alcinnz/Odysseus/l10n/">
+    <file>fr</file>
+    <file>nl</file>
+  </gresource>
+</gresources>
