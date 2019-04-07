@@ -104,6 +104,7 @@ namespace Odysseus.Traits {
                 var response_text = yield read_stream(response);
                 var info = new WebFeedParser();
                 info.parse(response_text);
+                label.label = info.title;
                 // TODO do something with info
 
                 populate_subscribe_buttons();
@@ -176,7 +177,7 @@ namespace Odysseus.Traits {
 
         private void visit_text(MarkupParseContext context,
                 string text, size_t text_len) throws MarkupError {
-            title = title + text;
+            if (in_title) title = title + text.strip();
         }
 
         private void visit_passthrough(MarkupParseContext context,
