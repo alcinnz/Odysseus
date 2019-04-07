@@ -40,7 +40,13 @@ namespace Odysseus.Model {
             var hxwls_in = new UnixOutputStream(stdin, true);
             var hxwls_out = new DataInputStream(new UnixInputStream(stdout, true));
 
-            yield hxwls_in.write_all_async(src, Priority.DEFAULT, null, null);
+            // Fix for webpages with, say, megabytes of HTML, so they don't freeze.
+            // Scanning just the first KB should be very generous.
+            if (src.length > 1024) {
+                yield hxwls_in.write_all_async(src[0:1024], Priority.DEFAULT, null, null);
+            } else {
+                yield hxwls_in.write_all_async(src, Priority.DEFAULT, null, null);
+            }
             yield hxwls_in.close_async(Priority.DEFAULT, null);
 
             var links = new Gee.ArrayList<Link>();
