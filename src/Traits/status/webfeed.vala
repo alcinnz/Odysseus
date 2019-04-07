@@ -118,6 +118,9 @@ namespace Odysseus.Traits {
             var is_empty = true;
 
             feedreaders.@foreach((feedreader) => {
+                // Firefox is NOT a feedreader, less so now then ever.
+                // It's .desktop file says otherwise.
+                if (feedreader.get_id() == "firefox.desktop") return;
                 // Verify it's a supported app.
                 if (!feedreader.supports_uris()) return;
                 if (!("application/rss+xml" in feedreader.get_supported_types()))
@@ -142,7 +145,13 @@ namespace Odysseus.Traits {
                 button.relief = Gtk.ReliefStyle.NONE;
                 button.tooltip_text = _("Install a feedreader to subscribe");
                 add(button);
+
+                button.clicked.connect(() =>
+                    (get_toplevel() as BrowserWindow).new_tab("odysseus:feedreaders")
+                );
             }
+
+            show_all();
         }
     }
 
