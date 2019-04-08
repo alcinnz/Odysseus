@@ -41,6 +41,7 @@ namespace Odysseus.Traits {
         // FIXME download these so I can determine if they actually are webfeeds,
         //      If there's a better label, and the best apps to suggest subscribing via.
         var grid = new Gtk.Grid();
+        grid.orientation = Gtk.Orientation.VERTICAL;
         var session = FeedRow.build_session();
         foreach (var link in links) {
             var label = new FeedRow(session, link);
