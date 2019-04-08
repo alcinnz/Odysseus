@@ -29,7 +29,7 @@ namespace Odysseus.Traits {
 
         if (alternatives.size > 0) {
             var indicator = new StatusIndicator(
-                    "webfeed-subscribe", Status.DISABLED,
+                    "webfeed-subscribe", Status.ENABLED,
                     _("Subscribe to webfeeds"),
                     (alts) => build_subscribe_popover(alts as Gee.List<string>));
             indicator.user_data = alternatives;
@@ -107,34 +107,52 @@ namespace Odysseus.Traits {
                 label.label = info.title;
                 // TODO do something with info
 
-                populate_subscribe_buttons();
+                populate_subscribe_buttons(link, info.types);
             } catch (Error err) {
                 destroy();
             }
         }
 
-        private void populate_subscribe_buttons() {
+        private void populate_subscribe_buttons(string link, Gee.Set<string> containers) {
             var feedreaders = AppInfo.get_all_for_type("application/atom+xml");
             var is_empty = true;
+
+            var links = new List<string>();
+            links.append(link);
 
             feedreaders.@foreach((feedreader) => {
                 // Firefox is NOT a feedreader, less so now then ever.
                 // It's .desktop file says otherwise.
                 if (feedreader.get_id() == "firefox.desktop") return;
+
                 // Verify it's a supported app.
                 if (!feedreader.supports_uris()) return;
                 if (!("application/rss+xml" in feedreader.get_supported_types()))
                     return;
                 is_empty = false;
 
+                // Ask the app if I should show it
+                var appinfo = feedreader as DesktopAppInfo;
+                if (appinfo != null && appinfo.has_key("X-WebFeed-Type")) {
+                    var feedtypes = appinfo.get_string("X-WebFeed-Type");
+                    if (feedtypes == "none") return;
+
+                    var supported = false;
+                    foreach (var type in feedtypes.split(";"))
+                        if (type in containers) supported = true;
+                    if (!supported) return;
+                }
+
                 // Add toggle button for feedreader.
-                var button = new Gtk.ToggleButton();
+                var button = new Gtk.Button();
                 button.image = new Gtk.Image.from_gicon(feedreader.get_icon(),
                         Gtk.IconSize.MENU);
                 button.always_show_image = true;
                 button.relief = Gtk.ReliefStyle.NONE;
                 button.tooltip_text = _("Subscribe via %s").printf(feedreader.get_name());
                 add(button);
+
+                button.clicked.connect(() => feedreader.launch_uris(links, null));
             });
 
             if (is_empty) {
@@ -171,7 +189,7 @@ namespace Odysseus.Traits {
             if (strip_ns(name) == "enclosure" || strip_ns(name) == "content") {
                 for (var i = 0; i < attr_names.length; i++) {
                     if (strip_ns(attr_names[i]) == "type")
-                        types.add(attr_values[i]);
+                        types.add(attr_values[i].split(";", 2)[0]);
                 }
             } else if (depth == 1 && strip_ns(name) == "title") {
                 in_title = true;
