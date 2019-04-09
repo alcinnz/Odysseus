@@ -89,8 +89,8 @@ namespace Odysseus.Traits {
             try {
                 spinner.start();
                 var req = session.request_http("GET", link);
-                req.get_message().request_headers.append(
-                        "Accept", "application/rss+xml, application/atom+xml, text/xml");
+                req.get_message().request_headers.append("Accept",
+                    "application/rss+xml, application/atom+xml, text/xml, application/xml");
                 var response = yield req.send_async(null);
                 spinner.stop();
 
@@ -98,7 +98,8 @@ namespace Odysseus.Traits {
                 var mime = req.get_content_type();
                 if (!mime.has_prefix("application/rss+xml") &&
                         !mime.has_prefix("application/atom+xml") &&
-                        !mime.has_prefix("text/xml")) {
+                        !mime.has_prefix("text/xml") &&
+                        !mime.has_prefix("application/xml")) {
                     destroy();
                     return;
                 }
