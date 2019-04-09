@@ -90,14 +90,15 @@ namespace Odysseus.Traits {
                 spinner.start();
                 var req = session.request_http("GET", link);
                 req.get_message().request_headers.append(
-                        "Accept", "application/rss+xml, application/atom+xml");
+                        "Accept", "application/rss+xml, application/atom+xml, text/xml");
                 var response = yield req.send_async(null);
                 spinner.stop();
 
                 if (req.get_message().status_code != 200) {destroy(); return;}
                 var mime = req.get_content_type();
                 if (!mime.has_prefix("application/rss+xml") &&
-                        !mime.has_prefix("application/atom+xml")) {
+                        !mime.has_prefix("application/atom+xml") &&
+                        !mime.has_prefix("text/xml")) {
                     destroy();
                     return;
                 }
