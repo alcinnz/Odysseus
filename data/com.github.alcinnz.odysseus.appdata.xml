@@ -73,6 +73,15 @@ that matter to you.</p>
   </provides>
 
   <releases>
+    <release version="1.5.12" date="2019-04-10">
+      <description>
+        <p>Webfeed discovery support!</p>
+        <p>Full Dutch localization</p>
+        <p>Fix topsites editing</p>
+        <p>Lower threshold for sourcing topsites from browser history</p>
+        <p>Minor performance improvements</p>
+      </description>
+    </release>
     <release version="1.5.11" date="2019-03-09">
       <description>
         <p>Enable MSE, full French translations.</p>
