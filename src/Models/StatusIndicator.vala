@@ -22,7 +22,7 @@ public class Odysseus.StatusIndicator : Object {
     public Status status {get; set;}
     public string text;
 
-    public delegate Gtk.Popover? OnPressed(Object dat);
+    public delegate Gtk.Popover? OnPressed(Object? dat);
     public Object user_data; // Closures haven't been working reliably.
     public OnPressed? on_pressed;
 
