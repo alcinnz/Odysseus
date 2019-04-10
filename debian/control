@@ -18,7 +18,7 @@ Standards-Version: 3.9.3
 
 Package: com.github.alcinnz.odysseus
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, html-xml-utils >= 7.
+Depends: ${misc:Depends}, ${shlibs:Depends}, html-xml-utils (>= 7)
 Description: A simple and performant yet powerful window onto the open decentralized web
  Odysseus is a convenient and privacy-respecting web browser, that increasingly,
  gently, and unobtrusively guides you wherever you want to go online.
