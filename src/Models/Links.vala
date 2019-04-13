@@ -22,14 +22,14 @@ namespace Odysseus.Model {
             this.rel = rel; this.href = href;
         }
     }
-    public async Link[] parse_links(uint8[] src) {
+    public async Link[] parse_links(uint8[] src, string url) {
         // Runs a W3C utility to extract additional information WebKit won't
         //      readily give me.
         try {
             int stdin;
             int stdout;
             Process.spawn_async_with_pipes("/",
-                    {"hxwls", "-l"},
+                    {"hxwls", "-lb", url},
                     null,
                     SpawnFlags.SEARCH_PATH,
                     null,

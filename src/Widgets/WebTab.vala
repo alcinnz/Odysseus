@@ -161,7 +161,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     private async void parse_links(Cancellable? cancellable = null) {
         try {
             var source = yield web.get_main_resource().get_data(cancellable);
-            var links = yield Model.parse_links(source);
+            var links = yield Model.parse_links(source, url);
 
             links_parsed(links, indicators);
             indicators_loaded(indicators);

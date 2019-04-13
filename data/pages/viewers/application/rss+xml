@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>{{ feed.title }}</title>
-  <link rel="alternate" type="{{ mime }}" href="{{ feed.link|default:url }}" />
+  <link rel="alternate" type="{{ mime }}" href="{{ url }}" />
   <base href="{{ url }}" />
   <style>
     @import url("odysseus:butterick.css");

@@ -38,8 +38,6 @@ namespace Odysseus.Traits {
     }
 
     private Gtk.Popover build_subscribe_popover(Gee.List<string> links) {
-        // FIXME download these so I can determine if they actually are webfeeds,
-        //      If there's a better label, and the best apps to suggest subscribing via.
         var grid = new Gtk.Grid();
         grid.orientation = Gtk.Orientation.VERTICAL;
         var session = FeedRow.build_session();
@@ -107,10 +105,11 @@ namespace Odysseus.Traits {
                 var response_text = yield read_stream(response);
                 var info = new WebFeedParser();
                 info.parse(response_text);
-                label.label = info.title;
-                // TODO do something with info
 
+                if (!info.is_webfeed) {destroy(); return;}
+                label.label = info.title;
                 populate_subscribe_buttons(link, info.types);
+
             } catch (Error err) {
                 destroy();
             }
@@ -184,17 +183,21 @@ namespace Odysseus.Traits {
         int depth = 0;
         public Gee.Set<string> types = new Gee.HashSet<string>();
         public string title = "";
-        bool in_title = true;
+        bool in_title = false;
+        public bool is_webfeed = false;
 
         private void visit_start(MarkupParseContext context, string name,
                 string[] attr_names, string[] attr_values) throws MarkupError {
-            depth++;
-            if (strip_ns(name) == "enclosure" || strip_ns(name) == "content") {
+            if (strip_ns(name) != "channel") depth++;
+
+            if (depth == 1 && (strip_ns(name) == "rss" || strip_ns(name) == "feed"))
+                is_webfeed = true;
+            else if (strip_ns(name) == "enclosure" || strip_ns(name) == "content") {
                 for (var i = 0; i < attr_names.length; i++) {
                     if (strip_ns(attr_names[i]) == "type")
                         types.add(attr_values[i].split(";", 2)[0]);
                 }
-            } else if (depth == 1 && strip_ns(name) == "title") {
+            } else if (depth == 2 && strip_ns(name) == "title") {
                 in_title = true;
                 title = "";
             }
