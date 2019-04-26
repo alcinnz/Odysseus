@@ -29,30 +29,20 @@ that matter to you.</p>
 
   <screenshots>
     <screenshot type="default">
-      <caption>Browser controls, find-in-page, and downloads progress.</caption>
-      <caption lang="cs">Ovládání prohlížeče, vyhledávání na stránce a stav stahování.</caption>
-      <caption lang="pt">Controles de navegador, pesquisa e progresso de downloads.</caption>
-      <image>https://alcinnz.github.io/Odysseus/screenshot.png</image>
+      <caption>Homepage, autocompletion</caption>
+      <image>https://github.com/alcinnz/Odysseus/blob/master/data/Screenshot-home.png?raw=true</image>
     </screenshot>
     <screenshot>
-      <caption>Autocompletion</caption>
-      <caption lang="cs">Automatické dokončování</caption>
-      <caption lang="fr">Auto-complétion</caption>
-      <caption lang="pt">Autocompletar</caption>
-      <image>https://alcinnz.github.io/Odysseus/Screenshot2.png</image>
+      <caption>History</caption>
+      <image>https://github.com/alcinnz/Odysseus/blob/master/data/Screenshot-history.png?raw=true</image>
     </screenshot>
     <screenshot>
-      <caption>Jump to any spot in tab history</caption>
-      <caption lang="cs">Přeskočte na jakýkoli web v historii panelu</caption>
-      <caption lang="fr">Basculer vers n'importe quel moment de votre historique</caption>
-      <caption lang="pt">Pular para qualquer ponto na aba histórica</caption>
-      <image>https://alcinnz.github.io/Odysseus/Screenshot3.png</image>
+      <caption>Downloads, find-in-page</caption>
+      <image>https://github.com/alcinnz/Odysseus/blob/master/data/Screenshot-download-find.png?raw=true</image>
     </screenshot>
     <screenshot>
-      <caption>The Application menu</caption>
-      <caption lang="cs">Menu aplikace</caption>
-      <caption lang="pt">Menu de aplicação</caption>
-      <image>https://alcinnz.github.io/Odysseus/Screenshot4.png</image>
+      <caption>Webfeed subscription</caption>
+      <image>https://github.com/alcinnz/Odysseus/blob/master/data/Screenshot-feed.png?raw=true</image>
     </screenshot>
   </screenshots>
 
