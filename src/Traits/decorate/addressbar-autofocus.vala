@@ -21,7 +21,7 @@ namespace Odysseus.Traits {
     public void setup_addressbar_autofocus(WebTab tab) {
         var web = tab.web;
         web.load_changed.connect((evt) => {
-            if (web.uri != "odysseus:home") return;
+            if (evt != WebKit.LoadEvent.STARTED || web.uri != "odysseus:home") return;
             var win = tab.get_toplevel() as BrowserWindow;
             if (win == null) return;
 
