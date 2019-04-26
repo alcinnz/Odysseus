@@ -131,7 +131,6 @@ namespace Odysseus.Traits {
                 if (!feedreader.supports_uris()) return;
                 if (!("application/rss+xml" in feedreader.get_supported_types()))
                     return;
-                is_empty = false;
 
                 // Ask the app if I should show it
                 var appinfo = feedreader as DesktopAppInfo;
@@ -144,6 +143,7 @@ namespace Odysseus.Traits {
                         if (type in containers) supported = true;
                     if (!supported) return;
                 }
+                is_empty = false;
 
                 // Add toggle button for feedreader.
                 var button = new Gtk.Button();
