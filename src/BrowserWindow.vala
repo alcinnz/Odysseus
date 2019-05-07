@@ -174,6 +174,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("_Print"), () => new WebKit.PrintOperation(web).run_dialog(this), Gdk.Key.P);
             menu.separate();
             menu.add(_("Show Downloads"), () => downloads.set_reveal_child(true), Gdk.Key.D);
+            var help = "https://odysseus.adrian.geek.nz/guide.html";
+            menu.add(_("Help"), () => new_tab(help), Gdk.Key.question);
             var about_link = "appstream://com.github.alcinnz.odysseus";
             menu.add(_("About Odysseus"), () => Granite.Services.System.open_uri(about_link));
         });
