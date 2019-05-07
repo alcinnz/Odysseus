@@ -20,6 +20,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     public WebNotebook tabs;
     private DownloadsBar downloads;
     public Odysseus.Header.AddressBar addressbar; // So it can be autofocused.
+    public Overlay.InfoContainer prompt;
 
     public bool closing = false;
 
@@ -48,7 +49,6 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         this(db.last_insert_rowid());
     }
 
-    const string app_id = "com.github.alcinnz.odysseus.desktop";
     private void init_layout() {
         tabs = new WebNotebook();
         var header = new Header.HeaderBarWithMenus();
@@ -57,11 +57,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         add_accel_group(header.accel_group);
         tabs.bind_property("title", this, "title");
 
-        var container = new Overlay.InfoContainer();
-        add(container);
-
-        if (AppInfo.get_default_for_uri_scheme("http").get_id() != app_id)
-            prompt_make_default.begin(container);
+        prompt = new Overlay.InfoContainer();
+        add(prompt);
 
         // Don't show tabbar when fullscreen
         window_state_event.connect((evt) => {
@@ -71,15 +68,18 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             } else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
             return false;
         });
-        container.add(tabs);
+        prompt.add(tabs);
 
         downloads = new DownloadsBar();
         downloads.expand = false;
         downloads.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
-        container.add(downloads);
+        prompt.add(downloads);
     }
 
-    private async void prompt_make_default(Overlay.InfoContainer prompt) throws Error {
+    const string app_id = "com.github.alcinnz.odysseus.desktop";
+    public async void prompt_make_default() throws Error {
+        if (AppInfo.get_default_for_uri_scheme("http").get_id() == app_id) return;
+
         var options = new Overlay.InfoContainer.MessageOptions();
         options.ok_text = _("Make Default");
         options.type = Gtk.MessageType.INFO;

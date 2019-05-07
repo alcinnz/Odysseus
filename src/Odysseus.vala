@@ -93,6 +93,7 @@ public class Odysseus.Application : Granite.Application {
         if (is_first_start) {
             var window = new BrowserWindow.from_new_entry();
             window.new_tab();
+            window.prompt_make_default.begin();
             window.show_all();
         } else Persist.restore_application();
     }
