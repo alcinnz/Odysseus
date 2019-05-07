@@ -73,10 +73,11 @@ namespace Odysseus.Traits {
         scrolled.add(list);
         list.selection_mode = Gtk.SelectionMode.NONE;
 
-        for (var chain = cert; chain != null; chain = cert.issuer) {
-            var gcr = new Gcr.SimpleCertificate (chain.certificate.data);
+        // FIXME the commented out code hangs.
+        //for (var chain = cert; chain != null; chain = cert.get_issuer()) {
+            var gcr = new Gcr.SimpleCertificate (cert.certificate.data);
             list.add(build_certificate_row(gcr));
-        }
+        //}
 
         return ret;
     }
