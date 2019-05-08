@@ -15,19 +15,27 @@
 * along with Odysseus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/** Integrates downloads into the Pantheon desktop. 
+/** Integrates downloads into the Pantheon desktop.
 
 Specifially it renders download progress onto the app icon
     and it notifies users of download completion. */
 namespace Odysseus.Traits {
     public void show_download_progress_on_icon(Download dl) {
-        var launcher = Unity.LauncherEntry.get_for_desktop_file(
-                "com.github.alcinnz.odysseus.desktop");
+        var appuri = "application://com.github.alcinnz.odysseus.desktop";
+        var launcher = new LauncherEntry();
+
+        var conn = Bus.get_sync(BusType.SESSION);
+        conn.register_object(@"/com/canonical/unity/launcherentry/$(appuri.hash())", launcher);
+
         dl.received_data.connect(() => {
             Idle.add(() => {
+                var props = new HashTable<string, Variant>(str_hash, str_equal);
+
                 var downloads = DownloadSet.get_downloads().downloads;
                 if (downloads.size == 0) {
-                    launcher.progress_visible = false;
+                    props.insert("progress-visible", false);
+                    props.insert("count-visible", false);
+                    launcher.update(appuri, props);
                     return false;
                 }
 
@@ -35,8 +43,11 @@ namespace Odysseus.Traits {
                 foreach (var download in downloads)
                     progress *= download.download.estimated_progress;
 
-                launcher.progress_visible = true;
-                launcher.progress = progress;
+                props.insert("progress-visible", true);
+                props.insert("progress", progress);
+                props.insert("count-visible", true);
+                props.insert("count", (int64) downloads.size);
+                launcher.update(appuri, props);
 
                 return false;
             }, Priority.LOW);
@@ -51,5 +62,10 @@ namespace Odysseus.Traits {
             notify.set_icon(dl.icon);
             Odysseus.Application.instance.send_notification(null, notify);
         });
+    }
+
+    [DBus(name="com.canonical.Unity.LauncherEntry")]
+    private class LauncherEntry : Object {
+	    public signal void update(string uri, HashTable<string,Variant> properties);
     }
 }
