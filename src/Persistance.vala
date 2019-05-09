@@ -50,7 +50,7 @@ namespace Odysseus.Persist {
     public static bool in_batch = true;
 
     public void on_window_closed(BrowserWindow win) {
-        // Read window state...
+        // Read window state…
         var state = win.get_window().get_state();
         string window_state;
         int width = 1200, height = 800;

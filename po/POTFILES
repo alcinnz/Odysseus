@@ -11,4 +11,8 @@ src/Traits/download-progress.vala
 src/Traits/download-window.vala
 src/Traits/decorate/alert.vala
 src/Traits/decorate/permit.vala
+src/Traits/navigate/errors.vala
 src/Traits/navigate/viewsource.vala
+src/Traits/status/https.vala
+src/Traits/status/local.vala
+src/Traits/status/webfeed.vala

@@ -588,7 +588,7 @@ namespace Odysseus.Templating {
             // Invalid vars
             if (path.length == 0) return this;
 
-            /* Now things get trickier...
+            /* Now things get trickier…
                 And may require a custom filter to be inserted
                 between the two filter chains. */
             var baseVar = ctx[path[0]];

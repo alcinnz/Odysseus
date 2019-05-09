@@ -41,7 +41,7 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
 
         search = new Gtk.Entry();
         search.primary_icon_name = "edit-find";
-        search.placeholder_text = _("Find in page...");
+        search.placeholder_text = _("Find in page…");
         search.changed.connect(() => {
             find_in_page();
             search.secondary_icon_name = search.text_length > 0 ?

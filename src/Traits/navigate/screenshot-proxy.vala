@@ -52,7 +52,7 @@ namespace Odysseus.Traits {
             throw new HTTPError.STATUS("HTTP %u", https.get_message().status_code);
 
         /* Now cache it for greater speed and privacy!
-            Afterall that's why this URI scheme is needed...*/
+            Afterall that's why this URI scheme is needed…*/
         // Start by reading the entire response in.
         var memory = new MemoryOutputStream.resizable();
         yield memory.splice_async(response, 0);
