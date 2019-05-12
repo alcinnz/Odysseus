@@ -32,7 +32,7 @@ namespace Odysseus.Traits {
             autoscroll_active = true;
 
             Timeout.add(100 /* 10 times per second*/, () => {
-                // It's scroll using JavaScript than in Vala here...
+                // It's scroll using JavaScript than in Vala here…
                 var js = "window.scrollBy(%f, %f)".printf(x - start_x, y - start_y);
                 web.run_javascript.begin(js, null);
                 return autoscroll_active;

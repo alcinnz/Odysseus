@@ -260,7 +260,7 @@ and can be called at 212 555-1234.
       },
       {
         "id": 1,
-        "question_text": "Doctor ...",
+        "question_text": "Doctor …",
         "choices": ["Who", "William Bell", "Walter Bishop", "Strange",
             "Strangelove", "Octopus"]
       },
@@ -278,7 +278,7 @@ and can be called at 212 555-1234.
       
           <li><a href="/polls/0/">Star what?</a></li>
       
-          <li><a href="/polls/1/">Doctor ...</a></li>
+          <li><a href="/polls/1/">Doctor …</a></li>
       
           <li><a href="/polls/2/">Who&apos;s fictional?</a></li>
       
@@ -348,12 +348,12 @@ and can be called at 212 555-1234.
 {% input %}
   {"question": {
     "id": 1,
-    "question_text": "Doctor ...",
+    "question_text": "Doctor …",
     "choices": ["Who", "William Bell", "Walter Bishop", "Strange",
         "Strangelove", "Octopus"]
   }}
 {% output %}
-  <h1>Doctor ...</h1>
+  <h1>Doctor …</h1>
   <form method="post" target="submit">
   <ul>
   
