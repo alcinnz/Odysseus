@@ -28,6 +28,12 @@
       <dd>{% trans %}This is what you see when you open a new tab.{% endtrans %}</dd>
       <dt><a href="odysseus:privacy">{% trans %}Privacy Policy{% endtrans %}</a></dt>
       <dd>{% trans %}The privacy situation around Odysseus.{% endtrans %}</a></dt>
+      <dt><a href="odysseus:feedreaders">{% trans %}Compatible Feed Readers{% endtrans %}</a></dt>
+      <dd>{% trans %}Lists all compatible feedreaders available in your package repositories.{% endtrans %}</dd>
+      <dt>{% trans %}Compatible Apps{% endtrans %}:
+        <form action="odysseus:filetype" method="GET"><input type="text" placeholder="MIME Type" name="mime" /></form>
+      </dt>
+      <dd>{% trans %}Lists all apps in your package repository capable of opening a specific MIME type.{% endtrans %}</dd>
     </dl>
   </main>
 </body>

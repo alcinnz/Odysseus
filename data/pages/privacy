@@ -1,109 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[view-private security-high] Privacy Policy</title>
+  <title>[view-private security-high] {% trans %}Privacy Policy{% endtrans %}</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
 <body>
-  <h1>Your Privacy & Odysseus</h1>
-  <p>Your browser history is extremely personal information regarding your interests.
+  <h1>{% trans %}Your Privacy & Odysseus{% endtrans %}</h1>
+  <p>{% trans %}Your browser history is extremely personal information regarding your interests.
     And as such you deserve to have full control over who other than you can see it if at all,
-    and what aspects of it they can see.</p>
+    and what aspects of it they can see.{% endtrans %}</p>
 
-  <p>Currently the privacy situation of Odysseus is not indifferent from that
+  <p>{% trans %}Currently the privacy situation of Odysseus is not indifferent from that
     of other browsers, but it's lead developer is keen to improve the situation.
-    And still it's useful for you to be aware of it.</p>
+    And still it's useful for you to be aware of it.{% endtrans %}</p>
 
-  <h2>What information do we share with sites you visit?</h2>
+  <h2>{% trans %}What information do we share with sites you visit?{% endtrans %}</h2>
   <ul>
     <li><details>
-      <summary>The "IP Address" which currently identifies your computer or network on the Internet.</summary>
-      <p>You can hide this information using tools like <a href="https://www.torproject.org/">Tor</a>
+      <summary>{% trans %}The "IP Address" which currently identifies your computer or network on the Internet.{% endtrans %}</summary>
+      <p>{% trans %}You can hide this information using tools like <a href="https://www.torproject.org/">Tor</a>
         (though it isn't as effective as originally thought) and
-        <a href="https://www.privateinternetaccess.com/">VPN</a>s.</p>
+        <a href="https://www.privateinternetaccess.com/">VPN</a>s.{% endtrans %}</p>
     </details></li>
-    <li>The pages on that site you visit.</li>
-    <li>When you visited those pages (implicitly).</li>
-    <li>Which page you came from.</li>
-    <li>The fact you use Odysseus and the Linux kernel.</li>
-    <li>The languages you speak.</li>
-    <li>Any data ("cookies") it told us to store for it.</li>
+    <li>{% trans %}The pages on that site you visit.{% endtrans %}</li>
+    <li>{% trans %}When you visited those pages (implicitly).{% endtrans %}</li>
+    <li>{% trans %}Which page you came from.{% endtrans %}</li>
+    <li>{% trans %}The fact you use Odysseus and the Linux kernel.{% endtrans %}</li>
+    <li>{% trans %}The languages you speak.{% endtrans %}</li>
+    <li>{% trans %}Any data ("cookies") it told us to store for it.{% endtrans %}</li>
   </ul>
 
-  <p>If you connect to the site insecurely (via <code>HTTP</code> rather than <code>HTTPS</code>),
+  <p>{% trans %}If you connect to the site insecurely (via <code>HTTP</code> rather than <code>HTTPS</code>),
     anyone on the network between you and the site you're visiting can also see this information.
-    Odysseus, other browsers, the <a href="https://www.eff.org/encrypt-the-web">EFF</a>, and others are working on closing this leak.</p>
+    Odysseus, other browsers, the <a href="https://www.eff.org/encrypt-the-web">EFF</a>,
+    and others are working on closing this leak.{% endtrans %}</p>
 
-  <p>It's worth noting that HTTPS still leaves room for improving privacy, as the
+  <p>{% trans %}It's worth noting that HTTPS still leaves room for improving privacy, as the
     sites you interact with still get all the information listed above and because
     the websites you are visiting are still (roughly) visible to anyone between you
     and the website. Furthermore this information may/will be visible to any
     businesses who have been hired by the site operators to help deliver their site
     to you. This will frequently include <a href="https://www.amazon.com/">Amazon</a>
-    and/or <a href="https://www.cloudflare.com/">Cloudflare</a>.</p>
+    and/or <a href="https://www.cloudflare.com/">Cloudflare</a>.{% endtrans %}</p>
 
   <hr />
 
-  <p>Furthermore sites can provide programs for Odysseus to run,
-    through which it can access:</p>
+  <p>{% trans %}Furthermore sites can provide programs for Odysseus to run,
+    through which it can access:{% endtrans %}</p>
   <ul>
-    <li>Any interaction you've had with the site.</li>
-    <li>The screenspace available to it.</li>
-    <li>Whether you're actively connected to the Internet.</li>
-    <li>Further information it tells us to store for it.</li>
+    <li>{% trans %}Any interaction you've had with the site.{% endtrans %}</li>
+    <li>{% trans %}The screenspace available to it.{% endtrans %}</li>
+    <li>{% trans %}Whether you're actively connected to the Internet.{% endtrans %}</li>
+    <li>{% trans %}Further information it tells us to store for it.{% endtrans %}</li>
     <li><details>
-      <summary>And with your explicit permission…</summary>
+      <summary>{% trans %}And with your explicit permission…{% endtrans %}</summary>
       <ul>
-        <li>Your current location.</li>
-        <li>Your camera.</li>
-        <li>Your microphone.</li>
+        <li>{% trans %}Your current location.{% endtrans %}</li>
+        <li>{% trans %}Your camera.{% endtrans %}</li>
+        <li>{% trans %}Your microphone.{% endtrans %}</li>
       </ul>
     </details></li>
   </ul>
 
-  <p>Furthermore the sites you visit may incorporate third-party resources, all
+  <p>{% trans %}Furthermore the sites you visit may incorporate third-party resources, all
     of whom will recieve similar information. However their ability to store
-    data is <a href="https://webkit.org/blog/8142/intelligent-tracking-prevention-1-1/">severely</a> <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">restricted</a>.</p>
+    data is <a href="https://webkit.org/blog/8142/intelligent-tracking-prevention-1-1/">severely</a>
+    <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">restricted</a>.{% endtrans %}</p>
 
-  <h2>What other information do we share with third parties?</h2>
+  <h2>{% trans %}What other information do we share with third parties?{% endtrans %}</h2>
   <ul>
     <li><details>
-      <summary>Any searches entered into the addressbar
+      <summary>{% trans %}Any searches entered into the addressbar
         are sent to <a href="https://ddg.gg/">DuckDuckGo</a> for your convenience.
-        (<a href="https://duckduckgo.com/privacy">Privacy Policy</a>)</summary>
-      <p>A search here means anything entered into the addressbar that contains
-        a space. So if you don't want to search DuckDuckGo don't type space there.
+        (<a href="https://duckduckgo.com/privacy">Privacy Policy</a>){% endtrans %}</summary>
+      <p>{% trans %}A search here means anything entered into the addressbar that contains
+        a space. So if you don't want to search DuckDuckGo don't type space there.{% endtrans %}
       </p>
     </details></li>
   </ul>
 
-  <h2>What information do we store?</h2>
-  <p>The following information is saved locally on your computer
+  <h2>{% trans %}What information do we store?{% endtrans %}</h2>
+  <p>{% trans %}The following information is saved locally on your computer
     (at <code>~/.config/com.github.alcinnz.odysseus</code>) in addition to what
-    websites tell us to store on their behalf:</p>
+    websites tell us to store on their behalf:{% endtrans %}</p>
   <ul>
-    <li>The icons representing sites you've visited.</li>
-    <li>Copies of visited pages to avoid redownloading them.</li>
+    <li>{% trans %}The icons representing sites you've visited.{% endtrans %}</li>
+    <li>{% trans %}Copies of visited pages to avoid redownloading them.{% endtrans %}</li>
     <li><details>
-      <summary>A list of sites to <em>always</em> download over HTTPS.</summary>
-      <p>There's some
+      <summary>{% trans %}A list of sites to <em>always</em> download over HTTPS.{% endtrans %}</summary>
+      <p>{% trans %}There's some
         <a href="https://webkit.org/blog/8146/protecting-against-hsts-abuse/">interesting compromises</a> made to prevent
-        sites (a.k.a. advertisers) from misusing it as a form of data storage.</p>
+        sites (a.k.a. advertisers) from misusing it as a form of data storage.{% endtrans %}</p>
     </details></li>
-    <li>Your browser history.</li>
-    <li>The tabs and windows you currently have open in Odysseus.</li>
+    <li>{% trans %}Your browser history.{% endtrans %}</li>
+    <li>{% trans %}The tabs and windows you currently have open in Odysseus.{% endtrans %}</li>
   </ul>
 
-  <p>Odysseus keeps this information safe from any sites you visit,
+  <p>{% trans %}Odysseus keeps this information safe from any sites you visit,
     and never shares it with any third parties or
-    even the Odysseus developers themselves.</p>
+    even the Odysseus developers themselves.{% endtrans %}</p>
 
-  <p>However it would be
+  <p>{% trans %}However it would be
     <a href="https://www.omgubuntu.co.uk/2012/08/is-zeitgeist-spying-on-you">overly
     paranoid</a> to try and protect this information from any malware on your
-    computer, as who knows what that malware might be doing?</p>
+    computer, as who knows what that malware might be doing?{% endtrans %}</p>
 
   <hr />
-  <p>See a correction to make? Please <a href="https://github.com/alcinnz/Odysseus/issues/">report it</a>.</p>
+  <p>{% trans %}See a correction to make? Please <a href="https://github.com/alcinnz/Odysseus/issues/">report it</a>.{% endtrans %}</p>
 </body>
 </html>

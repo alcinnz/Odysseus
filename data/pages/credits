@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>[avatar-default user-available] Credits</title>
+  <title>[avatar-default user-available] {% trans %}Credits{% endtrans %}</title>
   <style>@import url(odysseus:butterick.css);</style>
 </head>
 <body>
@@ -11,10 +11,12 @@
     <dd><a href="https://minimusminor.tumblr.com/">William Tongue</a></dd>
     <dd>Aurora Cochrane</dd>
     <dt>{% trans %}Feature suggesions & bug reports{% endtrans %}</dt>
+    <dd><a href="https://github.com/NathanBnm">Nathan Bnm</a></dd>
     <dd><a href="https://github.com/giovannicaligaris">@giovannicaligaris</a></dd>
     <dd><a href="https://github.com/ghost">@ghost</a></dd>
     <dd><a href="https://github.com/zvirdaniel">Daniel Zvir</a></dd>
     <dd><a href="https://github.com/WebShapedBiz">Siniša Perović</a></dd>
+    <dd>{% trans %}And more…{% endtrans %}</a>
     <dt>{% trans %}Translation{% endtrans %}</dt>
     <dd><dl>
         <dt>čeština</dt>
@@ -23,8 +25,10 @@
         <dd><a href="https://www.transifex.com/user/profile/tintou/">Corentin Noël</a></dd>
         <dt>Português</dt>
         <dd><a href="https://www.transifex.com/user/profile/Manitiolo/">Peterson SB</a></dd>
+        <dt>{% trans %}Infrastructure{% endtrans %}</dt>
+        <dd><a href="https://github.com/NathanBnm">Nathan Bnm</a></dd>
     </dl></dd>
-    <dt>Lead Developer/everything else</dt>
+    <dt>{% trans %}Lead Developer/everything else{% endtrans %}</dt>
     <dd><a href="https://github.com/alcinnz/">Adrian Cochrane</a></dd>
   </dl>
   <h2>{% trans %}External Projects{% endtrans %}</h2>
@@ -34,8 +38,8 @@
   <p><a href="https://sqlite.org/" title="SQLite"><img src="https://sqlite.org/images/sqlite370_banner.gif" alt="SQLite" /></a>
     <a href="https://webkit.org/" title="Apple WebKit">
         <img src="https://webkit.org/wp-content/themes/webkit/images/webkit.svg" height="100" alt="Apple WebKit" /></a>
-    <a href="https://webkitgtk.org/" title="WebKitGTK+ (GNOME Web's logo)">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/GNOME_Web_logo.png/64px-GNOME_Web_logo.png" alt="WebKitGTK+ (GNOME Web's logo)" />
+    <a href="https://webkitgtk.org/" title="WebKitGTK+ ({% trans %}GNOME Web's logo{% endtrans %})">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/GNOME_Web_logo.png/64px-GNOME_Web_logo.png" alt="WebKitGTK+ ({% trans %}GNOME Web's logo{% endtrans %})" />
     </a></p>
   <p><a href="http://gtk.org/" title="GTK+"><img src="https://elementary.io/images/open-source/gtk.svg" alt="GTK+"></a>
     <a href="https://github.com/elementary/granite" title="Granite"><img src="https://elementary.io/images/developer/granite.svg" alt="Granite" /></a>
