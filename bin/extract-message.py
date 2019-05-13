@@ -2,45 +2,10 @@
 """Parses {% trans %} Prosody tags to extract strings,
 which it then writes out into data/page-l10n/Oddysseus and
 merges into the other catalogue files in that directory. """
-import re
 from collections import defaultdict
+from parsing import *
 
 # Utilities
-tag_re = re.compile("({%x%}|{{x}}|{#x#})".replace("x",
-        """([^'"]|'([^\\']|\\\\.)*?'|"([^\\"]|\\\\.)*?")*?"""))
-def tags(filename):
-    with open(filename) as f:
-        line_no = 0
-        for bit in tag_re.split(f.read()):
-            if not bit: continue
-            yield bit, line_no
-            line_no += bit.count("\n")
-
-def is_tag(token, tagnames):
-    if not token.startswith("{%"): return False
-    token = token[2:-2].strip().split()
-    return token[0] in tagnames.split()
-
-def next(template, tagnames):
-    import codecs
-    unicode_escape = codecs.getdecoder('unicode_escape')
-    for token, line_no in template:
-        if is_tag(token, tagnames):
-            return line_no, None
-        if token.startswith("{{"):
-            body = token[2:-2].strip().split("|")
-            if (body[0][0] in "'\"" and body[0][-1] == body[0][0]
-                    and len(body) >= 2 and body[1] == "trans"):
-                return line_no, unicode_escape(body[0][1:-1])[0]
-    return None, None
-
-def block(template, tagnames):
-    block = ""
-    for token, line_no in template:
-        if is_tag(token, tagnames): return block.strip(), token
-        else: block += token
-    raise ValueError("Failed to find endtag out of '{}'".format(tagnames))
-
 def walk(top):
     import os
     for path, dirnames, filenames in os.walk(top):
@@ -70,9 +35,9 @@ def parse_templates(repo_root = "."):
         print("Parsing template", subpath)
         template = tags(filename)
 
-        line, text = next(template, "trans")
+        line, text, is_tag = next(template, "trans")
         while line:
-            if text is None:
+            if is_tag:
                 message, endtag = block(template, "endtrans")
                 yield message.strip(), subpath, line
             else:
@@ -81,7 +46,7 @@ def parse_templates(repo_root = "."):
                         print("Invalid text translation!", repr(text))
                         exit(1)
                 yield text.strip(), subpath, line
-            line, text = next(template, "trans")
+            line, text, is_tag = next(template, "trans")
 
 def consolidate(messages):
     from collections import OrderedDict
@@ -91,18 +56,17 @@ def consolidate(messages):
         ret[msg].append(tpl + ":" + str(line))
     return ret.items()
 
-if __name__ == "__main__":
-    from sys import argv
-    import os
-    repo_root = argv[1] if len(argv) > 1 else "."
-    l10n_root = os.path.join(repo_root, "data", "page-l10n")
+from sys import argv
+import os
+repo_root = argv[1] if len(argv) > 1 else "."
+l10n_root = os.path.join(repo_root, "data", "page-l10n")
 
-    with open(os.path.join(l10n_root, "Odysseus.messages"), 'w') as out:
-        for msg, sources in consolidate(parse_templates(repo_root)):
-            print("{% msg", " ".join(sources), "%}", msg, "{% trans %}{% endmsg %}", file=out)
+with open(os.path.join(l10n_root, "Odysseus.messages"), 'w') as out:
+    for msg, sources in consolidate(parse_templates(repo_root)):
+        print("{% msg", " ".join(sources), "%}", msg, "{% trans %}{% endmsg %}", file=out)
 
-    print("All messages have been extracted to:",
-            os.path.join(l10n_root, "Odysseus.messages"))
-    print("You may now manually merge them with other message files,")
-    print("we do not yet have any tools to help you with this.")
-    print("But even if we did, this would require manual review.")
+print("All messages have been extracted to:",
+        os.path.join(l10n_root, "Odysseus.messages"))
+print("You may now manually merge them with other message files,")
+print("we do not yet have any tools to help you with this.")
+print("But even if we did, this would require manual review.")

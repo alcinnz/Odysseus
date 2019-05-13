@@ -2,7 +2,7 @@
 {% msg /home:71 %} Browser History {% trans %}{% endmsg %}
 {% msg /home:81 %} You 'pinned' this here {% trans %}{% endmsg %}
 {% msg /home:81 %} Pinned {% trans %}{% endmsg %}
-{% msg /home:84 %} "Frequently visited" {% trans %}{% endmsg %}
+{% msg /home:84 %} Frequently visited {% trans %}{% endmsg %}
 {% msg /home:84 /history:29 /history:46 /NOT-FOUND:23 %} History {% trans %}{% endmsg %}
 {% msg /home:89 %} Recommended by Adrian Cochrane {% trans %}{% endmsg %}
 {% msg /home:89 %} Recommended {% trans %}{% endmsg %}

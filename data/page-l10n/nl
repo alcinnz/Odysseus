@@ -1,226 +1,1076 @@
-{% msg /home:26 %} New Tab {% trans %} Nieuw tabblad {% endmsg %}
-{% msg /home:49 %} Browser History {% trans %} Surfgeschiedenis {% endmsg %}
-{% msg /home:59 %} You 'pinned' this here {% trans %} Je hebt dit item hier 'vastgemaakt' {% endmsg %}
-{% msg /home:68 %} "Frequently visited" {% trans %} "Regelmatig bezocht" {% endmsg %}
-{% msg /home:73 %} "Recommended by Adrian Cochrane" {% trans %} "Aanbevolen door Adrian Cochrane" {% endmsg %}
-{% msg /home:122 %} Browse faster with
+{% msg /home:47 %}
+New Tab
+{% trans %}
+Nieuw tabblad
+{% endmsg %}
+{% msg /home:71 %}
+Browser History
+{% trans %}
+Surfgeschiedenis
+{% endmsg %}
+{% msg /home:81 %}
+You 'pinned' this here
+{% trans %}
+Je hebt dit item hier 'vastgemaakt'
+{% endmsg %}
+{% msg /home:81 %}
+Pinned
+{% trans %}
+
+{% endmsg %}
+{% msg /home:84 %}
+Frequently visited
+{% trans %}
+Regelmatig bezocht
+{% endmsg %}
+{% msg /home:84 /history:29 /history:46 /NOT-FOUND:23 %}
+History
+{% trans %}
+Geschiedenis
+{% endmsg %}
+{% msg /home:89 %}
+Recommended by Adrian Cochrane
+{% trans %}
+Aanbevolen door Adrian Cochrane
+{% endmsg %}
+{% msg /home:89 %}
+Recommended
+{% trans %}
+
+{% endmsg %}
+{% msg /home:145 %}
+Browse faster with
         <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
-          keyboard shortcuts</a>! {% trans %} Surf sneller met behulp van
+          keyboard shortcuts</a>!
+{% trans %}
+Surf sneller met behulp van
         <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
-          sneltoetsen</a>! {% endmsg %}
-{% msg /home:126 %} {# Translators: Use this entry to sell your translation project! #} 
+          sneltoetsen</a>!
+{% endmsg %}
+{% msg /home:149 %}
+{# Translators: Use this entry to sell your translation project! #}  
         Do you know another language? Then do your friends a favour and
-        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">teach Odysseus it</a>! {% trans %}
-        Beheers je een andere taal? Help dan je vrienden en
-        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">leer Odysseus deze taal</a>! {% endmsg %}
-{% msg /home:130 %} Don't know where to go? Here's some
+        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">teach Odysseus it</a>!
+{% trans %}
+Beheers je een andere taal? Help dan je vrienden en
+        <a href="https://www.transifex.com/none-483/odysseus/dashboard/">leer Odysseus deze taal</a>!
+{% endmsg %}
+{% msg /home:153 %}
+Don't know where to go? Here's some
         <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>.
-        {% trans %} Weet je niet waar je moet beginnen? Hier zijn enkele
-        <a href="https://alcinnz.github.io/Odysseus-recommendations/">aanbevelingen</a>. {% endmsg %}
-{% msg /home:133 %} Want to help
+{% trans %}
+Weet je niet waar je moet beginnen? Hier zijn enkele
+        <a href="https://alcinnz.github.io/Odysseus-recommendations/">aanbevelingen</a>.
+{% endmsg %}
+{% msg /home:156 %}
+Want to help
         <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>?
-        {% trans %} Wil je helpen
-        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">Odysseus nóg geweldiger te maken</a>? {% endmsg %}
-{% msg /home:136 %} Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>. {% trans %} Heb je vragen? Stel ze en <a href="https://alcinnz.github.io/Odysseus-support/">krijg antwoord</a>. {% endmsg %}
-{% msg /home:138 %} Designed and coded with <a href="odysseus:credits">help</a> & ♥ by Adrian Lyall Cochrane in NZ. {% trans %} Ontworpen en geprogrammeerd met <a href="odysseus:credits">hulp van</a> en ♥ door Adrian Lyall Cochrane in NZ. {% endmsg %}
-{% msg /home:140 %} History search not powerful enough for you?
+{% trans %}
+Wil je helpen
+        <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">Odysseus nóg geweldiger te maken</a>?
+{% endmsg %}
+{% msg /home:159 %}
+Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>.
+{% trans %}
+Heb je vragen? Stel ze en <a href="https://alcinnz.github.io/Odysseus-support/">krijg antwoord</a>.
+{% endmsg %}
+{% msg /home:161 %}
+Designed and coded with <a href="odysseus:credits">help</a>
+        & ♥ by Adrian Lyall Cochrane in NZ.
+{% trans %}
+Ontworpen en geprogrammeerd met <a href="odysseus:credits">hulp van</a> en ♥ door Adrian Lyall Cochrane in NZ.
+{% endmsg %}
+{% msg /home:170 %}
+donating
+{% trans %}
+
+{% endmsg %}
+{% msg /home:172 %}
+A {% donate-link %}  
+      to cover my time and effort would be greatly appreciated.
+{% trans %}
+
+{% endmsg %}
+{% msg /home:175 %}
+History search not powerful enough for you?
         I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>!
-        {% trans %} Vind je de zoekfunctie in de geschiedenis niet krachtig genoeg?
-        Dan heb je het <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">mis</a>! {% endmsg %}
-{% msg /home:143 %} While Odysseus does store information about your browsing,
+{% trans %}
+Vind je de zoekfunctie in de geschiedenis niet krachtig genoeg?
+        Dan heb je het <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">mis</a>!
+{% endmsg %}
+{% msg /home:178 %}
+While Odysseus does store information about your browsing,
         that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you.
-        {% trans %} Odysseus slaat informatie op over je surfgedrag,
-        maar we delen dit met <a href="odysseus:privacy">niemand</a>. {% endmsg %}
-{% msg /home:146 %} FYI: None of the links on this page were sponsered, no one paid for any of them.
-        {% trans %} Voor de duidelijkheid: geen enkele link op deze pagina is gesponsord; niemand ervoor betaald. {% endmsg %}
-{% msg /SERVER-ERROR:9 %} Internal Error {% trans %} Interne fout {% endmsg %}
-{% msg /SERVER-ERROR:21 %} This Is Bad… {% trans %} Dit ziet er slecht uit… {% endmsg %}
-{% msg /SERVER-ERROR:22 %} I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message.
-        {% trans %} Ik begrijp mijn eigen code niet. Als je een Odysseus-ontwikkelaar bent, dan vind je hieronder meer informatie (in het Engels). Als je geen ontwikkelaar bent, <a href="https://github.com/alcinnz/Odysseus/issues/new">licht ons dan in</a>. Sla, om ons te helpen, deze pagina op en voeg hem toe als bijlage aan je probleemomschrijving. {% endmsg %}
-{% msg /NOT-FOUND:9 %} Tool Not Found {% trans %} Hulpmiddel niet aangetroffen {% endmsg %}
-{% msg /NOT-FOUND:14 %} This Page (<code>{{ url }} </code>) Does Not Exist <br />
-        (and probably never has) {% trans %} Deze pagina (<code>{{ url }} </code>) bestaat niet <br />
-        (en mogelijk heeft deze ook nooit bestaan) {% endmsg %}
-{% msg /NOT-FOUND:16 %} Maybe you meant one of these other internal pages? {% trans %} Was je op zoek naar één van deze interne pagina's? {% endmsg %}
-{% msg /NOT-FOUND:19 %} Credits {% trans %} Met dank aan {% endmsg %}
-{% msg /NOT-FOUND:20 %} The people you should thank for this gorgeous browsing experience. {% trans %} De personen die je moet bedanken voor deze geweldige surfervaring. {% endmsg %}
-{% msg /NOT-FOUND:21 %} Odysseus Debugging {% trans %} Odysseus-foutopsporing {% endmsg %}
-{% msg /NOT-FOUND:22 %} Tools for ensuring your browser is working correctly. {% trans %} Hulpmiddelen om je browser te inspecteren. {% endmsg %}
-{% msg /NOT-FOUND:23 /history:29 /history:46 %} History {% trans %} Geschiedenis {% endmsg %}
-{% msg /NOT-FOUND:24 %} The pages you've visited before. {% trans %} De pagina's die je ooit bezocht hebt. {% endmsg %}
-{% msg /NOT-FOUND:25 %} Odysseus's Homepage {% trans %} Odysseus-website {% endmsg %}
-{% msg /NOT-FOUND:26 %} Includes links to the pages you visit most. {% trans %} Bevat links naar pagina's die je regelmatig bezoekt. {% endmsg %}
-{% msg /NOT-FOUND:27 %} This is what you see when you open a new tab. {% trans %} Dit zie je als je een nieuw tabblad opent. {% endmsg %}
-{% msg /NOT-FOUND:28 %} Privacy Policy {% trans %} Privacybeleid {% endmsg %}
-{% msg /NOT-FOUND:29 %} The privacy situation around Odysseus. {% trans %} De privacysituatie omtrent Odysseus. {% endmsg %}
-{% msg /history:63 %} Visited from: {% trans %} Bezocht van: {% endmsg %}
-{% msg /history:70 %} No results for this search or on this page! {% trans %} Geen resultaten voor je zoekopdracht of op deze pagina! {% endmsg %}
-{% msg /history:98 %} Wow! No history. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Go explore</a>! {% trans %}
-        Wat? Geen geschiedenis?! <a href="https://alcinnz.github.io/Odysseus-recommendations/">Ga op avontuur</a>! {% endmsg %}
-{% msg /INVALID-FORM:4 /errors/405:4 %} INVALID FORM SUBMISSION {% trans %} ONGELDIG FORMULIER {% endmsg %}
-{% msg /INVALID-FORM:12 %} Invalid form submission {% trans %} Ongeldig formulier {% endmsg %}
-{% msg /INVALID-FORM:13 %} The form you just submitted was invalid! While you <em>could</em>
+{% trans %}
+Odysseus slaat informatie op over je surfgedrag,
+        maar we delen dit met <a href="odysseus:privacy">niemand</a>.
+{% endmsg %}
+{% msg /home:181 %}
+FYI: None of the links on this page were sponsered, no one paid for any of them.
+{% trans %}
+Voor de duidelijkheid: geen enkele link op deze pagina is gesponsord; niemand ervoor betaald.
+{% endmsg %}
+{% msg /feedreaders:4 %}
+Available feedreaders
+{% trans %}
+Beschikbare feedlezers
+{% endmsg %}
+{% msg /feedreaders:12 %}
+No <a href="https://en.wikipedia.org/wiki/News_aggregator">feed readers</a> are installed
+{% trans %}
+Er zijn geen <a href="https://nl.wikipedia.org/wiki/Feedreader">feedlezers</a> geïnstalleerd
+{% endmsg %}
+{% msg /feedreaders:15 %}
+In order to subscribe to a <a href="https://en.wikipedia.org/wiki/Web_feed">webfeed</a>,
+      please install one first.
+{% trans %}
+Als je je wilt abonneren op een <a href="https://nl.wikipedia.org/wiki/Webfeed">webfeed</a>,
+      dan moet je een feedlezer installeren.
+{% endmsg %}
+{% msg /privacy:3 /NOT-FOUND:28 %}
+Privacy Policy
+{% trans %}
+Privacybeleid
+{% endmsg %}
+{% msg /privacy:7 %}
+Your Privacy & Odysseus
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:8 %}
+Your browser history is extremely personal information regarding your interests.
+    And as such you deserve to have full control over who other than you can see it if at all,
+    and what aspects of it they can see.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:12 %}
+Currently the privacy situation of Odysseus is not indifferent from that
+    of other browsers, but it's lead developer is keen to improve the situation.
+    And still it's useful for you to be aware of it.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:16 %}
+What information do we share with sites you visit?
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:19 %}
+The "IP Address" which currently identifies your computer or network on the Internet.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:20 %}
+You can hide this information using tools like <a href="https://www.torproject.org/">Tor</a>
+        (though it isn't as effective as originally thought) and
+        <a href="https://www.privateinternetaccess.com/">VPN</a>s.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:24 %}
+The pages on that site you visit.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:25 %}
+When you visited those pages (implicitly).
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:26 %}
+Which page you came from.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:27 %}
+The fact you use Odysseus and the Linux kernel.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:28 %}
+The languages you speak.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:29 %}
+Any data ("cookies") it told us to store for it.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:32 %}
+If you connect to the site insecurely (via <code>HTTP</code> rather than <code>HTTPS</code>),
+    anyone on the network between you and the site you're visiting can also see this information.
+    Odysseus, other browsers, the <a href="https://www.eff.org/encrypt-the-web">EFF</a>,
+    and others are working on closing this leak.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:37 %}
+It's worth noting that HTTPS still leaves room for improving privacy, as the
+    sites you interact with still get all the information listed above and because
+    the websites you are visiting are still (roughly) visible to anyone between you
+    and the website. Furthermore this information may/will be visible to any
+    businesses who have been hired by the site operators to help deliver their site
+    to you. This will frequently include <a href="https://www.amazon.com/">Amazon</a>
+    and/or <a href="https://www.cloudflare.com/">Cloudflare</a>.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:47 %}
+Furthermore sites can provide programs for Odysseus to run,
+    through which it can access:
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:50 %}
+Any interaction you've had with the site.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:51 %}
+The screenspace available to it.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:52 %}
+Whether you're actively connected to the Internet.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:53 %}
+Further information it tells us to store for it.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:55 %}
+And with your explicit permission…
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:57 %}
+Your current location.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:58 %}
+Your camera.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:59 %}
+Your microphone.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:64 %}
+Furthermore the sites you visit may incorporate third-party resources, all
+    of whom will recieve similar information. However their ability to store
+    data is <a href="https://webkit.org/blog/8142/intelligent-tracking-prevention-1-1/">severely</a>
+    <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">restricted</a>.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:69 %}
+What other information do we share with third parties?
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:72 %}
+Any searches entered into the addressbar
+        are sent to <a href="https://ddg.gg/">DuckDuckGo</a> for your convenience.
+        (<a href="https://duckduckgo.com/privacy">Privacy Policy</a>)
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:75 %}
+A search here means anything entered into the addressbar that contains
+        a space. So if you don't want to search DuckDuckGo don't type space there.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:81 %}
+What information do we store?
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:82 %}
+The following information is saved locally on your computer
+    (at <code>~/.config/com.github.alcinnz.odysseus</code>) in addition to what
+    websites tell us to store on their behalf:
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:86 %}
+The icons representing sites you've visited.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:87 %}
+Copies of visited pages to avoid redownloading them.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:89 %}
+A list of sites to <em>always</em> download over HTTPS.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:90 %}
+There's some
+        <a href="https://webkit.org/blog/8146/protecting-against-hsts-abuse/">interesting compromises</a> made to prevent
+        sites (a.k.a. advertisers) from misusing it as a form of data storage.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:94 %}
+Your browser history.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:95 %}
+The tabs and windows you currently have open in Odysseus.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:98 %}
+Odysseus keeps this information safe from any sites you visit,
+    and never shares it with any third parties or
+    even the Odysseus developers themselves.
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:102 %}
+However it would be
+    <a href="https://www.omgubuntu.co.uk/2012/08/is-zeitgeist-spying-on-you">overly
+    paranoid</a> to try and protect this information from any malware on your
+    computer, as who knows what that malware might be doing?
+{% trans %}
+
+{% endmsg %}
+{% msg /privacy:108 %}
+See a correction to make? Please <a href="https://github.com/alcinnz/Odysseus/issues/">report it</a>.
+{% trans %}
+
+{% endmsg %}
+{% msg /INVALID-FORM:4 /errors/405:4 %}
+INVALID FORM SUBMISSION
+{% trans %}
+ONGELDIG FORMULIER
+{% endmsg %}
+{% msg /INVALID-FORM:12 %}
+Invalid form submission
+{% trans %}
+Ongeldig formulier
+{% endmsg %}
+{% msg /INVALID-FORM:13 %}
+The form you just submitted was invalid! While you <em>could</em>
       be to blame, this is probably <span title="Odysseus's">my</span> fault.
-      {% trans %} Het zojuist ingestuurde formulier is ongeldig! Misschien was <em>could</em>
-      het jouw fout, maar waarschijnlijk was het <span title="Odysseus's">mijn</span> fout. {% endmsg %}
-{% msg /INVALID-FORM:17 %} Please
+{% trans %}
+Het zojuist ingestuurde formulier is ongeldig! Misschien was <em>could</em>
+      het jouw fout, maar waarschijnlijk was het <span title="Odysseus's">mijn</span> fout.
+{% endmsg %}
+{% msg /INVALID-FORM:17 %}
+Please
       <a href="https://github.com/alcinnz/odysseus/issues/new">report this to
         <span title="the Odysseus developers">us</span></a> and attach a copy of
-      this page (use the "Save As" option). More information (in English) is below. {% trans %}
-      <a href="https://github.com/alcinnz/odysseus/issues/new">Meld het
+      this page (use the "Save As" option). More information (in English) is below.
+{% trans %}
+<a href="https://github.com/alcinnz/odysseus/issues/new">Meld het
         <span title="the Odysseus-ontwikkelaars">ons</span></a> en voeg een kopie bij
-      van deze pagina (gebruik hiervoor de optie "Opslaan als"). Hieronder vind je meer informatie (in het Engels). {% endmsg %}
-{% msg /feedreaders:4 %} Available feedreaders {% trans %} Beschikbare feedlezers {% endmsg %}
-{% msg /feedreaders:12 %} No <a href="https://en.wikipedia.org/wiki/News_aggregator">feed readers</a> installed. {% trans %}
-      Er zijn geen <a href="https://nl.wikipedia.org/wiki/Feedreader">feedlezers</a> geïnstalleerd {% endmsg %}
-{% msg /feedreaders:15 %} In order to subscribe to a <a href="https://en.wikipedia.org/wiki/Web_feed">webfeed</a>,
-      please install one first. {% trans %} Als je je wilt abonneren op een <a href="https://nl.wikipedia.org/wiki/Webfeed">webfeed</a>,
-      dan moet je een feedlezer installeren. {% endmsg %}
-{% msg /filetype:4 %} CAN'T OPEN {{ filetype }} FILES {% trans %} KAN GEEN {{ filetype }}-BESTANDEN OPENEN {% endmsg %}
-{% msg /filetype:18 %} {% filetype %} files cannot be opened with any software on this computer. {% trans %}
-      {% filetype %}  bestanden kunnen niet worden geopend met de op deze computer aanwezige software {% endmsg %}
-{% msg /filetype:22 %} You must install a compatible app before your download will open. {% trans %} Installeer een compatibele app. {% endmsg %}
-{% msg /credits:9 %} Logo critiques {% trans %} Logo-opmerkingen {% endmsg %}
-{% msg /credits:12 %} Feature suggesions and bug reports {% trans %} Ideeën en fouten (bugs) melden {% endmsg %}
-{% msg /credits:17 %} Translation {% trans %} Vertalen {% endmsg %}
-{% msg /credits:29 %} External Projects {% trans %} Externe projecten {% endmsg %}
-{% msg /credits:30 %} If it weren't for these projects Odysseus wouldn't exist,
+      van deze pagina (gebruik hiervoor de optie "Opslaan als"). Hieronder vind je meer informatie (in het Engels).
+{% endmsg %}
+{% msg /history:63 %}
+Visited from:
+{% trans %}
+Bezocht van:
+{% endmsg %}
+{% msg /history:70 %}
+No results for this search or on this page!
+{% trans %}
+Geen resultaten voor je zoekopdracht of op deze pagina!
+{% endmsg %}
+{% msg /history:98 %}
+Wow! No history. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Go explore</a>!
+{% trans %}
+Wat? Geen geschiedenis?! <a href="https://alcinnz.github.io/Odysseus-recommendations/">Ga op avontuur</a>!
+{% endmsg %}
+{% msg /filetype:4 %}
+CAN'T OPEN {{ filetype }}   FILES
+{% trans %}
+KAN GEEN {{ filetype }} -BESTANDEN OPENEN
+{% endmsg %}
+{% msg /filetype:18 %}
+{% filetype %}   files cannot be opened with any software on this computer
+{% trans %}
+{% filetype %}   bestanden kunnen niet worden geopend met de op deze computer aanwezige software
+{% endmsg %}
+{% msg /filetype:22 %}
+You must install a compatible app before your download will open.
+{% trans %}
+Installeer een compatibele app.
+{% endmsg %}
+{% msg /NOT-FOUND:9 %}
+Tool Not Found
+{% trans %}
+Hulpmiddel niet aangetroffen
+{% endmsg %}
+{% msg /NOT-FOUND:14 %}
+This Page (<code>{{ url }}  </code>) Does Not Exist <br />
+        (and probably never has)
+{% trans %}
+Deze pagina (<code>{{ url }}  </code>) bestaat niet <br />
+        (en mogelijk heeft deze ook nooit bestaan)
+{% endmsg %}
+{% msg /NOT-FOUND:16 %}
+Maybe you meant one of these other internal pages?
+{% trans %}
+Was je op zoek naar één van deze interne pagina's?
+{% endmsg %}
+{% msg /NOT-FOUND:19 /credits:4 %}
+Credits
+{% trans %}
+Met dank aan
+{% endmsg %}
+{% msg /NOT-FOUND:20 %}
+The people you should thank for this gorgeous browsing experience.
+{% trans %}
+De personen die je moet bedanken voor deze geweldige surfervaring.
+{% endmsg %}
+{% msg /NOT-FOUND:21 %}
+Odysseus Debugging
+{% trans %}
+Odysseus-foutopsporing
+{% endmsg %}
+{% msg /NOT-FOUND:22 %}
+Tools for ensuring your browser is working correctly.
+{% trans %}
+Hulpmiddelen om je browser te inspecteren.
+{% endmsg %}
+{% msg /NOT-FOUND:24 %}
+The pages you've visited before.
+{% trans %}
+De pagina's die je ooit bezocht hebt.
+{% endmsg %}
+{% msg /NOT-FOUND:25 %}
+Odysseus's homepage
+{% trans %}
+Odysseus-website
+{% endmsg %}
+{% msg /NOT-FOUND:26 %}
+Includes links to the pages you visit most.
+{% trans %}
+Bevat links naar pagina's die je regelmatig bezoekt.
+{% endmsg %}
+{% msg /NOT-FOUND:27 %}
+This is what you see when you open a new tab.
+{% trans %}
+Dit zie je als je een nieuw tabblad opent.
+{% endmsg %}
+{% msg /NOT-FOUND:29 %}
+The privacy situation around Odysseus.
+{% trans %}
+De privacysituatie omtrent Odysseus.
+{% endmsg %}
+{% msg /NOT-FOUND:30 %}
+Compatible Feed Readers
+{% trans %}
+
+{% endmsg %}
+{% msg /NOT-FOUND:31 %}
+Lists all compatible feedreaders available in your package repositories.
+{% trans %}
+
+{% endmsg %}
+{% msg /NOT-FOUND:32 %}
+Compatible Apps
+{% trans %}
+
+{% endmsg %}
+{% msg /NOT-FOUND:35 %}
+Lists all apps in your package repository capable of opening a specific MIME type.
+{% trans %}
+
+{% endmsg %}
+{% msg /SERVER-ERROR:9 %}
+Internal Error
+{% trans %}
+Interne fout
+{% endmsg %}
+{% msg /SERVER-ERROR:21 %}
+This Is Bad…
+{% trans %}
+Dit ziet er slecht uit…
+{% endmsg %}
+{% msg /SERVER-ERROR:22 %}
+I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message.
+{% trans %}
+Ik begrijp mijn eigen code niet. Als je een Odysseus-ontwikkelaar bent, dan vind je hieronder meer informatie (in het Engels). Als je geen ontwikkelaar bent, <a href="https://github.com/alcinnz/Odysseus/issues/new">licht ons dan in</a>. Sla, om ons te helpen, deze pagina op en voeg hem toe als bijlage aan je probleemomschrijving.
+{% endmsg %}
+{% msg /credits:9 %}
+Logo critiques
+{% trans %}
+Logo-opmerkingen
+{% endmsg %}
+{% msg /credits:12 %}
+Feature suggesions & bug reports
+{% trans %}
+Ideeën en fouten (bugs) melden
+{% endmsg %}
+{% msg /credits:18 %}
+And more…
+{% trans %}
+
+{% endmsg %}
+{% msg /credits:19 %}
+Translation
+{% trans %}
+Vertalen
+{% endmsg %}
+{% msg /credits:27 %}
+Infrastructure
+{% trans %}
+
+{% endmsg %}
+{% msg /credits:30 %}
+Lead Developer/everything else
+{% trans %}
+
+{% endmsg %}
+{% msg /credits:33 %}
+External Projects
+{% trans %}
+Externe projecten
+{% endmsg %}
+{% msg /credits:34 %}
+If it weren't for these projects Odysseus wouldn't exist,
     it'd just be too hard to develop. So <em>thank you</em> to everyone who has
-    worked on these projects, and a special thanks to those who guide their development. {% trans %}
-    Zonder deze projecten zou Odysseus niet bestaan;
+    worked on these projects, and a special thanks to those who guide their development.
+{% trans %}
+Zonder deze projecten zou Odysseus niet bestaan;
     het zou dan simpelweg té moeilijk zijn geweest. Dus <em>dank</em> aan iedereen die heeft gewerkt
-    aan deze projecten, en nog meer dank aan de hoofdontwikkelaars. {% endmsg %}
-{% msg /credits:42 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
-    and everyone who's ever published anything to the Web. You're what makes it all worthwhile! {% trans %}
-    En <em>hartelijk dank</em> aan <a href="https://elementary.io">elementary OS</a>
-    en iedereen die ooit iets heeft gepubliceerd op het internet. Dankzij jullie is het de moeite waard! {% endmsg %}
-{% msg /errors/schema:5 %} CAN'T OPEN {{ url.scheme }} : LINKS {% trans %} KAN GEEN {{ url.scheme }} :-LINKS OPENEN {% endmsg %}
-{% msg /errors/schema:19 %} {% urischema %}  links cannot be opened with any software on this computer {% trans %}
-        {% urischema %}-links kunnen niet worden geopend met de op deze computer aanwezige software {% endmsg %}
-{% msg /errors/schema:23 %} You must install a compatible app before opening <a href="{{ url }} ">this link</a>.
-        {% trans %} Installeer een compatibele app voordat je <a href="{{ url }} ">deze link</a> opnieuw opent. {% endmsg %}
-{% msg /errors/200:4 /errors/204:4 %} NO CONTENT {% trans %} GEEN INHOUD {% endmsg %}
-{% msg /errors/200:9 %} No content received {% trans %} Geen inhoud doorgekregen {% endmsg %}
-{% msg /errors/401:4 %} Login required {% trans %} Inloggen vereist {% trans %}{% endmsg %}
-{% msg /errors/401:9 %} Please Log In {% trans %} Inloggen {% endmsg %}
-{% msg /errors/401:10 %} You need to log in to access this page {% trans %} Je moet inloggen om deze pagina te kunnen openen. {% endmsg %}
-{% msg /errors/401:16 %} Username {% trans %} Gebruikersnaam {% endmsg %}
-{% msg /errors/401:20 %} Password {% trans %} Wachtwoord {% endmsg %}
-{% msg /errors/401:25 %} Log In {% trans %} Inloggen {% endmsg %}
-{% msg /errors/404:4 %} NOT FOUND {% trans %} NIET GEVONDEN {% trans %}{% endmsg %}
-{% msg /errors/404:9 %} This Page Does Not Exist {% trans %} Deze pagina bestaat niet {% endmsg %}
-{% msg /errors/404:10 %} Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them.
-        {% trans %} Misschien heb je een typfout gemaakt of een ongeldige link gevolgd. Of misschien ligt het wel aan de site: de pagina is wellicht ondoordacht verplaatst of zelfs verwijded. {% endmsg %}
-{% msg /errors/404:12 /errors/451:12 /errors/410:12 %} Try <a href="/">their homepage</a>, or: {% trans %} Probeer hun <a href="/">startpagina</a>, of: {% endmsg %}
-{% msg /errors/405:9 %} The Form You Submitted Was Invalid {% trans %} Het ingediende formulier is ongeldig {% endmsg %}
-{% msg /errors/405:10 %} Please take this up with the website's developers {% trans %} Neem contact op met de ontwikkelaars van de website. {% endmsg %}
-{% msg /errors/protocol:4 %} INVALID SITE {% trans %} ONGELDIGE WEBSITE {% endmsg %}
-{% msg /errors/protocol:9 %} I Cannot Work With This Website {% trans %} Met deze website kan ik niks beginnen {% endmsg %}
-{% msg /errors/protocol:10 %} It doesn't speek the same language I do. {% trans %} Hij spreekt een andere taal dan ik. {% endmsg %}
-{% msg /errors/507:3 /errors/dns:4 %} CON't CONTACT {% trans %} KAN GEEN VERBINDING MAKEN {% endmsg %}
-{% msg /errors/507:8 /errors/dns:9 %} Could not contact {{ url.host }} {% trans %} Kan geen verbinding maken met {{ url.host }} {% endmsg %}
-{% msg /errors/507:9 /errors/dns:10 %} This may be due to a network failure or a broken link. {% trans %} Wellicht is er een netwerkfout opgetreden of is de link kapotgegaan. {% endmsg %}
-{% msg /errors/507:12 /errors/network:11 /errors/dns:14 %} Network Settings {% trans %} Netwerkinstellingen {% endmsg %}
-{% msg /errors/506:4 %} NEGOTIATION FAIL {% trans %} ONDERHANDELING MISLUKT {% endmsg %}
-{% msg /errors/506:9 %} Failed To Decide on a File Format {% trans %} Kan geen beslissing nemen over het bestandsformaat {% endmsg %}
-{% msg /errors/423:4 %} LOCKED {% trans %} VERGRENDELD {% endmsg %}
-{% msg /errors/423:9 %} This WebDAV page is locked {% trans %} Deze WebDAV-pagina is vergrendeld {% endmsg %}
-{% msg /errors/423:10 %} Try making your changes again later, or take it up with your group. {% trans %}
-        Probeer je wijzigingen op een later moment opnieuw aan te brengen of neem contact op met je groep. {% endmsg %}
-{% msg /errors/bad-certificate:9 %} INVALID CERTIFICATE {% trans %} ONGELDIG CERTIFICAAT {% endmsg %}
-{% msg /errors/bad-certificate:16 %} This site may not be who it appears to be {% trans %} Mogelijk doet deze site zich voor als een ander {% endmsg %}
-{% msg /errors/bad-certificate:17 %} It has failed to <a href="https://en.wikipedia.org/wiki/Public_key_certificate">assert</a> it's own identity.
-      This may be due to its configuration, or it may be because someone's actively trying to <strong>spy</strong> on you. {% trans %}
-      De eigen identiteit kan niet worden <a href="https://nl.wikipedia.org/wiki/Certificaat_(PKI)">vastgesteld</a>.
-      Dit kan liggen aan de websiteconfiguratie of omdat iemand je probeert <strong>af te luisteren</strong>. {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:20 %} Details available by clicking the
-      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
-            onerror="this.src = 'icon:16/security-medium-symbolic'" />
-      in the addressbar. {% trans %} Bekijk de details door te klikken op het pictogram
-      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
-            onerror="this.src = 'icon:16/security-medium-symbolic'" />
-      in de adresbalk. {% endmsg %}
-{% msg /errors/bad-certificate:27 %} Load {{ url }}  despite this warning {% trans %} Negeer deze waarschuwing en ga door met het laden van {{ url }} {% endmsg %}
-{% msg /errors/bad-certificate:30 %} {# People have to click this to bypass certificate warnings #} 
-            I Don't Trust <code>{{ url.host }} </code> Anyways {% trans %}
-            Ik vertrouw <code>{{ url.host }} </code> niet {% trans %}{% endmsg %}
-{% msg /errors/bad-certificate:34 %} Try insecure connection {% trans %} Onveilige verbinding proberen {% endmsg %}
-{% msg /errors/204:9 %} This Page Has Been Intentionally Left Empty {% trans %} Deze pagina is met opzet leeggelaten {% endmsg %}
-{% msg /errors/204:10 %} Until <span title="Odysseus browser">I</a> added this content to let you know so. {% trans %} Totdat <span title="Odysseus browser">ik</a> deze inhoud heb toegevoegd om je op de hoogte te brengen. {% endmsg %}
-{% msg /errors/418:4 %} I'm A Teapot {% trans %} 'k Ben een kleine theepot {% trans %}{% endmsg %}
-{% msg /errors/418:12 %} {# Easter-egg 418: verse 1 of "I'm A Teapot" nursery rhyme #} t
+    aan deze projecten, en nog meer dank aan de hoofdontwikkelaars.
+{% endmsg %}
+{% msg /credits:40 /credits:41 %}
+GNOME Web's logo
+{% trans %}
+
+{% endmsg %}
+{% msg /credits:46 %}
+And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
+    and everyone who's ever published anything to the Web. You're what makes it all worthwhile!
+{% trans %}
+En <em>hartelijk dank</em> aan <a href="https://elementary.io">elementary OS</a>
+    en iedereen die ooit iets heeft gepubliceerd op het internet. Dankzij jullie is het de moeite waard!
+{% endmsg %}
+{% msg /errors/501:4 %}
+UNSUPPORTED
+{% trans %}
+NIET-ONDERSTEUND
+{% endmsg %}
+{% msg /errors/501:9 %}
+Feature Not Supported
+{% trans %}
+Deze functie wordt niet ondersteund
+{% endmsg %}
+{% msg /errors/501:10 %}
+Though it might be in the future.
+{% trans %}
+Maar misschien in de toekomst wél.
+{% endmsg %}
+{% msg /errors/protocol:4 %}
+INVALID SITE
+{% trans %}
+ONGELDIGE WEBSITE
+{% endmsg %}
+{% msg /errors/protocol:9 %}
+I Cannot Work With This Website
+{% trans %}
+Met deze website kan ik niks beginnen
+{% endmsg %}
+{% msg /errors/protocol:10 %}
+It doesn't speak the same language I do.
+{% trans %}
+Hij spreekt een andere taal dan ik.
+{% endmsg %}
+{% msg /errors/451:4 %}
+LEGAL TAKEDOWN
+{% trans %}
+UIT DE LUCHT GEHAALD
+{% endmsg %}
+{% msg /errors/451:9 %}
+This Page Has Been Removed For Legal Reasons
+{% trans %}
+Deze website is omwille van juridische redenen uit de lucht gehaald
+{% endmsg %}
+{% msg /errors/451:10 %}
+This page has been purposefully removed, and may not return.
+{% trans %}
+Deze pagina is opzettelijk verwijderd en keert mogelijk niet terug.
+{% endmsg %}
+{% msg /errors/451:12 /errors/410:12 /errors/404:12 %}
+Try <a href="/">their homepage</a>, or:
+{% trans %}
+Probeer hun <a href="/">startpagina</a>, of:
+{% endmsg %}
+{% msg /errors/403:4 %}
+FORBIDDEN
+{% trans %}
+GEEN TOEGANG
+{% endmsg %}
+{% msg /errors/403:9 %}
+Permission Denied
+{% trans %}
+Toegang geweigerd
+{% endmsg %}
+{% msg /errors/403:10 %}
+You are not allowed to access this webpage. Try their <a href="/">homepage</a>.
+{% trans %}
+Je bent niet gemachtigd om deze pagina te bekijken. Probeer hun <a href="/">startpagina</a>.
+{% endmsg %}
+{% msg /errors/429:3 %}
+SITE'S TOO BUSY
+{% trans %}
+WEBSITE IS BEZIG
+{% endmsg %}
+{% msg /errors/429:8 %}
+The Website Is Too Busy Serving Others
+{% trans %}
+De website is te druk bezig met andere mensen
+{% endmsg %}
+{% msg /errors/429:9 %}
+You'll just have to wait.
+{% trans %}
+Je zult dus even moeten wachten.
+{% endmsg %}
+{% msg /errors/429:14 /errors/503:14 /errors/408:14 %}
+Reload
+{% trans %}
+Herladen
+{% endmsg %}
+{% msg /errors/network:3 %}
+CAN'T CONNECT
+{% trans %}
+KAN GEEN VERBINDING MAKEN
+{% endmsg %}
+{% msg /errors/network:8 %}
+Could Not Connect To The Internet
+{% trans %}
+Kan geen verbinding maken met het internet
+{% endmsg %}
+{% msg /errors/network:11 /errors/507:12 /errors/dns:14 %}
+Network Settings
+{% trans %}
+Netwerkinstellingen
+{% endmsg %}
+{% msg /errors/409:4 %}
+EDIT CONFLICT
+{% trans %}
+BEWERKCONFLICT
+{% endmsg %}
+{% msg /errors/409:9 %}
+Your Action Conflicted With Someone Else's
+{% trans %}
+Je actie conflicteert met die van iemand anders
+{% endmsg %}
+{% msg /errors/409:10 %}
+Please <a href="javascript:history.back()">go back</a> and try again.
+{% trans %}
+<a href="javascript:history.back()">Ga terug</a> en probeer het opnieuw.
+{% endmsg %}
+{% msg /errors/418:4 %}
+I'm A Teapot
+{% trans %}
+'k Ben een kleine theepot {% trans %}
+{% endmsg %}
+{% msg /errors/418:12 %}
+{# Easter-egg 418: verse 1 of "I'm A Teapot" nursery rhyme #} t t
       I'm a little teapot<br />
       Short and stout<br />
       Here is my handle<br />
-      And here is my spout {% trans %}
-      ‘k Ben een kleine theepot<br />
+      And here is my spout
+{% trans %}
+‘k Ben een kleine theepot<br />
       rond van buik<br />
       Dit is mijn oor<br />
-      en dat is mijn tuit {% trans %}{% endmsg %}
-{% msg /errors/418:17 %} {# Easter-egg 418: verse 2 of "I'm A Teapot" nursery rhyme #} t
+      en dat is mijn tuit {% trans %}
+{% endmsg %}
+{% msg /errors/418:17 %}
+{# Easter-egg 418: verse 2 of "I'm A Teapot" nursery rhyme #} t t
       When I get all steamed up<br />
       Hear me shout<br />
       "Tip me over<br />
-      And pour me out!" {% trans %}
-      Als het water kookt<br />
+      And pour me out!"
+{% trans %}
+Als het water kookt<br />
       dan roep ik luid<br />
       "Til me op<br />
-      en schenk me uit!" {% endmsg %}
-{% msg /errors/418:22 %} {# Easter-egg 418: attribution #} 
+      en schenk me uit!"
+{% endmsg %}
+{% msg /errors/418:22 %}
+{# Easter-egg 418: attribution #}  
       <strong>April Fools!</strong>
-      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% trans %}
-      <strong>1 april!</strong>
-      Van <a href="https://tools.ietf.org/html/rfc2324">IETF</a>. {% endmsg %}
-{% msg /errors/409:4 %} EDIT CONFLICT {% trans %} BEWERKCONFLICT {% endmsg %}
-{% msg /errors/409:9 %} Your Action Conflicted With Someone Else's {% trans %} Je actie conflicteert met die van iemand anders {% endmsg %}
-{% msg /errors/409:10 %} Please <a href="javascript:history.back()">go back</a> and try again. {% trans %} <a href="javascript:history.back()">Ga terug</a> en probeer het opnieuw. {% endmsg %}
-{% msg /errors/crashed:3 %} CRASHED {% trans %} GECRASHT {% endmsg %}
-{% msg /errors/400:3 %} BAD REQUEST {% trans %} ONGELDIG VERZOEK {% endmsg %}
-{% msg /errors/400:8 %} This Is Apparently <span title="Odysseus Browser">Our</span> Fault {% trans %} Dit is <span title="Odysseus Browser">onze</span> fout {% endmsg %}
-{% msg /errors/400:9 %} Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and <span title="Odysseus developers">we'll</span> see what we can do about it. {% trans %} <a href="https://github.com/alcinnz/Odysseus/issues/new">Meld het probleem</a> en dan zullen <span title="Odysseus developers">we</span> ernaar kijken. {% trans %}{% endmsg %}
-{% msg /errors/network:3 %} CAN'T CONNECT {% trans %} KAN GEEN VERBINDING MAKEN {% endmsg %}
-{% msg /errors/network:8 %} Could Not Connect To The Internet {% trans %} Kan geen verbinding maken met het internet {% endmsg %}
-{% msg /errors/501:4 %} UNSUPPORTED {% trans %} NIET-ONDERSTEUND {% endmsg %}
-{% msg /errors/501:9 %} Feature Not Supported {% trans %} Deze functie wordt niet ondersteund {% endmsg %}
-{% msg /errors/501:10 %} Though it might be in the future {% trans %} Maar misschien in de toekomst wél. {% endmsg %}
-{% msg /errors/503:3 %} SERVICE UNAVAILABLE {% trans %} DIENST NIET BESCHIKBAAR {% endmsg %}
-{% msg /errors/503:8 %} Service Temporarily Unavailable {% trans %} De dienst is tijdelijk niet beschikbaar {% endmsg %}
-{% msg /errors/503:9 %} Please try again later {% trans %} Probeer het later opnieuw. {% endmsg %}
-{% msg /errors/503:14 /errors/429:14 /errors/408:14 %} Reload {% trans %} Herladen {% endmsg %}
-{% msg /errors/429:3 %} SITE'S TOO BUSY {% trans %} WEBSITE IS BEZIG {% endmsg %}
-{% msg /errors/429:8 %} The Website Is Too Busy Serving Others {% trans %} De website is te druk bezig met andere mensen {% endmsg %}
-{% msg /errors/429:9 %} You'll just have to wait. {% trans %} Je zult dus even moeten wachten. {% endmsg %}
-{% msg /errors/uri:4 %} INVALID LINK {% trans %} ONGELDIGE LINK {% endmsg %}
-{% msg /errors/uri:14 %} Could not read link {% url %} {% trans %} Kan de link {% url %} niet uitlezen {% endmsg %}
-{% msg /errors/uri:16 %} Please report this issue to whoever gave you this link, they messed up! {% trans %}
-        Meld dit probleem aan degene die je de link heeft gestuurd; ze hebben een foutje gemaakt! {% endmsg %}
-{% msg /errors/424:4 %} REPEATED ERRORS {% trans %} TERUGKERENDE FOUTEN {% endmsg %}
-{% msg /errors/424:9 %} Follow On From a Previous Error {% trans %} De pagina blijft fout na fout geven {% endmsg %}
-{% msg /errors/451:4 %} LEGAL TAKEDOWN {% trans %} UIT DE LUCHT GEHAALD {% endmsg %}
-{% msg /errors/451:9 %} This Page Has Been Removed For Legal Reasons {% trans %}
-        Deze website is omwille van juridische redenen uit de lucht gehaald {% endmsg %}
-{% msg /errors/451:10 %} This page has been purposefully removed, and may not return. {% trans %}
-        Deze pagina is opzettelijk verwijderd en keert mogelijk niet terug. {% endmsg %}
-{% msg /errors/dns:11 %} Or it could be simply that <em>this site does not exist</em>. {% trans %} Of misschien <em>bestaat deze site gewoon niet</em>. {% endmsg %}
-{% msg /errors/500:4 %} WEBSITE PROBLEMS {% trans %} WEBSITEPROBLEMEN {% endmsg %}
-{% msg /errors/500:9 %} The Website Experienced An Error {% trans %} Er is een fout opgetreden op de website {% endmsg %}
-{% msg /errors/500:10 %} This shouldn't be happening, and you should report it. {% trans %} Dit zou niet mogen gebeuren. Meld deze fout! {% endmsg %}
-{% msg /errors/403:4 %} FORBIDDEN {% trans %} GEEN TOEGANG {% endmsg %}
-{% msg /errors/403:9 %} Permission Denied {% trans %} Toegang geweigerd {% endmsg %}
-{% msg /errors/403:10 %} You are not allowed to access this webpage. Try their <a href="/">homepage</a>. {% trans %}
-        Je bent niet gemachtigd om deze pagina te bekijken. Probeer hun <a href="/">startpagina</a>. {% endmsg %}
-{% msg /errors/408:3 %} REQUEST TIMED OUT {% trans %} VERZOEK VERLOPEN {% endmsg %}
-{% msg /errors/408:8 %} Timed Out While Asking For This Page {% trans %} Het verzoek is tijdens het opvragen verlopen {% endmsg %}
-{% msg /errors/408:9 %} Try reloading it later. {% trans %} Herlaad de pagina later nog eens. {% endmsg %}
-{% msg /errors/410:4 %} DOES NOT EXIST {% trans %} BESTAAT NIET {% endmsg %}
-{% msg /errors/410:9 %} This Page Has Been Removed {% trans %} Deze pagina is verwijderd {% endmsg %}
-{% msg /errors/410:10 %} This page has been purposefully removed, and will not return. {% trans %}
-        Deze pagina is opzettelijk verwijderd en keert niet meer terug. {% endmsg %}
-{% msg /errors/xxx:1 %} Something went wrong! {% trans %} Er is iets misgegaan! {% endmsg %}
-{% msg /errors/xxx:3 %} But <span title="The Odysseus browser">I</span> don't understand what it was. {% trans %}
-        Maar <span title="The Odysseus browser">ik</span> weet niet wat. {% endmsg %}
-{% msg /special/restore:8 %} Loading… {% trans %} Bezig met laden… {% endmsg %}
-{% msg /special/applist:1 %} Compatible apps {% trans %} Compatibele apps {% endmsg %}
-{% msg /special/applist:5 %} View in {{ pacman }} . {% trans %} Bekijken in {{ pacman }} . {% endmsg %}
-{% msg /special/applist:10 %} No compatible apps found in {{ pacman }} . {% trans %}
-        Geen compatibele apps aangetroffen in {{ pacman }} . {% endmsg %}
+      From the <a href="https://tools.ietf.org/html/rfc2324">IETF</a>.
+{% trans %}
+<strong>1 april!</strong>
+      Van <a href="https://tools.ietf.org/html/rfc2324">IETF</a>.
+{% endmsg %}
+{% msg /errors/401:4 %}
+Log-in Required
+{% trans %}
+Inloggen vereist
+{% endmsg %}
+{% msg /errors/401:9 %}
+Please Log In
+{% trans %}
+Inloggen
+{% endmsg %}
+{% msg /errors/401:10 %}
+You need to log in to access this page.
+{% trans %}
+Je moet inloggen om deze pagina te kunnen openen.
+{% endmsg %}
+{% msg /errors/401:16 %}
+Username
+{% trans %}
+Gebruikersnaam
+{% endmsg %}
+{% msg /errors/401:20 %}
+Password
+{% trans %}
+Wachtwoord
+{% endmsg %}
+{% msg /errors/401:25 %}
+Log In
+{% trans %}
+Inloggen
+{% endmsg %}
+{% msg /errors/507:3 /errors/dns:4 %}
+CAN'T CONTACT
+{% trans %}
+KAN GEEN VERBINDING MAKEN
+{% endmsg %}
+{% msg /errors/507:8 /errors/dns:9 %}
+Could Not Contact {{ url.host }}
+{% trans %}
+Kan geen verbinding maken met {{ url.host }}
+{% endmsg %}
+{% msg /errors/507:9 /errors/dns:10 %}
+This may be due to a network failure or a broken link.
+{% trans %}
+Wellicht is er een netwerkfout opgetreden of is de link kapotgegaan.
+{% endmsg %}
+{% msg /errors/bad-certificate:9 %}
+INVALID CERTIFICATE
+{% trans %}
+ONGELDIG CERTIFICAAT
+{% endmsg %}
+{% msg /errors/bad-certificate:16 %}
+This site may not be who it appears to be
+{% trans %}
+Mogelijk doet deze site zich voor als een ander
+{% endmsg %}
+{% msg /errors/bad-certificate:17 %}
+It has failed to <a href="https://en.wikipedia.org/wiki/Public_key_certificate">assert</a> it's own identity.
+      This may be due to its configuration, or it may be because someone's actively trying to <strong>spy</strong> on you.
+{% trans %}
+De eigen identiteit kan niet worden <a href="https://nl.wikipedia.org/wiki/Certificaat_(PKI)">vastgesteld</a>.
+      Dit kan liggen aan de websiteconfiguratie of omdat iemand je probeert <strong>af te luisteren</strong>. {% trans %}
+{% endmsg %}
+{% msg /errors/bad-certificate:20 %}
+Details available by clicking the
+      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
+            onerror="this.src = 'icon:16/security-medium-symbolic'" />
+      in the addressbar.
+{% trans %}
+Bekijk de details door te klikken op het pictogram
+      <img src="icon:16/channel-insecure-symbolic" alt="Insecure connection icon"
+            onerror="this.src = 'icon:16/security-medium-symbolic'" />
+      in de adresbalk.
+{% endmsg %}
+{% msg /errors/bad-certificate:27 %}
+Load {{ url }}   despite this warning
+{% trans %}
+Negeer deze waarschuwing en ga door met het laden van {{ url }}
+{% endmsg %}
+{% msg /errors/bad-certificate:30 %}
+{# People have to click this to bypass certificate warnings #}  
+            I Don't Trust <code>{{ url.host }}  </code> Anyways
+{% trans %}
+Ik vertrouw <code>{{ url.host }}  </code> niet {% trans %}
+{% endmsg %}
+{% msg /errors/bad-certificate:34 %}
+Try insecure connection
+{% trans %}
+Onveilige verbinding proberen
+{% endmsg %}
+{% msg /errors/424:4 %}
+REPEATED ERRORS
+{% trans %}
+TERUGKERENDE FOUTEN
+{% endmsg %}
+{% msg /errors/424:9 %}
+Follow On From a Previous Error
+{% trans %}
+De pagina blijft fout na fout geven
+{% endmsg %}
+{% msg /errors/423:4 %}
+LOCKED
+{% trans %}
+VERGRENDELD
+{% endmsg %}
+{% msg /errors/423:9 %}
+This WebDAV Page is Locked
+{% trans %}
+Deze WebDAV-pagina is vergrendeld
+{% endmsg %}
+{% msg /errors/423:10 %}
+Try making your changes again later, or take it up with your group.
+{% trans %}
+Probeer je wijzigingen op een later moment opnieuw aan te brengen of neem contact op met je groep.
+{% endmsg %}
+{% msg /errors/crashed:3 %}
+CRASHED
+{% trans %}
+GECRASHT
+{% endmsg %}
+{% msg /errors/xxx:1 %}
+Something went wrong!
+{% trans %}
+Er is iets misgegaan!
+{% endmsg %}
+{% msg /errors/xxx:3 %}
+But <span title="The Odysseus browser">I</span> don't understand what it was.
+{% trans %}
+Maar <span title="The Odysseus browser">ik</span> weet niet wat.
+{% endmsg %}
+{% msg /errors/400:3 %}
+BAD REQUEST
+{% trans %}
+ONGELDIG VERZOEK
+{% endmsg %}
+{% msg /errors/400:8 %}
+This Is Apparently <span title="Odysseus Browser">Our</span> Fault
+{% trans %}
+Dit is <span title="Odysseus Browser">onze</span> fout
+{% endmsg %}
+{% msg /errors/400:9 %}
+Please <a href="https://github.com/alcinnz/Odysseus/issues/new">report the problem</a> and <span title="Odysseus developers">we'll</span> see what we can do about it.
+{% trans %}
+<a href="https://github.com/alcinnz/Odysseus/issues/new">Meld het probleem</a> en dan zullen <span title="Odysseus developers">we</span> ernaar kijken. {% trans %}
+{% endmsg %}
+{% msg /errors/503:3 %}
+SERVICE UNAVAILABLE
+{% trans %}
+DIENST NIET BESCHIKBAAR
+{% endmsg %}
+{% msg /errors/503:8 %}
+Service Temporarily Unavailable
+{% trans %}
+De dienst is tijdelijk niet beschikbaar
+{% endmsg %}
+{% msg /errors/503:9 %}
+Please try again later.
+{% trans %}
+Probeer het later opnieuw.
+{% endmsg %}
+{% msg /errors/204:4 /errors/200:4 %}
+NO CONTENT
+{% trans %}
+GEEN INHOUD
+{% endmsg %}
+{% msg /errors/204:9 %}
+This Page Has Been Intentionally Left Empty
+{% trans %}
+Deze pagina is met opzet leeggelaten
+{% endmsg %}
+{% msg /errors/204:10 %}
+Until <span title="Odysseus browser">I</a> added this content to let you know so.
+{% trans %}
+Totdat <span title="Odysseus browser">ik</a> deze inhoud heb toegevoegd om je op de hoogte te brengen.
+{% endmsg %}
+{% msg /errors/506:4 %}
+NEGOTIATION FAIL
+{% trans %}
+ONDERHANDELING MISLUKT
+{% endmsg %}
+{% msg /errors/506:9 %}
+Failed To Decide on a File Format
+{% trans %}
+Kan geen beslissing nemen over het bestandsformaat
+{% endmsg %}
+{% msg /errors/408:3 %}
+REQUEST TIMED OUT
+{% trans %}
+VERZOEK VERLOPEN
+{% endmsg %}
+{% msg /errors/408:8 %}
+Timed Out While Asking For This Page
+{% trans %}
+Het verzoek is tijdens het opvragen verlopen
+{% endmsg %}
+{% msg /errors/408:9 %}
+Try reloading it later.
+{% trans %}
+Herlaad de pagina later nog eens.
+{% endmsg %}
+{% msg /errors/410:4 %}
+DOES NOT EXIST
+{% trans %}
+BESTAAT NIET
+{% endmsg %}
+{% msg /errors/410:9 %}
+This Page Has Been Removed
+{% trans %}
+Deze pagina is verwijderd
+{% endmsg %}
+{% msg /errors/410:10 %}
+This page has been purposefully removed, and will not return.
+{% trans %}
+Deze pagina is opzettelijk verwijderd en keert niet meer terug.
+{% endmsg %}
+{% msg /errors/schema:5 %}
+CAN'T OPEN {{ url.scheme }}  : LINKS
+{% trans %}
+KAN GEEN {{ url.scheme }}  :-LINKS OPENEN
+{% endmsg %}
+{% msg /errors/schema:19 %}
+{% urischema %}   links cannot be opened with any software on this computer
+{% trans %}
+{% urischema %} -links kunnen niet worden geopend met de op deze computer aanwezige software
+{% endmsg %}
+{% msg /errors/schema:23 %}
+You must install a compatible app before opening <a href="{{ url }}  ">this link</a>.
+{% trans %}
+Installeer een compatibele app voordat je <a href="{{ url }}  ">deze link</a> opnieuw opent.
+{% endmsg %}
+{% msg /errors/dns:11 %}
+Or it could be simply that <em>this site does not exist</em>.
+{% trans %}
+Of misschien <em>bestaat deze site gewoon niet</em>.
+{% endmsg %}
+{% msg /errors/404:4 %}
+NOT FOUND
+{% trans %}
+NIET GEVONDEN {% trans %}
+{% endmsg %}
+{% msg /errors/404:9 %}
+This Page Does Not Exist
+{% trans %}
+Deze pagina bestaat niet
+{% endmsg %}
+{% msg /errors/404:10 %}
+Maybe you typed it wrong or followed an invalid link. Or maybe the site you're visiting has inconsiderately moved pages around or even removed them.
+{% trans %}
+Misschien heb je een typfout gemaakt of een ongeldige link gevolgd. Of misschien ligt het wel aan de site: de pagina is wellicht ondoordacht verplaatst of zelfs verwijded.
+{% endmsg %}
+{% msg /errors/200:9 %}
+No content received
+{% trans %}
+Geen inhoud doorgekregen
+{% endmsg %}
+{% msg /errors/uri:4 %}
+INVALID LINK
+{% trans %}
+ONGELDIGE LINK
+{% endmsg %}
+{% msg /errors/uri:14 %}
+Could not read link {% url %}
+{% trans %}
+Kan de link {% url %}  niet uitlezen
+{% endmsg %}
+{% msg /errors/uri:16 %}
+Please report this issue to whoever gave you this link, they messed up!
+{% trans %}
+Meld dit probleem aan degene die je de link heeft gestuurd; ze hebben een foutje gemaakt!
+{% endmsg %}
+{% msg /errors/500:4 %}
+WEBSITE PROBLEMS
+{% trans %}
+WEBSITEPROBLEMEN
+{% endmsg %}
+{% msg /errors/500:9 %}
+The Website Experienced An Error
+{% trans %}
+Er is een fout opgetreden op de website
+{% endmsg %}
+{% msg /errors/500:10 %}
+This shouldn't be happening, and you should report it.
+{% trans %}
+Dit zou niet mogen gebeuren. Meld deze fout!
+{% endmsg %}
+{% msg /errors/405:9 %}
+The Form You Submitted Was Invalid
+{% trans %}
+Het ingediende formulier is ongeldig
+{% endmsg %}
+{% msg /errors/405:10 %}
+Please take this up with the website's developers.
+{% trans %}
+Neem contact op met de ontwikkelaars van de website.
+{% endmsg %}
+{% msg /special/restore:8 %}
+Loading…
+{% trans %}
+Bezig met laden…
+{% endmsg %}
+{% msg /special/applist:1 %}
+Compatible apps
+{% trans %}
+Compatibele apps
+{% endmsg %}
+{% msg /special/applist:5 %}
+View in {{ pacman }}  .
+{% trans %}
+Bekijken in {{ pacman }}  .
+{% endmsg %}
+{% msg /special/applist:10 %}
+No compatible apps found in {{ pacman }}  .
+{% trans %}
+Geen compatibele apps aangetroffen in {{ pacman }}  .
+{% endmsg %}
+{% msg /viewers/application/rss+xml:31 %}
+Updated
+{% trans %}
+
+{% endmsg %}
+{% msg /viewers/application/rss+xml:36 %}
+Contributors
+{% trans %}
+
+{% endmsg %}
+{% msg /viewers/application/rss+xml:62 %}
+Authors
+{% trans %}
+
+{% endmsg %}
+{% msg /viewers/application/rss+xml:70 %}
+Tags
+{% trans %}
+
+{% endmsg %}
+{% msg /viewers/application/rss+xml:101 %}
+Load more…
+{% trans %}
+
+{% endmsg %}
+{% msg /viewers/application/rss+xml:108 %}
+No more entries
+{% trans %}
+
+{% endmsg %}
+{% msg /viewers/application/rss+xml:109 %}
+{# Shorthand for "no more entries" #} s sFin.
+{% trans %}
+
+{% endmsg %}
+{% msg /viewers/application/rss+xml:134 %}
+Editor
+{% trans %}
+
+{% endmsg %}
+{% msg /viewers/application/rss+xml:137 %}
+Web Master
+{% trans %}
+
+{% endmsg %}

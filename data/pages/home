@@ -82,7 +82,7 @@ and I take advantage of this page to promote project links. #}
           {{"You 'pinned' this here"|trans}} AS help, {{"Pinned"|trans}} AS caption
         FROM topsites_whitelist ORDER BY order_ ASC;
       SELECT url as uri, {% q-tailrank %}, "history" AS cat,
-          {% trans %}"Frequently visited"{% endtrans %} AS help, {{"History"|trans}} AS caption
+          {{"Frequently visited"|trans}} AS help, {{"History"|trans}} AS caption
         FROM visit_counts
         WHERE count >= 10 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY count DESC;
