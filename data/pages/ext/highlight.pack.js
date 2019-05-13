@@ -98,7 +98,7 @@
     }
   }
 
-  function inherit(parent) {  // inherit(parent, override_obj, override_obj, ...)
+  function inherit(parent) {  // inherit(parent, override_obj, override_obj, …)
     var key;
     var result = {};
     var objects = Array.prototype.slice.call(arguments, 1);
@@ -170,7 +170,7 @@
       if (event1 == 'stop' && event2 == 'stop')
         return highlighted;
 
-      ... which is collapsed to:
+      … which is collapsed to:
       */
       return highlighted[0].event === 'start' ? original : highlighted;
     }
@@ -716,8 +716,8 @@
   hljs.IDENT_RE = '[a-zA-Z]\\w*';
   hljs.UNDERSCORE_IDENT_RE = '[a-zA-Z_]\\w*';
   hljs.NUMBER_RE = '\\b\\d+(\\.\\d+)?';
-  hljs.C_NUMBER_RE = '(-?)(\\b0[xX][a-fA-F0-9]+|(\\b\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)'; // 0x..., 0..., decimal, float
-  hljs.BINARY_NUMBER_RE = '\\b(0b[01]+)'; // 0b...
+  hljs.C_NUMBER_RE = '(-?)(\\b0[xX][a-fA-F0-9]+|(\\b\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)'; // 0x…, 0…, decimal, float
+  hljs.BINARY_NUMBER_RE = '\\b(0b[01]+)'; // 0b…
   hljs.RE_STARTERS_RE = '!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|-|-=|/=|/|:|;|<<|<<=|<=|<|===|==|=|>>>=|>>=|>=|>>>|>>|>|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~';
 
   // Common modes
@@ -889,7 +889,7 @@ hljs.registerLanguage('css', function(hljs) {
                                  // because it doesn’t let it to be parsed as
                                  // a rule set but instead drops parser into
                                  // the default mode which is how it should be.
-        illegal: /:/, // break on Less variables @var: ...
+        illegal: /:/, // break on Less variables @var: …
         contains: [
           {
             className: 'keyword',
@@ -979,7 +979,7 @@ hljs.registerLanguage('xml', function(hljs) {
       {
         className: 'tag',
         /*
-        The lookahead pattern (?=...) ensures that 'begin' only matches
+        The lookahead pattern (?=…) ensures that 'begin' only matches
         '<style' as a single word, followed by a whitespace or an
         ending braket. The '$' is needed for the lexeme to be recognized
         by hljs.subMode() that tests lexemes outside the stream.

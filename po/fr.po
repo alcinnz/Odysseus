@@ -1,119 +1,117 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# French translations of the com.github.alcinnz.odysseus package.
+# Copyright (C) 2019 THE com.github.alcinnz.odysseus'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.alcinnz.odysseus package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
-#, fuzzy
+# NathanBnm, 2019.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-22 12:13+1300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Corentin Noël <tintou@mailoo.org>, 2018\n"
-"Language-Team: French (https://www.transifex.com/none-483/teams/75521/fr/)\n"
+"POT-Creation-Date: 2019-05-09 23:26+0200\n"
+"PO-Revision-Date: 2019-05-09 22:07+0200\n"
+"Last-Translator: NathanBnm\n"
+"Language-Team: Français\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/BrowserWindow.vala:82
+#: src/BrowserWindow.vala:84
 msgid "Make Default"
 msgstr "Définir par défaut"
 
-#: src/BrowserWindow.vala:84
+#: src/BrowserWindow.vala:86
 msgid "Odysseus is not your default browser."
-msgstr "Odysseurs n'est pas votre navigateur par défaut."
+msgstr "Odysseus n'est pas votre navigateur par défaut."
 
-#: src/BrowserWindow.vala:99
+#: src/BrowserWindow.vala:101
 msgid "Go to previously viewed page"
 msgstr "Retourner à la page précédente"
 
-#: src/BrowserWindow.vala:107
+#: src/BrowserWindow.vala:109
 msgid "Go to next viewed page"
 msgstr "Aller à la page suivante"
 
-#: src/BrowserWindow.vala:116
+#: src/BrowserWindow.vala:118
 msgid "Load this page from the website again"
 msgstr "Recharger cette page à partir du site web"
 
-#: src/BrowserWindow.vala:118
+#: src/BrowserWindow.vala:120
 msgid "Ignore cache"
 msgstr "Ignorer le cache"
 
-#: src/BrowserWindow.vala:121
-msgid "Stop loading this page"
-msgstr "Arrêter de charger cette page"
-
 #: src/BrowserWindow.vala:123
+msgid "Stop loading this page"
+msgstr "Arrêter le chargement de cette page"
+
+#: src/BrowserWindow.vala:125
 msgid "Stop And Reload"
 msgstr "Recommencer le chargement"
 
-#: src/BrowserWindow.vala:136
+#: src/BrowserWindow.vala:138
 msgid "Current web address"
-msgstr "Adresse web actuelle"
+msgstr "Adresse Web actuelle"
 
-#: src/BrowserWindow.vala:144
+#: src/BrowserWindow.vala:147
 msgid "Menu"
 msgstr "Menu"
 
-#: src/BrowserWindow.vala:145
+#: src/BrowserWindow.vala:148
 msgid "_New Window"
 msgstr "_Nouvelle fenêtre"
 
-#: src/BrowserWindow.vala:150 src/BrowserWindow.vala:151
-#: src/Widgets/DownloadButton.vala:99
+#: src/BrowserWindow.vala:153 src/BrowserWindow.vala:154
+#: src/Widgets/DownloadButton.vala:100
 msgid "_Open"
 msgstr "_Ouvrir"
 
-#: src/BrowserWindow.vala:153
+#: src/BrowserWindow.vala:156
 msgid "_Save"
 msgstr "_Enregistrer"
 
 #. TRANSLATORS _ precedes shortcut key
-#: src/BrowserWindow.vala:154 src/Widgets/DownloadButton.vala:109
-#: src/Widgets/DownloadButton.vala:113
+#: src/BrowserWindow.vala:157 src/Widgets/DownloadButton.vala:110
+#: src/Widgets/DownloadButton.vala:114
 msgid "_Save As"
 msgstr "_Enregistrer sous"
 
-#: src/BrowserWindow.vala:157
+#: src/BrowserWindow.vala:160
 msgid "_View Source"
 msgstr "_Afficher la source"
 
-#: src/BrowserWindow.vala:159
+#: src/BrowserWindow.vala:162
 msgid "Zoom In"
 msgstr "Zoom avant"
 
-#: src/BrowserWindow.vala:161
+#: src/BrowserWindow.vala:164
 msgid "Zoom Out"
 msgstr "Zoom arrière"
 
-#: src/BrowserWindow.vala:164
+#: src/BrowserWindow.vala:167
 msgid "_History"
 msgstr "_Historique"
 
-#: src/BrowserWindow.vala:166
+#: src/BrowserWindow.vala:169
 msgid "_Find In Page"
 msgstr "_Chercher dans la page"
 
-#: src/BrowserWindow.vala:168
+#: src/BrowserWindow.vala:174
 msgid "_Print"
 msgstr "_Imprimer"
 
-#: src/BrowserWindow.vala:170
+#: src/BrowserWindow.vala:176
 msgid "Show Downloads"
 msgstr "Afficher les téléchargements"
 
-#: src/BrowserWindow.vala:171
+#: src/BrowserWindow.vala:178
+msgid "Help"
+msgstr "Aide"
+
+#: src/BrowserWindow.vala:180
 msgid "About Odysseus"
 msgstr "À propos d'Odysseus"
 
-#: src/BrowserWindow.vala:185 src/Widgets/DownloadButton.vala:121
-msgid "_Cancel"
-msgstr "_Annuler"
-
-#: src/Models/Download.vala:74
+#: src/Models/Download.vala:107
 #, c-format
 msgid ""
 "Error moving download to %s.\n"
@@ -123,27 +121,22 @@ msgstr ""
 "Celui-ci a été laissé dans votre dossier Téléchargements"
 
 #. / TRANSLATORS: "%i" seconds
-#: src/Models/Download.vala:87
+#: src/Models/Download.vala:120
 #, c-format
 msgid "%is"
 msgstr "%is"
 
 #. / TRANSLATORS: "%i" minutes
-#: src/Models/Download.vala:92
+#: src/Models/Download.vala:125
 #, c-format
 msgid "%im"
 msgstr "%im"
 
 #. / TRANSLATORS: "%i" hours and "%i" minutes,
-#: src/Models/Download.vala:97
+#: src/Models/Download.vala:130
 #, c-format
 msgid "%ih %im"
 msgstr "%ih %im"
-
-#. Disallow interacting with the page while dialog is active.
-#: src/Traits/decorate/alert.vala:60
-msgid "Close the message to continue interacting with this page"
-msgstr "Fermez le message pour continuer d'interagir avec la page"
 
 #: src/Widgets/DownloadBar.vala:34
 msgid "View all downloads"
@@ -157,22 +150,36 @@ msgstr "Fermer la barre des téléchargements"
 msgid "[Download]"
 msgstr "[Téléchargement]"
 
-#: src/Widgets/DownloadButton.vala:92
+#: src/Widgets/DownloadButton.vala:93
 msgid "DONE"
 msgstr "TERMINÉ"
 
-#: src/Widgets/DownloadButton.vala:104
+#: src/Widgets/DownloadButton.vala:105
 msgid "Open _Automatically"
 msgstr "Ouvrir _automatiquement"
 
-#: src/Widgets/WebTab.vala:88
+#: src/Widgets/DownloadButton.vala:122
+msgid "_Cancel"
+msgstr "_Annuler"
+
+#: src/Widgets/WebTab.vala:93
 #, c-format
-msgid "%u matches of \"%s\" found"
-msgstr "%u occurrences de « %s » trouvés"
+msgid "%u match of \"%s\" found"
+msgid_plural "%u matches of \"%s\" found"
+msgstr[0] "%u occurrence de « %s » trouvée"
+msgstr[1] "%u occurrences de « %s » trouvées"
+
+#: src/Widgets/WebTab.vala:240
+msgid "Press [esc] to leave fullscreen"
+msgstr "Appuyez sur [Échap] pour quitter le plein-écran"
+
+#: src/Widgets/Chromeless.vala:24
+msgid "Web Inspector"
+msgstr "Inspecteur Web"
 
 #: src/Widgets/overlays/FindToolbar.vala:44
-msgid "Find in page..."
-msgstr "Rechercher sur la page…"
+msgid "Find in page…"
+msgstr "Rechercher dans la page…"
 
 #: src/Widgets/overlays/FindToolbar.vala:86
 msgid "Find previous match"
@@ -208,7 +215,17 @@ msgstr "Correspondre au début du mot"
 msgid "Match CamelCase"
 msgstr "Respecter la CasseChameau"
 
-#: src/Traits/download-progress.vala:47
+#: src/Widgets/overlays/InfoContainer.vala:49
+#: src/Widgets/overlays/InfoContainer.vala:65
+msgid "OK"
+msgstr "OK"
+
+#: src/Widgets/overlays/InfoContainer.vala:50
+#: src/Widgets/overlays/InfoContainer.vala:65
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/Traits/download-progress.vala:58
 msgid "Web Download Completed"
 msgstr "Téléchargement terminé"
 
@@ -219,3 +236,134 @@ msgstr "Des téléchargements sont en cours…"
 #: src/Traits/download-window.vala:34
 msgid "Click a download to cancel or alter it"
 msgstr "Cliquez sur un téléchargement pour l'annuler ou le modifier"
+
+#: src/Traits/decorate/alert.vala:40
+msgid "Leave"
+msgstr "Quitter"
+
+#: src/Traits/decorate/alert.vala:40
+msgid "Stay"
+msgstr "Rester"
+
+#. Disallow interacting with the page while dialog is active.
+#: src/Traits/decorate/alert.vala:58
+msgid "Close the message to continue interacting with this page"
+msgstr "Fermez le message pour continuer d'interagir avec la page"
+
+#: src/Traits/decorate/permit.vala:30
+msgid "Allow"
+msgstr "Autoriser"
+
+#: src/Traits/decorate/permit.vala:30
+msgid "Deny"
+msgstr "Refuser"
+
+#: src/Traits/decorate/permit.vala:34
+msgid "This page wants to know where you currently are."
+msgstr "Cette page souhaite accéder à votre emplacement."
+
+#. FIXME non-standard.
+#: src/Traits/decorate/permit.vala:37
+msgid "This page wants the ability to show you notifications."
+msgstr "Cette page souhaite pouvoir vous envoyer des notifications."
+
+#: src/Traits/decorate/permit.vala:44
+msgid "This page wants to watch and listen to you."
+msgstr "Cette page souhaite accéder à votre webcam et à votre micro."
+
+#: src/Traits/decorate/permit.vala:47
+msgid "This page wants to listen to you."
+msgstr "Cette page souhaite accéder à votre micro."
+
+#: src/Traits/decorate/permit.vala:50
+msgid "This page wants to watch you."
+msgstr "Cette page souhgaite accéder à votre webcam."
+
+#: src/Traits/decorate/permit.vala:57
+msgid "Additional software is required to play media on this page:"
+msgstr ""
+"Un logiciel supplémentaire est requis pour lire les médias sur cette page : "
+
+#: src/Traits/decorate/permit.vala:59
+msgid "Install"
+msgstr "Installer"
+
+#: src/Traits/navigate/errors.vala:31
+msgid "Click to toggle error message."
+msgstr "Cliquez pour afficher/masquer le message d'erreur."
+
+#. If we're not viewing alternate HTML under this schema,
+#. close any tabs that have persisted.
+#: src/Traits/navigate/viewsource.vala:70
+msgid "Please go through the \"View Source\" menu item."
+msgstr "Veuillez utiliser l'élément du menu « Afficher la source »."
+
+#: src/Traits/status/https.vala:30
+#, c-format
+msgid "Your connection to %s is secure from eavesdroppers,"
+msgstr "Votre connexion à %s est protégée des espions,"
+
+#: src/Traits/status/https.vala:31
+msgid ""
+"Your activity can be seen by the admins and hosting companies for this site."
+msgstr ""
+"Votre activité peut être suivie par les administrateurs et l'hébergeur de ce "
+"site."
+
+#. FIXME provide more information about the error.
+#: src/Traits/status/https.vala:39
+msgid "Certificate validation failed! This site may be an imposter."
+msgstr ""
+"La validation du certificat a échoué ! Ce site pourrait être dangereux."
+
+#: src/Traits/status/https.vala:43
+msgid "Unknown certificate authority"
+msgstr "Autorité de certificat inconnue"
+
+#: src/Traits/status/https.vala:45
+msgid "Wrong site named in certificate"
+msgstr "Le nom du site est incorrect dans le certificat"
+
+#: src/Traits/status/https.vala:47
+msgid "Not yet active certificate"
+msgstr "Pas de certificat encore actif"
+
+#: src/Traits/status/https.vala:49
+msgid "Expired certificate"
+msgstr "Certificat expiré"
+
+#: src/Traits/status/https.vala:51
+msgid "Known bad certificate"
+msgstr "Certificat connu comme malveillant"
+
+#: src/Traits/status/https.vala:53
+msgid "Broken encryption scheme."
+msgstr "Schéma de chiffrement brisé."
+
+#: src/Traits/status/https.vala:55
+msgid "Unknown error…"
+msgstr "Erreur inconnue…"
+
+#: src/Traits/status/https.vala:98
+#, c-format
+msgid "Expires %s"
+msgstr "Expire le %s"
+
+#: src/Traits/status/local.vala:32
+msgid "This page was loaded from your computer. Noone else knows you're here."
+msgstr ""
+"Cette page a été chargée depuis votre ordinateur. Personne ne sait que vous "
+"êtes là."
+
+#: src/Traits/status/webfeed.vala:33
+msgid "Subscribe to webfeeds"
+msgstr "S'abonner aux flux Web."
+
+#: src/Traits/status/webfeed.vala:154
+#, c-format
+msgid "Subscribe via %s"
+msgstr "S'abonner via %s"
+
+#: src/Traits/status/webfeed.vala:166
+msgid "Install a feedreader to subscribe"
+msgstr "Installez un lecteur de flux pour vous abonner"

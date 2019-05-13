@@ -322,7 +322,7 @@ namespace Odysseus.Templating.Data {
         public override int to_int(out bool is_length = null) {
             warning("Trying to convert a stack to an int. " +
                     "This may not give the results you expect.");
-            is_length = true; // Won't get a better answer...
+            is_length = true; // Won't get a better answer…
             return 0;
         }
     }
@@ -349,7 +349,7 @@ namespace Odysseus.Templating.Data {
         public override string to_string() {return "";}
         public override bool exists {get {return true;}}
         public override int to_int(out bool is_length = null) {
-            is_length = true; // Won't get a better answer...
+            is_length = true; // Won't get a better answer…
             return 0;
         }
 

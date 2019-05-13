@@ -93,7 +93,7 @@ namespace Odysseus.Templating.xI18n {
     }
 
     private void lookup_translation(Slice key, ref Template body) {
-        // Look it up in the cache of translations already in memory...
+        // Look it up in the cache of translations already in memory…
         CacheEntry? prev = null;
         CacheEntry? entry = CacheEntry.translation_cache;
         for (; entry != null; prev = entry, entry = entry.next) {

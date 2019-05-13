@@ -1,15 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Portuguese translations of the com.github.alcinnz.odysseus package.
+# Copyright (C) 2019 THE com.github.alcinnz.odysseus'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.alcinnz.odysseus package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
-#, fuzzy
+# Peterson SB <manitiolo@outlook.com>, 2018.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-22 12:13+1300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-03-22 12:13+1300\n"
 "Last-Translator: Peterson SB <manitiolo@outlook.com>, 2018\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/none-483/teams/75521/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -171,8 +170,8 @@ msgid "%u matches of \"%s\" found"
 msgstr "%u correspondências de \"%s\" encontrados"
 
 #: src/Widgets/overlays/FindToolbar.vala:44
-msgid "Find in page..."
-msgstr "Buscando na página..."
+msgid "Find in page…"
+msgstr "Buscando na página…"
 
 #: src/Widgets/overlays/FindToolbar.vala:86
 msgid "Find previous match"

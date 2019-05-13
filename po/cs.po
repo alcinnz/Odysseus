@@ -1,103 +1,118 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the io.github.alcinnz.Odysseus package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
-#, fuzzy
+# Czech translations of the com.github.alcinnz.odysseus package.
+# Copyright (C) 2019 THE com.github.alcinnz.odysseus'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.alcinnz.odysseus package.
+# Daniel Zvir <zvir.daniel@seznam.cz>, 2018.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: io.github.alcinnz.Odysseus\n"
+"Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-23 08:14+1300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2019-05-09 23:26+0200\n"
+"PO-Revision-Date: 2019-05-09 22:07+0200\n"
 "Last-Translator: Daniel Zvir <zvir.daniel@seznam.cz>, 2018\n"
 "Language-Team: Czech (https://www.transifex.com/none-483/teams/75521/cs/)\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: src/BrowserWindow.vala:75
+#: src/BrowserWindow.vala:84
+msgid "Make Default"
+msgstr ""
+
+#: src/BrowserWindow.vala:86
+msgid "Odysseus is not your default browser."
+msgstr ""
+
+#: src/BrowserWindow.vala:101
 msgid "Go to previously viewed page"
 msgstr "Jdi na předchozí stránku"
 
-#: src/BrowserWindow.vala:83
+#: src/BrowserWindow.vala:109
 msgid "Go to next viewed page"
 msgstr "Jdi na následující stránku"
 
-#: src/BrowserWindow.vala:92
+#: src/BrowserWindow.vala:118
 msgid "Load this page from the website again"
 msgstr "Aktualizuj načtenou stránku"
 
-#: src/BrowserWindow.vala:94
+#: src/BrowserWindow.vala:120
 msgid "Ignore cache"
 msgstr "Ignoruj keše"
 
-#: src/BrowserWindow.vala:97
+#: src/BrowserWindow.vala:123
 msgid "Stop loading this page"
 msgstr "Přestaň načítat tuto stránku"
 
-#: src/BrowserWindow.vala:99
+#: src/BrowserWindow.vala:125
 msgid "Stop And Reload"
 msgstr "Stop a aktualizace"
 
-#: src/BrowserWindow.vala:112
+#: src/BrowserWindow.vala:138
 msgid "Current web address"
 msgstr "Aktuální webová adresa"
 
-#: src/BrowserWindow.vala:119
+#: src/BrowserWindow.vala:147
 msgid "Menu"
 msgstr "Menu"
 
-#: src/BrowserWindow.vala:120
+#: src/BrowserWindow.vala:148
 msgid "_New Window"
 msgstr "_Nové okno"
 
-#: src/BrowserWindow.vala:125 src/BrowserWindow.vala:126
+#: src/BrowserWindow.vala:153 src/BrowserWindow.vala:154
 #: src/Widgets/DownloadButton.vala:100
 msgid "_Open"
 msgstr "_Otevřít"
 
-#: src/BrowserWindow.vala:128
+#: src/BrowserWindow.vala:156
 msgid "_Save"
 msgstr "_Uložit"
 
 #. TRANSLATORS _ precedes shortcut key
-#: src/BrowserWindow.vala:129 src/Widgets/DownloadButton.vala:110
+#: src/BrowserWindow.vala:157 src/Widgets/DownloadButton.vala:110
 #: src/Widgets/DownloadButton.vala:114
 msgid "_Save As"
 msgstr "_Uložit jako"
 
-#: src/BrowserWindow.vala:132
+#: src/BrowserWindow.vala:160
 msgid "_View Source"
 msgstr "_Zobrazit zdroj"
 
-#: src/BrowserWindow.vala:134
+#: src/BrowserWindow.vala:162
 msgid "Zoom In"
 msgstr "Přiblížit"
 
-#: src/BrowserWindow.vala:136
+#: src/BrowserWindow.vala:164
 msgid "Zoom Out"
 msgstr "Oddálit"
 
-#: src/BrowserWindow.vala:139
+#: src/BrowserWindow.vala:167
+msgid "_History"
+msgstr ""
+
+#: src/BrowserWindow.vala:169
 msgid "_Find In Page"
 msgstr "_Najít na stránce"
 
-#: src/BrowserWindow.vala:141
+#: src/BrowserWindow.vala:174
 msgid "_Print"
 msgstr "_Tisk"
 
-#: src/BrowserWindow.vala:143
+#: src/BrowserWindow.vala:176
 msgid "Show Downloads"
 msgstr "Zobrazit stažené"
 
-#: src/BrowserWindow.vala:156 src/Widgets/DownloadButton.vala:122
-msgid "_Cancel"
-msgstr "_Zrušit"
+#: src/BrowserWindow.vala:178
+msgid "Help"
+msgstr ""
 
-#: src/Models/Download.vala:74
+#: src/BrowserWindow.vala:180
+msgid "About Odysseus"
+msgstr ""
+
+#: src/Models/Download.vala:107
 #, c-format
 msgid ""
 "Error moving download to %s.\n"
@@ -107,27 +122,22 @@ msgstr ""
 "soubory."
 
 #. / TRANSLATORS: "%i" seconds
-#: src/Models/Download.vala:87
+#: src/Models/Download.vala:120
 #, c-format
 msgid "%is"
 msgstr "%is"
 
 #. / TRANSLATORS: "%i" minutes
-#: src/Models/Download.vala:92
+#: src/Models/Download.vala:125
 #, c-format
 msgid "%im"
 msgstr "%im"
 
 #. / TRANSLATORS: "%i" hours and "%i" minutes,
-#: src/Models/Download.vala:97
+#: src/Models/Download.vala:130
 #, c-format
 msgid "%ih %im"
 msgstr "%ih %im"
-
-#. Disallow interacting with the page while dialog is active.
-#: src/Traits/decorate/alert.vala:60
-msgid "Close the message to continue interacting with this page"
-msgstr "Zavře zprávu a pokračuje v interakci s touto stránkou"
 
 #: src/Widgets/DownloadBar.vala:34
 msgid "View all downloads"
@@ -149,57 +159,208 @@ msgstr "HOTOVO"
 msgid "Open _Automatically"
 msgstr "Otevřít _Automaticky"
 
-#: src/Widgets/WebTab.vala:79
-#, c-format
-msgid "%u matches of \"%s\" found"
-msgstr "%u výsledků z \"%s\" nalezeno"
+#: src/Widgets/DownloadButton.vala:122
+msgid "_Cancel"
+msgstr "_Zrušit"
 
-#: src/Widgets/overlays/FindToolbar.vala:45
-msgid "Find in page..."
-msgstr "Najít na stránce..."
+#: src/Widgets/WebTab.vala:93
+#, fuzzy, c-format
+msgid "%u match of \"%s\" found"
+msgid_plural "%u matches of \"%s\" found"
+msgstr[0] "%u výsledků z \"%s\" nalezeno"
+msgstr[1] "%u výsledků z \"%s\" nalezeno"
+msgstr[2] "%u výsledků z \"%s\" nalezeno"
 
-#: src/Widgets/overlays/FindToolbar.vala:87
+#: src/Widgets/WebTab.vala:240
+msgid "Press [esc] to leave fullscreen"
+msgstr ""
+
+#: src/Widgets/Chromeless.vala:24
+msgid "Web Inspector"
+msgstr ""
+
+#: src/Widgets/overlays/FindToolbar.vala:44
+msgid "Find in page…"
+msgstr "Najít na stránce…"
+
+#: src/Widgets/overlays/FindToolbar.vala:86
 msgid "Find previous match"
 msgstr "Najít předchozí položku"
 
-#: src/Widgets/overlays/FindToolbar.vala:99
+#: src/Widgets/overlays/FindToolbar.vala:98
 msgid "View search options"
 msgstr "Zobrazit možnosti vyhledávání"
 
-#: src/Widgets/overlays/FindToolbar.vala:129
+#: src/Widgets/overlays/FindToolbar.vala:128
 msgid "Match Uppercase"
 msgstr "Hledat velká písmena"
 
-#: src/Widgets/overlays/FindToolbar.vala:136
+#: src/Widgets/overlays/FindToolbar.vala:135
 msgid "Ignore Uppercase"
 msgstr "Ignorovat velikost písmen"
 
-#: src/Widgets/overlays/FindToolbar.vala:143
+#: src/Widgets/overlays/FindToolbar.vala:142
 msgid "Auto"
 msgstr "Auto"
 
-#: src/Widgets/overlays/FindToolbar.vala:153
+#: src/Widgets/overlays/FindToolbar.vala:152
 msgid "Cyclic Search"
 msgstr "Opakovat vyhledávání"
 
-#: src/Widgets/overlays/FindToolbar.vala:160
+#: src/Widgets/overlays/FindToolbar.vala:159
 msgid "Match Word Start"
 msgstr "Hledat začátek slova"
 
 #. If the user doesn't know what CamelCase means,
 #. they probably don't want this option. (note the hint in it's name)
-#: src/Widgets/overlays/FindToolbar.vala:168
+#: src/Widgets/overlays/FindToolbar.vala:167
 msgid "Match CamelCase"
 msgstr "Hledat CamelCase"
 
-#: src/Traits/download-progress.vala:47
+#: src/Widgets/overlays/InfoContainer.vala:49
+#: src/Widgets/overlays/InfoContainer.vala:65
+msgid "OK"
+msgstr ""
+
+#: src/Widgets/overlays/InfoContainer.vala:50
+#: src/Widgets/overlays/InfoContainer.vala:65
+#, fuzzy
+msgid "Cancel"
+msgstr "_Zrušit"
+
+#: src/Traits/download-progress.vala:58
 msgid "Web Download Completed"
 msgstr "Stahování dokončeno"
 
 #: src/Traits/download-window.vala:27
 msgid "Downloads Are In Progress…"
-msgstr "Stahování probíhá..."
+msgstr "Stahování probíhá…"
 
 #: src/Traits/download-window.vala:34
 msgid "Click a download to cancel or alter it"
 msgstr "Klikněte na stahování pro zrušení či úpravu"
+
+#: src/Traits/decorate/alert.vala:40
+msgid "Leave"
+msgstr ""
+
+#: src/Traits/decorate/alert.vala:40
+msgid "Stay"
+msgstr ""
+
+#. Disallow interacting with the page while dialog is active.
+#: src/Traits/decorate/alert.vala:58
+msgid "Close the message to continue interacting with this page"
+msgstr "Zavře zprávu a pokračuje v interakci s touto stránkou"
+
+#: src/Traits/decorate/permit.vala:30
+msgid "Allow"
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:30
+msgid "Deny"
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:34
+msgid "This page wants to know where you currently are."
+msgstr ""
+
+#. FIXME non-standard.
+#: src/Traits/decorate/permit.vala:37
+msgid "This page wants the ability to show you notifications."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:44
+msgid "This page wants to watch and listen to you."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:47
+msgid "This page wants to listen to you."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:50
+msgid "This page wants to watch you."
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:57
+msgid "Additional software is required to play media on this page:"
+msgstr ""
+
+#: src/Traits/decorate/permit.vala:59
+msgid "Install"
+msgstr ""
+
+#: src/Traits/navigate/errors.vala:31
+msgid "Click to toggle error message."
+msgstr ""
+
+#. If we're not viewing alternate HTML under this schema,
+#. close any tabs that have persisted.
+#: src/Traits/navigate/viewsource.vala:70
+msgid "Please go through the \"View Source\" menu item."
+msgstr ""
+
+#: src/Traits/status/https.vala:30
+#, c-format
+msgid "Your connection to %s is secure from eavesdroppers,"
+msgstr ""
+
+#: src/Traits/status/https.vala:31
+msgid ""
+"Your activity can be seen by the admins and hosting companies for this site."
+msgstr ""
+
+#. FIXME provide more information about the error.
+#: src/Traits/status/https.vala:39
+msgid "Certificate validation failed! This site may be an imposter."
+msgstr ""
+
+#: src/Traits/status/https.vala:43
+msgid "Unknown certificate authority"
+msgstr ""
+
+#: src/Traits/status/https.vala:45
+msgid "Wrong site named in certificate"
+msgstr ""
+
+#: src/Traits/status/https.vala:47
+msgid "Not yet active certificate"
+msgstr ""
+
+#: src/Traits/status/https.vala:49
+msgid "Expired certificate"
+msgstr ""
+
+#: src/Traits/status/https.vala:51
+msgid "Known bad certificate"
+msgstr ""
+
+#: src/Traits/status/https.vala:53
+msgid "Broken encryption scheme."
+msgstr ""
+
+#: src/Traits/status/https.vala:55
+msgid "Unknown error…"
+msgstr ""
+
+#: src/Traits/status/https.vala:98
+#, c-format
+msgid "Expires %s"
+msgstr ""
+
+#: src/Traits/status/local.vala:32
+msgid "This page was loaded from your computer. Noone else knows you're here."
+msgstr ""
+
+#: src/Traits/status/webfeed.vala:33
+msgid "Subscribe to webfeeds"
+msgstr ""
+
+#: src/Traits/status/webfeed.vala:154
+#, c-format
+msgid "Subscribe via %s"
+msgstr ""
+
+#: src/Traits/status/webfeed.vala:166
+msgid "Install a feedreader to subscribe"
+msgstr ""
