@@ -16,7 +16,7 @@ Vous avez épinglé ceci ici
 {% msg /home:81 %}
 Pinned
 {% trans %}
-
+Epinglé
 {% endmsg %}
 {% msg /home:84 %}
 Frequently visited
@@ -31,12 +31,12 @@ Historique
 {% msg /home:89 %}
 Recommended by Adrian Cochrane
 {% trans %}
-Recommendé par Adrian Cochrane
+Recommandé par Adrian Cochrane
 {% endmsg %}
 {% msg /home:89 %}
 Recommended
 {% trans %}
-
+Recommandé
 {% endmsg %}
 {% msg /home:145 %}
 Browse faster with
@@ -56,13 +56,13 @@ Connaissez-vous une autre langue ? Alors rendez service à vos amis et <a href="
 Don't know where to go? Here's some
         <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>.
 {% trans %}
-Vous êtes perdu ? Voici quelques <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>
+Vous êtes perdu ? Voici quelques <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommandations</a>
 {% endmsg %}
 {% msg /home:156 %}
 Want to help
         <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>?
 {% trans %}
-Envie de contribuer <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">rendre Odysseus encore meilleur</a> ?
+Envie de contribuer à <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">rendre Odysseus encore meilleur</a> ?
 {% endmsg %}
 {% msg /home:159 %}
 Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>.
@@ -78,19 +78,19 @@ Conçu et développé avec <a href="odysseus:credits">aide</a> & ♥ par Adrian 
 {% msg /home:170 %}
 donating
 {% trans %}
-
+donner
 {% endmsg %}
 {% msg /home:172 %}
 A {% donate-link %}  
       to cover my time and effort would be greatly appreciated.
 {% trans %}
-
+      pour couvrir mon temps et effort ce serait avec plaisir.
 {% endmsg %}
 {% msg /home:175 %}
 History search not powerful enough for you?
         I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>!
 {% trans %}
-La recherche dans l'hitorique n'est pas assez puissante pour vous ? <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">Je m'en doutais<a> !
+La recherche via l'hitorique n'est pas assez puissante pour vous ? <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">Je m'en doutais<a> !
 {% endmsg %}
 {% msg /home:178 %}
 While Odysseus does store information about your browsing,
@@ -127,68 +127,68 @@ Politique de confidentialité
 {% msg /privacy:7 %}
 Your Privacy & Odysseus
 {% trans %}
-
+Votre confidentialité et Odysseus
 {% endmsg %}
 {% msg /privacy:8 %}
 Your browser history is extremely personal information regarding your interests.
     And as such you deserve to have full control over who other than you can see it if at all,
     and what aspects of it they can see.
 {% trans %}
-
+Votre historique de navigation comprend des informations très personnelles qui ne concernent que vous. Et en tant que tel, vous méritez d'avoir un contrôle total sur qui d'autre que vous peut le voir, le cas échéant, et quels aspects de celui-ci ils peuvent voir.
 {% endmsg %}
 {% msg /privacy:12 %}
 Currently the privacy situation of Odysseus is not indifferent from that
     of other browsers, but it's lead developer is keen to improve the situation.
     And still it's useful for you to be aware of it.
 {% trans %}
-
+Actuellement, la confidentialité d'Odysseus n'est pas indifférente à celle des autres navigateurs, mais son développeur principal est soucieux d'améliorer la situation. Et c'est quand même utile que vous en soyez conscient.
 {% endmsg %}
 {% msg /privacy:16 %}
 What information do we share with sites you visit?
 {% trans %}
-
+Quelles informations est-ce que nous partageons avec le sites que vous visitez ?
 {% endmsg %}
 {% msg /privacy:19 %}
 The "IP Address" which currently identifies your computer or network on the Internet.
 {% trans %}
-
+L'adresse IP qui identifie en ce moment votre ordinateur sur le réseau et sur Internet.
 {% endmsg %}
 {% msg /privacy:20 %}
 You can hide this information using tools like <a href="https://www.torproject.org/">Tor</a>
         (though it isn't as effective as originally thought) and
         <a href="https://www.privateinternetaccess.com/">VPN</a>s.
 {% trans %}
-
+Vous pouvez masquer cette information en utilisants des outils tels que <a href="https://www.torproject.org/">Tor</a> (bien qu'il ne soit pas aussi efficace qu'on le pensait à l'origine) ou un <a href="https://www.privateinternetaccess.com/">VPN</a>s.
 {% endmsg %}
 {% msg /privacy:24 %}
 The pages on that site you visit.
 {% trans %}
-
+Les pages que vous visitez sur ce site.
 {% endmsg %}
 {% msg /privacy:25 %}
 When you visited those pages (implicitly).
 {% trans %}
-
+Le moment auquel vous avez visité ces pages (implicitement).
 {% endmsg %}
 {% msg /privacy:26 %}
 Which page you came from.
 {% trans %}
-
+De quelle page vous venez.
 {% endmsg %}
 {% msg /privacy:27 %}
 The fact you use Odysseus and the Linux kernel.
 {% trans %}
-
+Le fait que vous utilisiez Odysseus et un noyau Linux.
 {% endmsg %}
 {% msg /privacy:28 %}
 The languages you speak.
 {% trans %}
-
+La langue que vous parlez.
 {% endmsg %}
 {% msg /privacy:29 %}
 Any data ("cookies") it told us to store for it.
 {% trans %}
-
+Toute sorte de "cookies" de données stockées.
 {% endmsg %}
 {% msg /privacy:32 %}
 If you connect to the site insecurely (via <code>HTTP</code> rather than <code>HTTPS</code>),
@@ -196,7 +196,7 @@ If you connect to the site insecurely (via <code>HTTP</code> rather than <code>H
     Odysseus, other browsers, the <a href="https://www.eff.org/encrypt-the-web">EFF</a>,
     and others are working on closing this leak.
 {% trans %}
-
+Si vous vous connectez au site de manière non sécurisée (via <code>HTTP</code> plutôt que <code>HTTPS</code>), toute personne sur le réseau entre vous et le site que vous visitez peut également voir ces informations. Odysseus, d'autres navigateurs, le <a href="https://www.eff.org/encrypt-the-web">EFF</a>, et d'autres travaillent sur la fermeture de cette fuite.
 {% endmsg %}
 {% msg /privacy:37 %}
 It's worth noting that HTTPS still leaves room for improving privacy, as the
@@ -207,53 +207,53 @@ It's worth noting that HTTPS still leaves room for improving privacy, as the
     to you. This will frequently include <a href="https://www.amazon.com/">Amazon</a>
     and/or <a href="https://www.cloudflare.com/">Cloudflare</a>.
 {% trans %}
-
+Il convient de noter que le protocole HTTPS laisse encore de la place à l'amélioration de la protection de la vie privée, étant donné que les sites avec lesquels vous interagissez obtiennent toujours toutes les informations listées ci-dessus et parce que les sites Web que vous visitez sont toujours (à peu près) visibles pour quiconque entre vous et le site Web. De plus, ces informations peuvent être/seront visibles pour tout le monde et pour les entreprises qui ont été embauchées par les exploitants du site pour les aider à vous fournir leurs services. Il s'agit souvent de <a href="https://www.amazon.com/">Amazon</a> et/ou de <a href="https://www.cloudflare.com/">Cloudflare</a>.
 {% endmsg %}
 {% msg /privacy:47 %}
 Furthermore sites can provide programs for Odysseus to run,
     through which it can access:
 {% trans %}
-
+En outre, les sites peuvent fournir à Odysseus des programmes auxquels il peut accéder :
 {% endmsg %}
 {% msg /privacy:50 %}
 Any interaction you've had with the site.
 {% trans %}
-
+Toute interaction que vous avez avec le site.
 {% endmsg %}
 {% msg /privacy:51 %}
 The screenspace available to it.
 {% trans %}
-
+L'espace écran à sa disposition.
 {% endmsg %}
 {% msg /privacy:52 %}
 Whether you're actively connected to the Internet.
 {% trans %}
-
+Si vous êtes bien connecté à Internet.
 {% endmsg %}
 {% msg /privacy:53 %}
 Further information it tells us to store for it.
 {% trans %}
-
+Plus d'informatioons que nous stockons pour eux.
 {% endmsg %}
 {% msg /privacy:55 %}
 And with your explicit permission…
 {% trans %}
-
+Et avec votre autorisation explicite…
 {% endmsg %}
 {% msg /privacy:57 %}
 Your current location.
 {% trans %}
-
+Votre position actuelle.
 {% endmsg %}
 {% msg /privacy:58 %}
 Your camera.
 {% trans %}
-
+Votre webcam.
 {% endmsg %}
 {% msg /privacy:59 %}
 Your microphone.
 {% trans %}
-
+Votre micro.
 {% endmsg %}
 {% msg /privacy:64 %}
 Furthermore the sites you visit may incorporate third-party resources, all
@@ -261,76 +261,76 @@ Furthermore the sites you visit may incorporate third-party resources, all
     data is <a href="https://webkit.org/blog/8142/intelligent-tracking-prevention-1-1/">severely</a>
     <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">restricted</a>.
 {% trans %}
-
+De plus, les sites que vous visitez peuvent incorporer des ressources de tierces parties, qui recevront toutes des informations similaires. Cependant, leur capacité à stocker des données est <a href="https://webkit.org/blog/8142/intelligent-tracking-prevention-1-1/">sérieusement</a> <a href="https://webkit.org/blog/7675/intelligent-tracking-prevention/">limitée</a>.
 {% endmsg %}
 {% msg /privacy:69 %}
 What other information do we share with third parties?
 {% trans %}
-
+Quelles autres informations nous partageons avec des tiers ?
 {% endmsg %}
 {% msg /privacy:72 %}
 Any searches entered into the addressbar
-        are sent to <a href="https://ddg.gg/">DuckDuckGo</a> for your convenience.
+are sent to <a href="https://ddg.gg/">DuckDuckGo</a> for your convenience.
         (<a href="https://duckduckgo.com/privacy">Privacy Policy</a>)
 {% trans %}
-
+Toute recherche depuis la barre d'adresse est envoyée à <a href="https://ddg.gg/">DuckDuckGo</a> pour votre confort. (<a href="https://duckduckgo.com/privacy">Politique de confidentialité</a>)
 {% endmsg %}
 {% msg /privacy:75 %}
 A search here means anything entered into the addressbar that contains
         a space. So if you don't want to search DuckDuckGo don't type space there.
 {% trans %}
-
+Une recherche signifie ici tout ce qui est entré dans la barre d'adresse et qui contient un espace. Donc si vous ne voulez pas chercher DuckDuckGo ne tapez pas d'espace ici.
 {% endmsg %}
 {% msg /privacy:81 %}
 What information do we store?
 {% trans %}
-
+Quelles informations stockons-nous ?
 {% endmsg %}
 {% msg /privacy:82 %}
 The following information is saved locally on your computer
     (at <code>~/.config/com.github.alcinnz.odysseus</code>) in addition to what
     websites tell us to store on their behalf:
 {% trans %}
-
+Les informations suvantes sont enregistrées localement sur votre ordinateur (à <code>~/.config/com.github.alcinnz.odysseus</code>) en plus de ce que nous stockons au nom des sites Web :
 {% endmsg %}
 {% msg /privacy:86 %}
 The icons representing sites you've visited.
 {% trans %}
-
+Les icônes représentant les sites que vous avez visité.
 {% endmsg %}
 {% msg /privacy:87 %}
 Copies of visited pages to avoid redownloading them.
 {% trans %}
-
+Des copies des pages visitées pour vous éviter de les retélécharger.
 {% endmsg %}
 {% msg /privacy:89 %}
 A list of sites to <em>always</em> download over HTTPS.
 {% trans %}
-
+Une liste de sites à <em>toujours<em> télécharger en HTTPS.
 {% endmsg %}
 {% msg /privacy:90 %}
 There's some
         <a href="https://webkit.org/blog/8146/protecting-against-hsts-abuse/">interesting compromises</a> made to prevent
         sites (a.k.a. advertisers) from misusing it as a form of data storage.
 {% trans %}
-
+Il y a des <a href="https://webkit.org/blog/8146/protecting-against-hsts-abuse/">interesting compromises</a> faits pour empêcher les sites (aussi appelés annonceurs) d'en faire un mauvais usage dans le but de stocker des données.
 {% endmsg %}
 {% msg /privacy:94 %}
 Your browser history.
 {% trans %}
-
+Votre historique de navigation.
 {% endmsg %}
 {% msg /privacy:95 %}
 The tabs and windows you currently have open in Odysseus.
 {% trans %}
-
+Les onglets et fenêtres que vous avez actuellement ouvert dans Odysseus.
 {% endmsg %}
 {% msg /privacy:98 %}
 Odysseus keeps this information safe from any sites you visit,
     and never shares it with any third parties or
     even the Odysseus developers themselves.
 {% trans %}
-
+Odysseus garde ces informations à l'écart de tous les sites que vous visitez et ne les partage jamais avec de tierces parties ou même les devéloppeurs d'Odysseus eux-mêmes.
 {% endmsg %}
 {% msg /privacy:102 %}
 However it would be
@@ -338,12 +338,12 @@ However it would be
     paranoid</a> to try and protect this information from any malware on your
     computer, as who knows what that malware might be doing?
 {% trans %}
-
+Cependant, il serait <a href="https://www.omgubuntu.co.uk/2012/08/is-zeitgeist-spying-on-you">complètement paranoïaque</a> d'essayer de protéger ces informations de tout autre logiciel malveillant sur votre ordinateur, car qui sait ce que ce logiciel pourrait faire ?
 {% endmsg %}
 {% msg /privacy:108 %}
 See a correction to make? Please <a href="https://github.com/alcinnz/Odysseus/issues/">report it</a>.
 {% trans %}
-
+Vous pensez avoir une correction à apporter ? Veuillez <a href="https://github.com/alcinnz/Odysseus/issues/">le signaler</a>.
 {% endmsg %}
 {% msg /INVALID-FORM:4 /errors/405:4 %}
 INVALID FORM SUBMISSION
@@ -463,22 +463,22 @@ La situation de la vie privée concernant Odysseus.
 {% msg /NOT-FOUND:30 %}
 Compatible Feed Readers
 {% trans %}
-
+Lecteurs de flux compatibles
 {% endmsg %}
 {% msg /NOT-FOUND:31 %}
 Lists all compatible feedreaders available in your package repositories.
 {% trans %}
-
+Liste tous les lecteurs de flux compatible dans votre dépôt de paquets.
 {% endmsg %}
 {% msg /NOT-FOUND:32 %}
 Compatible Apps
 {% trans %}
-
+Applications compatibles
 {% endmsg %}
 {% msg /NOT-FOUND:35 %}
 Lists all apps in your package repository capable of opening a specific MIME type.
 {% trans %}
-
+Liste toutes les applications de votre dépôt de paquets capables d'ouvrir ce type MIME spécificque.
 {% endmsg %}
 {% msg /SERVER-ERROR:9 %}
 Internal Error
@@ -508,7 +508,7 @@ Suggestions de fonctionnalités et rapports de bugs
 {% msg /credits:18 %}
 And more…
 {% trans %}
-
+Et plus…
 {% endmsg %}
 {% msg /credits:19 %}
 Translation
@@ -518,12 +518,12 @@ Traduction
 {% msg /credits:27 %}
 Infrastructure
 {% trans %}
-
+Infrastructure
 {% endmsg %}
 {% msg /credits:30 %}
 Lead Developer/everything else
 {% trans %}
-
+Développeur principal/tout le reste
 {% endmsg %}
 {% msg /credits:33 %}
 External Projects
@@ -540,7 +540,7 @@ Sans ces projets, Odysseus n'existerait pas, ce serait trop difficile à dévelo
 {% msg /credits:40 /credits:41 %}
 GNOME Web's logo
 {% trans %}
-
+Logo de GNOME Web
 {% endmsg %}
 {% msg /credits:46 %}
 And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
@@ -666,7 +666,7 @@ Veuillez <a href="javascript:history.back()">revenir en arrière</a> et réessay
 {% msg /errors/418:4 %}
 I'm A Teapot
 {% trans %}
-
+Je suis une théière
 {% endmsg %}
 {% msg /errors/418:12 %}
 {# Easter-egg 418: verse 1 of "I'm A Teapot" nursery rhyme #} t t
@@ -917,7 +917,7 @@ Les liens {% urischema %}    ne peuvent être ouverts avec aucune application su
 {% msg /errors/schema:23 %}
 You must install a compatible app before opening <a href="{{ url }}  ">this link</a>.
 {% trans %}
-
+Vous devez d'abord installer une application compatible avant de pouvoir ouvrir <a href="{{ url }}  ">ce lien</a>.
 {% endmsg %}
 {% msg /errors/dns:11 %}
 Or it could be simply that <em>this site does not exist</em>.
@@ -1007,32 +1007,32 @@ Pas d'application compatible trouvée dans {{ pacman }}    .
 {% msg /viewers/application/rss+xml:31 %}
 Updated
 {% trans %}
-
+Mis à jour
 {% endmsg %}
 {% msg /viewers/application/rss+xml:36 %}
 Contributors
 {% trans %}
-
+Contributeurs
 {% endmsg %}
 {% msg /viewers/application/rss+xml:62 %}
 Authors
 {% trans %}
-
+Autheurs
 {% endmsg %}
 {% msg /viewers/application/rss+xml:70 %}
 Tags
 {% trans %}
-
+Étiquettes
 {% endmsg %}
 {% msg /viewers/application/rss+xml:101 %}
 Load more…
 {% trans %}
-
+Charger plus…
 {% endmsg %}
 {% msg /viewers/application/rss+xml:108 %}
 No more entries
 {% trans %}
-
+Pas d'autres entrées
 {% endmsg %}
 {% msg /viewers/application/rss+xml:109 %}
 {# Shorthand for "no more entries" #} s sFin.
@@ -1042,10 +1042,10 @@ No more entries
 {% msg /viewers/application/rss+xml:134 %}
 Editor
 {% trans %}
-
+Éditeurs
 {% endmsg %}
 {% msg /viewers/application/rss+xml:137 %}
 Web Master
 {% trans %}
-
+Webmasters
 {% endmsg %}
