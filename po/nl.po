@@ -1,25 +1,29 @@
-# Dutch translations of the com.github.alcinnz.odysseus package.
-# Copyright (C) 2019 THE com.github.alcinnz.odysseus'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.alcinnz.odysseus package.
-# Heimen Stoffels <vistausss@outlook.com>, 2019.
-#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Heimen Stoffels <vistausss@outlook.com>, 2019
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-09 23:26+0200\n"
-"PO-Revision-Date: 2019-03-19 17:37+0100\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
-"Language-Team: Dutch <vistausss@outlook.com>\n"
-"Language: nl\n"
+"PO-Revision-Date: 2017-12-16 18:41+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>, 2019\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/none-483/teams/75521/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/BrowserWindow.vala:84
 msgid "Make Default"
-msgstr "Instellen als standaardbrowser"
+msgstr "Instellen als standaard"
 
 #: src/BrowserWindow.vala:86
 msgid "Odysseus is not your default browser."
@@ -27,7 +31,7 @@ msgstr "Odysseus is niet je standaardbrowser."
 
 #: src/BrowserWindow.vala:101
 msgid "Go to previously viewed page"
-msgstr "Ga naar de vorige pagina"
+msgstr "Ga terug naar de vorige pagina"
 
 #: src/BrowserWindow.vala:109
 msgid "Go to next viewed page"
@@ -35,7 +39,7 @@ msgstr "Ga naar de volgende pagina"
 
 #: src/BrowserWindow.vala:118
 msgid "Load this page from the website again"
-msgstr "Herlaad deze pagina helemaal opnieuw"
+msgstr "Deze pagina opnieuw laden"
 
 #: src/BrowserWindow.vala:120
 msgid "Ignore cache"
@@ -43,7 +47,7 @@ msgstr "Cache negeren"
 
 #: src/BrowserWindow.vala:123
 msgid "Stop loading this page"
-msgstr "Stoppen met laden"
+msgstr "Stoppen met laden van deze pagina"
 
 #: src/BrowserWindow.vala:125
 msgid "Stop And Reload"
@@ -74,11 +78,11 @@ msgstr "Op_slaan"
 #: src/BrowserWindow.vala:157 src/Widgets/DownloadButton.vala:110
 #: src/Widgets/DownloadButton.vala:114
 msgid "_Save As"
-msgstr "Opslaan al_s"
+msgstr "Op_slaan als"
 
 #: src/BrowserWindow.vala:160
 msgid "_View Source"
-msgstr "_Broncode bekijken"
+msgstr "Broncode to_nen"
 
 #: src/BrowserWindow.vala:162
 msgid "Zoom In"
@@ -94,11 +98,11 @@ msgstr "Gesc_hiedenis"
 
 #: src/BrowserWindow.vala:169
 msgid "_Find In Page"
-msgstr "_Zoeken op pagina"
+msgstr "Zoeken op p_agina"
 
 #: src/BrowserWindow.vala:174
 msgid "_Print"
-msgstr "_Afdrukken"
+msgstr "Af_drukken"
 
 #: src/BrowserWindow.vala:176
 msgid "Show Downloads"
@@ -106,7 +110,7 @@ msgstr "Downloads tonen"
 
 #: src/BrowserWindow.vala:178
 msgid "Help"
-msgstr ""
+msgstr "Hulp"
 
 #: src/BrowserWindow.vala:180
 msgid "About Odysseus"
@@ -119,7 +123,7 @@ msgid ""
 "It has been left in your Downloads folder"
 msgstr ""
 "Kan download niet verplaatsen naar %s.\n"
-"Het bestand is achtergelaten in je Downloads-map"
+"De download is achtergebleven in je Downloads-map."
 
 #. / TRANSLATORS: "%i" seconds
 #: src/Models/Download.vala:120
@@ -137,7 +141,7 @@ msgstr "%im"
 #: src/Models/Download.vala:130
 #, c-format
 msgid "%ih %im"
-msgstr "%iu %im"
+msgstr "%iu%im"
 
 #: src/Widgets/DownloadBar.vala:34
 msgid "View all downloads"
@@ -145,15 +149,15 @@ msgstr "Alle downloads tonen"
 
 #: src/Widgets/DownloadBar.vala:36
 msgid "Close downloads bar"
-msgstr "Downloadsbalk sluiten"
+msgstr "Downloadbalk sluiten"
 
 #: src/Widgets/DownloadButton.vala:53
 msgid "[Download]"
-msgstr "[Download]"
+msgstr "[Downloaden]"
 
 #: src/Widgets/DownloadButton.vala:93
 msgid "DONE"
-msgstr "AFGEROND"
+msgstr "VOLTOOID"
 
 #: src/Widgets/DownloadButton.vala:105
 msgid "Open _Automatically"
@@ -167,8 +171,8 @@ msgstr "_Annuleren"
 #, c-format
 msgid "%u match of \"%s\" found"
 msgid_plural "%u matches of \"%s\" found"
-msgstr[0] "%u overeenkomst gevonden voor \"%s\""
-msgstr[1] "%u overeenkomsten gevonden voor \"%s\""
+msgstr[0] "\"%s gevonden; %u overeenkomst"
+msgstr[1] "\"%s\" gevonden; %u overeenkomsten"
 
 #: src/Widgets/WebTab.vala:240
 msgid "Press [esc] to leave fullscreen"
@@ -176,11 +180,11 @@ msgstr "Druk op [esc] om volledig scherm af te sluiten"
 
 #: src/Widgets/Chromeless.vala:24
 msgid "Web Inspector"
-msgstr "Webinspecteur"
+msgstr "Webinspectie"
 
 #: src/Widgets/overlays/FindToolbar.vala:44
 msgid "Find in page…"
-msgstr "Zoeken op pagina…"
+msgstr "Zoeken op pagina..."
 
 #: src/Widgets/overlays/FindToolbar.vala:86
 msgid "Find previous match"
@@ -192,7 +196,7 @@ msgstr "Zoekopties tonen"
 
 #: src/Widgets/overlays/FindToolbar.vala:128
 msgid "Match Uppercase"
-msgstr "Hoofdlettergevoelig"
+msgstr "Hoofdlettergebruik moet overeenkomen"
 
 #: src/Widgets/overlays/FindToolbar.vala:135
 msgid "Ignore Uppercase"
@@ -204,17 +208,17 @@ msgstr "Automatisch"
 
 #: src/Widgets/overlays/FindToolbar.vala:152
 msgid "Cyclic Search"
-msgstr "Doorlopend zoeken"
+msgstr "Cyclisch zoeken"
 
 #: src/Widgets/overlays/FindToolbar.vala:159
 msgid "Match Word Start"
-msgstr "Overeenkomen met begin van woord"
+msgstr "Woordbegin moet overeen komen"
 
 #. If the user doesn't know what CamelCase means,
 #. they probably don't want this option. (note the hint in it's name)
 #: src/Widgets/overlays/FindToolbar.vala:167
 msgid "Match CamelCase"
-msgstr "Overeenkomen met CamelCase"
+msgstr "Came|Gebruik moet overeenkomen"
 
 #: src/Widgets/overlays/InfoContainer.vala:49
 #: src/Widgets/overlays/InfoContainer.vala:65
@@ -228,15 +232,15 @@ msgstr "Annuleren"
 
 #: src/Traits/download-progress.vala:58
 msgid "Web Download Completed"
-msgstr "Download afgerond"
+msgstr "Webdownload voltooid"
 
 #: src/Traits/download-window.vala:27
 msgid "Downloads Are In Progress…"
-msgstr "Bezig met downloaden…"
+msgstr "Er zijn actieve downloads..."
 
 #: src/Traits/download-window.vala:34
 msgid "Click a download to cancel or alter it"
-msgstr "Klik op een download om deze af te breken of aan te passen"
+msgstr "Klik op een download om deze te annuleren of aan te passen"
 
 #: src/Traits/decorate/alert.vala:40
 msgid "Leave"
@@ -249,7 +253,7 @@ msgstr "Blijven"
 #. Disallow interacting with the page while dialog is active.
 #: src/Traits/decorate/alert.vala:58
 msgid "Close the message to continue interacting with this page"
-msgstr "Sluit dit bericht om de pagina te bedienen"
+msgstr "Sluit het bericht om door te gaan met de pagina-interactie"
 
 #: src/Traits/decorate/permit.vala:30
 msgid "Allow"
@@ -257,7 +261,7 @@ msgstr "Toestaan"
 
 #: src/Traits/decorate/permit.vala:30
 msgid "Deny"
-msgstr "Afwijzen"
+msgstr "Weigeren"
 
 #: src/Traits/decorate/permit.vala:34
 msgid "This page wants to know where you currently are."
@@ -266,23 +270,23 @@ msgstr "Deze pagina wil je huidige locatie opvragen."
 #. FIXME non-standard.
 #: src/Traits/decorate/permit.vala:37
 msgid "This page wants the ability to show you notifications."
-msgstr "Deze pagina wil meldingen kunnen tonen."
+msgstr "Deze pagina wil je meldingen tonen."
 
 #: src/Traits/decorate/permit.vala:44
 msgid "This page wants to watch and listen to you."
-msgstr "Deze pagina wil je zien en horen."
+msgstr "Deze pagina wil je bekijken en beluisteren."
 
 #: src/Traits/decorate/permit.vala:47
 msgid "This page wants to listen to you."
-msgstr "Deze pagina wil je horen."
+msgstr "Deze pagina wil je beluisteren."
 
 #: src/Traits/decorate/permit.vala:50
 msgid "This page wants to watch you."
-msgstr "Deze pagina wil je zien."
+msgstr "Deze pagina wil je bekijken."
 
 #: src/Traits/decorate/permit.vala:57
 msgid "Additional software is required to play media on this page:"
-msgstr "Extra software benodigd om de media op deze pagina af te spelen:"
+msgstr "Er is extra software nodig om media op deze pagina af te spelen:"
 
 #: src/Traits/decorate/permit.vala:59
 msgid "Install"
@@ -290,75 +294,78 @@ msgstr "Installeren"
 
 #: src/Traits/navigate/errors.vala:31
 msgid "Click to toggle error message."
-msgstr ""
+msgstr "Klik om foutmelding te tonen/verbergen"
 
 #. If we're not viewing alternate HTML under this schema,
 #. close any tabs that have persisted.
 #: src/Traits/navigate/viewsource.vala:70
 msgid "Please go through the \"View Source\" menu item."
-msgstr "Ga naar het menu-item 'Broncode bekijken'."
+msgstr "Ga naar het menu-item \"Broncode tonen\"."
 
 #: src/Traits/status/https.vala:30
 #, c-format
 msgid "Your connection to %s is secure from eavesdroppers,"
-msgstr ""
+msgstr "Je verbinding met %s is afgeschermd,"
 
 #: src/Traits/status/https.vala:31
 msgid ""
 "Your activity can be seen by the admins and hosting companies for this site."
 msgstr ""
+"Je activiteit kan worden bekeken door de beheerders en hostingbedrijven van "
+"deze site."
 
 #. FIXME provide more information about the error.
 #: src/Traits/status/https.vala:39
 msgid "Certificate validation failed! This site may be an imposter."
-msgstr ""
+msgstr "Certificaatvalidering mislukt! Mogelijk is deze site nep."
 
 #: src/Traits/status/https.vala:43
 msgid "Unknown certificate authority"
-msgstr ""
+msgstr "Onbekende certificaatautoriteit"
 
 #: src/Traits/status/https.vala:45
 msgid "Wrong site named in certificate"
-msgstr ""
+msgstr "Onbekende site vermeld op certificaat"
 
 #: src/Traits/status/https.vala:47
 msgid "Not yet active certificate"
-msgstr ""
+msgstr "Nog geen actief certificaat"
 
 #: src/Traits/status/https.vala:49
 msgid "Expired certificate"
-msgstr ""
+msgstr "Verlopen certificaat"
 
 #: src/Traits/status/https.vala:51
 msgid "Known bad certificate"
-msgstr ""
+msgstr "Erkend slecht certificaat"
 
 #: src/Traits/status/https.vala:53
 msgid "Broken encryption scheme."
-msgstr ""
+msgstr "Versleutelingsmechanisme werkt niet"
 
 #: src/Traits/status/https.vala:55
 msgid "Unknown error…"
-msgstr ""
+msgstr "Onbekende fout..."
 
 #: src/Traits/status/https.vala:98
 #, c-format
 msgid "Expires %s"
-msgstr ""
+msgstr "Verloopt op %s"
 
 #: src/Traits/status/local.vala:32
 msgid "This page was loaded from your computer. Noone else knows you're here."
 msgstr ""
+"Deze pagina is geopend vanaf je computer. Nieman weet dat je hier bent."
 
 #: src/Traits/status/webfeed.vala:33
 msgid "Subscribe to webfeeds"
-msgstr ""
+msgstr "Abonneren op webfeeds"
 
 #: src/Traits/status/webfeed.vala:154
 #, c-format
 msgid "Subscribe via %s"
-msgstr ""
+msgstr "Abonneren via %s"
 
 #: src/Traits/status/webfeed.vala:166
 msgid "Install a feedreader to subscribe"
-msgstr ""
+msgstr "Als je je wilt abonneren, installeer dan een feedlezer"
