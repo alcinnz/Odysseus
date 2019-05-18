@@ -25,7 +25,7 @@ At the same time Odysseus pulls together the same SQLite database, web-APIs, and
 Building
 ----------
 
-First ensure Git, HTML XML Utils, Meson, Ninja, and the Vala compiler are installed, along with:
+First ensure Git, W3C's HTML XML Utils (optional), Meson, Ninja, and the Vala compiler are installed, along with:
 
 * GTK+ 3
 * [Granite](https://github.com/elementary/granite)
