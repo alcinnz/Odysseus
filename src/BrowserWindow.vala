@@ -98,22 +98,29 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
     }
 
     private void build_toolbar(Header.HeaderBarWithMenus tools) {
-        var back = tools.add_item_left("go-previous", _("Go to previously viewed page"),
+        var back = tools.build_tool_item("go-previous", _("Go to previously viewed page"),
                 Gdk.Key.comma, () => web.go_back(), (menu) => {
             web.get_back_forward_list().get_back_list().@foreach((item) => {
                 var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
                 favicon_for_menuitem.begin(opt, item);
             });
-        }, true);
+        }, Gdk.ModifierType.CONTROL_MASK, true);
         tabs.bind_property("can-go-back", back, "sensitive", BindingFlags.SYNC_CREATE);
-        var forward = tools.add_item_left("go-next", _("Go to next viewed page"),
+        var forward = tools.build_tool_item("go-next", _("Go to next viewed page"),
                 Gdk.Key.period, () => web.go_forward(), (menu) => {
             web.get_back_forward_list().get_forward_list().@foreach((item) => {
                 var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
                 favicon_for_menuitem.begin(opt, item);
             });
-        }, true);
+        }, Gdk.ModifierType.CONTROL_MASK, true);
         tabs.bind_property("can-go-forward", forward, "sensitive", BindingFlags.SYNC_CREATE);
+        // For themes where this is meaningful, has no impact on elementary OS.
+        var tab_history = new Gtk.Grid();
+        tab_history.orientation = Gtk.Orientation.HORIZONTAL;
+        tab_history.get_style_context().add_class("linked");
+        tab_history.add(back);
+        tab_history.add(forward);
+        tools.pack_start(tab_history);
 
         var reload = tools.build_tool_item("view-refresh", _("Load this page from the website again"),
                 Gdk.Key.r, () => web.reload(), (menu) => {
