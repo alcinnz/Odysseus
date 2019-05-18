@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/github/bleakgrey/liberate/">
+    <file>Readability.js</file>
+    <file>Readability-readerable.js</file>
+    <file>is_readable.js</file>
+    <file>patcher.js</file>
+    <file>theme-light.css</file>
+    <file>theme-solarized.css</file>
+    <file>theme-moonlight.css</file>
+  </gresource>
+</gresources>

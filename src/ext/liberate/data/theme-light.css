@@ -1,0 +1,58 @@
+body {
+	background: white;
+	font-family: monospace;
+	max-width: 40em;
+	margin: 0em auto;
+	padding: 4em;
+	/*-webkit-font-smoothing: subpixel-antialiased;*/
+	font-size: calc(1em + 0.5vw);
+}
+
+.page {
+	line-height: calc(1.5em + 1vw);
+}
+
+header h1 {
+	text-transform: capitalize;
+}
+header h4 {
+	font-weight: normal;
+}
+header div {
+	border-top: medium double #333;
+	text-align: center;
+	height: 0.25em;
+	max-height: 0px;
+	margin-top: 4em;
+	margin-bottom: 4em;
+}
+header div:after {
+	content: "§";
+	display: inline-block;
+	position: relative;
+	top: -0.75em;
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+	font-size: 1em;
+	background: white;
+}
+
+p {
+	margin-bottom: 1.5rem;
+}
+
+blockquote, code, figure {
+	margin: 0;
+	padding: 1em;
+	border-left: 0.4em solid lightgrey;
+	display: block;
+}
+
+bold, strong {
+	font-weight: normal;
+	background-color: rgba(255, 225, 120, 0.5);
+}
+
+img {
+	max-width: 100%;
+}

@@ -1,0 +1,13 @@
+.solarized body,
+.solarized header div:after {
+	background: #FDF6E3;
+	color: #3F2727;
+}
+
+.solarized header div {
+	border-color: #3F2727;
+}
+
+.solarized a {
+	color: #D1545E;
+}

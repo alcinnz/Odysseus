@@ -1,0 +1,13 @@
+.moonlight body,
+.moonlight header div:after {
+	background: #273445;
+	color: #fff;
+}
+
+.moonlight header div {
+	border-color: #fff;
+}
+
+.moonlight a {
+	color: #D1545E;
+}
