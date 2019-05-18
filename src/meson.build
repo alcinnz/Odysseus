@@ -1,3 +1,10 @@
+liberate_resources = gnome.compile_resources(
+         'liberate-resources', 'ext/liberate/data/gresource.xml',
+         source_dir: 'ext/liberate/data',
+         c_name: 'liberate'
+       )
+liberate = ['Liberate', 'Reader']
+
 sources = ['Odysseus', 'BrowserWindow', 'Persistance']
 widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar', 'Chromeless']
 header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
@@ -22,6 +29,9 @@ prosody_misc = ['http', 'AppStream', 'mimeinfo', 'favicons',
         'diff', 'test', 'i18n']
 models = ['Download', 'DownloadSet', 'ImageUtil', 'I18nUtil', 'StatusIndicator', 'Links']
 
+foreach f : liberate
+    sources += ['ext/liberate/' + f]
+endforeach
 foreach f : header_widgets
     widgets += ['header/' + f]
 endforeach
@@ -64,7 +74,7 @@ endforeach
 foreach f : models
     sources += ['Models/' + f]
 endforeach
-source_files = [about_pages, sql_scripts, l10n_pages]
+source_files = [about_pages, sql_scripts, l10n_pages, liberate_resources]
 foreach f : sources
     source_files += [f + '.vala']
 endforeach
