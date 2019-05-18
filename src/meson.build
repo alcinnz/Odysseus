@@ -17,7 +17,7 @@ decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll'
         'fix-plus.google.com', 'fix-bg-videos', 'addressbar-autofocus',
         'notifications']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
-indicators = ['https', 'local', 'webfeed']
+indicators = ['https', 'local', 'webfeed', 'liberate']
 services = ['pages', 'Completer', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
