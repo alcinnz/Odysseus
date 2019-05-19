@@ -62,6 +62,7 @@ namespace Odysseus.Traits {
         tab.populate_indicators.connect(report_https);
         tab.populate_indicators.connect(report_local);
         tab.links_parsed.connect(discover_webfeeds);
+        detect_readability(tab);
     }
 
     public void setup_autosuggest() {

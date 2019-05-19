@@ -16,7 +16,12 @@
         <file>privacy</file>
         <file>feedreaders</file>
         <file>filetype</file>
+
+        <!-- Thanks to IconMonstr / Alexander Kahlkopf for these icons. -->
+        <!-- It seems clearly within his license agreement to use them for
+            browser features. -->
         <file>webfeed-subscribe-symbolic.svg</file>
+        <file>com.github.bleakgrey.liberate-symbolic.svg</file>
 
         <file>debugging/test</file>
         <file>debugging/index</file>

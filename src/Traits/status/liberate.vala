@@ -25,6 +25,10 @@ namespace Odysseus.Traits {
     }
 
     private void offer_readability(WebTab tab) {
+        // Upstream fixme: this callback is triggered repeatedly.
+        foreach (var indicator in tab.indicators)
+            if (indicator.icon == "com.github.bleakgrey.liberate") return;
+
         var indicator = new StatusIndicator(
             "com.github.bleakgrey.liberate", Status.DISABLED,
             _("Improve this page's readability"),
@@ -33,16 +37,16 @@ namespace Odysseus.Traits {
                 if (web == null) return null;
 
                 var popover = new Gtk.Popover(null);
-                var menu = new Gtk.Menu();
+                var menu = new Gtk.Grid();
+                menu.orientation = Gtk.Orientation.VERTICAL;
                 popover.add(menu);
 
-                var options = new SList<Gtk.RadioMenuItem>();
                 /// Translators: name of a Reader Mode theme.
-                add_theme(web, menu, options, _("Light"), "light");
+                add_theme(web, menu, _("Light"), "light");
                 /// Translators: name of a Reader Mode theme.
-                add_theme(web, menu, options, _("Moonlight"), "moonlight");
+                add_theme(web, menu, _("Moonlight"), "moonlight");
                 /// Translators: name of a Reader Mode theme.
-                add_theme(web, menu, options, _("Solarized"), "Solarized");
+                add_theme(web, menu, _("Solarized"), "Solarized");
 
                 return popover;
             }
@@ -53,11 +57,11 @@ namespace Odysseus.Traits {
         tab.indicators_loaded(tab.indicators);
     }
 
-    private void add_theme(WebKit.WebView web, Gtk.Menu menu,
-            SList<Gtk.RadioMenuItem> options,
+    private void add_theme(WebKit.WebView web, Gtk.Container menu,
             string human_name, string filename) {
-        var option = new Gtk.RadioMenuItem.with_label(options, human_name);
-        option.toggled.connect(() => Liberate.read(web, filename));
+        var option = new Gtk.Button.with_label(human_name);
+        option.clicked.connect(() => Liberate.read(web, filename));
+        option.relief = Gtk.ReliefStyle.NONE;
         menu.add(option);
     }
 }
