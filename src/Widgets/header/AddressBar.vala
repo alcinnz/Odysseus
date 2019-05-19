@@ -43,7 +43,13 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
 
         // Necessary to get the linked controls looking right.
         var statusbutton = new Gtk.Button();
-        statusbutton.get_style_context().add_class("entry");
+        var statusstyle = statusbutton.get_style_context();
+        statusstyle.add_class("entry");
+        try {
+            var nopadding = new Gtk.CssProvider();
+            nopadding.load_from_data("* {padding: 0px;}");
+            statusstyle.add_provider(nopadding, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        } catch (Error err) {/* It's fine */}
         statusbutton.add(statusbar);
         add(statusbutton);
 
