@@ -24,6 +24,11 @@ namespace Odysseus.Traits {
         });
     }
 
+    public class ReaderData : Object {
+        public WebKit.WebView web;
+        public StatusIndicator indicator;
+    }
+
     private void offer_readability(WebTab tab) {
         // Upstream fixme: this callback is triggered repeatedly.
         foreach (var indicator in tab.indicators)
@@ -33,8 +38,12 @@ namespace Odysseus.Traits {
             "com.github.bleakgrey.liberate", Status.DISABLED,
             _("Improve this page's readability"),
             (data) => {
-                var web = data as WebKit.WebView;
-                if (web == null) return null;
+                var d = data as ReaderData;
+                if (d == null) return null;
+                var web = d.web;
+
+                Liberate.read(web);
+                d.indicator.status = Status.ACTIVE;
 
                 var popover = new Gtk.Popover(null);
                 var menu = new Gtk.Grid();
@@ -51,7 +60,10 @@ namespace Odysseus.Traits {
                 return popover;
             }
         );
-        indicator.user_data = tab.web;
+        var data = new ReaderData();
+        data.web = tab.web;
+        data.indicator = indicator;
+        indicator.user_data = data;
 
         tab.indicators.add(indicator);
         tab.indicators_loaded(tab.indicators);
