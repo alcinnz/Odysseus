@@ -26,7 +26,7 @@ namespace Odysseus.Traits {
 
     private void offer_readability(WebTab tab) {
         var indicator = new StatusIndicator(
-            "com.github.bleakgray.liberate", Status.DISABLED,
+            "com.github.bleakgrey.liberate", Status.DISABLED,
             _("Improve this page's readability"),
             (data) => {
                 var web = data as WebKit.WebView;
