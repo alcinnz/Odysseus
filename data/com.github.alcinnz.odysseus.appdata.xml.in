@@ -60,6 +60,14 @@ that matter to you.</p>
   </provides>
 
   <releases>
+    <release version="1.5.17" date="2019-05-20">
+      <description>
+        <p>Reader Mode</p>
+        <p>Minor layout fix</p>
+        <p>Show download count</p>
+        <p>Preparation to support a global dark mode</p>
+      </description>
+    </release>
     <release version="1.5.12" date="2019-04-10">
       <description>
         <p>Webfeed discovery support!</p>
