@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-09 23:26+0200\n"
+"POT-Creation-Date: 2019-05-20 16:41+1200\n"
 "PO-Revision-Date: 2017-12-16 18:41+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>, 2019\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/none-483/teams/75521/nl_NL/)\n"
@@ -37,82 +37,82 @@ msgstr "Ga terug naar de vorige pagina"
 msgid "Go to next viewed page"
 msgstr "Ga naar de volgende pagina"
 
-#: src/BrowserWindow.vala:118
+#: src/BrowserWindow.vala:125
 msgid "Load this page from the website again"
 msgstr "Deze pagina opnieuw laden"
 
-#: src/BrowserWindow.vala:120
+#: src/BrowserWindow.vala:127
 msgid "Ignore cache"
 msgstr "Cache negeren"
 
-#: src/BrowserWindow.vala:123
+#: src/BrowserWindow.vala:130
 msgid "Stop loading this page"
 msgstr "Stoppen met laden van deze pagina"
 
-#: src/BrowserWindow.vala:125
+#: src/BrowserWindow.vala:132
 msgid "Stop And Reload"
 msgstr "Stoppen en herladen"
 
-#: src/BrowserWindow.vala:138
+#: src/BrowserWindow.vala:145
 msgid "Current web address"
 msgstr "Huidig website-adres"
 
-#: src/BrowserWindow.vala:147
+#: src/BrowserWindow.vala:154
 msgid "Menu"
 msgstr "Menu"
 
-#: src/BrowserWindow.vala:148
+#: src/BrowserWindow.vala:155
 msgid "_New Window"
 msgstr "_Nieuw venster"
 
-#: src/BrowserWindow.vala:153 src/BrowserWindow.vala:154
+#: src/BrowserWindow.vala:160 src/BrowserWindow.vala:161
 #: src/Widgets/DownloadButton.vala:100
 msgid "_Open"
 msgstr "_Openen"
 
-#: src/BrowserWindow.vala:156
+#: src/BrowserWindow.vala:163
 msgid "_Save"
 msgstr "Op_slaan"
 
 #. TRANSLATORS _ precedes shortcut key
-#: src/BrowserWindow.vala:157 src/Widgets/DownloadButton.vala:110
+#: src/BrowserWindow.vala:164 src/Widgets/DownloadButton.vala:110
 #: src/Widgets/DownloadButton.vala:114
 msgid "_Save As"
 msgstr "Op_slaan als"
 
-#: src/BrowserWindow.vala:160
+#: src/BrowserWindow.vala:167
 msgid "_View Source"
 msgstr "Broncode to_nen"
 
-#: src/BrowserWindow.vala:162
+#: src/BrowserWindow.vala:169
 msgid "Zoom In"
 msgstr "Inzoomen"
 
-#: src/BrowserWindow.vala:164
+#: src/BrowserWindow.vala:171
 msgid "Zoom Out"
 msgstr "Uitzoomen"
 
-#: src/BrowserWindow.vala:167
+#: src/BrowserWindow.vala:174
 msgid "_History"
 msgstr "Gesc_hiedenis"
 
-#: src/BrowserWindow.vala:169
+#: src/BrowserWindow.vala:176
 msgid "_Find In Page"
 msgstr "Zoeken op p_agina"
 
-#: src/BrowserWindow.vala:174
+#: src/BrowserWindow.vala:181
 msgid "_Print"
 msgstr "Af_drukken"
 
-#: src/BrowserWindow.vala:176
+#: src/BrowserWindow.vala:183
 msgid "Show Downloads"
 msgstr "Downloads tonen"
 
-#: src/BrowserWindow.vala:178
+#: src/BrowserWindow.vala:185
 msgid "Help"
 msgstr "Hulp"
 
-#: src/BrowserWindow.vala:180
+#: src/BrowserWindow.vala:187
 msgid "About Odysseus"
 msgstr "Over Odysseus"
 
@@ -369,3 +369,22 @@ msgstr "Abonneren via %s"
 #: src/Traits/status/webfeed.vala:166
 msgid "Install a feedreader to subscribe"
 msgstr "Als je je wilt abonneren, installeer dan een feedlezer"
+
+#: src/Traits/status/liberate.vala:41
+msgid "Improve this page's readability"
+msgstr "Verbeter de leesbaarheid van deze pagina"
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:57
+msgid "Light"
+msgstr "Licht"
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:59
+msgid "Moonlight"
+msgstr "Maneschijn"
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:61
+msgid "Solarized"
+msgstr "Gesolariseerd"
