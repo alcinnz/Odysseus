@@ -10,6 +10,9 @@
     <dt>{% trans %}Logo critiques{% endtrans %}</dt>
     <dd><a href="https://minimusminor.tumblr.com/">William Tongue</a></dd>
     <dd>Aurora Cochrane</dd>
+    <dt>{% trans %}Other icons{% endtrans %}</dt>
+    <dd>{% trans %}Your system{% endtrans %} ({{ distro.ID }})</dd>
+    <dd><a href="https://iconmonstr.com/">IconMonstr/Alexandar Kahlkopf</a></dd>
     <dt>{% trans %}Feature suggesions & bug reports{% endtrans %}</dt>
     <dd><a href="https://github.com/NathanBnm">Nathan Bnm</a></dd>
     <dd><a href="https://github.com/giovannicaligaris">@giovannicaligaris</a></dd>
@@ -28,6 +31,8 @@
         <dt>{% trans %}Infrastructure{% endtrans %}</dt>
         <dd><a href="https://github.com/NathanBnm">Nathan Bnm</a></dd>
     </dl></dd>
+    <dt>{% trans %}Reader mode{% endtrans %}</dt>
+    <dd><a href="https://mastodon.social/@bleakgrey">Bleakgrey</a></dd>
     <dt>{% trans %}Lead Developer/everything else{% endtrans %}</dt>
     <dd><a href="https://github.com/alcinnz/">Adrian Cochrane</a></dd>
   </dl>
