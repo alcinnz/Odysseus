@@ -27,6 +27,8 @@ namespace Odysseus.Traits {
     public class ReaderData : Object {
         public WebKit.WebView web;
         public StatusIndicator indicator;
+        // Serves the dual purpose of caching, and tracking it's active status.
+        public Gtk.Popover popover;
     }
 
     private void offer_readability(WebTab tab) {
@@ -42,22 +44,24 @@ namespace Odysseus.Traits {
                 if (d == null) return null;
                 var web = d.web;
 
-                Liberate.read(web);
-                d.indicator.status = Status.ACTIVE;
+                if (d.popover == null) {
+                    Liberate.read(web);
+                    d.indicator.status = Status.ACTIVE;
 
-                var popover = new Gtk.Popover(null);
-                var menu = new Gtk.Grid();
-                menu.orientation = Gtk.Orientation.VERTICAL;
-                popover.add(menu);
+                    d.popover = new Gtk.Popover(null);
+                    var menu = new Gtk.Grid();
+                    menu.orientation = Gtk.Orientation.VERTICAL;
+                    d.popover.add(menu);
 
-                /// Translators: name of a Reader Mode theme.
-                add_theme(web, menu, _("Light"), "light");
-                /// Translators: name of a Reader Mode theme.
-                add_theme(web, menu, _("Moonlight"), "moonlight");
-                /// Translators: name of a Reader Mode theme.
-                add_theme(web, menu, _("Solarized"), "Solarized");
+                    /// Translators: name of a Reader Mode theme.
+                    var group = add_theme(web, menu, _("Light"), "light");
+                    /// Translators: name of a Reader Mode theme.
+                    add_theme(web, menu, _("Moonlight"), "moonlight", group);
+                    /// Translators: name of a Reader Mode theme.
+                    add_theme(web, menu, _("Solarized"), "Solarized", group);
+                }
 
-                return popover;
+                return d.popover;
             }
         );
         var data = new ReaderData();
@@ -69,11 +73,16 @@ namespace Odysseus.Traits {
         tab.indicators_loaded(tab.indicators);
     }
 
-    private void add_theme(WebKit.WebView web, Gtk.Container menu,
-            string human_name, string filename) {
-        var option = new Gtk.Button.with_label(human_name);
-        option.clicked.connect(() => Liberate.read(web, filename));
-        option.relief = Gtk.ReliefStyle.NONE;
+    private Gtk.RadioButton add_theme(WebKit.WebView web, Gtk.Container menu,
+            string human_name, string filename,
+            Gtk.RadioButton? group = null) {
+        var option = new Gtk.RadioButton.with_label_from_widget(group, human_name);
+        option.toggled.connect(() => {
+            (menu.get_ancestor(typeof(Gtk.Popover)) as Gtk.Popover).popdown();
+            Liberate.apply_theme(web, filename);
+        });
+
         menu.add(option);
+        return option;
     }
 }
