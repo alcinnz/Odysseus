@@ -160,18 +160,7 @@ and I take advantage of this page to promote project links. #}
       {% trans %}Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>.{% endtrans %}
     {% alt %}
       <p>{% trans %}Designed and coded with <a href="odysseus:credits">help</a>
-        & ♥ by Adrian Lyall Cochrane in NZ.{% endtrans %}<p>
-      {% macro donate-link : text %}
-        {# I want to encourage donations on elementary OS to come via AppCenter,
-            for the sake of other elementary OS devs. #}
-        <a {% if distro.ID in "elementary" %}
-            href="appstream://com.github.alcinnz.odysseus"
-          {% else %}
-            href="https://liberapay.com/alcinnz"
-          {% endif %}>{% trans %}donating{% endtrans %}</a>
-      {% endmacro %}
-      <p>{% trans %}A {% donate-link %}
-      to cover my time and effort would be greatly appreciated.{% endtrans %}</p>
+        & ♥ by <a href="https://adrian.geek.nz/">Adrian Lyall Cochrane</a> in NZ.{% endtrans %}<p>
     {% alt %}
       {% trans %}History search not powerful enough for you?
         I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>!{% endtrans %}
