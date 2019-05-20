@@ -26,8 +26,11 @@
         <dd><a href="https://github.com/zvirdaniel">Daniel Zvir</a></dd>
         <dt>Français</dt>
         <dd><a href="https://www.transifex.com/user/profile/tintou/">Corentin Noël</a></dd>
+        <dd><a href="https://github.com/NathanBnm">Nathan Bnm</a></dd>
         <dt>Português</dt>
         <dd><a href="https://www.transifex.com/user/profile/Manitiolo/">Peterson SB</a></dd>
+        <dt>Nederlands</dt>
+        <dd><a href="https://www.transifex.com/user/profile/Vistaus/">Heimen Stoffels</a></dd>
         <dt>{% trans %}Infrastructure{% endtrans %}</dt>
         <dd><a href="https://github.com/NathanBnm">Nathan Bnm</a></dd>
     </dl></dd>
