@@ -18,15 +18,12 @@
         <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>? {% trans %}{% endmsg %}
 {% msg /home:159 %} Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>. {% trans %}{% endmsg %}
 {% msg /home:161 %} Designed and coded with <a href="odysseus:credits">help</a>
-        & ♥ by Adrian Lyall Cochrane in NZ. {% trans %}{% endmsg %}
-{% msg /home:170 %} donating {% trans %}{% endmsg %}
-{% msg /home:172 %} A {% donate-link %} 
-      to cover my time and effort would be greatly appreciated. {% trans %}{% endmsg %}
-{% msg /home:175 %} History search not powerful enough for you?
+        & ♥ by <a href="https://adrian.geek.nz/">Adrian Lyall Cochrane</a> in NZ. {% trans %}{% endmsg %}
+{% msg /home:164 %} History search not powerful enough for you?
         I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>! {% trans %}{% endmsg %}
-{% msg /home:178 %} While Odysseus does store information about your browsing,
+{% msg /home:167 %} While Odysseus does store information about your browsing,
         that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you. {% trans %}{% endmsg %}
-{% msg /home:181 %} FYI: None of the links on this page were sponsered, no one paid for any of them. {% trans %}{% endmsg %}
+{% msg /home:170 %} FYI: None of the links on this page were sponsered, no one paid for any of them. {% trans %}{% endmsg %}
 {% msg /feedreaders:4 %} Available feedreaders {% trans %}{% endmsg %}
 {% msg /feedreaders:12 %} No <a href="https://en.wikipedia.org/wiki/News_aggregator">feed readers</a> are installed {% trans %}{% endmsg %}
 {% msg /feedreaders:15 %} In order to subscribe to a <a href="https://en.wikipedia.org/wiki/Web_feed">webfeed</a>,
@@ -136,17 +133,20 @@
 {% msg /SERVER-ERROR:21 %} This Is Bad… {% trans %}{% endmsg %}
 {% msg /SERVER-ERROR:22 %} I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message. {% trans %}{% endmsg %}
 {% msg /credits:9 %} Logo critiques {% trans %}{% endmsg %}
-{% msg /credits:12 %} Feature suggesions & bug reports {% trans %}{% endmsg %}
-{% msg /credits:18 %} And more… {% trans %}{% endmsg %}
-{% msg /credits:19 %} Translation {% trans %}{% endmsg %}
-{% msg /credits:27 %} Infrastructure {% trans %}{% endmsg %}
-{% msg /credits:30 %} Lead Developer/everything else {% trans %}{% endmsg %}
-{% msg /credits:33 %} External Projects {% trans %}{% endmsg %}
-{% msg /credits:34 %} If it weren't for these projects Odysseus wouldn't exist,
+{% msg /credits:12 %} Other icons {% trans %}{% endmsg %}
+{% msg /credits:13 %} Your system {% trans %}{% endmsg %}
+{% msg /credits:15 %} Feature suggesions & bug reports {% trans %}{% endmsg %}
+{% msg /credits:21 %} And more… {% trans %}{% endmsg %}
+{% msg /credits:22 %} Translation {% trans %}{% endmsg %}
+{% msg /credits:30 %} Infrastructure {% trans %}{% endmsg %}
+{% msg /credits:33 %} Reader mode {% trans %}{% endmsg %}
+{% msg /credits:35 %} Lead Developer/everything else {% trans %}{% endmsg %}
+{% msg /credits:38 %} External Projects {% trans %}{% endmsg %}
+{% msg /credits:39 %} If it weren't for these projects Odysseus wouldn't exist,
     it'd just be too hard to develop. So <em>thank you</em> to everyone who has
     worked on these projects, and a special thanks to those who guide their development. {% trans %}{% endmsg %}
-{% msg /credits:40 /credits:41 %} GNOME Web's logo {% trans %}{% endmsg %}
-{% msg /credits:46 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
+{% msg /credits:45 /credits:46 %} GNOME Web's logo {% trans %}{% endmsg %}
+{% msg /credits:51 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
     and everyone who's ever published anything to the Web. You're what makes it all worthwhile! {% trans %}{% endmsg %}
 {% msg /errors/501:4 %} UNSUPPORTED {% trans %}{% endmsg %}
 {% msg /errors/501:9 %} Feature Not Supported {% trans %}{% endmsg %}

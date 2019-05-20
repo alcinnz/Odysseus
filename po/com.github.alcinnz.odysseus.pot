@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-09 23:26+0200\n"
+"POT-Creation-Date: 2019-05-20 16:41+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,82 +34,82 @@ msgstr ""
 msgid "Go to next viewed page"
 msgstr ""
 
-#: src/BrowserWindow.vala:118
+#: src/BrowserWindow.vala:125
 msgid "Load this page from the website again"
 msgstr ""
 
-#: src/BrowserWindow.vala:120
+#: src/BrowserWindow.vala:127
 msgid "Ignore cache"
 msgstr ""
 
-#: src/BrowserWindow.vala:123
+#: src/BrowserWindow.vala:130
 msgid "Stop loading this page"
 msgstr ""
 
-#: src/BrowserWindow.vala:125
+#: src/BrowserWindow.vala:132
 msgid "Stop And Reload"
 msgstr ""
 
-#: src/BrowserWindow.vala:138
+#: src/BrowserWindow.vala:145
 msgid "Current web address"
 msgstr ""
 
-#: src/BrowserWindow.vala:147
+#: src/BrowserWindow.vala:154
 msgid "Menu"
 msgstr ""
 
-#: src/BrowserWindow.vala:148
+#: src/BrowserWindow.vala:155
 msgid "_New Window"
 msgstr ""
 
-#: src/BrowserWindow.vala:153 src/BrowserWindow.vala:154
+#: src/BrowserWindow.vala:160 src/BrowserWindow.vala:161
 #: src/Widgets/DownloadButton.vala:100
 msgid "_Open"
 msgstr ""
 
-#: src/BrowserWindow.vala:156
+#: src/BrowserWindow.vala:163
 msgid "_Save"
 msgstr ""
 
 #. TRANSLATORS _ precedes shortcut key
-#: src/BrowserWindow.vala:157 src/Widgets/DownloadButton.vala:110
+#: src/BrowserWindow.vala:164 src/Widgets/DownloadButton.vala:110
 #: src/Widgets/DownloadButton.vala:114
 msgid "_Save As"
 msgstr ""
 
-#: src/BrowserWindow.vala:160
+#: src/BrowserWindow.vala:167
 msgid "_View Source"
 msgstr ""
 
-#: src/BrowserWindow.vala:162
+#: src/BrowserWindow.vala:169
 msgid "Zoom In"
 msgstr ""
 
-#: src/BrowserWindow.vala:164
+#: src/BrowserWindow.vala:171
 msgid "Zoom Out"
 msgstr ""
 
-#: src/BrowserWindow.vala:167
+#: src/BrowserWindow.vala:174
 msgid "_History"
 msgstr ""
 
-#: src/BrowserWindow.vala:169
+#: src/BrowserWindow.vala:176
 msgid "_Find In Page"
 msgstr ""
 
-#: src/BrowserWindow.vala:174
+#: src/BrowserWindow.vala:181
 msgid "_Print"
 msgstr ""
 
-#: src/BrowserWindow.vala:176
+#: src/BrowserWindow.vala:183
 msgid "Show Downloads"
 msgstr ""
 
-#: src/BrowserWindow.vala:178
+#: src/BrowserWindow.vala:185
 msgid "Help"
 msgstr ""
 
-#: src/BrowserWindow.vala:180
+#: src/BrowserWindow.vala:187
 msgid "About Odysseus"
 msgstr ""
 
@@ -360,4 +360,23 @@ msgstr ""
 
 #: src/Traits/status/webfeed.vala:166
 msgid "Install a feedreader to subscribe"
+msgstr ""
+
+#: src/Traits/status/liberate.vala:41
+msgid "Improve this page's readability"
+msgstr ""
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:57
+msgid "Light"
+msgstr ""
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:59
+msgid "Moonlight"
+msgstr ""
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:61
+msgid "Solarized"
 msgstr ""

@@ -16,3 +16,4 @@ src/Traits/navigate/viewsource.vala
 src/Traits/status/https.vala
 src/Traits/status/local.vala
 src/Traits/status/webfeed.vala
+src/Traits/status/liberate.vala

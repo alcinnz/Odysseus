@@ -76,36 +76,25 @@ Heb je vragen? Stel ze en <a href="https://alcinnz.github.io/Odysseus-support/">
 {% endmsg %}
 {% msg /home:161 %}
 Designed and coded with <a href="odysseus:credits">help</a>
-        & ♥ by Adrian Lyall Cochrane in NZ.
+        & ♥ by <a href="https://adrian.geek.nz/">Adrian Lyall Cochrane</a> in NZ.
 {% trans %}
-Ontworpen en geprogrammeerd met <a href="odysseus:credits">hulp van</a> en ♥ door Adrian Lyall Cochrane in NZ.
+Ontworpen en geprogrammeerd met <a href="odysseus:credits">hulp van</a> en ♥ door <a href="https://adrian.geek.nz/">Adrian Lyall Cochrane</a> in NZ.
 {% endmsg %}
-{% msg /home:170 %}
-donating
-{% trans %}
-
-{% endmsg %}
-{% msg /home:172 %}
-A {% donate-link %}  
-      to cover my time and effort would be greatly appreciated.
-{% trans %}
-
-{% endmsg %}
-{% msg /home:175 %}
+{% msg /home:164 %}
 History search not powerful enough for you?
         I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>!
 {% trans %}
 Vind je de zoekfunctie in de geschiedenis niet krachtig genoeg?
         Dan heb je het <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">mis</a>!
 {% endmsg %}
-{% msg /home:178 %}
+{% msg /home:167 %}
 While Odysseus does store information about your browsing,
         that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you.
 {% trans %}
 Odysseus slaat informatie op over je surfgedrag,
         maar we delen dit met <a href="odysseus:privacy">niemand</a>.
 {% endmsg %}
-{% msg /home:181 %}
+{% msg /home:170 %}
 FYI: None of the links on this page were sponsered, no one paid for any of them.
 {% trans %}
 Voor de duidelijkheid: geen enkele link op deze pagina is gesponsord; niemand ervoor betaald.
@@ -513,36 +502,51 @@ Logo critiques
 Logo-opmerkingen
 {% endmsg %}
 {% msg /credits:12 %}
+Other icons
+{% trans %}
+
+{% endmsg %}
+{% msg /credits:13 %}
+Your system
+{% trans %}
+
+{% endmsg %}
+{% msg /credits:15 %}
 Feature suggesions & bug reports
 {% trans %}
 Ideeën en fouten (bugs) melden
 {% endmsg %}
-{% msg /credits:18 %}
+{% msg /credits:21 %}
 And more…
 {% trans %}
 
 {% endmsg %}
-{% msg /credits:19 %}
+{% msg /credits:22 %}
 Translation
 {% trans %}
 Vertalen
 {% endmsg %}
-{% msg /credits:27 %}
+{% msg /credits:30 %}
 Infrastructure
 {% trans %}
 
 {% endmsg %}
-{% msg /credits:30 %}
+{% msg /credits:33 %}
+Reader mode
+{% trans %}
+
+{% endmsg %}
+{% msg /credits:35 %}
 Lead Developer/everything else
 {% trans %}
 
 {% endmsg %}
-{% msg /credits:33 %}
+{% msg /credits:38 %}
 External Projects
 {% trans %}
 Externe projecten
 {% endmsg %}
-{% msg /credits:34 %}
+{% msg /credits:39 %}
 If it weren't for these projects Odysseus wouldn't exist,
     it'd just be too hard to develop. So <em>thank you</em> to everyone who has
     worked on these projects, and a special thanks to those who guide their development.
@@ -551,12 +555,12 @@ Zonder deze projecten zou Odysseus niet bestaan;
     het zou dan simpelweg té moeilijk zijn geweest. Dus <em>dank</em> aan iedereen die heeft gewerkt
     aan deze projecten, en nog meer dank aan de hoofdontwikkelaars.
 {% endmsg %}
-{% msg /credits:40 /credits:41 %}
+{% msg /credits:45 /credits:46 %}
 GNOME Web's logo
 {% trans %}
 
 {% endmsg %}
-{% msg /credits:46 %}
+{% msg /credits:51 %}
 And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
     and everyone who's ever published anything to the Web. You're what makes it all worthwhile!
 {% trans %}
