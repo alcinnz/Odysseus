@@ -17,7 +17,7 @@
 public class Odysseus.Header.AddressBar : Gtk.Grid {
     private Services.Completer completer = new Services.Completer();
     public Gtk.Entry entry = new Gtk.Entry();
-    private Gtk.Container statusbar;
+    private Gee.List<Gtk.Widget> statusbuttons = new Gee.ArrayList<Gtk.Widget>();
 
     private Gtk.Popover popover;
     private Gtk.ListBox list;
@@ -38,31 +38,21 @@ public class Odysseus.Header.AddressBar : Gtk.Grid {
         entry.halign = Gtk.Align.FILL;
         add(entry);
 
-        statusbar = new Gtk.Grid();
-        statusbar.@set("orientation", Gtk.Orientation.HORIZONTAL);
-
-        // Necessary to get the linked controls looking right.
-        var statusbutton = new Gtk.Button();
-        var statusstyle = statusbutton.get_style_context();
-        statusstyle.add_class("entry");
-        try {
-            var nopadding = new Gtk.CssProvider();
-            nopadding.load_from_data("* {padding: 0px;}");
-            statusstyle.add_provider(nopadding, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        } catch (Error err) {/* It's fine */}
-        statusbutton.add(statusbar);
-        add(statusbutton);
-
         build_dropdown();
         connect_events();
         notify["max-width"].connect(queue_resize);
     }
 
     public void show_indicators(Gee.List<StatusIndicator> indicators) {
-        statusbar.forall((widget) => widget.destroy());
-        foreach (var indicator in indicators) statusbar.add(indicator.build_ui());
-        if (indicators.size > 0) statusbar.show_all();
-        else statusbar.hide();
+        foreach (var widget in statusbuttons) widget.destroy();
+        statusbuttons.clear();
+
+        foreach (var indicator in indicators) {
+            var statusbutton = indicator.build_ui();
+            this.add(statusbutton);
+            statusbuttons.add(statusbutton);
+        }
+        show_all();
     }
 
     /* This approximates the expand to fill effect. */

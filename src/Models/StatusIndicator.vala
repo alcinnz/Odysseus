@@ -46,7 +46,7 @@ public class Odysseus.StatusIndicator : Object {
     public Gtk.Widget build_ui() {
         var ret = new Gtk.Button();
         ret.image = build_image();
-        ret.relief = Gtk.ReliefStyle.NONE;
+
         ret.clicked.connect(() => {
             var popover = on_pressed != null ? on_pressed(user_data) : tooltip_popover();
             ret.image = build_image();
@@ -55,6 +55,11 @@ public class Odysseus.StatusIndicator : Object {
             popover.relative_to = ret;
             popover.show_all();
         });
+
+        // Force elementary to render the borders, they're necessary for visual clarity.
+        var style = ret.get_style_context();
+        style.remove_class("image-button");
+        style.changed.connect(() => style.remove_class("image-button"));
 
         ret.halign = Gtk.Align.CENTER;
         ret.valign = Gtk.Align.BASELINE;
