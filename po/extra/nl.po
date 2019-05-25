@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-09 23:08+0200\n"
+"POT-Creation-Date: 2019-05-20 16:41+1200\n"
 "PO-Revision-Date: 2017-12-16 19:21+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>, 2019\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/none-483/teams/75521/nl_NL/)\n"
@@ -187,153 +187,159 @@ msgstr "Indicatoren voor HTTPS en lokale pagina's"
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:97
 msgid "Performance fixes and better labelling on topsites display."
-msgstr ""
+msgstr "Prestatieverbeteringen en beter gelabelde topsites."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:98
 msgid "Hides downloads bar in fullscreen."
-msgstr ""
+msgstr "Downloadsbalk wordt verborgen op volledig scherm."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:103
 msgid "Renders nice previews for webfeeds."
-msgstr ""
+msgstr "Er worden voorbeelden geladen voor webfeeds."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:104
 msgid "Fixes regressions with topsites interactions and viewsource."
-msgstr ""
+msgstr "Problemen opgelost met topsites-interactie en bronweergave."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:109
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:108
 msgid "Fixes for Juno."
-msgstr ""
+msgstr "Foutoplossingen m.b.t. Juno."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:114
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:112
 msgid "Topsites performance and design improvements."
-msgstr ""
+msgstr "Prestatie- en ontwerpverbeteringen m.b.t. topsites."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:115
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:113
 msgid "Add indicators for menuitems that are links."
-msgstr ""
+msgstr "Indicators toegevoegd voor menu-items die eigenlijk links zijn."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:120
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:118
 msgid ""
 "Major performance improvements in regards to internal pages. i.e. stops "
 "wasting time wasting memory."
-msgstr ""
+msgstr "Prestatieverbeteringen op interne pagina's."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:121
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:119
 msgid "Recommends apps for unsupported URL and file types."
 msgstr ""
+"Er worden nu apps aanbevolen bij niet-ondersteunde url's en bestandssoorten."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:122
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:120
 msgid "Improved accessibility of the downloads bar."
-msgstr ""
+msgstr "Verbeterde toegankelijkheid van de downloadsbalk."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:127
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:125
 msgid "Fills in gaps within the topsites display with my recommendations."
-msgstr ""
+msgstr "Gaten opgevuld in topsites met eigen aanbevelingen."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:128
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:126
 msgid "More succinct text in download notifications."
-msgstr ""
+msgstr "Beknoptere tekst in downloadmeldingen."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:133
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:131
 msgid "You can customize the topsites on odysseus:home!"
-msgstr ""
+msgstr "Je kunt de topsites op odysseus:home aanpassen!"
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:134
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:132
 msgid "Minor optimizations to odysseus:history."
-msgstr ""
+msgstr "Kleine verbeteringen aan odysseus:history."
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:137
+msgid "Your most visited pages are now linked to from the newtab page."
+msgstr "Je meest bezochte pagina's worden nu getoond op niuewe tabbladen."
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:138
+msgid "Now speaks French and Portuguese."
+msgstr "Franse en Portugese vertalingen toegevoegd."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:139
-msgid "Your most visited pages are now linked to from the newtab page."
-msgstr ""
+msgid "Added credits page to thank contributors."
+msgstr "Pagina toegevoegd waarop bijdragers worden bedankt."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:140
-msgid "Now speaks French and Portuguese."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:141
-msgid "Added credits page to thank contributors."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:142
 msgid "More minor UI corrections."
-msgstr ""
+msgstr "Enkele uiterlijke verbeteringen"
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:147
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:145
 msgid ""
 "More communicative browser history viewer, with colour coded tabs, tooltips "
 "communicating which links you've followed, favicons, page screenshots, and "
 "years in all dates."
 msgstr ""
+"Duidelijkere geschiedenisweergavepagina met gekleurde tabbladen, "
+"hulpballonnen die de url's tonen, favicons, schermafdrukken van pagina's en "
+"jaartallen."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:150
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:148
 msgid "Fixes for video playback and infinite tab spawnage."
-msgstr ""
+msgstr "Fouten opgelost m.b.t. video's afspelen en oneindige tabbladen."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:151
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:149
 msgid "Added a privacy notice."
-msgstr ""
+msgstr "Privacybeleid toegevoegd."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:156
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:154
 msgid "Natural search of your browser history"
-msgstr ""
+msgstr "Natuurlijk zoeken in je surfgeschiedenis."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:157
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:155
 msgid ""
 "Added useful \"hints\" to the footer of the newtab page, which may link to a"
 " new credits page."
-msgstr ""
+msgstr "'Tips' toegevoegd aan de voetnoten op nieuwe tabbladen."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:158
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:156
 msgid "Reduced prevalance of the \"loading\" message."
-msgstr ""
+msgstr "Zichtbaarheid van 'Bezig met laden...' ingeperkt."
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:161
+msgid "Now speaks Czech."
+msgstr "Tsjechische vertaling."
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:162
+msgid "Tabs now open in background."
+msgstr "Tabbladen openen nu op de achtergrond."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:163
-msgid "Now speaks Czech."
-msgstr ""
+msgid "Short-term style fix for plus.google.com."
+msgstr "Stijlbladoplossing voor plus.google.com."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:164
-msgid "Tabs now open in background."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:165
-msgid "Short-term style fix for plus.google.com."
-msgstr ""
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:166
 msgid "Preparations for more localization."
-msgstr ""
+msgstr "Voorbereidingen voor meer vertalingen."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:171
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:169
 msgid "Adds more keyboard and middle click shortcuts."
-msgstr ""
+msgstr "Meer sneltoetsen toegevoegd (toetsenbord en muis)."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:172
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:170
 msgid "Fixes links displayed in AppCenter."
-msgstr ""
+msgstr "Zichtbaarheid van links in AppCenter opgelost."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:177
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:175
 msgid "Hopefully this makes it display better in AppCenter."
-msgstr ""
+msgstr "Hopelijk wordt alles nu beter weergegeven."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:182
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:180
 msgid "Bugfix: a tab always remains open in each window."
-msgstr ""
+msgstr "Foutoplossing: tabblad blijft altijd geopend in elk venster."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:187
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:185
 msgid "Disable broken WebInspector for now."
-msgstr ""
+msgstr "WebInspectie tijdelijk uitgeschakeld."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:188
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:186
 msgid ""
 "If you have the know-how to fix "
 "https://github.com/alcinnz/Odysseus/issues/54, please help."
 msgstr ""
+"Als je weet hoe je https://github.com/alcinnz/Odysseus/issues/54 oplost, "
+"help me dan!"
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:193
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:191
 msgid "Offers a very smooth browsing and downloads experience."
-msgstr ""
+msgstr "Vloeiende navigatie en downloads."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:194
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:192
 msgid "First AppCenter release, so Merry Christmas!"
-msgstr ""
+msgstr "Eerste AppCenter-uitgave. Vrolijk kerstfeest!"

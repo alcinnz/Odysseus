@@ -1,20 +1,24 @@
-# French translations for extra package.
-# Copyright (C) 2019 THE extra'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the extra package.
-# NathanBnm, 2019.
-#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Corentin Noël <tintou@mailoo.org>, 2018
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-09 23:08+0200\n"
-"PO-Revision-Date: 2019-05-09 22:24+0200\n"
-"Last-Translator: NathanBnm\n"
-"Language-Team: none\n"
-"Language: fr\n"
+"POT-Creation-Date: 2019-05-20 16:41+1200\n"
+"PO-Revision-Date: 2017-12-16 19:21+0000\n"
+"Last-Translator: Corentin Noël <tintou@mailoo.org>, 2018\n"
+"Language-Team: French (https://www.transifex.com/none-483/teams/75521/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: data/com.github.alcinnz.odysseus.desktop.in:4
@@ -27,7 +31,7 @@ msgstr "Explorez les savoirs, les divertissements, et les services du web"
 
 #: data/com.github.alcinnz.odysseus.desktop.in:7
 msgid "com.github.alcinnz.odysseus"
-msgstr "com.github.alcinnz.odysseus"
+msgstr ""
 
 #. TRANSLATORS This is a semicolon list of keywords for this application
 #: data/com.github.alcinnz.odysseus.desktop.in:11
@@ -44,12 +48,12 @@ msgstr "Nouvel onglet"
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:6
 msgid "Odysseus web browser"
-msgstr "Navigateur Web Odysseus"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:7
 msgid ""
 "A simple and performant yet powerful window onto the open decentralized web"
-msgstr "Une simple ouverture performante vers le Web décentralisé"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:10
 msgid ""
@@ -57,300 +61,266 @@ msgid ""
 "increasingly, gently, and unobtrusively guides you wherever you want to go "
 "online."
 msgstr ""
-"Odysseus est un navigateur Web pratique est respectueux de la vie privée, il "
-"vous guide plus loin, simplement et en toute discrétion là où vous voulez "
-"aller en ligne. "
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:12
 msgid ""
 "Through this well thought out simplicity Odysseus lets you focus on the "
 "webpages that matter to you."
 msgstr ""
-"À travers ces belles pensées, la simplicité d'Odysseus vous permet de vous "
-"concentrer sur les pages Web qui comptent pour vous."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:14
 msgid "High-level features:"
-msgstr "Fonctionnalités :"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:16
 msgid "Tabbed web browsing"
-msgstr "Navigation en onglets"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:17
 msgid "Find-in-page"
-msgstr "Recherche dans la page"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:18
 msgid "Downloads"
-msgstr "Téléchargements"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:19
 msgid "Opens non-webpage links in 3rd party apps, or suggests ones to install"
 msgstr ""
-"Ouvre des liens externes dans des applications tierces, ou vous suggère de "
-"les installer"
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:20
 msgid "DuckDuckGo integration"
-msgstr "Intégration de DuckDuckGo"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:21
 msgid "Browser history"
-msgstr "Historique de navigation"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:22
 msgid "Topsites with initial hand-curated recommendations"
-msgstr "Meilleurs sites avec des recommandations au départ manuelles"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:24
 msgid "These features are completed to a high degree of polish."
-msgstr "Ces fonctionnalités sont bien implémentées."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:29
 msgid "Homepage, autocompletion"
-msgstr "Page d'accueil, autocomplétion"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:33
 msgid "History"
-msgstr "Historique"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:37
 msgid "Downloads, find-in-page"
-msgstr "Téléchargements, recherche dans la page"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:41
 msgid "Webfeed subscription"
-msgstr "Abonnement aux flux Web"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:46
 msgid "Adrian Cochrane"
-msgstr "Adrian Cochrane"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:65
 msgid "Webfeed discovery support!"
-msgstr "Prise en charge de la découverte des flux Web !"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:66
 msgid "Full Dutch localization"
-msgstr "Traduction complète en néerlandais"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:67
 msgid "Fix topsites editing"
-msgstr "Correction de la modification des meilleurs sites"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:68
 msgid "Lower threshold for sourcing topsites from browser history"
 msgstr ""
-"Seuil inférieur pour l'approvisionnement des meilleurs sites à partir de "
-"l'historique du navigateur"
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:69
 msgid "Minor performance improvements"
-msgstr "Légères améliorations des performances"
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:74
 msgid "Enable MSE, full French translations."
-msgstr "Activation de MSE, traduction complète en français."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:79
 msgid "Minor visual corrections."
-msgstr "Quelques corrections graphiques."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:80
 msgid ""
 "Visually tie status icons to addressbar again, revert having icons in "
 "application menu."
 msgstr ""
-"Les icônes d'état sont à nouveau liées visuellement à la barre d'adresse, et "
-"retirées du menu de l'application."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:82
 msgid "Fixes for other themes."
-msgstr "Corrections pour d'autres thèmes."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:87
 msgid ""
 "Indicates HTTPS (with it's cryptographic certificate) and local pages, "
 "errors, and permissions."
 msgstr ""
-"Indication du HTTPS (avec son certificat) et des pages locales, des erreurs "
-"et des permissions."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:92
 msgid "Indicates HTTPS and local pages."
-msgstr "Indication du HTTPS et des pages locales."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:97
 msgid "Performance fixes and better labelling on topsites display."
 msgstr ""
-"Correction des performances et meilleur affichage des noms des meilleurs "
-"sites."
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:98
 msgid "Hides downloads bar in fullscreen."
-msgstr "La barre de téléchargements esy désormais masquée en mode plein-écran."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:103
 msgid "Renders nice previews for webfeeds."
-msgstr "Création d'apercus pour les flux Web."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:104
 msgid "Fixes regressions with topsites interactions and viewsource."
 msgstr ""
-"Correction des regressions avec les intéractions des meilleurs sites et "
-"l'affichage du code source."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:109
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:108
 msgid "Fixes for Juno."
-msgstr "Corrections pour Juno."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:114
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:112
 msgid "Topsites performance and design improvements."
-msgstr "Amélioration de la performance des meilleurs sites et de l'apparence."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:115
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:113
 msgid "Add indicators for menuitems that are links."
-msgstr "Indicateurs pour les éléments du menu qui sont des liens."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:120
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:118
 msgid ""
 "Major performance improvements in regards to internal pages. i.e. stops "
 "wasting time wasting memory."
 msgstr ""
-"Améliorations majeures des performances par rapport aux pages locales. Par "
-"exemple cela arrête de perdre du temps en mémoire."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:121
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:119
 msgid "Recommends apps for unsupported URL and file types."
 msgstr ""
-"Recommandation d'applications pour les URL ou types de fichiers non "
-"supportés."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:122
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:120
 msgid "Improved accessibility of the downloads bar."
-msgstr "Amélioration de l'accessibilité de la barre des téléchargements."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:127
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:125
 msgid "Fills in gaps within the topsites display with my recommendations."
 msgstr ""
-"Comble les lacunes dans l'affichage des meilleurs sites avec mes "
-"recommandations."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:128
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:126
 msgid "More succinct text in download notifications."
-msgstr "Texte simplifié dans les notifcations de téléchargement."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:133
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:131
 msgid "You can customize the topsites on odysseus:home!"
 msgstr ""
-"Vous pouvez personnaliser les meilleurs sites en tapant odysseus:home !"
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:134
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:132
 msgid "Minor optimizations to odysseus:history."
-msgstr "Légère optimisation pour odysseus:history."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:139
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:137
 msgid "Your most visited pages are now linked to from the newtab page."
 msgstr ""
-"Vos pages les plus visités sont désormais liées à la page nouvel onglet."
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:138
+msgid "Now speaks French and Portuguese."
+msgstr ""
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:139
+msgid "Added credits page to thank contributors."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:140
-msgid "Now speaks French and Portuguese."
-msgstr "Maintenant traduit en français et en portugais."
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:141
-msgid "Added credits page to thank contributors."
-msgstr "Ajout de la page des crédits pour remercier les contributeurs."
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:142
 msgid "More minor UI corrections."
-msgstr "Quelques petites corrections de l'interface."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:147
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:145
 msgid ""
 "More communicative browser history viewer, with colour coded tabs, tooltips "
 "communicating which links you've followed, favicons, page screenshots, and "
 "years in all dates."
 msgstr ""
-"Historique de navigation plus communicatif, avec des onglets en couleur, des "
-"infobulles communiquant les liens que vous avez suivis, les icônes des sites "
-"Web, les captures d'écran des pages et les années dans toutes les dates."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:150
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:148
 msgid "Fixes for video playback and infinite tab spawnage."
-msgstr "Corrections pour la lecture vidéo et la création infinie d'onglets."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:151
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:149
 msgid "Added a privacy notice."
-msgstr "Ajout d'un avertissement de confidentialité."
+msgstr ""
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:154
+msgid "Natural search of your browser history"
+msgstr ""
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:155
+msgid ""
+"Added useful \"hints\" to the footer of the newtab page, which may link to a"
+" new credits page."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:156
-msgid "Natural search of your browser history"
-msgstr "Recherche naturelle dans l'historique de navigation"
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:157
-msgid ""
-"Added useful \"hints\" to the footer of the newtab page, which may link to a "
-"new credits page."
-msgstr ""
-"Ajout d'indication s utiles dans le pied de page de la page nouvel onglet, "
-"qui pourrait être lié a une page de crédits."
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:158
 msgid "Reduced prevalance of the \"loading\" message."
-msgstr "Diminution de la fréquence du message de chargement."
+msgstr ""
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:161
+msgid "Now speaks Czech."
+msgstr ""
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:162
+msgid "Tabs now open in background."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:163
-msgid "Now speaks Czech."
-msgstr "Maintenant traduit en tchèque."
+msgid "Short-term style fix for plus.google.com."
+msgstr ""
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:164
-msgid "Tabs now open in background."
-msgstr "Les onglets s'ouvrent désormais en arrière-plan."
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:165
-msgid "Short-term style fix for plus.google.com."
-msgstr "Correction de style à court terme pour plus.google.com."
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:166
 msgid "Preparations for more localization."
-msgstr "Préparation pour plus de traductions"
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:171
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:169
 msgid "Adds more keyboard and middle click shortcuts."
-msgstr "Ajout de nouveaux raccourcis claviers et de la molette de la souris."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:172
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:170
 msgid "Fixes links displayed in AppCenter."
-msgstr "Correction des liens dans le Centre d'Applications."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:177
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:175
 msgid "Hopefully this makes it display better in AppCenter."
-msgstr "En espérant que cela les affiche mieux dans le Centre d'Applications."
+msgstr ""
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:182
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:180
 msgid "Bugfix: a tab always remains open in each window."
 msgstr ""
-"Correction de bug : Un onglet reste toujours ouvert dans chaque fenêtre."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:187
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:185
 msgid "Disable broken WebInspector for now."
-msgstr "Désactivation de l'inspecteur Web non fonctionnel pour le moment."
-
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:188
-msgid ""
-"If you have the know-how to fix https://github.com/alcinnz/Odysseus/"
-"issues/54, please help."
 msgstr ""
-"Si vous avez le savoir-faire pour corriger https://github.com/alcinnz/"
-"Odysseus/issues/54, merci de m'aider."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:193
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:186
+msgid ""
+"If you have the know-how to fix "
+"https://github.com/alcinnz/Odysseus/issues/54, please help."
+msgstr ""
+
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:191
 msgid "Offers a very smooth browsing and downloads experience."
 msgstr ""
-"Odysseus vous offre une expérience de navigation et de téléchargement fluide."
 
-#: data/com.github.alcinnz.odysseus.appdata.xml.in:194
+#: data/com.github.alcinnz.odysseus.appdata.xml.in:192
 msgid "First AppCenter release, so Merry Christmas!"
-msgstr "Première version pour le Centre d'Applications, Joyeux Noël !"
+msgstr ""
