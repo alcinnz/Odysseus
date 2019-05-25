@@ -1,0 +1,13 @@
+diff --git a/src/Models/Links.vala b/src/Models/Links.vala
+index 1bbf9eb..f7f6668 100644
+--- a/src/Models/Links.vala
++++ b/src/Models/Links.vala
+@@ -29,7 +29,7 @@ namespace Odysseus.Model {
+             int stdin;
+             int stdout;
+             Process.spawn_async_with_pipes("/",
+-                    {"hxwls", "-lb", url},
++                    {"@hxwls@", "-lb", url},
+                     null,
+                     SpawnFlags.SEARCH_PATH,
+                     null,

@@ -1,0 +1,6 @@
+{
+  "url": "https://github.com/NixOS/nixpkgs-channels/archive/650a295621b27c4ebe0fa64a63fd25323e64deb3.tar.gz",
+  "sha256": "0rxjkfiq53ibz0rzggvnp341b6kgzgfr9x6q07m2my7ijlirs2da",
+  "name": "source",
+  "unpack": true
+}
