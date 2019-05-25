@@ -10,4 +10,10 @@ stdenv.mkDerivation {
   buildInputs = [ appstream gcr glib granite gtk3 html-xml-utils json-glib
                   libgee libsoup sqlite webkitgtk ];
   src = ./..;
+
+  patches = [ ./patches/hxwls-path.patch ];
+  hxwls = "${html-xml-utils}/bin/hxwls";
+  postPatch = ''
+    substituteAllInPlace src/Models/Links.vala
+  '';
 }
