@@ -7,7 +7,7 @@
 stdenv.mkDerivation {
   name = "odysseus";
   nativeBuildInputs = [ gettext meson ninja pkgconfig python3 vala ];
-  buildInputs = [ appstream gcr glib granite gtk3 html-xml-utils json-glib
+  buildInputs = [ appstream gcr glib granite gtk3 json-glib
                   libgee libsoup sqlite webkitgtk ];
   src = ./..;
 
