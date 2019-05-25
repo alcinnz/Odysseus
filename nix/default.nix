@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {}
+{ pkgs ? import ./nixpkgs {}
 , lib ? pkgs.lib
 , makeScope ? lib.makeScope
 , newScope ? pkgs.newScope
