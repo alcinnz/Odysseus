@@ -73,15 +73,18 @@ namespace Odysseus.Traits {
         scrolled.add(list);
         list.selection_mode = Gtk.SelectionMode.NONE;
 
+#if HAVE_GCR3
         // FIXME the commented out code hangs.
         //for (var chain = cert; chain != null; chain = cert.get_issuer()) {
             var gcr = new Gcr.SimpleCertificate (cert.certificate.data);
             list.add(build_certificate_row(gcr));
         //}
+#endif
 
         return ret;
     }
 
+#if HAVE_GCR3
     private Gtk.Widget build_certificate_row(Gcr.Certificate cert) {
         var ret = new Gtk.Grid();
         ret.column_spacing = 10; ret.row_spacing = 10;
@@ -107,4 +110,5 @@ namespace Odysseus.Traits {
         ret.halign = Gtk.Align.START;
         return ret;
     }
+#endif
 }

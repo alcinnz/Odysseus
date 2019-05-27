@@ -27,6 +27,7 @@ And given I can link to app descriptions where they can be installed via simple
         URLs, it looks quite trivial to write that UI in Prosody. The
         challenging bit is getting at the data, which is what's done here. */
 namespace Odysseus.Templating.xAppStream {
+#if HAVE_APPSTREAM
     using AppStream;
 
     public class AppStreamBuilder : TagBuilder, Object {
@@ -61,6 +62,7 @@ namespace Odysseus.Templating.xAppStream {
             }
         }
     }
+
     private class AppStreamTag : Template {
         private AppStream.Pool pool;
         private Variable[] vars;
@@ -138,4 +140,11 @@ namespace Odysseus.Templating.xAppStream {
             yield renderer.exec(data, output);
         }
     }
+#else
+    public class AppStreamBuilder : TagBuilder, Object {
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            return null;
+        }
+    }
+#endif
 }

@@ -1,1 +1,2 @@
-option('nofts5', type: 'boolean', value: false)
+option('appstream', type: 'boolean', value: true, description: 'Use appstream to recommend compatible apps')
+option('gcr', type: 'boolean', value: true, description: 'Use GCR to show certificate details, HEAVILY RECOMMENDED')
