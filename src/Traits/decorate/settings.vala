@@ -52,12 +52,25 @@ namespace Odysseus.Traits {
         settings.javascript_can_open_windows_automatically = false;
         settings.load_icons_ignoring_image_load_setting = true;
         settings.media_playback_allows_inline = true;
-        settings.media_playback_requires_user_gesture = false;
+        settings.media_playback_requires_user_gesture = true;
         settings.print_backgrounds = true;
         settings.set_user_agent_with_application_details("Odysseus",
                 Odysseus.Application.instance.build_version);
         Templating.xHTTP.FetchTag.user_agent = settings.user_agent;
-        settings.zoom_text_only = false;
+        settings.zoom_text_only = true;
+        settings.enable_accelerated_2d_canvas = true;
+        settings.enable_encrypted_media = false; // I'm morally opposed to this pseudo-standard
+        settings.enable_hyperlink_auditing = false; // Odysseus might be small enough for this to be effectively disabled.
+        settings.enable_media_stream = true; // Though it shouldn't be the browser's job.
+        settings.enable_webgl = true;
+        settings.enable_write_console_messages_to_stdout = false; // There's enough there already.
+        settings.hardware_acceleration_policy = WebKit.HardwareAccelerationPolicy.ALWAYS;
+        settings.@set(
+            "enable-back-forward-navigation-gestures", true,
+            "enable-javascript-markup", true,
+            "enable-mock-capture-devices", true, // Could be useful as a mute...
+            "enable-webaudio", true
+        );
         web.settings = settings;
     }
 }
