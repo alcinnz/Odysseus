@@ -51,6 +51,8 @@ namespace Odysseus.Traits {
                     d.popover = new Gtk.Popover(null);
                     var menu = new Gtk.Grid();
                     menu.orientation = Gtk.Orientation.VERTICAL;
+                    menu.row_spacing = 5;
+                    menu.margin = 5;
                     d.popover.add(menu);
 
                     /// Translators: name of a Reader Mode theme.
@@ -59,6 +61,13 @@ namespace Odysseus.Traits {
                     add_theme(web, menu, _("Moonlight"), "moonlight", group);
                     /// Translators: name of a Reader Mode theme.
                     add_theme(web, menu, _("Solarized"), "Solarized", group);
+
+                    var reload = new Gtk.Button.with_label(_("Exit Reader Mode"));
+                    reload.image = new Gtk.Image.from_icon_name("view-refresh", Gtk.IconSize.BUTTON);
+                    reload.always_show_image = true;
+                    reload.tooltip_text = _("Reload this page");
+                    reload.clicked.connect(() => web.reload());
+                    menu.add(reload);
                 }
 
                 return d.popover;
