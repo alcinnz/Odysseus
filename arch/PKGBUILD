@@ -5,6 +5,7 @@ pkgrel=1
 pkgdesc="Web browser for the open and decentralized web."
 url="https://odysseus.adrian.geek.nz"
 license=('GPL')
+arch=('i686' 'x86_64')
 depends=(
     'gtk3'
     'granite'
