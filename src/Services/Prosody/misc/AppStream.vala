@@ -117,18 +117,23 @@ namespace Odysseus.Templating.xAppStream {
                     }
                 }
 
-                app_list[j++] = Data.Let.builds("id", new Data.Literal(apps[i].id),
-                        Data.Let.builds("icon", new Data.Literal(icon),
-                        Data.Let.builds("name", new Data.Literal(apps[i].get_name())
+                // For non-AppStream-compatible package manager GUIs.
+                var packages = string.joinv(" ", apps[i].get_pkgnames());
+
+                app_list[j++] = Data.Let.builds("icon", new Data.Literal(icon),
+                        Data.Let.builds("name", new Data.Literal(apps[i].get_name()),
+                        Data.Let.builds("packages", new Data.Literal(packages),
+                        new Data.Literal(apps[i].id)
                 )));
             }
             app_list = app_list[0:j];
 
             // 4. What was the package manager again?
-            var pacman = AppInfo.get_default_for_uri_scheme("appstream").get_display_name();
+            var pacman = AppInfo.get_default_for_uri_scheme("appstream");
 
             // 5. Render via a common template
-            var data = Data.Let.builds("pacman", new Data.Literal(pacman),
+            var data = Data.Let.builds("pacman",
+                        new Data.Literal(pacman != null ? pacman.get_display_name() : ""),
                     Data.Let.builds("apps", new Data.List.from_array(app_list)));
             yield renderer.exec(data, output);
         }
