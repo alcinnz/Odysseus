@@ -1,0 +1,74 @@
+{
+    "app-id" : "com.github.alcinnz.odysseus",
+    "base": "io.elementary.BaseApp",
+    "base-version": "juno",
+    "runtime": "org.gnome.Platform",
+    "sdk": "org.gnome.Sdk",
+    "runtime-version": "3.32",
+    "command" : "com.github.alcinnz.odysseus",
+    "finish-args" : [
+        "--share=ipc",
+        "--share=network",
+        "--socket=x11",
+        "--socket=wayland",
+
+        "--device=dri",
+        "--socket=pulseaudio",
+
+        "--filesystem=xdg-run/dconf",
+        "--filesystem=~/.config/dconf:ro",
+        "--talk-name=ca.desrt.dconf",
+        "--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+    ],
+    "cleanup" : [
+        "/include",
+        "/lib/pkgconfig",
+        "/share/pkgconfig",
+        "/share/aclocal",
+        "/man",
+        "/share/man",
+        "/share/gtk-doc",
+        "*.la",
+        "*.a",
+        "/lib/girepository-1.0",
+        "/share/dbus-1",
+        "/share/doc",
+        "/share/gir-1.0"
+    ],
+    "modules" : [
+        {
+            "name" : "yaml",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/yaml/libyaml.git"
+                }
+            ]
+        },
+        {
+            "name" : "appstream",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dstemming=false",
+                "-Dvapi=true"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/ximion/appstream.git"
+                }
+            ]
+        },
+        {
+            "name" : "odysseus",
+            "buildsystem" : "meson",
+            "builddir" : true,
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/alcinnz/Odysseus.git"
+                }
+            ]
+        }
+    ]
+}
