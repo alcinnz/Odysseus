@@ -60,6 +60,7 @@ public class Odysseus.StatusIndicator : Object {
         var style = ret.get_style_context();
         style.remove_class("image-button");
         style.changed.connect(() => style.remove_class("image-button"));
+        style.add_class("entry");
 
         ret.halign = Gtk.Align.CENTER;
         ret.valign = Gtk.Align.BASELINE;
