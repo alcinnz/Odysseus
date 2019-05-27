@@ -36,7 +36,7 @@ msgstr ""
 #. TRANSLATORS This is a semicolon list of keywords for this application
 #: data/com.github.alcinnz.odysseus.desktop.in:11
 msgid "WWW;Web;Internet;Browser;"
-msgstr "WWW;Web;Internet;Prohlížeč"
+msgstr "WWW;Web;Internet;Prohlížeč;"
 
 #: data/com.github.alcinnz.odysseus.desktop.in:18
 msgid "New Window"
