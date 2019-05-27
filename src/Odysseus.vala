@@ -17,6 +17,7 @@
 public class Odysseus.Application : Granite.Application {
     construct {
         this.flags |= ApplicationFlags.HANDLES_OPEN;
+        this.flags |= ApplicationFlags.HANDLES_COMMAND_LINE;
         Intl.setlocale (LocaleCategory.ALL, "");
         Intl.textdomain ("odysseus");
 
@@ -36,7 +37,6 @@ public class Odysseus.Application : Granite.Application {
     }
 
     protected override int command_line (ApplicationCommandLine command_line) {
-        // FIXME This isn't run, find an alternate way to parse these arguments.
         activate();
 
         var window = get_active_window() as BrowserWindow;
