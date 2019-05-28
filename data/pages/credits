@@ -14,6 +14,8 @@
     <dd>{% trans %}Your system{% endtrans %} ({{ distro.ID }})</dd>
     <dd><a href="https://iconmonstr.com/">IconMonstr/Alexandar Kahlkopf</a></dd>
     <dt>{% trans %}Feature suggesions & bug reports{% endtrans %}</dt>
+    <dd><a href="https://github.com/Exalm">Alexander Mikhaylenko</a></dd>
+    <dd><a href="https://www.alm.website/">Alex Martin</a></dd>
     <dd><a href="https://github.com/NathanBnm">Nathan Bnm</a></dd>
     <dd><a href="https://github.com/giovannicaligaris">@giovannicaligaris</a></dd>
     <dd><a href="https://github.com/ghost">@ghost</a></dd>
@@ -36,8 +38,18 @@
     </dl></dd>
     <dt>{% trans %}Reader mode{% endtrans %}</dt>
     <dd><a href="https://mastodon.social/@bleakgrey">Bleakgrey</a></dd>
+    <dt>{% trans %}Packaging{% endtrans %}</dt>
+    <dd><dl>
+      <dt>elementary OS</dt>
+      <dt>Arch</dt>
+      <dd>Adrian Cochrane</dd>
+      <dt>FlatPak</dt>
+      <dd><a href="https://github.com/Exalm">Alexander Mikhaylenko</a></dd>
+      <dt>Nix</dt>
+      <dd><a href="https://libranet.de/~clacke">Claes Wallin</a></dd>
+    </dl></dd>
     <dt>{% trans %}Lead Developer/everything else{% endtrans %}</dt>
-    <dd><a href="https://github.com/alcinnz/">Adrian Cochrane</a></dd>
+    <dd><a href="https://adrian.geek.nz/">Adrian Cochrane</a></dd>
   </dl>
   <h2>{% trans %}External Projects{% endtrans %}</h2>
   <p>{% trans %}If it weren't for these projects Odysseus wouldn't exist,
