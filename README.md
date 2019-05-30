@@ -16,6 +16,20 @@ and to support the open decentralized web over the centralized services of today
 
 [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.alcinnz.odysseus.desktop) or [download a stable release](https://github.com/alcinnz/Odysseus/releases)
 
+Issues From Other Platforms
+---------------------------
+While Odysseus is primarily targetted towards elementary OS, I do welcome issues
+to be reported about breakages in other platforms. And I welcome Odysseus's app
+icon to be reworked for those themes as well, whether you want to contribute that
+work to my repository or their's.
+
+Because I've had an easy dealing with past issues in this regard, and I have people
+interested in using Odysseus on those other platforms.
+
+**NOTE:** This notice is in no way a condemnation of app devs who are asking not to
+have to deal with these issues. It should only indicate that some app devs have an
+easier time dealing with them than others through no fault of their own.
+
 Technical Architecture
 ----------------------
 In a nutshell Odysseus pulls together WebKitGTK and SQLite using GTK/Granite, splitting off minor enhancements to it's core UI into builtin "traits".
