@@ -24,7 +24,8 @@ icon to be reworked for those themes as well, whether you want to contribute tha
 work to my repository or their's.
 
 Because I've had an easy dealing with past issues in this regard, and I have people
-interested in using Odysseus on those other platforms.
+interested in using Odysseus on those other platforms. I want them to have a great
+experience too.
 
 **NOTE:** This notice is in no way a condemnation of app devs who are asking not to
 have to deal with these issues. It should only indicate that some app devs have an
@@ -71,7 +72,5 @@ Then within the repository's root run the fullowing commands (or some OS-specifi
 
 Contributing
 ------------
-
-For anyone interested in contributing new features, fixes, etc to Odysseus, pull requests are always welcome and there is a discussion [Matrix room](https://riot.im/app/#/room/#odysseus-web:matrix.org) for you to discuss your ideas or get help. If you don't know where to start, try one of these [feature requests](https://github.com/alcinnz/Odysseus/issues?q=is%3Aopen+is%3Aissue+label%3AEasy+label%3A%22help+wanted%22).
-
-If you want to help teach Oddysseus a new language, please visit https://github.com/alcinnz/Odysseus/wiki/Localizing-Odysseus. Work is ongoing to make this easier.
+Please see [the guide](https://odysseus.adrian.geek.nz/guides/contributing.html), and join the
+[Matrix room](https://riot.im/app/#/room/#odysseus-web:matrix.org) to discuss your ideas or get help.
