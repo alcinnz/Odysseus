@@ -40,4 +40,11 @@ stdenv.mkDerivation {
     webkitgtk
   ];
 
+  meta = with stdenv.lib; {
+    description = "A simple and performant yet powerful elementary OS-style window onto the open decentralized web";
+    homepage = "https://odysseus.adrian.geek.nz";
+    license = licenses.gpl3Plus;
+    platforms = platforms.linux;
+    maintainers = [ maintainers.worldofpeace ];
+  };
 }
