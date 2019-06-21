@@ -47,6 +47,7 @@
       <dd><a href="https://github.com/Exalm">Alexander Mikhaylenko</a></dd>
       <dt>Nix</dt>
       <dd><a href="https://libranet.de/~clacke">Claes Wallin</a></dd>
+      <dd><a href="https://github.com/worldofpeace">worldofpeace</a></dd>
     </dl></dd>
     <dt>{% trans %}Lead Developer/everything else{% endtrans %}</dt>
     <dd><a href="https://adrian.geek.nz/">Adrian Cochrane</a></dd>
