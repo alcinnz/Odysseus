@@ -59,6 +59,10 @@ namespace Odysseus.Templating {
             stdout.write(@"$text");
         }
     }*/
+    /* Used when we're calling the template for it's side effects. */
+    public class VoidWriter : Object, Writer {
+        public async void write(Slice text) {}
+    }
 
     /* Mainly used in the implementation of WebKit custom URI schemes.
         That API expects to receive data as an InputStream.
