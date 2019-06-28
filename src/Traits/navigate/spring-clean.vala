@@ -18,12 +18,12 @@
 namespace Odysseus.Traits {
     private short count = 0;
     public void maybe_spring_clean(WebKit.LoadEvent event) {
-        if (event != WebKit.LoadEvent.FINISHED || count++ != 32) return;
+        if (event != WebKit.LoadEvent.FINISHED || count++ != 16) return;
 
         Templating.ErrorData errData = null;
         try {
             Templating.get_for_resource("/io/github/alcinnz/Odysseus/odysseus:/spring-clean", ref errData)
                 .exec.begin(new Templating.Data.Empty(), new Templating.VoidWriter());
-        } catch (Error err) {/* It's fine. */}
+        } catch (Error err) {warning("Failed to run spring cleaning.");}
     }
 }

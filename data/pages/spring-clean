@@ -1,0 +1,23 @@
+{% random %}
+  {# Load up the full-text search index on-demand #}
+  {% query %}INSERT OR IGNORE INTO history_fts(rowid, uri, title)
+    SELECT rowid, uri, title FROM page_visit;{% endquery %}
+{% alt %}
+  {# Update the visit_counts index. This can take a little bit but not so much it is noticable.
+      Formulating it this way regularly gives control back to the GLib MainLoop,
+      such that the application remains responsive.
+      i.e. SQLite can freeze Odysseus, but Prosody cannot. #}
+  {% query %}BEGIN TRANSACTION;{% endquery %}
+  {# visit_counts is a special index, akin to a materialized view, that optimizes
+      selecting/ordering pages based on number of visits. #}
+  {% query %}SELECT uri, COUNT(*) AS count FROM page_visit GROUP BY uri;
+  {% except %}SELECT * FROM visit_counts WHERE url = {{ uri }} AND count = {{ count }};
+  {% each-row %}
+    <!-- Indexing {{ uri }} -->
+    {% query %}INSERT OR REPLACE INTO visit_counts(url, count)
+          VALUES ({{ uri }}, {{ count }});{% endquery %}
+  {% endquery %}
+  {% query %}END TRANSACTION;{% endquery %}
+{% endrandom %}
+
+Spring cleaning finished!
