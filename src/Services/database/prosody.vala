@@ -114,6 +114,16 @@ namespace Odysseus.Database.Prosody {
                 ix++;
             }
         }
+
+        public async int step() {
+            int ret = query.step();
+            while (ret == Sqlite.BUSY) {
+                Idle.add(step.callback);
+                yield;
+                ret = query.step();
+            }
+            return ret;
+        }
     }
 
     private class QueryTag : Template {
@@ -143,7 +153,7 @@ namespace Odysseus.Database.Prosody {
                 unowned Sqlite.Statement query = iter.query;
                 iter.bind(ctx);
 
-                while ((err = query.step()) == Sqlite.ROW) {
+                while ((err = yield iter.step()) == Sqlite.ROW) {
                     var loopParams = new Data.Stack(new DataSQLiteRow(query), ctx);
 
                     // SQLite doesn't return control flow to the mainloop, so do so here.
@@ -155,7 +165,7 @@ namespace Odysseus.Database.Prosody {
                     var skip = false;
                     for (var except = this.except; except != null; except = except.next) {
                         except.bind(loopParams);
-                        if (except.query.step() == Sqlite.ROW) continue;
+                        if ((yield except.step()) == Sqlite.ROW) continue;
                         skip = true;
                         break;
                     }
