@@ -85,5 +85,10 @@ BEGIN TRANSACTION;
   CREATE INDEX url_by_count ON visit_counts(count, url);
 {% endif %}
 
-PRAGMA user_version = 6;
+{% if v < 7 %}
+  CREATE TABLE unvisited_links(uri, endorsements);
+  CREATE TABLE link_sources(link, domain);
+{% endif %}
+
+PRAGMA user_version = 7;
 END TRANSACTION;
