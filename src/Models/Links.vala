@@ -41,9 +41,9 @@ namespace Odysseus.Model {
             var hxwls_out = new DataInputStream(new UnixInputStream(stdout, true));
 
             // Fix for webpages with, say, megabytes of HTML, so they don't freeze.
-            // Scanning just the first KB should be very generous.
-            if (src.length > 2048) {
-                yield hxwls_in.write_all_async(src[0:2048], Priority.DEFAULT, null, null);
+            // Scanning just the first several KB should be very generous.
+            if (src.length > 8*1024) {
+                yield hxwls_in.write_all_async(src[0:8*1024], Priority.DEFAULT, null, null);
             } else {
                 yield hxwls_in.write_all_async(src, Priority.DEFAULT, null, null);
             }
