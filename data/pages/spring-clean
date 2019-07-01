@@ -24,7 +24,7 @@
         SELECT unvisited_links.rowid
         FROM unvisited_links, page_visit
         WHERE page_visit.uri = unvisited_links.uri);
-    DELETE FROM link_sources WHERE uri IN (SELECT uri FROM page_visit);
+    DELETE FROM unvisited_links WHERE uri IN (SELECT uri FROM page_visit);
   {% endquery %}
 {% endrandom %}
 

@@ -12,7 +12,8 @@ header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
 overlay_widgets = ['FindToolbar', 'InfoContainer']
 traits = ['init', 'download-progress', 'download-window']
 nav_traits = ['autodownload', 'persist-tab-history', 'newtab', 'history',
-        'errors', 'other-types', 'screenshot-proxy', 'viewsource', 'spring-clean']
+        'errors', 'other-types', 'screenshot-proxy', 'viewsource', 'spring-clean',
+        'harvest-recommendations']
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll',
         'fix-plus.google.com', 'fix-bg-videos', 'addressbar-autofocus',
         'notifications']

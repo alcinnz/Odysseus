@@ -19,7 +19,7 @@ namespace Odysseus.Traits {
     public void setup_recommendations_harvester(WebTab tab) {
         var qCheckLinks = Database.parse("SELECT rowid FROM unvisited_links WHERE uri = ?;");
         var qCheckHistory = Database.parse("SELECT * FROM page_visit WHERE uri = ?;");
-        var qUpdateLink = Database.parse("UPDATE unvisited_links SET count = count + ? WHERE uri = ?;");
+        var qUpdateLink = Database.parse("UPDATE unvisited_links SET endorsements = endorsements + ? WHERE uri = ?;");
         var qInsertLink = Database.parse("INSERT INTO unvisited_links VALUES (?, ?);");
         var qCheckSources = Database.parse("SELECT * FROM link_sources WHERE link = ? AND domain = ?;");
         var qInsertSource = Database.parse("INSERT INTO link_sources VALUES (?, ?);");
@@ -36,7 +36,7 @@ namespace Odysseus.Traits {
                 // Save the link itself.
                 qCheckLinks.bind_text(1, link.href);
                 var isUpdating = testQuery(qCheckLinks);
-                var query = isUpdating ? qUpdateLink : qInsertLink;
+                unowned Sqlite.Statement query = isUpdating ? qUpdateLink : qInsertLink;
 
                 query.reset();
                 // Ofcourse sites recommend themselves, it means more when they recommend others.
@@ -56,7 +56,7 @@ namespace Odysseus.Traits {
                     qInsertSource.step();
                 }
             }
-        })
+        });
     }
 
     private bool testQuery(Sqlite.Statement query) {

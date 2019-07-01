@@ -57,6 +57,7 @@ namespace Odysseus.Traits {
         Database.setup_pseudorest(tab);
         setup_addressbar_autofocus(tab);
         tab.web.show_notification.connect(show_notification);
+        setup_recommendations_harvester(tab);
 
         // Indicators
         tab.populate_indicators.connect(report_https);
