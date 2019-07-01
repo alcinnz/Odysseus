@@ -18,6 +18,14 @@
           VALUES ({{ uri }}, {{ count }});{% endquery %}
   {% endquery %}
   {% query %}END TRANSACTION;{% endquery %}
+{% alt %}
+  {% query %}
+    DELETE FROM link_sources WHERE link IN (
+        SELECT unvisited_links.rowid
+        FROM unvisited_links, page_visit
+        WHERE page_visit.uri = unvisited_links.uri);
+    DELETE FROM link_sources WHERE uri IN (SELECT uri FROM page_visit);
+  {% endquery %}
 {% endrandom %}
 
-Spring cleaning finished!
+{% trans %}Spring cleaning finished!{% endtrans %}
