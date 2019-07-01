@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>[mail-unread] {% trans %}Personalized Suggestions{% endtrans %}</title>
+  <style>@import url(odysseus:butterick.css);</style>
+</head>
+<body>
+  <h1>{% trans %}Personalized Suggestions{% endtrans %}</h1>
+  <p>{% trans %}You have encountered, but not visited, these links whilst surfing the Web.{% endtrans %}</p>
+
+  <ul>{% query %}
+    SELECT rowid, uri FROM unvisited_links
+    WHERE uri NOT IN (SELECT uri FROM page_visit)
+    ORDER BY endorsements DESC, random()
+    LIMIT 25;
+  {% each-row %}
+    <li><a href="{{ uri }}">
+      <img src="{{ uri|favicon }}" height="16" width="16" />
+      {% trans %}Recommended by: {% endtrans %}
+      {% query %}
+        SELECT domain FROM link_sources WHERE link = {{ rowid }};
+      {% each-row %}
+        ● {{ domain }}
+      {% empty %}
+        {# This should never happen #}
+        {% trans %}No one?{% endtrans %}
+      {% endquery %}
+    </a></li>
+  {% empty %}
+    <li>{% trans %}I don't seem to have any links to recommend to you specifically,
+      but <a href="http://recommendations.adrian.geek.nz/">here's some great ones</a>!
+    {% endtrans %}</li>
+  {% endquery %}</ul>
+</body>
+</html>
