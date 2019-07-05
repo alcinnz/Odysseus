@@ -20,13 +20,13 @@ namespace Odysseus.Traits {
         var qCheckLinks = Database.parse("SELECT rowid FROM unvisited_links WHERE uri = ?;");
         var qCheckHistory = Database.parse("SELECT * FROM page_visit WHERE uri = ?;");
         var qUpdateLink = Database.parse("UPDATE unvisited_links SET endorsements = endorsements + ? WHERE uri = ?;");
-        var qInsertLink = Database.parse("INSERT INTO unvisited_links VALUES (?, ?);");
+        var qInsertLink = Database.parse("INSERT INTO unvisited_links(endorsements, uri) VALUES (?, ?);");
         var qCheckSources = Database.parse("SELECT * FROM link_sources WHERE link = ? AND domain = ?;");
-        var qInsertSource = Database.parse("INSERT INTO link_sources VALUES (?, ?);");
+        var qInsertSource = Database.parse("INSERT INTO link_sources(link, domain) VALUES (?, ?);");
 
         tab.links_parsed.connect((links, _) => {
             foreach (var link in links) {
-                if (link.rel == "" || link.rel == null) continue;
+                if (link.rel == "" || link.rel == null || link.href.has_prefix("odysseus:")) continue;
                 qCheckHistory.bind_text(1, link.href);
                 if (!testQuery(qCheckHistory)) continue;
 

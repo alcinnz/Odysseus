@@ -17,6 +17,7 @@
         <file>feedreaders</file>
         <file>filetype</file>
         <file>spring-clean</file>
+        <file>suggestions</file>
 
         <!-- Thanks to IconMonstr / Alexander Kahlkopf for these icons. -->
         <!-- It seems clearly within his license agreement to use them for
