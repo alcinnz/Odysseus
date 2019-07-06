@@ -26,7 +26,7 @@ namespace Odysseus.Traits {
 
         tab.links_parsed.connect((links, _) => {
             foreach (var link in links) {
-                if (link.rel == "" || link.rel == null || link.href.has_prefix("odysseus:")) continue;
+                if (link.tag != "a" || link.href.has_prefix("odysseus:")) continue;
                 qCheckHistory.bind_text(1, link.href);
                 if (!testQuery(qCheckHistory)) continue;
 

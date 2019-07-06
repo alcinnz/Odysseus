@@ -16,10 +16,11 @@
 */
 namespace Odysseus.Model {
     public class Link {
+        public string tag;
         public string rel;
         public string href;
-        public Link(string rel, string href) {
-            this.rel = rel; this.href = href;
+        public Link(string tag, string rel, string href) {
+            this.tag = tag; this.rel = rel; this.href = href;
         }
     }
     public async Link[] parse_links(uint8[] src, string url) {
@@ -53,7 +54,7 @@ namespace Odysseus.Model {
             string line;
             while ((line = yield hxwls_out.read_line_async()) != null) {
                 var record = line.split("\t");
-                links.add(new Link(record[1], record[2]));
+                links.add(new Link(record[0], record[1], record[2]));
             }
             return links.to_array();
         } catch (Error err) {
