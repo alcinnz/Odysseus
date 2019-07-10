@@ -20,6 +20,7 @@ that matter to you.</p>
       <li>DuckDuckGo integration</li>
       <li>Browser history</li>
       <li>Topsites with initial hand-curated recommendations</li>
+      <li>Personalized link recommendations</li>
     </ul>
     <p>These features are completed to a high degree of polish.</p>
   </description>
@@ -60,6 +61,12 @@ that matter to you.</p>
   </provides>
 
   <releases>
+    <release version="1.6.0" date="2019-07-10">
+      <description>
+        <p>Personalized recommendations</p>
+        <p>Performance optimizations (tidies up database)</p>
+      </description>
+    </release>
     <release version="1.5.17" date="2019-05-20">
       <description>
         <p>Reader Mode</p>
