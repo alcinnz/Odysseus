@@ -1,29 +1,30 @@
 {% msg /home:47 %} New Tab {% trans %}{% endmsg %}
-{% msg /home:71 %} Browser History {% trans %}{% endmsg %}
-{% msg /home:81 %} You 'pinned' this here {% trans %}{% endmsg %}
-{% msg /home:81 %} Pinned {% trans %}{% endmsg %}
-{% msg /home:84 %} Frequently visited {% trans %}{% endmsg %}
-{% msg /home:84 /history:29 /history:46 /NOT-FOUND:23 %} History {% trans %}{% endmsg %}
-{% msg /home:89 %} Recommended by Adrian Cochrane {% trans %}{% endmsg %}
-{% msg /home:89 %} Recommended {% trans %}{% endmsg %}
-{% msg /home:145 %} Browse faster with
+{% msg /home:72 %} Browser History {% trans %}{% endmsg %}
+{% msg /home:82 %} Several sites recommended this link. {% trans %}{% endmsg %}
+{% msg /home:88 %} You 'pinned' this here {% trans %}{% endmsg %}
+{% msg /home:88 %} Pinned {% trans %}{% endmsg %}
+{% msg /home:91 %} Frequently visited {% trans %}{% endmsg %}
+{% msg /home:92 %} <a href='odysseus:history'>History</a> {% trans %}{% endmsg %}
+{% msg /home:97 %} Recommended by Adrian Cochrane {% trans %}{% endmsg %}
+{% msg /home:97 %} Recommended {% trans %}{% endmsg %}
+{% msg /home:154 %} Browse faster with
         <a href="https://alcinnz.github.io/Odysseus-support/guides/keyboard-shortcuts.html">
           keyboard shortcuts</a>! {% trans %}{% endmsg %}
-{% msg /home:149 %} {# Translators: Use this entry to sell your translation project! #} 
+{% msg /home:158 %} {# Translators: Use this entry to sell your translation project! #} 
         Do you know another language? Then do your friends a favour and
         <a href="https://www.transifex.com/none-483/odysseus/dashboard/">teach Odysseus it</a>! {% trans %}{% endmsg %}
-{% msg /home:153 %} Don't know where to go? Here's some
+{% msg /home:162 %} Don't know where to go? Here's some
         <a href="https://alcinnz.github.io/Odysseus-recommendations/">recommendations</a>. {% trans %}{% endmsg %}
-{% msg /home:156 %} Want to help
+{% msg /home:165 %} Want to help
         <a href="https://github.com/alcinnz/Odysseus-support/wiki/Get-Involved!">make Odysseus more awesome</a>? {% trans %}{% endmsg %}
-{% msg /home:159 %} Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>. {% trans %}{% endmsg %}
-{% msg /home:161 %} Designed and coded with <a href="odysseus:credits">help</a>
+{% msg /home:168 %} Got questions? Have them <a href="https://alcinnz.github.io/Odysseus-support/">answered</a>. {% trans %}{% endmsg %}
+{% msg /home:170 %} Designed and coded with <a href="odysseus:credits">help</a>
         & ♥ by <a href="https://adrian.geek.nz/">Adrian Lyall Cochrane</a> in NZ. {% trans %}{% endmsg %}
-{% msg /home:164 %} History search not powerful enough for you?
+{% msg /home:173 %} History search not powerful enough for you?
         I <a href="https://alcinnz.github.io/Odysseus-support/guides/how-to-view-history.html">doubt it</a>! {% trans %}{% endmsg %}
-{% msg /home:167 %} While Odysseus does store information about your browsing,
+{% msg /home:176 %} While Odysseus does store information about your browsing,
         that <a href="odysseus:privacy">doesn't mean</a> we share it with anyone but you. {% trans %}{% endmsg %}
-{% msg /home:170 %} FYI: None of the links on this page were sponsered, no one paid for any of them. {% trans %}{% endmsg %}
+{% msg /home:179 %} FYI: None of the links on this page were sponsered, no one paid for any of them. {% trans %}{% endmsg %}
 {% msg /feedreaders:4 %} Available feedreaders {% trans %}{% endmsg %}
 {% msg /feedreaders:12 %} No <a href="https://en.wikipedia.org/wiki/News_aggregator">feed readers</a> are installed {% trans %}{% endmsg %}
 {% msg /feedreaders:15 %} In order to subscribe to a <a href="https://en.wikipedia.org/wiki/Web_feed">webfeed</a>,
@@ -106,6 +107,13 @@
       <a href="https://github.com/alcinnz/odysseus/issues/new">report this to
         <span title="the Odysseus developers">us</span></a> and attach a copy of
       this page (use the "Save As" option). More information (in English) is below. {% trans %}{% endmsg %}
+{% msg /suggestions:3 /suggestions:7 %} Personalized Suggestions {% trans %}{% endmsg %}
+{% msg /suggestions:8 %} You have encountered, but not visited, these links whilst surfing the Web. {% trans %}{% endmsg %}
+{% msg /suggestions:18 %} Recommended by: {% trans %}{% endmsg %}
+{% msg /suggestions:25 %} No one? {% trans %}{% endmsg %}
+{% msg /suggestions:29 %} I don't seem to have any links to recommend to you specifically,
+      but <a href="http://recommendations.adrian.geek.nz/">here's some great ones</a>! {% trans %}{% endmsg %}
+{% msg /history:29 /history:46 /NOT-FOUND:23 %} History {% trans %}{% endmsg %}
 {% msg /history:63 %} Visited from: {% trans %}{% endmsg %}
 {% msg /history:70 %} No results for this search or on this page! {% trans %}{% endmsg %}
 {% msg /history:98 %} Wow! No history. <a href="https://alcinnz.github.io/Odysseus-recommendations/">Go explore</a>! {% trans %}{% endmsg %}
@@ -129,24 +137,30 @@
 {% msg /NOT-FOUND:31 %} Lists all compatible feedreaders available in your package repositories. {% trans %}{% endmsg %}
 {% msg /NOT-FOUND:32 %} Compatible Apps {% trans %}{% endmsg %}
 {% msg /NOT-FOUND:35 %} Lists all apps in your package repository capable of opening a specific MIME type. {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:36 %} Personalized suggestions {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:37 %} Links recommended by visited pages you have yet to visit. {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:38 %} Database optimization {% trans %}{% endmsg %}
+{% msg /NOT-FOUND:39 %} Clears away junk from database. {% trans %}{% endmsg %}
 {% msg /SERVER-ERROR:9 %} Internal Error {% trans %}{% endmsg %}
 {% msg /SERVER-ERROR:21 %} This Is Bad… {% trans %}{% endmsg %}
 {% msg /SERVER-ERROR:22 %} I cannot understand my own code. If you are an Odysseus developer more information (in English) is below. If you aren't, please <a href="https://github.com/alcinnz/Odysseus/issues/new">tell us about the problem</a>. It helps if you can save this page and attach it to your message. {% trans %}{% endmsg %}
+{% msg /spring-clean:30 %} Spring cleaning finished! {% trans %}{% endmsg %}
 {% msg /credits:9 %} Logo critiques {% trans %}{% endmsg %}
 {% msg /credits:12 %} Other icons {% trans %}{% endmsg %}
 {% msg /credits:13 %} Your system {% trans %}{% endmsg %}
 {% msg /credits:15 %} Feature suggesions & bug reports {% trans %}{% endmsg %}
-{% msg /credits:21 %} And more… {% trans %}{% endmsg %}
-{% msg /credits:22 %} Translation {% trans %}{% endmsg %}
-{% msg /credits:30 %} Infrastructure {% trans %}{% endmsg %}
-{% msg /credits:33 %} Reader mode {% trans %}{% endmsg %}
-{% msg /credits:35 %} Lead Developer/everything else {% trans %}{% endmsg %}
-{% msg /credits:38 %} External Projects {% trans %}{% endmsg %}
-{% msg /credits:39 %} If it weren't for these projects Odysseus wouldn't exist,
+{% msg /credits:23 %} And more… {% trans %}{% endmsg %}
+{% msg /credits:24 %} Translation {% trans %}{% endmsg %}
+{% msg /credits:35 %} Infrastructure {% trans %}{% endmsg %}
+{% msg /credits:38 %} Reader mode {% trans %}{% endmsg %}
+{% msg /credits:40 %} Packaging {% trans %}{% endmsg %}
+{% msg /credits:51 %} Lead Developer/everything else {% trans %}{% endmsg %}
+{% msg /credits:54 %} External Projects {% trans %}{% endmsg %}
+{% msg /credits:55 %} If it weren't for these projects Odysseus wouldn't exist,
     it'd just be too hard to develop. So <em>thank you</em> to everyone who has
     worked on these projects, and a special thanks to those who guide their development. {% trans %}{% endmsg %}
-{% msg /credits:45 /credits:46 %} GNOME Web's logo {% trans %}{% endmsg %}
-{% msg /credits:51 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
+{% msg /credits:61 /credits:62 %} GNOME Web's logo {% trans %}{% endmsg %}
+{% msg /credits:67 %} And a <em>very special thanks</em> to <a href="https://elementary.io">elementary OS</a>
     and everyone who's ever published anything to the Web. You're what makes it all worthwhile! {% trans %}{% endmsg %}
 {% msg /errors/501:4 %} UNSUPPORTED {% trans %}{% endmsg %}
 {% msg /errors/501:9 %} Feature Not Supported {% trans %}{% endmsg %}
@@ -249,8 +263,9 @@
 {% msg /errors/405:10 %} Please take this up with the website's developers. {% trans %}{% endmsg %}
 {% msg /special/restore:8 %} Loading… {% trans %}{% endmsg %}
 {% msg /special/applist:1 %} Compatible apps {% trans %}{% endmsg %}
-{% msg /special/applist:5 %} View in {{ pacman }} . {% trans %}{% endmsg %}
-{% msg /special/applist:10 %} No compatible apps found in {{ pacman }} . {% trans %}{% endmsg %}
+{% msg /special/applist:6 %} View in {{ pacman }} . {% trans %}{% endmsg %}
+{% msg /special/applist:8 %} Packages for {{ app.name|default:app }} . {% trans %}{% endmsg %}
+{% msg /special/applist:14 %} No compatible apps found in {{ pacman }} . {% trans %}{% endmsg %}
 {% msg /viewers/application/rss+xml:31 %} Updated {% trans %}{% endmsg %}
 {% msg /viewers/application/rss+xml:36 %} Contributors {% trans %}{% endmsg %}
 {% msg /viewers/application/rss+xml:62 %} Authors {% trans %}{% endmsg %}
