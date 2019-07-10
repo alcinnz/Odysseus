@@ -34,6 +34,10 @@
         <form action="odysseus:filetype" method="GET"><input type="text" placeholder="MIME Type" name="mime" /></form>
       </dt>
       <dd>{% trans %}Lists all apps in your package repository capable of opening a specific MIME type.{% endtrans %}</dd>
+      <dt><a href="odysseus:suggestions">{% trans %}Personalized suggestions{% endtrans %}</a></dt>
+      <dd>{% trans %}Links recommended by visited pages you have yet to visit.{% endtrans %}</dd>
+      <dt><a href="odysseus:spring-clean">{% trans %}Database optimization{% endtrans %}</a></dt>
+      <dd>{% trans %}Clears away junk from database.{% endtrans %}</dd>
     </dl>
   </main>
 </body>

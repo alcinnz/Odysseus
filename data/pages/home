@@ -58,6 +58,7 @@ and I take advantage of this page to promote project links. #}
     main nav img:hover {box-shadow: 4px 4px 4px;}
 
     /* Styling for the different link sources */
+    .suggestion > a {color: #666; text-decoration: none; font-size: 132px; text-align: center;}
     .pinned img {color: #64baff;}
     .pinned form:first-of-type * {display: none;}
     .history img {color: #666;}
@@ -78,11 +79,18 @@ and I take advantage of this page to promote project links. #}
       AS order_
     {% endmacro %}
     {% query 20 %}
+      SELECT uri, 0 as order_, "suggestion" AS cat,
+          {{"Several sites recommended this link."|trans}} AS help,
+          {{"<a href='odysseus:suggestions'>Personalized Suggestion</a>"}}
+        FROM unvisited_links
+        WHERE uri NOT IN (SELECT uri FROM page_visit)
+        ORDER BY endorsements*random() DESC LIMIT 1;
       SELECT uri, order_, "pinned" AS cat,
           {{"You 'pinned' this here"|trans}} AS help, {{"Pinned"|trans}} AS caption
         FROM topsites_whitelist ORDER BY order_ ASC;
       SELECT url as uri, {% q-tailrank %}, "history" AS cat,
-          {{"Frequently visited"|trans}} AS help, {{"History"|trans}} AS caption
+          {{"Frequently visited"|trans}} AS help,
+          {{"<a href='odysseus:history'>History</a>"|trans}} AS caption
         FROM visit_counts
         WHERE count >= 10 AND uri NOT IN (SELECT uri FROM topsites_whitelist)
         ORDER BY count DESC;
@@ -97,6 +105,7 @@ and I take advantage of this page to promote project links. #}
       <figure class="{{ cat }}" tooltip="{{ cat }}">
         <a href="{{ uri }}" title="{{ help }}
 {{ uri }}">
+          {% if cat in "suggestion" %}?{% else %}
           <img style="width: 132px; height: 132px;"
                 {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ uri }};
                 {% each-row %}
@@ -104,7 +113,7 @@ and I take advantage of this page to promote project links. #}
                 {% empty %}{# Custom URI scheme that caches the HTTP responses in this table. #}
                   src="odysseusproxy:///{{ uri }}"
                 {% endquery %}
-                height="128" width="128" />
+                height="128" width="128" />{% endif %}
         </a>
         <legend>
           <form method="POST"><input aria-hidden name="$" value="topsites_whitelist" />
@@ -112,7 +121,7 @@ and I take advantage of this page to promote project links. #}
             <input type="number" name="order_" value="{{ order_ }}" />
             <button type="submit" title="Keep this link on this page.">&check;</button>
           </form>
-          {{ caption }}
+          {{ caption|safe }}
           <form method="POST"><input aria-hidden name="$" value="topsites_blacklist" />
             <input aria-hidden name="uri" value="{{ uri }}" />
             <button type="submit" title="Remove this link from this page.">x</button>
