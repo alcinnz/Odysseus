@@ -40,12 +40,12 @@ public class Odysseus.Overlay.FindToolbar : Gtk.Toolbar {
         this.options = WebKit.FindOptions.NONE;
 
         search = new Gtk.Entry();
-        search.primary_icon_name = "edit-find";
+        search.primary_icon_name = "edit-find-symbolic";
         search.placeholder_text = _("Find in page…");
         search.changed.connect(() => {
             find_in_page();
             search.secondary_icon_name = search.text_length > 0 ?
-                    "edit-clear" : null;
+                    "edit-clear-symbolic" : null;
         });
         search.icon_press.connect((which, pos) => {
             if (which == Gtk.EntryIconPosition.SECONDARY) {
