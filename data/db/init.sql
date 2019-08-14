@@ -89,6 +89,10 @@ BEGIN TRANSACTION;
   CREATE TABLE unvisited_links(uri, endorsements);
   CREATE TABLE link_sources(link, domain);
 {% endif %}
+-- Global because I forgot them in Odysseus 1.6
+CREATE INDEX IF NOT EXISTS unvisited_link__uri ON unvisited_links(uri);
+CREATE INDEX IF NOT EXISTS unvisited_link__endorsements ON unvisited_links(endorsements, uri); -- Vital.
+CREATE INDEX IF NOT EXISTS link_sources__both ON link_sources(link, domain);
 
 PRAGMA user_version = 7;
 END TRANSACTION;
