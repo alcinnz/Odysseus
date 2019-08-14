@@ -186,7 +186,12 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             var about_link = "appstream://com.github.alcinnz.odysseus";
             menu.add(_("About Odysseus"), () => Granite.Services.System.open_uri(about_link));
         });
+
         tools.shortcut(Gdk.Key.T, () => new_tab());
+        tools.shortcut(Gdk.Key.Page_Up, () => tabs.previous_page());
+        tools.shortcut(Gdk.Key.KP_Page_Up, () => tabs.previous_page());
+        tools.shortcut(Gdk.Key.Page_Down, () => tabs.next_page());
+        tools.shortcut(Gdk.Key.KP_Page_Down, () => tabs.next_page());
     }
 
     /* Implemented down here so it can be async */
