@@ -63,6 +63,7 @@ namespace Odysseus.Traits {
         tab.populate_indicators.connect(report_https);
         tab.populate_indicators.connect(report_local);
         tab.links_parsed.connect(discover_webfeeds);
+        setup_youtube_feed_discovery(tab);
         detect_readability(tab);
     }
 

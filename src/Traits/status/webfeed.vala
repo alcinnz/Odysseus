@@ -37,6 +37,46 @@ namespace Odysseus.Traits {
         }
     }
 
+    public void setup_youtube_feed_discovery(WebTab tab) {
+        // To help people move from YouTube's hueristics to ones they control.
+        tab.web.load_changed.connect((evt) => {
+            if (evt != WebKit.LoadEvent.FINISHED) return;
+            var uri = tab.url;
+            if (!uri.has_prefix("https://www.youtube.com/")) return;
+
+            var alternatives = new Gee.ArrayList<string>();
+            var feed_uri = "https://www.youtube.com/feeds/videos.xml";
+
+            var channel_base = "https://www.youtube.com/channel/";
+            if (uri.has_prefix(channel_base)) {
+                var channel = uri[channel_base.length:uri.length];
+                alternatives.add(feed_uri + "?channel_id=" + channel);
+            }
+            var user_base = "https://youtube.com/user/";
+            if (uri.has_prefix(user_base)) {
+                var user = uri[user_base.length:uri.length];
+                alternatives.add(feed_uri + "?user=" + user);
+            }
+
+            var query = uri.split("?", 2)[1].split("&");
+            foreach (var q in query) {
+                if (!q.has_prefix("list=")) continue;
+                var playlist = q["list=".length:q.length];
+                alternatives.add(feed_uri + "?playlist_id=" + playlist);
+            }
+
+            if (alternatives.size > 0) {
+                var indicator = new StatusIndicator(
+                    "webfeed-subscribe", Status.ENABLED,
+                    _("Subscribe to webfeeds"),
+                    (alts) => build_subscribe_popover(alts as Gee.List<string>));
+                indicator.user_data = alternatives;
+                tab.indicators.add(indicator);
+                tab.indicators_loaded(tab.indicators);
+            }
+        });
+    }
+
     private Gtk.Popover build_subscribe_popover(Gee.List<string> links) {
         var grid = new Gtk.Grid();
         grid.orientation = Gtk.Orientation.VERTICAL;
