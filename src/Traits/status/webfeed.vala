@@ -41,40 +41,50 @@ namespace Odysseus.Traits {
         // To help people move from YouTube's hueristics to ones they control.
         tab.web.load_changed.connect((evt) => {
             if (evt != WebKit.LoadEvent.FINISHED) return;
-            var uri = tab.url;
-            if (!uri.has_prefix("https://www.youtube.com/")) return;
+            discover_youtube_feeds(tab.url, tab);
+        });
 
-            var alternatives = new Gee.ArrayList<string>();
-            var feed_uri = "https://www.youtube.com/feeds/videos.xml";
+        // YouTube's a SPA, so handle that.
+        tab.web.notify["uri"].connect((pspec) => {
+            discover_youtube_feeds(tab.url, tab);
+        });
+    }
 
-            var channel_base = "https://www.youtube.com/channel/";
-            if (uri.has_prefix(channel_base)) {
-                var channel = uri[channel_base.length:uri.length];
-                alternatives.add(feed_uri + "?channel_id=" + channel);
-            }
-            var user_base = "https://youtube.com/user/";
-            if (uri.has_prefix(user_base)) {
-                var user = uri[user_base.length:uri.length];
-                alternatives.add(feed_uri + "?user=" + user);
-            }
+    public void discover_youtube_feeds(string uri, WebTab tab) {
+        if (!uri.has_prefix("https://www.youtube.com/")) return;
 
-            var query = uri.split("?", 2)[1].split("&");
+        var alternatives = new Gee.ArrayList<string>();
+        var feed_uri = "https://www.youtube.com/feeds/videos.xml";
+
+        var channel_base = "https://www.youtube.com/channel/";
+        if (uri.has_prefix(channel_base)) {
+            var channel = uri[channel_base.length:uri.length].split_set("/#?", 2)[0];
+            alternatives.add(feed_uri + "?channel_id=" + channel);
+        }
+        var user_base = "https://youtube.com/user/";
+        if (uri.has_prefix(user_base)) {
+            var user = uri[user_base.length:uri.length].split_set("/#?", 2)[0];
+            alternatives.add(feed_uri + "?user=" + user);
+        }
+
+        if ("?" in uri) {
+            var query = uri.split("?", 2)[1].split("#")[0].split("&");
             foreach (var q in query) {
                 if (!q.has_prefix("list=")) continue;
                 var playlist = q["list=".length:q.length];
                 alternatives.add(feed_uri + "?playlist_id=" + playlist);
             }
+        }
 
-            if (alternatives.size > 0) {
-                var indicator = new StatusIndicator(
-                    "webfeed-subscribe", Status.ENABLED,
-                    _("Subscribe to webfeeds"),
-                    (alts) => build_subscribe_popover(alts as Gee.List<string>));
-                indicator.user_data = alternatives;
-                tab.indicators.add(indicator);
-                tab.indicators_loaded(tab.indicators);
-            }
-        });
+        if (alternatives.size > 0) {
+            var indicator = new StatusIndicator(
+                "webfeed-subscribe", Status.ENABLED,
+                _("Subscribe to webfeeds"),
+                (alts) => build_subscribe_popover(alts as Gee.List<string>));
+            indicator.user_data = alternatives;
+            tab.indicators.add(indicator);
+            tab.indicators_loaded(tab.indicators);
+        }
     }
 
     private Gtk.Popover build_subscribe_popover(Gee.List<string> links) {
