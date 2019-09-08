@@ -7,22 +7,15 @@
   <summary>A simple and performant yet powerful window onto the open decentralized web</summary>
 
   <description>
-    <p>Odysseus is a convenient and privacy-respecting web browser, that increasingly,
-gently, and unobtrusively guides you wherever you want to go online.</p>
-	<p>Through this well thought out simplicity Odysseus lets you focus on the webpages
-that matter to you.</p>
-    <p>High-level features:</p>
+    <p>Odysseus is a simple yet powerful web browser focusing on new ways to discover the webpages you need and want, without relying on central webservices invading your privacy.</p>
+    <p>These discovery features include:</p>
     <ul>
-      <li>Tabbed web browsing</li>
-      <li>Find-in-page</li>
-      <li>Downloads</li>
-      <li>Opens non-webpage links in 3rd party apps, or suggests ones to install</li>
-      <li>DuckDuckGo integration</li>
-      <li>Browser history</li>
-      <li>Topsites with initial hand-curated recommendations</li>
-      <li>Personalized link recommendations</li>
+      <li>Top sites, with initial handcurated recommendations</li>
+      <li>Personalized suggestions, harvested from the pages you visit</li>
+      <li>Webfeed discovery, integrating with existing feedreaders</li>
+      <li>Easily skimmed browser history, with full-text search</li>
+      <li>Failing to open a link, suggests compatible apps to install</li>
     </ul>
-    <p>These features are completed to a high degree of polish.</p>
   </description>
 
   <screenshots>
@@ -61,6 +54,15 @@ that matter to you.</p>
   </provides>
 
   <releases>
+    <release versino="1.6.1" date="2019-09-08">
+      <description>
+        <p>Expose YouTube webfeeds.</p>
+        <p>Fix personalized recommendation display.</p>
+        <p>Performance fixes for personalized recommendations.</p>
+        <p>Use non-colourful icons.</p>
+        <p>Integrate history link deeper into topsites display.</p>
+      </description>
+    </release>
     <release version="1.6.0" date="2019-07-10">
       <description>
         <p>Personalized recommendations</p>
