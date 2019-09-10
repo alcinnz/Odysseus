@@ -54,7 +54,7 @@
   </provides>
 
   <releases>
-    <release versino="1.6.1" date="2019-09-08">
+    <release version="1.6.1" date="2019-09-08">
       <description>
         <p>Expose YouTube webfeeds.</p>
         <p>Fix personalized recommendation display.</p>
