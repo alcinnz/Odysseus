@@ -25,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -72,7 +72,7 @@
          offset="0"
          id="stop1693" />
       <stop
-         style="stop-color:#57d5a9;stop-opacity:0.91666669"
+         style="stop-color:#57d5a9;stop-opacity:1"
          offset="1"
          id="stop1695" />
     </linearGradient>
@@ -1985,12 +1985,12 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="22.627417"
-     inkscape:cx="2.4058734"
-     inkscape:cy="15.814395"
+     inkscape:cx="2.9861947"
+     inkscape:cy="17.462306"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer8"
+     inkscape:current-layer="layer7"
      showguides="true"
      inkscape:snap-page="true"
      inkscape:snap-grids="false" />
@@ -2071,7 +2071,7 @@
        inkscape:path-effect="#path-effect4154"
        style="fill:#fafafa;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <ellipse
-       style="fill:#667885;fill-opacity:1;stroke:none;stroke-width:0.49435729;stroke-opacity:1"
+       style="fill:#3a9104;fill-opacity:1;stroke:none;stroke-width:0.49435729;stroke-opacity:1"
        id="path3350"
        cx="11.189894"
        cy="115.71861"
@@ -2085,7 +2085,7 @@
        rx="1.6343009"
        ry="1.7878429" />
     <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#667885;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#667885;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:path-effect="#path-effect1689"
        inkscape:original-d="m 5.3708077,120.92878 c -0.5738824,-2.69586 -0.9733146,-5.36271 0.4273491,-7.36584 0.8326093,-1.02664 2.0731569,-1.64808 3.3142742,-2.04506 1.596851,-0.47398 4.117695,-0.22633 5.69059,0.29296 2.257689,0.74538 3.769494,1.3627 5.779118,2.66679 0.726758,0.47161 0.0097,1.04334 -0.319889,1.47103 -0.997938,1.29475 -2.361519,2.22702 -3.79595,3.04307 -3.324051,1.89105 -5.986553,0.72377 -9.1787446,1.29566 -0.3233901,0.058 -1.5943468,0.54547 -1.9167477,0.64139 z"
        id="path1687"
@@ -2098,6 +2098,6 @@
        cy="115.71861"
        cx="11.189894"
        id="ellipse1711"
-       style="fill:none;fill-opacity:1;stroke:#485a6c;stroke-width:0.75;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:#206b00;stroke-width:0.8;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>

@@ -25,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -72,7 +72,7 @@
          offset="0"
          id="stop1693" />
       <stop
-         style="stop-color:#57d5a9;stop-opacity:0.91666669"
+         style="stop-color:#57d5a9;stop-opacity:1"
          offset="1"
          id="stop1695" />
     </linearGradient>
@@ -1984,9 +1984,9 @@
      inkscape:window-height="1377"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="8"
-     inkscape:cx="-16.532468"
-     inkscape:cy="27.227649"
+     inkscape:zoom="32"
+     inkscape:cx="15.773143"
+     inkscape:cy="20.156292"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -2047,18 +2047,13 @@
      inkscape:label="Layer 3"
      transform="translate(0,-96)">
     <path
-       style="fill:#1b4b07;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.467096px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#667885;fill-opacity:0.50588238;fill-rule:evenodd;stroke:none;stroke-width:0.467096px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 24.782532,121.61841 -12.278428,-6.59162 5.522457,-5.19195 z"
        id="path4287-1"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
     <path
-       inkscape:connector-curvature="0"
-       id="path1701"
-       d="m 12.872455,114.68043 -0.368202,0.34642 12.27821,6.59152 -0.450557,-0.78582 z"
-       style="fill:#9ee6cd;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.467096px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    <path
-       style="fill:#1b4b07;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.467096px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#667885;fill-opacity:0.50588238;fill-rule:evenodd;stroke:none;stroke-width:0.467096px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 5.9158082,102.97395 12.0545068,6.88787 -5.461783,5.15718 z"
        id="path4287"
        inkscape:connector-curvature="0"
@@ -2080,11 +2075,6 @@
        inkscape:path-effect="#path-effect2294"
        style="opacity:0.07000002;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#0b0f17;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
-       inkscape:connector-curvature="0"
-       id="path1703"
-       d="m 5.9159186,102.97391 6.5925844,12.04496 5.461942,-5.15696 -0.359171,-0.20509 -5.102771,4.81799 -6.1590299,-11.2533 z"
-       style="fill:#9ee6cd;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.467096px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    <path
        sodipodi:nodetypes="cccsssssc"
        inkscape:connector-curvature="0"
        d="m 8.0413487,117.37309 c -0.61661,-2.89658 -1.0457813,-5.76198 0.4591667,-7.91426 0.8946,-1.10307 2.2275106,-1.77078 3.5610326,-2.19731 1.715743,-0.50927 4.424272,-0.24319 6.114275,0.31477 2.425782,0.80088 4.050146,1.46416 6.209394,2.86534 0.780868,0.50673 0.01048,1.12103 -0.343706,1.58056 -1.072238,1.39114 -2.537343,2.39282 -4.078572,3.26963 -3.571539,2.03185 -6.432273,0.77766 -9.862134,1.39213 -0.3474676,0.0623 -1.7130516,0.58608 -2.0594563,0.68914 z"
@@ -2093,7 +2083,7 @@
        inkscape:path-effect="#path-effect4154"
        style="fill:#fafafa;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <ellipse
-       style="fill:#667885;fill-opacity:1;stroke:none;stroke-width:0.49435726;stroke-opacity:1"
+       style="fill:#3a9104;fill-opacity:1;stroke:none;stroke-width:0.49435726;stroke-opacity:1"
        id="path3350"
        cx="14.293686"
        cy="111.77502"
@@ -2120,6 +2110,6 @@
        cy="111.77502"
        cx="14.293686"
        id="ellipse1711"
-       style="fill:none;fill-opacity:1;stroke:#485a6c;stroke-width:0.75;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:#206b00;stroke-width:0.75;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>
