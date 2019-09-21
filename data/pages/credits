@@ -8,6 +8,7 @@
 <body>
   <dl>
     <dt>{% trans %}Logo critiques{% endtrans %}</dt>
+    <dd>Redesign by: <a href="https://github.com/Fatih20">Nararyans R.I.</a></dd>
     <dd><a href="https://minimusminor.tumblr.com/">William Tongue</a></dd>
     <dd>Aurora Cochrane</dd>
     <dt>{% trans %}Other icons{% endtrans %}</dt>

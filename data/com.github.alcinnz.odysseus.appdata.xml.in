@@ -44,7 +44,7 @@
   <update_contact>alcinnz@lavabit.com</update_contact>
 
   <custom>
-    <value key="x-appcenter-color-primary">#f7785b</value>
+    <value key="x-appcenter-color-primary">#57d5a9</value>
     <value key="x-appcenter-color-primary-text">#000</value>
     <value key="x-appcenter-suggested-price">1</value>
   </custom>
@@ -54,7 +54,9 @@
   </provides>
 
   <releases>
-    <release versino="1.6.1" date="2019-09-08">
+    <!-- Next release should include:
+      <p>New icon thanks to Fatih20 (Nararyans R.I.)</p> -->
+    <release version="1.6.1" date="2019-09-08">
       <description>
         <p>Expose YouTube webfeeds.</p>
         <p>Fix personalized recommendation display.</p>
