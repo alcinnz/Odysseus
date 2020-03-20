@@ -54,8 +54,12 @@
   </provides>
 
   <releases>
-    <!-- Next release should include:
-      <p>New icon thanks to Fatih20 (Nararyans R.I.)</p> -->
+    <release version="1.6.2" date="2020-03-20">
+      <description>
+        <p>New icon thanks to Fatih20 (Nararyans R.I.)</p>
+        <p>Fix crash resulting from opening local files (the OS no longer provides the "file://"-prefix).</p>
+      </description>
+    </release>
     <release version="1.6.1" date="2019-09-08">
       <description>
         <p>Expose YouTube webfeeds.</p>
