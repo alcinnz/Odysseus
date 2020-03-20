@@ -52,7 +52,8 @@ public class Odysseus.Application : Granite.Application {
                 win.new_tab();
                 win.show_all();
                 continue;
-            }
+            } else if (arg.has_prefix("/")) // GIO stopped providing the URI scheme.
+                arg = "file://" + arg;
 
             window.new_tab(arg);
         }
