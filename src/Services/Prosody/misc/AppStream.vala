@@ -84,13 +84,13 @@ namespace Odysseus.Templating.xAppStream {
             extra_mimes = extra_mimes[1:extra_mimes.length];
 
             // 2. Query AppStream
-            var apps = pool.get_components_by_provided_item(ProvidedKind.MIMETYPE, mime);
+            var apps = pool.get_components_by_provided_item(ProvidedKind.MEDIATYPE, mime);
 
             // 3. Construct a datamodel for rendering
             var app_list = new Data.Data[apps.length]; int j = 0;
             for (var i = 0; i < apps.length; i++) {
                 // First check if it also matches extra_mimes!
-                var app_mimes = apps[i].get_provided_for_kind(AppStream.ProvidedKind.MIMETYPE);
+                var app_mimes = apps[i].get_provided_for_kind(AppStream.ProvidedKind.MEDIATYPE);
                 var matches = true;
                 foreach (var extra_mime in extra_mimes) {
                     if (app_mimes.has_item(extra_mime)) continue;
