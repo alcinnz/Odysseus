@@ -46,35 +46,37 @@ namespace Odysseus.Services {
         var url = new Data.Mapping(null, url_text);
         var parser = new Soup.URI(url_text);
 
-        url["fragment"] = new Data.Literal(parser.fragment);
-        url["host"] = new Data.Literal(parser.host);
-        url["password"] = new Data.Literal(parser.password);
-        url["path"] = new Data.Literal(parser.path);
-        url["port"] = new Data.Literal(parser.port);
-        url["scheme"] = new Data.Literal(parser.scheme);
-        url["user"] = new Data.Literal(parser.user);
+        if (parser != null) {
+            url["fragment"] = new Data.Literal(parser.fragment);
+            url["host"] = new Data.Literal(parser.host);
+            url["password"] = new Data.Literal(parser.password);
+            url["path"] = new Data.Literal(parser.path);
+            url["port"] = new Data.Literal(parser.port);
+            url["scheme"] = new Data.Literal(parser.scheme);
+            url["user"] = new Data.Literal(parser.user);
 
-        var q = new Gee.HashMap<Slice, Gee.List<Data.Data>>();
-        foreach (var keyvalue in parser.query.split("&")) {
-            var segments = keyvalue.split("=", 2);
-            if (segments.length == 0) {
-                warning("Malformed query string '%s'", parser.query);
-                continue;
+            var q = new Gee.HashMap<Slice, Gee.List<Data.Data>>();
+            foreach (var keyvalue in parser.query.split("&")) {
+                var segments = keyvalue.split("=", 2);
+                if (segments.length == 0) {
+                    warning("Malformed query string '%s'", parser.query);
+                    continue;
+                }
+
+                var key = new Slice.s(segments[0]);
+                Data.Data val = new Data.Literal("");
+                if (segments.length > 1)
+                    val = new Data.Literal(Soup.URI.decode(segments[1].replace("+", " ")));
+
+                if (!q.has_key(key)) q[key] = new Gee.ArrayList<Data.Data>();
+                var vals = q[key];
+                vals.add(val);
             }
 
-            var key = new Slice.s(segments[0]);
-            Data.Data val = new Data.Literal("");
-            if (segments.length > 1)
-                val = new Data.Literal(Soup.URI.decode(segments[1].replace("+", " ")));
-
-            if (!q.has_key(key)) q[key] = new Gee.ArrayList<Data.Data>();
-            var vals = q[key];
-            vals.add(val);
+            var query = new Gee.HashMap<Slice, Data.Data>();
+            url["query"] = new Data.Mapping(query, parser.query);
+            foreach (var p in q.entries) query[p.key] = new Data.List(p.value);
         }
-
-        var query = new Gee.HashMap<Slice, Data.Data>();
-        url["query"] = new Data.Mapping(query, parser.query);
-        foreach (var p in q.entries) query[p.key] = new Data.List(p.value);
 
         // Predominantly used by the bad-certificate error page.
         if (url_text.has_prefix("https://")) {
