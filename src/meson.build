@@ -4,6 +4,7 @@ liberate_resources = gnome.compile_resources(
          c_name: 'liberate'
        )
 liberate = ['Liberate', 'Reader']
+tokenized = ['AutomaticScrollBox', 'Completer', 'tokenized']
 
 sources = ['Odysseus', 'BrowserWindow', 'Persistance']
 widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar', 'Chromeless']
@@ -32,6 +33,9 @@ models = ['Download', 'DownloadSet', 'ImageUtil', 'I18nUtil', 'StatusIndicator',
 
 foreach f : liberate
     sources += ['ext/liberate/' + f]
+endforeach
+foreach f : tokenized
+    sources += ['ext/tokenized-entry/' + f]
 endforeach
 foreach f : header_widgets
     widgets += ['header/' + f]
