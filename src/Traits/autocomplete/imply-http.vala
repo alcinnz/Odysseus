@@ -19,8 +19,8 @@
 Takes care to leave valid URIs as is so users can take advantage of the fact
 URIs entered into the addressbar may be opened by other applications. */
 namespace Odysseus.Traits {
-    public class ImplyHTTP : Services.CompleterDelegate {
-        public override void autocomplete() {
+    public class ImplyHTTP : Tokenized.CompleterDelegate {
+        public override void autocomplete(string query, Tokenized.Completer c) {
             if (" " in query || !("." in query || ":" in query))
                 return; // Doesn't even resemble a URI!
 
@@ -46,8 +46,8 @@ namespace Odysseus.Traits {
                 }
             }
 
-            if (has_schema) suggest(query);
-            else suggest("https://" + query);
+            if (has_schema) c.suggestion(query);
+            else c.suggestion("https://" + query);
         }
     }
 }

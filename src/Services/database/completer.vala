@@ -16,7 +16,7 @@
 */
 /** Makes it trivial to write autocompletors as database queries. */
 namespace Odysseus.Services {
-    public abstract class CompleterQuery : CompleterDelegate {
+    public abstract class CompleterQuery : Tokenized.CompleterDelegate {
         private Sqlite.Statement compiled;
         public abstract string sql();
 
@@ -27,7 +27,7 @@ namespace Odysseus.Services {
             }
         }
 
-        public override void autocomplete() {
+        public override void autocomplete(string query, Tokenized.Completer c) {
             // These completers will generally be unhelpful in this case
             if (query == "") return;
 
@@ -35,7 +35,7 @@ namespace Odysseus.Services {
             compiled.bind_text(1, query);
 
             while (compiled.step() == Sqlite.ROW) {
-                suggest(compiled.column_text(1), compiled.column_text(0));
+                c.suggestion(compiled.column_text(1), compiled.column_text(0));
             }
         }
     }

@@ -16,10 +16,10 @@
 */
 /** Suggests the user "quacks" what they entered into the addressbar. */
 namespace Odysseus.Traits.Search {
-    public class DuckDuckGo : Services.CompleterDelegate {
+    public class DuckDuckGo : Tokenized.CompleterDelegate {
 
-        public override void autocomplete() {
-            suggest("https://duckduckgo.com/?q=" + Soup.URI.encode(query, null),
+        public override void autocomplete(string query, Tokenized.Completer c) {
+            c.suggestion("https://duckduckgo.com/?q=" + Soup.URI.encode(query, null),
                     "🔍\t" + query);
         }
     }

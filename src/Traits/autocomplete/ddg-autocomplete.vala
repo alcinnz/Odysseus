@@ -16,26 +16,25 @@
 */
 /** Loads autocompletions from DuckDuckGo. */
 namespace Odysseus.Traits.Search {
-    public class DDGOnlineCompletions : Services.CompleterDelegate {
+    public class DDGOnlineCompletions : Tokenized.CompleterDelegate {
         private Soup.Session session = new Soup.Session();
         private Cancellable in_progress = new Cancellable();
         private DuckDuckGo output;
-        
+
         construct {
-            output = Object.@new(typeof(DuckDuckGo), "completer", completer)
-                    as DuckDuckGo;
+            output = new DuckDuckGo();
         }
-        
-        public override void autocomplete() {
+
+        public override void autocomplete(string query, Tokenized.Completer c) {
             // Don't want this to be a keylogger, even for DuckDuckGo.
             if (!(" " in query)) return;
             // Cancel current request if any, then reset for reuse.
             in_progress.cancel(); in_progress.reset();
 
-            fetch_completions.begin();
+            fetch_completions.begin(query, c);
         }
 
-        private async void fetch_completions() {
+        private async void fetch_completions(string query, Tokenized.Completer c) {
             try {
                 var uri = "https://duckduckgo.com/ac/?q=" + Soup.URI.encode(query, null);
                 var request = session.request(uri);
@@ -49,8 +48,7 @@ namespace Odysseus.Traits.Search {
                     var jsonString = obj.get_string_member(member);
                     if (jsonString == null) return;
 
-                    output.query = jsonString;
-                    output.autocomplete();
+                    output.autocomplete(jsonString, c);
                 });
                 yield jsonParser.load_from_stream_async(response, in_progress);
             } catch (Error e) {
