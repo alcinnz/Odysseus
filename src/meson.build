@@ -8,7 +8,7 @@ tokenized = ['AutomaticScrollBox', 'Completer', 'tokenized']
 
 sources = ['Odysseus', 'BrowserWindow', 'Persistance']
 widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar', 'Chromeless']
-header_widgets = ['AddressBar', 'ButtonWithMenu', 'AutomaticScrollBox',
+header_widgets = ['AddressBar2', 'ButtonWithMenu', 'AutomaticScrollBox',
         'HeaderBarWithMenus']
 overlay_widgets = ['FindToolbar', 'InfoContainer']
 traits = ['init', 'download-progress', 'download-window']

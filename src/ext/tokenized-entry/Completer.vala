@@ -6,7 +6,6 @@ namespace Tokenized {
     public class Completion : Object {
         public string val {get; set;}
         public string label {get; set;}
-        public Completer? completer = null;
         public bool is_token;
 
         public Completion(string val, string label) {
@@ -14,11 +13,10 @@ namespace Tokenized {
             this.label = label;
             this.is_token = false;
         }
-        public Completion.token(string val, string label, Completer? completer = null) {
+        public Completion.token(string val, string label) {
             this.val = val;
             this.label = label;
             this.is_token = true;
-            this.completer = completer;
         }
     }
 
@@ -57,8 +55,8 @@ namespace Tokenized {
         public void suggestion(string val, string? label = null) {
             @yield(new Completion(val, label == null ? val : label));
         }
-        public void token(string val, string? label = null, Completer? completer = null) {
-            @yield(new Completion.token(val, label == null ? val : label, completer));
+        public void token(string val, string? label = null) {
+            @yield(new Completion.token(val, label == null ? val : label));
         }
     }
 

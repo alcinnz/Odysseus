@@ -1,7 +1,7 @@
 using Gtk;
 
 public class TokenizedEntry : Grid {
-    private Entry entry;
+    public Entry entry;
     private Button clear_button;
     private Grid grid;
 
@@ -21,6 +21,7 @@ public class TokenizedEntry : Grid {
         }
         get {return _tokens;}
     }
+    public signal void value_entered(string val);
 
     /* -- expand to fill -- */
     public int max_width {get; set; default = 840;} // Something large
@@ -85,9 +86,15 @@ public class TokenizedEntry : Grid {
 
     public class TextRow : ListBoxRow {
         public string label = "";
-        public TextRow(string label) {
+        public string val = "";
+        public bool is_token = false;
+        public TextRow(string label, string val, bool is_token) {
             this.label = label;
+            this.val = val;
+            this.is_token = is_token;
+
             add(new Gtk.Label(label));
+            this.tooltip_text = val;
             show_all();
         }
     }
@@ -96,7 +103,7 @@ public class TokenizedEntry : Grid {
         list.@foreach((widget) => {list.remove(widget);});
 
         autocompleter.suggest(entry.text, (result) => {
-            list.add(new TextRow(result.label));
+            list.add(new TextRow(result.label, result.val, result.is_token));
 
             /* Ensure a row is selected. */
             if (list.get_children().length() == 1) {
@@ -127,8 +134,10 @@ public class TokenizedEntry : Grid {
 
     /* -- tokens -- */
     public void addtoken(TextRow row) {
-        _tokens.add(new Token(row.label));
-        rebuild_tokens();
+        if (row.is_token) {
+            _tokens.add(new Token(row.label));
+            rebuild_tokens();
+        } else value_entered(row.val);
     }
 
     private void _addtoken(Token row) {
