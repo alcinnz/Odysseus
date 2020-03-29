@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-20 16:41+1200\n"
+"POT-Creation-Date: 2020-03-29 19:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -340,7 +340,7 @@ msgstr ""
 msgid "Unknown error…"
 msgstr ""
 
-#: src/Traits/status/https.vala:98
+#: src/Traits/status/https.vala:101
 #, c-format
 msgid "Expires %s"
 msgstr ""
@@ -349,16 +349,16 @@ msgstr ""
 msgid "This page was loaded from your computer. Noone else knows you're here."
 msgstr ""
 
-#: src/Traits/status/webfeed.vala:33
+#: src/Traits/status/webfeed.vala:33 src/Traits/status/webfeed.vala:82
 msgid "Subscribe to webfeeds"
 msgstr ""
 
-#: src/Traits/status/webfeed.vala:154
+#: src/Traits/status/webfeed.vala:204
 #, c-format
 msgid "Subscribe via %s"
 msgstr ""
 
-#: src/Traits/status/webfeed.vala:166
+#: src/Traits/status/webfeed.vala:216
 msgid "Install a feedreader to subscribe"
 msgstr ""
 
@@ -367,16 +367,24 @@ msgid "Improve this page's readability"
 msgstr ""
 
 #. / Translators: name of a Reader Mode theme.
-#: src/Traits/status/liberate.vala:57
+#: src/Traits/status/liberate.vala:59
 msgid "Light"
 msgstr ""
 
 #. / Translators: name of a Reader Mode theme.
-#: src/Traits/status/liberate.vala:59
+#: src/Traits/status/liberate.vala:61
 msgid "Moonlight"
 msgstr ""
 
 #. / Translators: name of a Reader Mode theme.
-#: src/Traits/status/liberate.vala:61
+#: src/Traits/status/liberate.vala:63
 msgid "Solarized"
+msgstr ""
+
+#: src/Traits/status/liberate.vala:65
+msgid "Exit Reader Mode"
+msgstr ""
+
+#: src/Traits/status/liberate.vala:68
+msgid "Reload this page"
 msgstr ""
