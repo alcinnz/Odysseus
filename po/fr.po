@@ -1,15 +1,15 @@
 # French translations of the com.github.alcinnz.odysseus package.
 # Copyright (C) 2019 THE com.github.alcinnz.odysseus'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.alcinnz.odysseus package.
-# NathanBnm, 2019.
+# Nathan Bonnemains (@NathanBnm), 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-09 23:26+0200\n"
+"POT-Creation-Date: 2020-03-29 19:57+0200\n"
 "PO-Revision-Date: 2019-05-09 22:07+0200\n"
-"Last-Translator: NathanBnm\n"
+"Last-Translator: Nathan Bonnemains (@NathanBnm)\n"
 "Language-Team: Français\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -32,82 +32,82 @@ msgstr "Retourner à la page précédente"
 msgid "Go to next viewed page"
 msgstr "Aller à la page suivante"
 
-#: src/BrowserWindow.vala:118
+#: src/BrowserWindow.vala:125
 msgid "Load this page from the website again"
 msgstr "Recharger cette page à partir du site web"
 
-#: src/BrowserWindow.vala:120
+#: src/BrowserWindow.vala:127
 msgid "Ignore cache"
 msgstr "Ignorer le cache"
 
-#: src/BrowserWindow.vala:123
+#: src/BrowserWindow.vala:130
 msgid "Stop loading this page"
 msgstr "Arrêter le chargement de cette page"
 
-#: src/BrowserWindow.vala:125
+#: src/BrowserWindow.vala:132
 msgid "Stop And Reload"
 msgstr "Recommencer le chargement"
 
-#: src/BrowserWindow.vala:138
+#: src/BrowserWindow.vala:145
 msgid "Current web address"
 msgstr "Adresse Web actuelle"
 
-#: src/BrowserWindow.vala:147
+#: src/BrowserWindow.vala:154
 msgid "Menu"
 msgstr "Menu"
 
-#: src/BrowserWindow.vala:148
+#: src/BrowserWindow.vala:155
 msgid "_New Window"
 msgstr "_Nouvelle fenêtre"
 
-#: src/BrowserWindow.vala:153 src/BrowserWindow.vala:154
+#: src/BrowserWindow.vala:160 src/BrowserWindow.vala:161
 #: src/Widgets/DownloadButton.vala:100
 msgid "_Open"
 msgstr "_Ouvrir"
 
-#: src/BrowserWindow.vala:156
+#: src/BrowserWindow.vala:163
 msgid "_Save"
 msgstr "_Enregistrer"
 
 #. TRANSLATORS _ precedes shortcut key
-#: src/BrowserWindow.vala:157 src/Widgets/DownloadButton.vala:110
+#: src/BrowserWindow.vala:164 src/Widgets/DownloadButton.vala:110
 #: src/Widgets/DownloadButton.vala:114
 msgid "_Save As"
 msgstr "_Enregistrer sous"
 
-#: src/BrowserWindow.vala:160
+#: src/BrowserWindow.vala:167
 msgid "_View Source"
 msgstr "_Afficher la source"
 
-#: src/BrowserWindow.vala:162
+#: src/BrowserWindow.vala:169
 msgid "Zoom In"
 msgstr "Zoom avant"
 
-#: src/BrowserWindow.vala:164
+#: src/BrowserWindow.vala:171
 msgid "Zoom Out"
 msgstr "Zoom arrière"
 
-#: src/BrowserWindow.vala:167
+#: src/BrowserWindow.vala:174
 msgid "_History"
 msgstr "_Historique"
 
-#: src/BrowserWindow.vala:169
+#: src/BrowserWindow.vala:176
 msgid "_Find In Page"
 msgstr "_Chercher dans la page"
 
-#: src/BrowserWindow.vala:174
+#: src/BrowserWindow.vala:181
 msgid "_Print"
 msgstr "_Imprimer"
 
-#: src/BrowserWindow.vala:176
+#: src/BrowserWindow.vala:183
 msgid "Show Downloads"
 msgstr "Afficher les téléchargements"
 
-#: src/BrowserWindow.vala:178
+#: src/BrowserWindow.vala:185
 msgid "Help"
 msgstr "Aide"
 
-#: src/BrowserWindow.vala:180
+#: src/BrowserWindow.vala:187
 msgid "About Odysseus"
 msgstr "À propos d'Odysseus"
 
@@ -171,7 +171,7 @@ msgstr[1] "%u occurrences de « %s » trouvées"
 
 #: src/Widgets/WebTab.vala:240
 msgid "Press [esc] to leave fullscreen"
-msgstr "Appuyez sur [Échap] pour quitter le plein-écran"
+msgstr "Appuyez sur [Échap] pour quitter le plein écran"
 
 #: src/Widgets/Chromeless.vala:24
 msgid "Web Inspector"
@@ -277,7 +277,7 @@ msgstr "Cette page souhaite accéder à votre micro."
 
 #: src/Traits/decorate/permit.vala:50
 msgid "This page wants to watch you."
-msgstr "Cette page souhgaite accéder à votre webcam."
+msgstr "Cette page souhaite accéder à votre webcam."
 
 #: src/Traits/decorate/permit.vala:57
 msgid "Additional software is required to play media on this page:"
@@ -344,7 +344,7 @@ msgstr "Schéma de chiffrement brisé."
 msgid "Unknown error…"
 msgstr "Erreur inconnue…"
 
-#: src/Traits/status/https.vala:98
+#: src/Traits/status/https.vala:101
 #, c-format
 msgid "Expires %s"
 msgstr "Expire le %s"
@@ -355,15 +355,42 @@ msgstr ""
 "Cette page a été chargée depuis votre ordinateur. Personne ne sait que vous "
 "êtes là."
 
-#: src/Traits/status/webfeed.vala:33
+#: src/Traits/status/webfeed.vala:33 src/Traits/status/webfeed.vala:82
 msgid "Subscribe to webfeeds"
 msgstr "S'abonner aux flux Web."
 
-#: src/Traits/status/webfeed.vala:154
+#: src/Traits/status/webfeed.vala:204
 #, c-format
 msgid "Subscribe via %s"
 msgstr "S'abonner via %s"
 
-#: src/Traits/status/webfeed.vala:166
+#: src/Traits/status/webfeed.vala:216
 msgid "Install a feedreader to subscribe"
 msgstr "Installez un lecteur de flux pour vous abonner"
+
+#: src/Traits/status/liberate.vala:41
+msgid "Improve this page's readability"
+msgstr "Améliorer la lisibilité de cette page"
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:59
+msgid "Light"
+msgstr "Clair"
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:61
+msgid "Moonlight"
+msgstr "Clair de lune"
+
+#. / Translators: name of a Reader Mode theme.
+#: src/Traits/status/liberate.vala:63
+msgid "Solarized"
+msgstr "Solarisé"
+
+#: src/Traits/status/liberate.vala:65
+msgid "Exit Reader Mode"
+msgstr "Quitter le mode lecture"
+
+#: src/Traits/status/liberate.vala:68
+msgid "Reload this page"
+msgstr "Recharger cette page"
