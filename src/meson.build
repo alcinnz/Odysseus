@@ -8,8 +8,7 @@ tokenized = ['AutomaticScrollBox', 'Completer', 'tokenized']
 
 sources = ['Odysseus', 'BrowserWindow', 'Persistance']
 widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar', 'Chromeless']
-header_widgets = ['AddressBar2', 'ButtonWithMenu', 'AutomaticScrollBox',
-        'HeaderBarWithMenus']
+header_widgets = ['AddressBar2', 'ButtonWithMenu', 'HeaderBarWithMenus']
 overlay_widgets = ['FindToolbar', 'InfoContainer']
 traits = ['init', 'download-progress', 'download-window']
 nav_traits = ['autodownload', 'persist-tab-history', 'newtab', 'history',
@@ -20,7 +19,7 @@ decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll'
         'notifications']
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history']
 indicators = ['https', 'local', 'webfeed', 'liberate']
-services = ['pages', 'Completer', 'globals', 'icons']
+services = ['pages', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'slice']

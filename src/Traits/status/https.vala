@@ -67,7 +67,7 @@ namespace Odysseus.Traits {
         var header = new Gtk.Label(summary);
         header.margin = 20;
         grid.add(header);
-        var scrolled = new Odysseus.Header.AutomaticScrollBox();
+        var scrolled = new Tokenized.AutomaticScrollBox();
         grid.add(scrolled);
         var list = new Gtk.ListBox();
         scrolled.add(list);
