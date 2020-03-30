@@ -145,6 +145,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         addressbar.tooltip_text = _("Current web address") + " (Ctrl+L)";
         addressbar.value_entered.connect((url) => web.load_uri(url));
         tabs.bind_property("uri", addressbar.entry, "text", BindingFlags.SYNC_CREATE);
+        tabs.notify["uri"].connect((pspec) => addressbar.clear_tokens());
         tabs.bind_property("favicon", addressbar.entry, "primary-icon-gicon", BindingFlags.SYNC_CREATE);
         tabs.bind_property("progress", addressbar.entry, "progress-fraction", BindingFlags.SYNC_CREATE);
         tabs.indicators_loaded.connect(addressbar.show_indicators);

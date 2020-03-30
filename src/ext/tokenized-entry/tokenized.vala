@@ -140,7 +140,7 @@ public class TokenizedEntry : Grid {
     /* -- tokens -- */
     public void addtoken(TextRow row) {
         if (row.is_token) {
-            _tokens.add(new Token(row.label));
+            _tokens.add(new Token(row.val));
             rebuild_tokens();
         } else value_entered(row.val);
     }
@@ -170,8 +170,13 @@ public class TokenizedEntry : Grid {
         foreach (var child in grid.get_children()) child.destroy();
         foreach (var token in _tokens) _addtoken(token);
 
-        if (_tokens.size == 0) clear_button.hide();
+        if (_tokens.size == 0) {clear_button.no_show_all = true; clear_button.hide();}
         else clear_button.show_all();
+    }
+
+    public void clear_tokens() {
+        _tokens.clear();
+        rebuild_tokens();
     }
 
     /* -- styles -- */

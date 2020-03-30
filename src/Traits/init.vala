@@ -73,6 +73,7 @@ namespace Odysseus.Traits {
         completers.register(typeof(HistoryAutocompleter));
         completers.register(typeof(Search.DuckDuckGo));
         completers.register(typeof(Search.DDGOnlineCompletions));
+        completers.register(typeof(RedPanda));
 
         DownloadSet.get_downloads().add.connect(show_download_progress_on_icon);
         DownloadSet.get_downloads().add.connect(download_window_handle_download);
