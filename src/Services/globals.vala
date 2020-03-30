@@ -41,4 +41,10 @@ namespace Odysseus {
         Traits.setup_context(web_ctxt);
         return web_ctxt;
     }
+
+    private static Tokenized.CompleterFactory completer;
+    public Tokenized.CompleterFactory get_main_completers() {
+        if (completer == null) completer = new Tokenized.CompleterFactory();
+        return completer;
+    }
 }

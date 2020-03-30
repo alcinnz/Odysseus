@@ -93,7 +93,11 @@ public class TokenizedEntry : Grid {
             this.val = val;
             this.is_token = is_token;
 
-            add(new Gtk.Label(label));
+            var widget = new Gtk.Label(label);
+            widget.justify = Gtk.Justification.LEFT;
+            widget.halign = Gtk.Align.START;
+            widget.set_markup(Markup.printf_escaped("<span size='large'>%s</span>", label));
+            add(widget);
             this.tooltip_text = val;
             show_all();
         }

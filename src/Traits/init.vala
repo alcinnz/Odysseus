@@ -68,10 +68,11 @@ namespace Odysseus.Traits {
     }
 
     public void setup_autosuggest() {
-        Services.Completer.register(typeof(ImplyHTTP));
-        Services.Completer.register(typeof(HistoryAutocompleter));
-        Services.Completer.register(typeof(Search.DuckDuckGo));
-        Services.Completer.register(typeof(Search.DDGOnlineCompletions));
+        var completers = get_main_completers();
+        completers.register(typeof(ImplyHTTP));
+        completers.register(typeof(HistoryAutocompleter));
+        completers.register(typeof(Search.DuckDuckGo));
+        completers.register(typeof(Search.DDGOnlineCompletions));
 
         DownloadSet.get_downloads().add.connect(show_download_progress_on_icon);
         DownloadSet.get_downloads().add.connect(download_window_handle_download);

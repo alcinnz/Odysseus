@@ -17,6 +17,10 @@
 public class Odysseus.Header.AddressBar : TokenizedEntry {
     private Gee.List<Gtk.Widget> statusbuttons = new Gee.ArrayList<Gtk.Widget>();
 
+    construct {
+        this.autocompleter = get_main_completers().build();
+    }
+
     public void show_indicators(Gee.List<StatusIndicator> indicators) {
         foreach (var widget in statusbuttons) widget.destroy();
         statusbuttons.clear();
