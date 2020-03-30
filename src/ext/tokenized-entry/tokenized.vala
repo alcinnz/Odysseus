@@ -99,6 +99,7 @@ public class TokenizedEntry : Grid {
             widget.set_markup(Markup.printf_escaped("<span size='large'>%s</span>", label));
             add(widget);
             this.tooltip_text = val;
+            this.margin = 5;
             show_all();
         }
     }
