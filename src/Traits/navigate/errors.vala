@@ -135,7 +135,8 @@ namespace Odysseus.Traits {
             if (type == WebKit.PolicyDecisionType.RESPONSE) {
                 var response_decision = (WebKit.ResponsePolicyDecision) decision;
                 var response = response_decision.response;
-                if (response.content_length == 0 &&
+                if (response.uri.has_prefix("http") &&
+                        response.content_length == 0 &&
                         response.uri == web.uri &&
                         response.status_code != 200) {
                     report_error(response.status_code.to_string(), response.uri,
@@ -148,7 +149,8 @@ namespace Odysseus.Traits {
             }
             return false;
         });
-        web.authenticate.connect((request) => {
+        // Webpage-based authentication isn't working.
+        /*web.authenticate.connect((request) => {
             report_error("401", web.uri, tab, true);
             connect_form(web, (req) => {
                 GenericArray<string> keys;
@@ -166,6 +168,6 @@ namespace Odysseus.Traits {
                 request.authenticate(creds);
             });
            return true;
-       });
+       });*/
     }
 }
