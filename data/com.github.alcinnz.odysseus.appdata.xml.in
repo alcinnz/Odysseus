@@ -54,6 +54,14 @@
   </provides>
 
   <releases>
+    <release version="1.6.3" date="2020-03-31">
+      <description>
+        <p>New French &amp; Dutch localizations</p>
+        <p>Minor addressbar redesign</p>
+        <p>Improved error reporting</p>
+        <p>(Temporary) Red Panda Adventures easter egg</p>
+      </description>
+    </release>
     <release version="1.6.2" date="2020-03-20">
       <description>
         <p>New icon thanks to Fatih20 (Nararyans R.I.)</p>
