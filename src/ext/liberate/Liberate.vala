@@ -24,8 +24,12 @@ namespace Liberate {
 	}
 
 	static string read_resource (string name) {
-		var res = GLib.resources_lookup_data (RESOURCES_PATH + name, ResourceLookupFlags.NONE);
-		return (string)res.get_data ();
+	    try {
+		    var res = GLib.resources_lookup_data (RESOURCES_PATH + name, ResourceLookupFlags.NONE);
+		    return (string)res.get_data ();
+	    } catch (Error e) {
+	        return e.message; // Syntax error, but places the error in a place I can easily check.
+	    }
 	}
 
 	static inline string to_vala_string (global::JS.String js) {

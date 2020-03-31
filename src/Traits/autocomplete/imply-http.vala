@@ -32,10 +32,10 @@ namespace Odysseus.Traits {
                 var host = query.split("/", 2)[0];
                 if (host == null) host = query;
 
-                var user = host.str("@");
+                var user = host[0:host.index_of("@")];
                 if (user != null) has_schema = !(":" in user);
                 else {
-                    var port = host.rstr(":");
+                    var port = host[host.index_of(":")+1:host.length];
                     has_schema = false;
                     foreach (var digit in port.data) {
                         if ('0' < digit || digit > '9') {

@@ -204,7 +204,14 @@ namespace Odysseus.Traits {
                 button.tooltip_text = _("Subscribe via %s").printf(feedreader.get_name());
                 add(button);
 
-                button.clicked.connect(() => feedreader.launch_uris(links, null));
+                button.clicked.connect(() => {
+                    try {
+                        feedreader.launch_uris(links, null);
+                    } catch (Error e) {
+                        button.image = new Gtk.Image.from_icon_name("error", Gtk.IconSize.MENU);
+                        warning("Failed to subscribe with %s: %s", feedreader.get_name(), e.message);
+                    }
+                });
             });
 
             if (is_empty) {

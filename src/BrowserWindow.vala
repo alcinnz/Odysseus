@@ -101,16 +101,18 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         var back = tools.build_tool_item("go-previous", _("Go to previously viewed page"),
                 Gdk.Key.comma, () => web.go_back(), (menu) => {
             web.get_back_forward_list().get_back_list().@foreach((item) => {
-                var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
-                favicon_for_menuitem.begin(opt, item);
+                /*var opt =*/ menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
+                // FIXME, I'll miss having favicons here. But deprecated APIs I can't be bothered to replace...
+                //favicon_for_menuitem.begin(opt, item);
             });
         }, Gdk.ModifierType.CONTROL_MASK, true);
         tabs.bind_property("can-go-back", back, "sensitive", BindingFlags.SYNC_CREATE);
         var forward = tools.build_tool_item("go-next", _("Go to next viewed page"),
                 Gdk.Key.period, () => web.go_forward(), (menu) => {
             web.get_back_forward_list().get_forward_list().@foreach((item) => {
-                var opt = menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
-                favicon_for_menuitem.begin(opt, item);
+                /*var opt =*/ menu.add(item.get_title(), () => web.go_to_back_forward_list_item(item));
+                // FIXME, I'll miss having favicons here. But deprecated APIs I can't be bothered to replace...
+                //favicon_for_menuitem.begin(opt, item);
             });
         }, Gdk.ModifierType.CONTROL_MASK, true);
         tabs.bind_property("can-go-forward", forward, "sensitive", BindingFlags.SYNC_CREATE);
@@ -182,10 +184,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("_Print"), () => new WebKit.PrintOperation(web).run_dialog(this), Gdk.Key.P);
             menu.separate();
             menu.add(_("Show Downloads"), () => downloads.set_reveal_child(true), Gdk.Key.D);
-            var help = "https://odysseus.adrian.geek.nz/guide.html";
-            menu.add(_("Help"), () => new_tab(help), Gdk.Key.question);
-            var about_link = "appstream://com.github.alcinnz.odysseus";
-            menu.add(_("About Odysseus"), () => Granite.Services.System.open_uri(about_link));
+            menu.add(_("Help"), () => new_tab("https://odysseus.adrian.geek.nz/guide.html"), Gdk.Key.question);
+            menu.add(_("About Odysseus"), () => new_tab("appstream://com.github.alcinnz.odysseus"));
         });
 
         tools.shortcut(Gdk.Key.T, () => new_tab());
@@ -214,7 +214,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         return ret;
     }
 
-    private async void favicon_for_menuitem(Gtk.ImageMenuItem menuitem,
+    /*private async void favicon_for_menuitem(Gtk.ImageMenuItem menuitem,
                 WebKit.BackForwardListItem item) {
         menuitem.always_show_image = true;
         try {
@@ -225,8 +225,8 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         } catch (Error e) {
             warning("Failed to load favicon for '%s':", item.get_uri());
         }
-    }
-    
+    }*/
+
     public void new_tab(string url = "odysseus:home") {
         var tab = new WebTab.with_new_entry(tabs, url);
         tabs.insert_tab(tab, -1);

@@ -32,8 +32,15 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         box.add(mainbox);
 
         add_action("folder", _("View all downloads"),
-                () => Granite.Services.System.open(Download.folder));
-        add_action("window-close", _("Close downloads bar"), () => set_reveal_child(false));
+                (button) => {
+                    try {
+                        AppInfo.launch_default_for_uri(Download.folder.get_uri(), null);
+                    } catch (Error e) {
+                        button.image = new Gtk.Image.from_icon_name("error", Gtk.IconSize.MENU);
+                        warning("Failed to open file manager: %s", e.message);
+                    }
+        });
+        add_action("window-close", _("Close downloads bar"), (_) => set_reveal_child(false));
 
         reveal_child = false;
         notify["child-revealed"].connect((pspec) => {
@@ -46,10 +53,10 @@ public class Odysseus.DownloadsBar : Gtk.Revealer {
         DownloadSet.get_downloads().add.connect((dl) => reveal_child = true);
     }
 
-    private delegate void Action();
+    private delegate void Action(Gtk.Button button);
     private void add_action(string icon, string help, owned Action action) {
         var button = new Gtk.Button.from_icon_name(icon);
-        button.clicked.connect(() => action());
+        button.clicked.connect(() => action(button));
         button.relief = Gtk.ReliefStyle.NONE;
         button.tooltip_text = help;
         box.add(button);

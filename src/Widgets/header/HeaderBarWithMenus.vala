@@ -103,9 +103,9 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
         public Gtk.Menu menu = new Gtk.Menu();
         public Gtk.AccelGroup? accel_group = null;
 
-        public Gtk.ImageMenuItem add(string title, owned Action action, uint key = 0,
+        public Gtk.MenuItem add(string title, owned Action action, uint key = 0,
                 Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK) {
-            var item = new Gtk.ImageMenuItem.with_mnemonic(title);
+            var item = new Gtk.MenuItem.with_mnemonic(title);
             item.activate.connect(() => {action();});
             menu.add(item);
 
