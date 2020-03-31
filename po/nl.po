@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Heimen Stoffels <vistausss@outlook.com>, 2019
+# Heimen Stoffels <vistausss@outlook.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.alcinnz.odysseus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-20 16:41+1200\n"
+"POT-Creation-Date: 2020-03-29 19:57+0200\n"
 "PO-Revision-Date: 2017-12-16 18:41+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>, 2019\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>, 2020\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/none-483/teams/75521/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -347,7 +347,7 @@ msgstr "Versleutelingsmechanisme werkt niet"
 msgid "Unknown error…"
 msgstr "Onbekende fout..."
 
-#: src/Traits/status/https.vala:98
+#: src/Traits/status/https.vala:101
 #, c-format
 msgid "Expires %s"
 msgstr "Verloopt op %s"
@@ -357,16 +357,16 @@ msgid "This page was loaded from your computer. Noone else knows you're here."
 msgstr ""
 "Deze pagina is geopend vanaf je computer. Nieman weet dat je hier bent."
 
-#: src/Traits/status/webfeed.vala:33
+#: src/Traits/status/webfeed.vala:33 src/Traits/status/webfeed.vala:82
 msgid "Subscribe to webfeeds"
 msgstr "Abonneren op webfeeds"
 
-#: src/Traits/status/webfeed.vala:154
+#: src/Traits/status/webfeed.vala:204
 #, c-format
 msgid "Subscribe via %s"
 msgstr "Abonneren via %s"
 
-#: src/Traits/status/webfeed.vala:166
+#: src/Traits/status/webfeed.vala:216
 msgid "Install a feedreader to subscribe"
 msgstr "Als je je wilt abonneren, installeer dan een feedlezer"
 
@@ -375,16 +375,24 @@ msgid "Improve this page's readability"
 msgstr "Verbeter de leesbaarheid van deze pagina"
 
 #. / Translators: name of a Reader Mode theme.
-#: src/Traits/status/liberate.vala:57
+#: src/Traits/status/liberate.vala:59
 msgid "Light"
 msgstr "Licht"
 
 #. / Translators: name of a Reader Mode theme.
-#: src/Traits/status/liberate.vala:59
+#: src/Traits/status/liberate.vala:61
 msgid "Moonlight"
 msgstr "Maneschijn"
 
 #. / Translators: name of a Reader Mode theme.
-#: src/Traits/status/liberate.vala:61
+#: src/Traits/status/liberate.vala:63
 msgid "Solarized"
 msgstr "Gesolariseerd"
+
+#: src/Traits/status/liberate.vala:65
+msgid "Exit Reader Mode"
+msgstr "Leesweergave afsluiten"
+
+#: src/Traits/status/liberate.vala:68
+msgid "Reload this page"
+msgstr "Deze pagina herladen"
