@@ -187,6 +187,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("Help"), () => new_tab("https://odysseus.adrian.geek.nz/guide.html"), Gdk.Key.question);
             menu.add(_("About Odysseus"), () => new_tab("appstream://com.github.alcinnz.odysseus"));
         });
+        var bookmark = tools.add_item_right("non-starred", _("Bookmark page"), 0, null, (menu) => {});
 
         tools.shortcut(Gdk.Key.T, () => new_tab());
         tools.shortcut(Gdk.Key.Page_Up, () => tabs.previous_page());
