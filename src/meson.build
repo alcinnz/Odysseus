@@ -9,7 +9,7 @@ tokenized = ['AutomaticScrollBox', 'Completer', 'tokenized']
 sources = ['Odysseus', 'BrowserWindow', 'Persistance']
 widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar', 'Chromeless']
 header_widgets = ['AddressBar2', 'ButtonWithMenu', 'HeaderBarWithMenus']
-overlay_widgets = ['FindToolbar', 'InfoContainer']
+overlay_widgets = ['FindToolbar', 'InfoContainer', 'Bookmarker']
 traits = ['init', 'download-progress', 'download-window']
 nav_traits = ['autodownload', 'persist-tab-history', 'newtab', 'history',
         'errors', 'other-types', 'screenshot-proxy', 'viewsource', 'spring-clean',

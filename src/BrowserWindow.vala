@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2018).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2016-2020).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -187,7 +187,12 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("Help"), () => new_tab("https://odysseus.adrian.geek.nz/guide.html"), Gdk.Key.question);
             menu.add(_("About Odysseus"), () => new_tab("appstream://com.github.alcinnz.odysseus"));
         });
-        var bookmark = tools.add_item_right("non-starred", _("Bookmark page"), 0, null, (menu) => {});
+        var bookmarker = new Bookmarker();
+        var bookmark = tools.add_item_right("non-starred", _("Bookmark page"), 0, () => {
+            bookmarker.href = tabs.uri;
+            bookmarker.show_all();
+        }, (menu) => {});
+        bookmarker.relative_to = bookmark;
 
         tools.shortcut(Gdk.Key.T, () => new_tab());
         tools.shortcut(Gdk.Key.Page_Up, () => tabs.previous_page());
