@@ -19,6 +19,8 @@ public class Odysseus.Bookmarker : Gtk.Popover {
     public string href;
     private Gtk.Grid layout;
 
+    private Gtk.Entry label;
+
     construct {
         this.position = Gtk.PositionType.BOTTOM;
 
@@ -28,7 +30,7 @@ public class Odysseus.Bookmarker : Gtk.Popover {
 
         var icon = new Gtk.Image.from_icon_name("starred", Gtk.IconSize.DIALOG);
         layout.attach(icon, 0, 0, 1, 2);
-        var label = new Gtk.Entry();
+        label = new Gtk.Entry();
         layout.attach(label, 1, 0);
         var desc = new Gtk.TextView();
         var desc_scrolled = new Gtk.ScrolledWindow(null, null);
@@ -39,6 +41,10 @@ public class Odysseus.Bookmarker : Gtk.Popover {
         layout.attach(unbookmark, 0, 3);
         var tags = new TokenizedEntry();
         layout.attach(tags, 1, 3);
+    }
+    public void populate(string uri, string title) {
+        this.label.text = title;
+        this.href = uri;
     }
 
     public override void get_preferred_width(out int min, out int natural) {

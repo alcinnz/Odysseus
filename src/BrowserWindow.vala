@@ -189,7 +189,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         });
         var bookmarker = new Bookmarker();
         var bookmark = tools.add_item_right("non-starred", _("Bookmark page"), 0, () => {
-            bookmarker.href = tabs.uri;
+            bookmarker.populate(tabs.uri, tabs.title); // TODO extract tags.
             bookmarker.show_all();
         }, (menu) => {});
         bookmarker.relative_to = bookmark;
