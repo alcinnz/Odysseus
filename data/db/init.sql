@@ -94,5 +94,20 @@ CREATE INDEX IF NOT EXISTS unvisited_link__uri ON unvisited_links(uri);
 CREATE INDEX IF NOT EXISTS unvisited_link__endorsements ON unvisited_links(endorsements, uri); -- Vital.
 CREATE INDEX IF NOT EXISTS link_sources__both ON link_sources(link, domain);
 
-PRAGMA user_version = 7;
+{% if v < 8 %}
+  CREATE TABLE vocab(url UNIQUE, label UNIQUE, hue UNIQUE);
+  CREATE TABLE tags(url UNIQUE, label, vocab);
+  CREATE TABLE tag_labels(tag, altlabel);
+  CREATE INDEX altlabels ON tag_labels(altlabel, tag);
+  CREATE TABLE tag_infers(broader, narrower);
+  CREATE INDEX tag_narrower ON tag_infers(narrower, broader);
+  CREATE INDEX tag_broader ON tag_infers(broader, narrower);
+
+  CREATE TABLE favs(url UNIQUE, title, desc);
+  CREATE TABLE fav_tags(fav, tag);
+  CREATE INDEX tag_favs_index ON fav_tags(tag, fav);
+  CREATE INDEX fav_tags_index ON fav_tags(fav, tag);
+{% endif %}
+
+PRAGMA user_version = 8;
 END TRANSACTION;
