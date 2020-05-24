@@ -43,6 +43,8 @@ public class Odysseus.Bookmarker : Gtk.Popover {
         var Qremove_fav = Database.parse("DELETE FROM favs WHERE url = ?;");
         var Qremove_tags = Database.parse("DELETE FROM fav_tags WHERE fav = ?;");
         unbookmark.clicked.connect(() => {
+            popdown();
+
             Qremove_fav.reset();
             Qremove_fav.bind_text(1, href);
             Qremove_fav.step();
