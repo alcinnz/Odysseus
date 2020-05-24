@@ -29,10 +29,13 @@ Also this is a normal headerbar, so all everything that's normally possible is
     the AddressBar. */
 public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
     public Gtk.AccelGroup accel_group = new Gtk.AccelGroup();
+    public Gtk.IconSize size = Gtk.IconSize.LARGE_TOOLBAR;
 
     construct {
         show_close_button = true;
         set_has_subtitle(false);
+        size = Gtk.Settings.get_default().gtk_theme_name == "elementary" ?
+                Gtk.IconSize.LARGE_TOOLBAR : Gtk.IconSize.BUTTON;
     }
 
     public delegate void Action();
@@ -41,9 +44,7 @@ public class Odysseus.Header.HeaderBarWithMenus : Gtk.HeaderBar {
             uint key, owned Action? action, owned BuildMenu build_menu,
             Gdk.ModifierType modifier = Gdk.ModifierType.CONTROL_MASK,
             bool dynamic_menu = false) {
-        var item = new ButtonWithMenu.from_icon_name(icon + "-symbolic",
-                Gtk.Settings.get_default().gtk_theme_name == "elementary" ?
-                    Gtk.IconSize.LARGE_TOOLBAR : Gtk.IconSize.BUTTON);
+        var item = new ButtonWithMenu.from_icon_name(icon + "-symbolic", size);
         item.tooltip_text = tooltip;
         if (key != 0) item.tooltip_text += " (%s)".printf(
                 Gtk.accelerator_get_label(key, modifier));

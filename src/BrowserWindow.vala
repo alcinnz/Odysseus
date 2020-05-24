@@ -187,11 +187,26 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             menu.add(_("Help"), () => new_tab("https://odysseus.adrian.geek.nz/guide.html"), Gdk.Key.question);
             menu.add(_("About Odysseus"), () => new_tab("appstream://com.github.alcinnz.odysseus"));
         });
+
         var bookmarker = new Bookmarker();
-        var bookmark = tools.add_item_right("non-starred", _("Bookmark page"), 0, () => {
+        Header.ButtonWithMenu bookmark = null;
+        bookmark = tools.add_item_right("non-starred", _("Bookmark page"), 0, () => {
             bookmarker.populate(tabs.uri, tabs.title); // TODO extract tags.
             bookmarker.show_all();
+            bookmark.image = new Gtk.Image.from_icon_name("starred", tools.size);
         }, (menu) => {});
+        var Qis_bookmarked = Database.parse("SELECT rowid FROM favs WHERE url = ?;");
+        tabs.notify["uri"].connect((pspec) => {
+            Qis_bookmarked.reset();
+            Qis_bookmarked.bind_text(1, tabs.uri);
+            if (Qis_bookmarked.step() == Sqlite.ROW) {
+                bookmark.image = new Gtk.Image.from_icon_name("starred", tools.size);
+                bookmarker.rowid = Qis_bookmarked.column_int64(0);
+            } else {
+                bookmark.image = new Gtk.Image.from_icon_name("non-starred", tools.size);
+                bookmarker.rowid = 0;
+            }
+        });
         bookmarker.relative_to = bookmark;
 
         tools.shortcut(Gdk.Key.T, () => new_tab());
