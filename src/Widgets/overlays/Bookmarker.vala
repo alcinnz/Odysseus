@@ -56,7 +56,9 @@ public class Odysseus.Bookmarker : Gtk.Popover {
             }
         });
         layout.attach(unbookmark, 0, 3);
+
         var tags = new TokenizedEntry();
+        tags.autocompleter = new TagsCompleter();
         layout.attach(tags, 1, 3);
     }
     public void populate(string uri, string title) {
@@ -80,5 +82,10 @@ public class Odysseus.Bookmarker : Gtk.Popover {
         Qinsert_favs.step();
 
         rowid = Database.get_database().last_insert_rowid();
+    }
+}
+class Odysseus.TagsCompleter : Tokenized.Completer {
+    public override void suggest(string query, owned Tokenized.Completer.YieldCallback cb) {
+        cb(new Tokenized.Completion.token(query, "+" + query));
     }
 }

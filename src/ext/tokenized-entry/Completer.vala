@@ -36,7 +36,7 @@ namespace Tokenized {
 
         public delegate void YieldCallback(Completion completion);
         private YieldCallback yieldCallback;
-        public void suggest(string query, owned YieldCallback cb) {
+        public virtual void suggest(string query, owned YieldCallback cb) {
             this.yieldCallback = cb;
             seen.clear();
 
