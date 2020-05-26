@@ -7,9 +7,10 @@ public class TokenizedEntry : Grid {
 
     public class Token {
         public string label;
+        public string val;
         public float hue;
-        public Token(string label, float hue = 1.0f) {
-            this.label = label; this.hue = hue;
+        public Token(string label, string val, float hue = 1.0f) {
+            this.label = label; this.val = val; this.hue = hue;
         }
     }
     private Gee.List<Token> _tokens = new Gee.ArrayList<Token>();
@@ -140,7 +141,7 @@ public class TokenizedEntry : Grid {
     /* -- tokens -- */
     public void addtoken(TextRow row) {
         if (row.is_token) {
-            _tokens.add(new Token(row.val));
+            _tokens.add(new Token(row.label, row.val));
             rebuild_tokens();
         } else value_entered(row.val);
     }

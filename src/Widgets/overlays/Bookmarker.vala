@@ -86,6 +86,6 @@ public class Odysseus.Bookmarker : Gtk.Popover {
 }
 class Odysseus.TagsCompleter : Tokenized.Completer {
     public override void suggest(string query, owned Tokenized.Completer.YieldCallback cb) {
-        cb(new Tokenized.Completion.token(query, "+" + query));
+        cb(new Tokenized.Completion.token("+" + query, query));
     }
 }
