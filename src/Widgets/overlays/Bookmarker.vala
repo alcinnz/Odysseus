@@ -74,6 +74,7 @@ public class Odysseus.Bookmarker : Gtk.Popover {
     }
 
     private static Sqlite.Statement Qinsert_favs = Database.parse("INSERT OR REPLACE INTO favs VALUES (?, ?, ?);");
+    private static Sqlite.Statement Qdelete_toks = Database.parse("DELETE FROM fav_tags WHERE fav = ?;");
     private static Sqlite.Statement Qinsert_tok = Database.parse("INSERT OR IGNORE INTO fav_tags VALUES (?, ?);");
     private static Sqlite.Statement Qinsert_tag = Database.parse("INSERT INTO tags VALUES (?, ?, (SELECT rowid FROM vocabs WHERE url = 'odysseus:myvocab.ttl#'));");
     private static Sqlite.Statement Qinsert_label = Database.parse("INSERT INTO tag_labels VALUES (?, ?)");
@@ -88,6 +89,9 @@ public class Odysseus.Bookmarker : Gtk.Popover {
 
         rowid = Database.get_database().last_insert_rowid();
 
+        Qdelete_toks.reset();
+        Qdelete_toks.bind_int64(1, rowid);
+        Qdelete_toks.step();
         foreach (var tok in tags.tokens) {
             int64 tagid = 0;
             var val = tok.val[1:tok.val.length];
