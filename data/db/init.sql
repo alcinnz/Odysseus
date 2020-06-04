@@ -108,7 +108,7 @@ CREATE INDEX IF NOT EXISTS link_sources__both ON link_sources(link, domain);
   CREATE INDEX tag_favs_index ON fav_tags(tag, fav);
   CREATE INDEX fav_tags_index ON fav_tags(fav, tag);
 {% endif %}
-INSERT OR IGNORE INTO vocab("odysseus:myvocab.ttl#", "", 1.0);
+INSERT OR IGNORE INTO vocab VALUES ("odysseus:myvocab.ttl#", "", 1.0);
 
 PRAGMA user_version = 8;
 END TRANSACTION;

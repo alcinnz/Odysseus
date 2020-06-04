@@ -734,7 +734,7 @@ namespace Odysseus.Templating.Std {
         escapes["csv"] = Writer.build_escapes("'\"", "\\'", "\\\"");
         // These escape codes taken from Django
         // https://github.com/django/django/blob/9718fa2e8abe430c3526a9278dd976443d4ae3c6/django/utils/html.py#L51
-        var escape_js_string = Writer.build_escapes("\\\"><&=-;\x2028\x2029'",
+        var escape_js_string = Writer.build_escapes("\\\"><&=-;\0x2028\0x2029'",
                 "\\u005C", "\\u0022", "\\u003E", "\\u003C", "\\u0026",
                 "\\u003D", "\\u002D", "\\u003B", "\\u2028", "\\u2029");
         // Escape every ASCII character with a value less than 32.
