@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% trans %}Favourites{% endtrans %}</title>
+  <style>@import url(odysseus:butterick.css)</style>
+</head>
+<body>
+  <nav>
+  {% query %}SELECT url, title, desc FROM favs;{% each-row %}
+  <figure>
+    <a href="{{ url }}" title="{{ desc }}">
+      <img width="132" height="132"
+        {% query %}SELECT image FROM screenshot_v2 WHERE uri = {{ url }};
+        {% each-row %}
+          src="data:image/png;base64,{{ image }}"
+        {% endquery %} alt="{{ desc }}" />
+    </a>
+    <legend>{{ title }}</legend>
+  </figure>{% endquery %}
+</body>
+</html>
