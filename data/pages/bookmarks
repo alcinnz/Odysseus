@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% trans %}Favourites{% endtrans %}</title>
-  <style>@import url(odysseus:butterick.css)</style>
+  <title>[starred] {% trans %}Favourites{% endtrans %}</title>
+  <style>
+    @import url(odysseus:butterick.css);
+    figure {width: 134px; overflow: crop;}
+    legend {text-overflow: ellipsis;}
+  </style>
 </head>
 <body>
   <nav>

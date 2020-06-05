@@ -25,28 +25,8 @@ namespace Odysseus.Traits {
                 return; // Doesn't even resemble a URI!
 
             // TODO handle IPv6 addresses.
-            bool has_schema;
-            if ("://" in query) has_schema = true;
-            else if (!(":" in query)) has_schema = false;
-            else {
-                var host = query.split("/", 2)[0];
-                if (host == null) host = query;
-
-                var user = host[0:host.index_of("@")];
-                if (user != null) has_schema = !(":" in user);
-                else {
-                    var port = host[host.index_of(":")+1:host.length];
-                    has_schema = false;
-                    foreach (var digit in port.data) {
-                        if ('0' < digit || digit > '9') {
-                            has_schema = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (has_schema) c.suggestion(query);
+            // Maybe other failure cases, but the more sophisticated test broke.
+            if (":" in query) c.suggestion(query);
             else c.suggestion("https://" + query);
         }
     }

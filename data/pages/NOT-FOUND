@@ -17,10 +17,17 @@
     <p>{% trans %}Maybe you meant one of these other internal pages?{% endtrans %}</p>
 
     <dl>
+      <dt><a href="odysseus:bookmarks">{% trans %}Bookmarks{% endtrans %}</a></dt>
+      <dd>{% trans %}Webpages you've starred.{% endtrans %}</dd>
       <dt><a href="odysseus:credits">{% trans %}Credits{% endtrans %}</a></dt>
       <dd>{% trans %}The people you should thank for this gorgeous browsing experience.{% endtrans %}</dd>
       <dt><a href="odysseus:debugging/index">{% trans %}Odysseus Debugging{% endtrans %}</a></dt>
       <dd>{% trans %}Tools for ensuring your browser is working correctly.{% endtrans %}</dd>
+      <dt><a href="odysseus:feedreaders">{% trans %}Compatible Feed Readers{% endtrans %}</a></dt>
+      <dd>{% trans %}Lists all compatible feedreaders available in your package repositories.{% endtrans %}</dd>
+      <dt>{% trans %}Compatible Apps{% endtrans %}:
+        <form action="odysseus:filetype" method="GET"><input type="text" placeholder="MIME Type" name="mime" /></form>
+      </dt>
       <dt><a href="odysseus:history">{% trans %}History{% endtrans %}</a></dt>
       <dd>{% trans %}The pages you've visited before.{% endtrans %}</dd>
       <dt><a href="odysseus:home">{% trans %}Odysseus's homepage{% endtrans %}</a></dt>
@@ -28,11 +35,6 @@
       <dd>{% trans %}This is what you see when you open a new tab.{% endtrans %}</dd>
       <dt><a href="odysseus:privacy">{% trans %}Privacy Policy{% endtrans %}</a></dt>
       <dd>{% trans %}The privacy situation around Odysseus.{% endtrans %}</a></dt>
-      <dt><a href="odysseus:feedreaders">{% trans %}Compatible Feed Readers{% endtrans %}</a></dt>
-      <dd>{% trans %}Lists all compatible feedreaders available in your package repositories.{% endtrans %}</dd>
-      <dt>{% trans %}Compatible Apps{% endtrans %}:
-        <form action="odysseus:filetype" method="GET"><input type="text" placeholder="MIME Type" name="mime" /></form>
-      </dt>
       <dd>{% trans %}Lists all apps in your package repository capable of opening a specific MIME type.{% endtrans %}</dd>
       <dt><a href="odysseus:suggestions">{% trans %}Personalized suggestions{% endtrans %}</a></dt>
       <dd>{% trans %}Links recommended by visited pages you have yet to visit.{% endtrans %}</dd>
