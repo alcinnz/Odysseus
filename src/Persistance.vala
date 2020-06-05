@@ -216,6 +216,7 @@ namespace Odysseus.Persist {
 
     private static Sqlite.Statement? Qload_state;
     private void restore_tab_state(WebTab tab, bool restore_uri) {
+        tab.is_restoring = true;
         if (Qload_state == null)
             Qload_state = Database.parse(
                     "SELECT pinned, history, order_, historical_id FROM tab WHERE ROWID = ?");
@@ -240,5 +241,6 @@ namespace Odysseus.Persist {
         } catch (Error err) {
             tab.web.load_uri("odysseus:errors/crashed");
         }
+        tab.is_restoring = false;
     }
 }

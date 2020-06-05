@@ -22,7 +22,6 @@ namespace Odysseus.Traits {
     public void setup_history_tracker(WebTab tab) {
         var web = tab.web;
         var prev_uri = web.uri;
-        var first = true; // Don't log session restoration!
 
         var qSaveHistory = Database.parse("""INSERT INTO page_visit
                 (tab, uri, title, favicon, visited_at, referrer)
@@ -33,8 +32,8 @@ namespace Odysseus.Traits {
         var qSaveScreenshot = Database.parse("INSERT OR REPLACE INTO screenshot(uri, image) VALUES (?, ?);");
 
         web.load_changed.connect((evt) => {
-            if (evt == WebKit.LoadEvent.FINISHED && first) {
-                prev_uri = web.uri; first = false; return;
+            if (evt == WebKit.LoadEvent.FINISHED && tab.is_restoring) {
+                prev_uri = web.uri; return;
             }
             if (evt != WebKit.LoadEvent.FINISHED ||
                     web.uri.has_prefix("odysseus:") || web.uri.has_prefix("source:") ||

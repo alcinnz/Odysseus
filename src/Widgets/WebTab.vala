@@ -18,6 +18,7 @@ public class Odysseus.WebTab : Granite.Widgets.Tab {
     public WebKit.WebView web; // To allow it to be wrapped in layout views.
     private Gtk.Revealer find;
     public Overlay.InfoContainer info; // for prompts.
+    public bool is_restoring = false;
 
     public int64 tab_id;
     public int order = -1;
