@@ -36,7 +36,7 @@ namespace Odysseus.Database.Tagging {
         if (tags.size == 0) {
             if (Qall_tags == null) Qall_tags = parse("SELECT rowid FROM favs;");
             Qall_tags.reset();
-            while (Qall_tags.step() != Sqlite.OK) {
+            while (Qall_tags.step() == Sqlite.ROW) {
                 ret.add(Qall_tags.column_int64(0));
             }
             return ret;
@@ -73,5 +73,29 @@ namespace Odysseus.Database.Tagging {
             }
         }
         return ret;
+    }
+
+    private Sqlite.Statement Qtags_by_fav = null;
+    public Gee.Set<int64> related_tags(Gee.List<int64> tags) {
+        if (Qtags_by_fav == null) Qtags_by_fav = parse("SELECT tag FROM fav_tags WHERE fav = ?;");
+
+        Gee.HashSet<int64> ret = null;
+        foreach (var fav in favs_by_tags(tags)) {
+            var this_tags = new Gee.HashSet<int64>();
+
+            Qtags_by_fav.reset();
+            Qtags_by_fav.bind_int64(1, fav);
+            while (Qtags_by_fav.step() == Sqlite.ROW)
+                this_tags.add(Qtags_by_fav.column_int64(0));
+
+            if (ret == null) ret = this_tags;
+            else ret.retain_all(this_tags);
+        }
+
+        if (ret == null) return new Gee.HashSet<int64>();
+        else {
+            ret.remove_all(tags);
+            return ret;
+        }
     }
 }
