@@ -266,5 +266,6 @@ namespace Odysseus.Database.Prosody {
     public void register_query_tags() {
         register_tag("query", new QueryBuilder());
         register_tag("macro", new MacroMetaBuilder());
+        register_tag("tagged", new Tagging.TaggedBuilder());
     }
 }

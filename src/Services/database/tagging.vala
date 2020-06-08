@@ -22,15 +22,20 @@
 // 2a. If not present, restart this loop.
 // 3. Yield final fav ID once the end of list has been reached.
 namespace Odysseus.Database.Tagging {
+    using Templating;
+
     private class Stmt {
         public Sqlite.Statement s;
+        public Stmt(string query) {
+            this.s = parse(query);
+        }
     }
-    private Gee.ArrayList<stmt> iters = null;
+    private Gee.ArrayList<Stmt> iters = null;
 
     // Ideally we'd be able to let the database handle this logic, but SQLite doesn't support arrays for input.
     private Sqlite.Statement Qall_tags = null;
-    public Gee.List<int64> favs_by_tags(Gee.List<int64> tags) {
-        var ret = new Gee.ArrayList<int64>();
+    public Gee.List<int64?> favs_by_tags(Gee.List<int64?> tags) {
+        var ret = new Gee.ArrayList<int64?>();
 
         // No tags match everything.
         if (tags.size == 0) {
@@ -43,6 +48,7 @@ namespace Odysseus.Database.Tagging {
         }
 
         // Prepare the iterators.
+        if (iters == null) iters = new Gee.ArrayList<Stmt>();
         for (var i = 0; i < tags.size; i++) {
             if (i == iters.size)
                 iters.add(new Stmt("SELECT fav FROM fav_tags WHERE tag = ? ORDER BY fav ASC;"));
@@ -52,7 +58,7 @@ namespace Odysseus.Database.Tagging {
         }
 
         // Mainloop
-        int64 max_sofar = int64.min;
+        int64 max_sofar = int64.MIN;
         while (true) {
             bool matched = true;
             // The goal is to make all (sorted) iters == max_sofar
@@ -68,7 +74,7 @@ namespace Odysseus.Database.Tagging {
                 // So continue & try to assert that for i+1.
             }
             if (matched) {
-                ret.add(max_so_far);
+                ret.add(max_sofar);
                 if (iters[0].s.step() != Sqlite.ROW) return ret;
             }
         }
@@ -76,12 +82,12 @@ namespace Odysseus.Database.Tagging {
     }
 
     private Sqlite.Statement Qtags_by_fav = null;
-    public Gee.Set<int64> related_tags(Gee.List<int64> tags) {
+    public Gee.Set<int64?> related_tags(Gee.List<int64?> tags) {
         if (Qtags_by_fav == null) Qtags_by_fav = parse("SELECT tag FROM fav_tags WHERE fav = ?;");
 
-        Gee.HashSet<int64> ret = null;
+        Gee.HashSet<int64?> ret = null;
         foreach (var fav in favs_by_tags(tags)) {
-            var this_tags = new Gee.HashSet<int64>();
+            var this_tags = new Gee.HashSet<int64?>();
 
             Qtags_by_fav.reset();
             Qtags_by_fav.bind_int64(1, fav);
@@ -92,10 +98,65 @@ namespace Odysseus.Database.Tagging {
             else ret.retain_all(this_tags);
         }
 
-        if (ret == null) return new Gee.HashSet<int64>();
+        if (ret == null) return new Gee.HashSet<int64?>();
         else {
             ret.remove_all(tags);
             return ret;
+        }
+    }
+
+    public class TaggedBuilder : TagBuilder, Object {
+        public Template? build(Parser parser, WordIter args) throws SyntaxError {
+            var source = new Variable(args.next());
+            var type = args.next();
+            if ("as" in type) type = new Slice.s("fav");
+            else if (!("as" in args.next()))
+                throw new SyntaxError.INVALID_ARGS("Expecting 'as' before iteration variable.");
+            var dest = args.next();
+            args.assert_end();
+            if (!("fav" in type || "tag" in type))
+                throw new SyntaxError.INVALID_ARGS("Type must be 'tag' or 'fav', default 'fav'.");
+
+            WordIter endtoken;
+            var body = parser.parse("empty endtagged", out endtoken);
+
+            var endtag = endtoken.next(); endtoken.assert_end();
+            Template empty_block = new Echo();
+            if ("empty" in endtag) {
+                empty_block = parser.parse("endtagged", out endtoken);
+                endtag = endtoken.next(); endtoken.assert_end();
+            }
+            if (!("endtagged" in endtag))
+                throw new SyntaxError.UNBALANCED_TAGS("Expected {%% endtagged %} tag following {%% tagged %}, possibly with one {%% else %} tag inbetween.");
+
+            return new TaggedTag("fav" in type, source, dest, body, empty_block);
+        }
+    }
+
+    private class TaggedTag : Template {
+        private bool type; // true for fav, false for tag.
+        private Variable source;
+        private Slice dest;
+        private Template body;
+        private Template empty;
+
+        public TaggedTag(bool type, Variable source, Slice dest, Template body, Template empty) {
+            this.type = type; this.source = source; this.dest = dest;
+            this.body = body; this.empty = empty;
+        }
+
+        public override async void exec(Data.Data ctx, Writer output) {
+            var input = new Gee.ArrayList<int64?>();
+            source.eval(ctx).foreach_map((k, v) => input.add((int64) v.to_int()));
+
+            Gee.Collection<int64?> ids;
+            if (this.type) ids = favs_by_tags(input);
+            else ids = related_tags(input);
+
+            foreach (var id in ids) {
+                body.exec(Data.Let.build(dest, new Data.Literal(id), ctx), output);
+            }
+            if (ids.size == 0) empty.exec(ctx, output);
         }
     }
 }

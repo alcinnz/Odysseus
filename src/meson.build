@@ -20,7 +20,7 @@ decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll'
 complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history', 'redpanda']
 indicators = ['https', 'local', 'webfeed', 'liberate']
 services = ['pages', 'globals', 'icons']
-db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest']
+db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest', 'tagging']
 prosody = ['parser', 'lib', 'data', 'expression', 'writers', 'loader',
         'slice']
 prosody_misc = ['json', 'http', 'diff', 'i18n', 'tsv', 'favicons', 'test',
