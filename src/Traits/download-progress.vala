@@ -27,42 +27,42 @@ namespace Odysseus.Traits {
         try {
             var conn = Bus.get_sync(BusType.SESSION);
             conn.register_object(@"/com/canonical/unity/launcherentry/$(appuri.hash())", launcher);
-
-            dl.received_data.connect(() => {
-                Idle.add(() => {
-                    var props = new HashTable<string, Variant>(str_hash, str_equal);
-
-                    var downloads = DownloadSet.get_downloads().downloads;
-                    if (downloads.size == 0) {
-                        props.insert("progress-visible", false);
-                        launcher.update(appuri, props);
-                        return false;
-                    }
-
-                    var progress = 1.0;
-                    foreach (var download in downloads)
-                        progress *= download.download.estimated_progress;
-
-                    props.insert("progress-visible", true);
-                    props.insert("progress", progress);
-                    launcher.update(appuri, props);
-
-                    return false;
-                }, Priority.LOW);
-            });
-            dl.finished.connect(() => {
-                if (dl.cancelled) return;
-
-                var notify = new Notification(_("Web Download Completed"));
-                var response = dl.download.response;
-                var url = new Soup.URI(response.uri);
-                notify.set_body(url.path[url.path.last_index_of("/")+1:url.path.length] + "\n" + url.host);
-                notify.set_icon(dl.icon);
-                Odysseus.Application.instance.send_notification(null, notify);
-            });
         } catch (IOError e) {
             /* Ignore, assuming the desktop doesn't support these indicators. */
         }
+
+        dl.received_data.connect(() => {
+            Idle.add(() => {
+                var props = new HashTable<string, Variant>(str_hash, str_equal);
+
+                var downloads = DownloadSet.get_downloads().downloads;
+                if (downloads.size == 0) {
+                    props.insert("progress-visible", false);
+                    if (launcher != null) launcher.update(appuri, props);
+                    return false;
+                }
+
+                var progress = 1.0;
+                foreach (var download in downloads)
+                    progress *= download.download.estimated_progress;
+
+                props.insert("progress-visible", true);
+                props.insert("progress", progress);
+                if (launcher != null) launcher.update(appuri, props);
+
+                return false;
+            }, Priority.LOW);
+        });
+        dl.finished.connect(() => {
+            if (dl.cancelled) return;
+
+            var notify = new Notification(_("Web Download Completed"));
+            var response = dl.download.response;
+            var url = new Soup.URI(response.uri);
+            notify.set_body(url.path[url.path.last_index_of("/")+1:url.path.length] + "\n" + url.host);
+            notify.set_icon(dl.icon);
+            Odysseus.Application.instance.send_notification(null, notify);
+        });
     }
 
     [DBus(name="com.canonical.Unity.LauncherEntry")]
