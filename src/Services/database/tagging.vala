@@ -154,7 +154,7 @@ namespace Odysseus.Database.Tagging {
             else ids = related_tags(input);
 
             foreach (var id in ids) {
-                body.exec(Data.Let.build(dest, new Data.Literal(id), ctx), output);
+                yield body.exec(Data.Let.build(dest, new Data.Literal(id), ctx), output);
             }
             if (ids.size == 0) empty.exec(ctx, output);
         }

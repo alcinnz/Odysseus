@@ -9,8 +9,12 @@
   </style>
 </head>
 <body>
-  <nav>
-  {% query %}SELECT url, title, desc FROM favs;{% each-row %}
+  <aside><dl>{% tagged url.query.t tag as tag %}
+    {% query %}SELECT label FROM tags WHERE rowid = {{ tag }};{% each-row %}
+    <dd><a href="?{% for t in url.query.t %}t={{t}}&{% endfor %}t={{ tag }}">{{ label }}</a></dd>
+  {% endquery %}{% endtagged %}</dl></aside>
+
+  {% macro bookmark %}
   <figure>
     <a href="{{ url }}" title="{{ desc }}">
       <img width="132" height="132"
@@ -20,6 +24,16 @@
         {% endquery %} alt="{{ desc }}" />
     </a>
     <legend>{{ title }}</legend>
-  </figure>{% endquery %}
+  </figure>
+  {% endmacro %}
+  <nav>
+  {% if url.query.t %}
+    {% tagged url.query.t as fav %}
+    {% query %}SELECT url, title, desc FROM favs WHERE rowid = {{ fav }};
+    {% each-row %}{% bookmark %}{% endquery %}{% endtagged %}
+  {% else %}
+    {% query %} SELECT url, title, desc FROM favs;{% each-row %}{% bookmark %}{% endquery %}
+  {% endif %}
+  </nav>
 </body>
 </html>
