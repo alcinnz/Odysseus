@@ -121,7 +121,7 @@ public class Odysseus.Bookmarker : Gtk.Popover {
 class Odysseus.TagsCompleter : Tokenized.Completer {
     private static Sqlite.Statement qAutocompleteTags = Database.parse(
         "SELECT l.tag, t.label FROM tag_labels AS l, tags AS t WHERE l.altlabel LIKE ? AND l.tag == t.rowid;");
-    public override void suggest(string query, owned Tokenized.Completer.YieldCallback cb) {
+    public override void suggest(string query, owned Tokenized.Completer.YieldCallback cb, Gee.List<TokenizedEntry.Token>? tokens = null) {
         if ("%" in query || "_" in query) return; // TODO Better handling?
 
         qAutocompleteTags.reset();

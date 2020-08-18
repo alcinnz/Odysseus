@@ -25,6 +25,8 @@ namespace Tokenized {
         private Gee.List<CompleterDelegate> delegates = new Gee.ArrayList<CompleterDelegate>();
         private Gee.Set<string> seen = new Gee.HashSet<string>();
 
+		public Gee.List<TokenizedEntry.Token> tags;
+
         public void add_type(Type type) {
             var completer = Object.@new(type) as CompleterDelegate;
             if (completer != null) delegates.add(completer);
@@ -36,8 +38,9 @@ namespace Tokenized {
 
         public delegate void YieldCallback(Completion completion);
         private YieldCallback yieldCallback;
-        public virtual void suggest(string query, owned YieldCallback cb) {
+        public virtual void suggest(string query, owned YieldCallback cb, Gee.List<TokenizedEntry.Token>? tags = null) {
             this.yieldCallback = cb;
+            this.tags = tags;
             seen.clear();
 
             foreach (var completer in delegates) {

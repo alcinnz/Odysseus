@@ -116,7 +116,7 @@ public class TokenizedEntry : Grid {
                 list.select_row(list.get_row_at_index(0));
                 this.selected = 0;
             }
-        });
+        }, _tokens);
     }
 
     private void build_autocomplete() {
