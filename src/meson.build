@@ -17,7 +17,7 @@ nav_traits = ['autodownload', 'persist-tab-history', 'newtab', 'history',
 decor_traits = ['alert', 'permit', 'settings', 'internal-favicons', 'AutoScroll',
         'fix-plus.google.com', 'fix-bg-videos', 'addressbar-autofocus',
         'notifications']
-complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history', 'redpanda']
+complete_traits = ['imply-http', 'duckduckgo', 'ddg-autocomplete', 'history', 'bookmarks']
 indicators = ['https', 'local', 'webfeed', 'liberate']
 services = ['pages', 'globals', 'icons']
 db_services = ['database', 'util', 'prosody', 'completer', 'psuedorest', 'tagging']

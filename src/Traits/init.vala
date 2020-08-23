@@ -1,5 +1,5 @@
 /**
-* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017-2018).
+* This file is part of Odysseus Web Browser (Copyright Adrian Cochrane 2017-2020).
 *
 * Odysseus is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -70,10 +70,11 @@ namespace Odysseus.Traits {
     public void setup_autosuggest() {
         var completers = get_main_completers();
         completers.register(typeof(ImplyHTTP));
+        completers.register(typeof(Bookmarks));
         completers.register(typeof(HistoryAutocompleter));
         completers.register(typeof(Search.DuckDuckGo));
         completers.register(typeof(Search.DDGOnlineCompletions));
-        completers.register(typeof(RedPanda));
+        //completers.register(typeof(RedPanda));
 
         DownloadSet.get_downloads().add.connect(show_download_progress_on_icon);
         DownloadSet.get_downloads().add.connect(download_window_handle_download);

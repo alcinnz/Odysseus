@@ -19,15 +19,15 @@ namespace Odysseus.Traits {
     public class Bookmarks : Tokenized.CompleterDelegate {
         public override void autocomplete(string query, Tokenized.Completer c) {
             // Gather tag IDs
-            var tags = new int64?[c.tags.size];
-            foreach (var i = 0; i < c.tags.size; i++) {
+            var tags = new Gee.ArrayList<int64?>();
+            for (var i = 0; i < c.tags.size; i++) {
                 tags[i] = int64.parse(c.tags[i].val);
             }
             // Determine related, matching tags.
-            foreach (var tag in Services.Database.Tagging.related_tags(c.tags)) {
+            foreach (var tag in Database.Tagging.related_tags(tags)) {
                 // query to see if the name matches query, if provided.
                 // query to find label.
-                c.token(tag, query);
+                c.token(tag.to_string(), query);
             }
         }
     }
