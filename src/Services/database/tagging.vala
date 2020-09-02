@@ -83,6 +83,16 @@ namespace Odysseus.Database.Tagging {
 
     private Sqlite.Statement Qtags_by_fav = null;
     public Gee.Set<int64?> related_tags(Gee.List<int64?> tags) {
+        if (tags == null || tags.size == 0) {
+            // Return all tags if we've yet to filter them down...
+            if (Qall_tags == null) Qall_tags = parse("SELECT rowid FROM tags;");
+
+            var ret = new Gee.HashSet<int64?>();
+            Qall_tags.reset();
+            while (Qall_tags.step() == Sqlite.ROW) ret.add(Qall_tags.column_int64(0));
+            return ret;
+        }
+
         if (Qtags_by_fav == null) Qtags_by_fav = parse("SELECT tag FROM fav_tags WHERE fav = ?;");
 
         Gee.HashSet<int64?> ret = null;
