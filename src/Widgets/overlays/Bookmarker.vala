@@ -62,10 +62,23 @@ public class Odysseus.Bookmarker : Gtk.Popover {
         tags.autocompleter = new TagsCompleter();
         layout.attach(tags, 1, 3);
     }
+    private static Sqlite.Statement Qquery_favs = Database.parse(
+		"SELECT fav_tags.tag, tags.label FROM favs, tags, fav_tags WHERE favs.rowid = fav_tags.fav AND favs.url = ? AND fav_tags.tag = tags.rowid"
+    );
     public void populate(string uri, string title) {
         this.label.text = title;
         this.href = uri;
         tags.clear_tokens();
+
+        // Retrieve tags...
+        Qquery_favs.reset();
+        Qquery_favs.bind_text(1, uri);
+        while (Qquery_favs.step() == Sqlite.ROW) {
+            var tagid = Qquery_favs.column_text(0);
+            var label = Qquery_favs.column_text(1);
+
+            tags.addtoken(new TokenizedEntry.TextRow(label, tagid, true));
+        }
     }
 
     public override void get_preferred_width(out int min, out int natural) {
