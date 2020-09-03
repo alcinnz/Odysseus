@@ -20,6 +20,8 @@ namespace Odysseus.Traits {
 		private Sqlite.Statement qGetName = Database.parse("SELECT label FROM tags WHERE rowid = ?;");
 		private Sqlite.Statement qQueryName = Database.parse("SELECT * FROM tag_labels WHERE tag = ? AND altlabel LIKE ?;");
         public override void autocomplete(string query, Tokenized.Completer c) {
+			if (query == null || query == "") return; // Prefer URL autocompletion...
+
             // Gather tag IDs
             var tags = new Gee.ArrayList<int64?>();
             for (var i = 0; i < c.tags.size; i++) {
