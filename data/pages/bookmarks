@@ -6,6 +6,7 @@
     @import url(odysseus:butterick.css);
     figure {width: 134px; overflow: crop;}
     legend {text-overflow: ellipsis;}
+    aside {float: left; background: #eee; padding: 10px}
   </style>
 </head>
 <body>
