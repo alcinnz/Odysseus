@@ -10,9 +10,10 @@
 </head>
 <body>
   <aside><dl>{% tagged url.query.t tag as tag %}
-    {% query %}SELECT label FROM tags WHERE rowid = {{ tag }};{% each-row %}
-    <dd><a href="?{% for t in url.query.t %}t={{t}}&{% endfor %}t={{ tag }}">{{ label }}</a></dd>
-  {% endquery %}{% endtagged %}</dl></aside>
+    <dd><a href="odysseus:bookmarks?{% for t in url.query.t %}t={{t}}&{% endfor %}t={{ tag }}">
+        {% query %}SELECT label FROM tags WHERE rowid = {{ tag }};{% each-row %}{{ label }}{% empty %}-{% endquery %}
+	</a></dd>
+  {% endtagged %}</dl></aside>
 
   {% macro bookmark %}
   <figure>
