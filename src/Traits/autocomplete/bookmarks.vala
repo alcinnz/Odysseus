@@ -24,9 +24,15 @@ namespace Odysseus.Traits {
 
             // Gather tag IDs
             var tags = new Gee.ArrayList<int64?>();
+            var params_builder = new StringBuilder();
             for (var i = 0; i < c.tags.size; i++) {
                 tags[i] = int64.parse(c.tags[i].val);
+                params_builder.append("t=");
+                params_builder.append(c.tags[i].val);
+                params_builder.append("&");
             }
+            var param = params_builder.str;
+
             // Determine related, matching tags.
             foreach (var tag in Database.Tagging.related_tags(tags)) {
                 // query to find label.
@@ -44,7 +50,7 @@ namespace Odysseus.Traits {
                     qQueryName.bind_text(2, "%" + query + "%");
                     if (qGetName.step() != Sqlite.ROW) continue;
                 }
-                c.token(tag.to_string(), name);
+                c.suggestion(@"odysseus:bookmarks?$(param)t=$tag", name);
             }
         }
     }
