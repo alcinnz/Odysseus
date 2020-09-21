@@ -146,6 +146,11 @@ public class TokenizedEntry : Grid {
         } else value_entered(row.val);
     }
 
+	public void addtoken_raw(string label, string val, float hue = 1.0f) {
+		_tokens.add(new Token(label, val, hue));
+		rebuild_tokens();
+	}
+
     private void _addtoken(Token row) {
         var token = new Button.with_label(row.label);
         token.tooltip_text = "Remove '%s'".printf(row.label);

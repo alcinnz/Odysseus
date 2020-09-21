@@ -17,6 +17,33 @@
 public class Odysseus.Header.AddressBar : TokenizedEntry {
     private Gee.List<Gtk.Widget> statusbuttons = new Gee.ArrayList<Gtk.Widget>();
 
+	private Sqlite.Statement qGetName = Database.parse("SELECT label FROM tags WHERE rowid = ?;");
+	public string text {
+		get {return entry.text;}
+		set {
+			clear_tokens();
+            if (value.has_prefix("odysseus:bookmarks?")) {
+                var query = value.split("?", 2)[1].split("&");
+                foreach (var param in query) {
+                    if (!param.has_prefix("t=")) continue;
+                    var tag = param[2:param.length];
+                    if (tag == "") continue;
+
+					// Query to get the label
+		            qGetName.reset();
+		            qGetName.bind_int64(1, int64.parse(tag));
+		            if (qGetName.step() != Sqlite.ROW) continue;
+		            var name = qGetName.column_text(0);
+		            if (name == null) continue;
+
+					addtoken_raw(name, tag);
+                }
+                entry.text = "";
+            } else entry.text = value;
+			// TODO render t parameters as tokens...
+		}
+	}
+
     construct {
         this.autocompleter = get_main_completers().build();
     }
