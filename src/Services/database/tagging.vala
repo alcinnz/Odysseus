@@ -115,7 +115,7 @@ namespace Odysseus.Database.Tagging {
                 this_tags.add(new Int64(Qtags_by_fav.column_int64(0)));
 
             if (ret == null) ret = this_tags;
-            else ret.retain_all(this_tags);
+            else ret.add_all(this_tags);
         }
 
         if (ret == null) return new Gee.HashSet<Int64>();
