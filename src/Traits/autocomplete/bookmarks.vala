@@ -23,10 +23,10 @@ namespace Odysseus.Traits {
 			if (query == null || query == "") return; // Prefer URL autocompletion...
 
             // Gather tag IDs
-            var tags = new Gee.ArrayList<int64?>();
+            var tags = new Gee.ArrayList<Database.Tagging.Int64>();
             var params_builder = new StringBuilder();
             for (var i = 0; i < c.tags.size; i++) {
-                tags[i] = int64.parse(c.tags[i].val);
+                tags[i] = new Database.Tagging.Int64(int64.parse(c.tags[i].val));
                 params_builder.append("t=");
                 params_builder.append(c.tags[i].val);
                 params_builder.append("&");
@@ -37,7 +37,7 @@ namespace Odysseus.Traits {
             foreach (var tag in Database.Tagging.related_tags(tags)) {
                 // query to find label.
                 qGetName.reset();
-                qGetName.bind_int64(1, tag);
+                qGetName.bind_int64(1, tag.i);
                 if (qGetName.step() != Sqlite.ROW) continue;
                 var name = qGetName.column_text(0);
                 if (name == null) continue;
@@ -46,7 +46,7 @@ namespace Odysseus.Traits {
                 // SELECT * FROM tag_labels WHERE tag = ? AND altlabel = ?;
                 if (!name.contains(query)) {
                     qQueryName.reset();
-                    qQueryName.bind_int64(1, tag);
+                    qQueryName.bind_int64(1, tag.i);
                     qQueryName.bind_text(2, "%" + query + "%");
                     if (qGetName.step() != Sqlite.ROW) continue;
                 }

@@ -24,6 +24,15 @@
 namespace Odysseus.Database.Tagging {
     using Templating;
 
+    public class Int64 : Object, Gee.Hashable<Int64> {
+        /* Better int64 boxed type for use with libgee */
+        public int64 i;
+        public Int64(int64 val) {this.i = val;}
+        public bool equal_to(Int64 other) {return this.i == other.i;}
+        public uint hash() {return (uint) this.i;}
+        public string to_string() {return @"$i";}
+    }
+
     private class Stmt {
         public Sqlite.Statement s;
         public Stmt(string query) {
@@ -34,15 +43,15 @@ namespace Odysseus.Database.Tagging {
 
     // Ideally we'd be able to let the database handle this logic, but SQLite doesn't support arrays for input.
     private Sqlite.Statement Qall_tags = null;
-    public Gee.List<int64?> favs_by_tags(Gee.List<int64?> tags) {
-        var ret = new Gee.ArrayList<int64?>();
+    public Gee.List<Int64> favs_by_tags(Gee.List<Int64> tags) {
+        var ret = new Gee.ArrayList<Int64>();
 
         // No tags match everything.
         if (tags.size == 0) {
             if (Qall_tags == null) Qall_tags = parse("SELECT rowid FROM favs;");
             Qall_tags.reset();
             while (Qall_tags.step() == Sqlite.ROW) {
-                ret.add(Qall_tags.column_int64(0));
+                ret.add(new Int64(Qall_tags.column_int64(0)));
             }
             return ret;
         }
@@ -53,7 +62,7 @@ namespace Odysseus.Database.Tagging {
             if (i == iters.size)
                 iters.add(new Stmt("SELECT fav FROM fav_tags WHERE tag = ? ORDER BY fav ASC;"));
             iters[i].s.reset();
-            iters[i].s.bind_int64(1, tags[i]);
+            iters[i].s.bind_int64(1, tags[i].i);
             if (iters[i].s.step() != Sqlite.ROW) return ret;
         }
 
@@ -74,7 +83,7 @@ namespace Odysseus.Database.Tagging {
                 // So continue & try to assert that for i+1.
             }
             if (matched) {
-                ret.add(max_sofar);
+                ret.add(new Int64(max_sofar));
                 if (iters[0].s.step() != Sqlite.ROW) return ret;
             }
         }
@@ -82,33 +91,34 @@ namespace Odysseus.Database.Tagging {
     }
 
     private Sqlite.Statement Qtags_by_fav = null;
-    public Gee.Set<int64?> related_tags(Gee.List<int64?> tags) {
+    public Gee.Set<Int64> related_tags(Gee.List<Int64> tags) {
         if (tags == null || tags.size == 0) {
             // Return all tags if we've yet to filter them down...
             if (Qall_tags == null) Qall_tags = parse("SELECT rowid FROM tags;");
 
-            var ret = new Gee.HashSet<int64?>();
+            var ret = new Gee.HashSet<Int64>();
             Qall_tags.reset();
-            while (Qall_tags.step() == Sqlite.ROW) ret.add(Qall_tags.column_int64(0));
+            while (Qall_tags.step() == Sqlite.ROW)
+                ret.add(new Int64(Qall_tags.column_int64(0)));
             return ret;
         }
 
         if (Qtags_by_fav == null) Qtags_by_fav = parse("SELECT tag FROM fav_tags WHERE fav = ?;");
 
-        Gee.HashSet<int64?> ret = null;
+        Gee.HashSet<Int64> ret = null;
         foreach (var fav in favs_by_tags(tags)) {
-            var this_tags = new Gee.HashSet<int64?>();
+            var this_tags = new Gee.HashSet<Int64>();
 
             Qtags_by_fav.reset();
-            Qtags_by_fav.bind_int64(1, fav);
+            Qtags_by_fav.bind_int64(1, fav.i);
             while (Qtags_by_fav.step() == Sqlite.ROW)
-                this_tags.add(Qtags_by_fav.column_int64(0));
+                this_tags.add(new Int64(Qtags_by_fav.column_int64(0)));
 
             if (ret == null) ret = this_tags;
             else ret.retain_all(this_tags);
         }
 
-        if (ret == null) return new Gee.HashSet<int64?>();
+        if (ret == null) return new Gee.HashSet<Int64>();
         else {
             ret.remove_all(tags);
             return ret;
@@ -156,15 +166,15 @@ namespace Odysseus.Database.Tagging {
         }
 
         public override async void exec(Data.Data ctx, Writer output) {
-            var input = new Gee.ArrayList<int64?>();
-            source.eval(ctx).foreach_map((k, v) => input.add((int64) v.to_int()));
+            var input = new Gee.ArrayList<Int64>();
+            source.eval(ctx).foreach_map((k, v) => input.add(new Int64(v.to_int())));
 
-            Gee.Collection<int64?> ids;
+            Gee.Collection<Int64> ids;
             if (this.type) ids = favs_by_tags(input);
             else ids = related_tags(input);
 
             foreach (var id in ids) {
-                yield body.exec(Data.Let.build(dest, new Data.Literal((int) id), ctx), output);
+                yield body.exec(Data.Let.build(dest, new Data.Literal((int) id.i), ctx), output);
             }
             if (ids.size == 0) empty.exec(ctx, output);
         }
