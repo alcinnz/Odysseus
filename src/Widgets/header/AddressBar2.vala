@@ -46,6 +46,14 @@ public class Odysseus.Header.AddressBar : TokenizedEntry {
 
     construct {
         this.autocompleter = get_main_completers().build();
+
+		this.entry.focus_in_event.connect((evt) => {
+            Idle.add(() => {
+                entry.select_region(0, -1);
+                return false;
+            }, Priority.HIGH); // To aid retyping URLs, copy+paste
+            return false;
+        });
     }
 
     public void show_indicators(Gee.List<StatusIndicator> indicators) {
