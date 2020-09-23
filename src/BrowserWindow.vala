@@ -247,7 +247,30 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
         }
     }*/
 
-    public void new_tab(string url = "odysseus:home") {
+    private Sqlite.Statement qGetHomeTag = Database.parse(
+			"""SELECT rowid FROM tags WHERE url = "odysseus:chrome.skos#home";""");
+	private int64? homeTagId = null;
+	private Sqlite.Statement qGetHomePage = Database.parse(
+			"""SELECT favs.url FROM favs, fav_tags
+				WHERE favs.rowid = fav_tags.fav AND fav_tags.tag = ?
+				ORDER BY random();""");
+    public void new_tab(string? url = null) {
+        if (url == null) {
+			// If no URL specified, use user-configured homepage.
+			// Or fallback to odysseus:home
+            if (homeTagId == null) {
+                qGetHomeTag.reset();
+                if (qGetHomeTag.step() != Sqlite.ROW) url = "odysseus:home";
+				else homeTagId = qGetHomeTag.column_int64(0);
+            }
+			if (homeTagId != null) { // Check if the previous measure failed...
+				qGetHomePage.reset();
+				qGetHomePage.bind_int64(1, homeTagId);
+				if (qGetHomePage.step() != Sqlite.ROW) url = "odysseus:home";
+				else url = qGetHomePage.column_text(0);
+			}
+        }
+
         var tab = new WebTab.with_new_entry(tabs, url);
         tabs.insert_tab(tab, -1);
         tabs.current = tab;
