@@ -109,6 +109,12 @@ CREATE INDEX IF NOT EXISTS link_sources__both ON link_sources(link, domain);
   CREATE INDEX fav_tags_index ON fav_tags(fav, tag);
 {% endif %}
 INSERT OR IGNORE INTO vocab VALUES ("odysseus:myvocab.ttl#", "", 1.0);
+INSERT OR IGNORE INTO vocab VALUES ("odysseus:chrome.skos#", "Browser integrations", 0.5);
+INSERT OR IGNORE INTO tags VALUES ("odysseus:chrome.skos#home", "homepage", (SELECT rowid FROM vocab WHERE url = "odysseus:chrome.skos#"));
+INSERT OR IGNORE INTO tag_labels VALUES ((SELECT rowid FROM tags WHERE url = "odysseus:chrome.skos#home"), "home");
+INSERT OR IGNORE INTO tag_labels VALUES ((SELECT rowid FROM tags WHERE url = "odysseus:chrome.skos#home"), "homepage");
+INSERT OR IGNORE INTO tag_labels VALUES ((SELECT rowid FROM tags WHERE url = "odysseus:chrome.skos#home"), "startpage");
+INSERT OR IGNORE INTO tag_labels VALUES ((SELECT rowid FROM tags WHERE url = "odysseus:chrome.skos#home"), "new tab page");
 
 PRAGMA user_version = 8;
 END TRANSACTION;
