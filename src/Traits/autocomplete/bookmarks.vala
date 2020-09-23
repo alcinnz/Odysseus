@@ -26,7 +26,7 @@ namespace Odysseus.Traits {
             var tags = new Gee.ArrayList<Database.Tagging.Int64>();
             var params_builder = new StringBuilder();
             for (var i = 0; i < c.tags.size; i++) {
-                tags[i] = new Database.Tagging.Int64(int64.parse(c.tags[i].val));
+                tags.add(new Database.Tagging.Int64(int64.parse(c.tags[i].val)));
                 params_builder.append("t=");
                 params_builder.append(c.tags[i].val);
                 params_builder.append("&");
