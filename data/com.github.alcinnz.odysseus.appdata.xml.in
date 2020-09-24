@@ -54,6 +54,14 @@
   </provides>
 
   <releases>
+    <release version="1.7.1" date="2020-09-24">
+      <description>
+        <p>Tag-based bookmarking</p>
+        <p>Set your own homepages</p>
+        <p>Fix UI regression around autoselecting addressbar</p>
+        <p>Red Panda Adventures easter egg removed (it was a UI test)</p>
+      </description>
+    </release>
     <release version="1.6.3" date="2020-03-31">
       <description>
         <p>New French &amp; Dutch localizations</p>
