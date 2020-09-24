@@ -194,6 +194,10 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             bookmarker.show_all();
             bookmark.image = new Gtk.Image.from_icon_name("starred", tools.size);
         }, (menu) => {});
+		bookmarker.removed.connect(() => {
+			bookmark.image = new Gtk.Image.from_icon_name("non-starred", tools.size);
+		});
+
         var Qis_bookmarked = Database.parse("SELECT rowid FROM favs WHERE url = ?;");
         tabs.notify["uri"].connect((pspec) => {
             Qis_bookmarked.reset();

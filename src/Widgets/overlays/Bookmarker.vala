@@ -24,6 +24,8 @@ public class Odysseus.Bookmarker : Gtk.Popover {
     private Gtk.TextView desc;
     private TokenizedEntry tags;
 
+    public signal void removed();
+
     construct {
         this.position = Gtk.PositionType.BOTTOM;
 
@@ -55,6 +57,8 @@ public class Odysseus.Bookmarker : Gtk.Popover {
                 Qremove_tags.bind_int64(1, rowid);
                 Qremove_tags.step();
             }
+
+            removed();
         });
         layout.attach(unbookmark, 0, 3);
 
