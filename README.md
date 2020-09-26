@@ -3,7 +3,7 @@ Odysseus web browser
 
 [![Build Status](https://travis-ci.com/alcinnz/Odysseus.svg?branch=master)](https://travis-ci.com/alcinnz/Odysseus)
 
-A simple and performant yet powerful [elementary OS](https://elementary.io/)-[style](https://elementary.io/docs/human-interface-guidelines) window onto the open decentralized web.
+A simple and performant yet powerful [elementary OS](https://elementary.io/)-[style](https://elementary.io/docs/human-interface-guidelines) window onto the open decentralized web, exploring how best to help you (re)discover interesting/entertaining/useful/etc webpages!
 
 Odysseus is already and will continue to be a convenient, privacy-respecting,
 [ethically designed](https://2017.ind.ie/ethical-design/), and opensource
@@ -15,6 +15,20 @@ In doing so Odysseus aims to help you focus on the webpages that matter to you,
 and to support the open decentralized web over the centralized services of today.
 
 [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.alcinnz.odysseus.desktop) or [download a stable release](https://github.com/alcinnz/Odysseus/releases)
+
+Discovery features
+------------------
+
+Odysseus wants to help you (re)discover the best of the web without relying on any one webservice! To this end it features:
+
+* Tracks your top-visited websites to be linked to on the default homepage.
+* Lets you set multiple homepages, with a random one loading for each new tab.
+* Hardcodes some initial recommendations to get you started.
+* Echos back frequently encountered unvisited links as personalized recommendations.
+* Helps you subscribe to "webfeeds" offered by most websites, including YouTube.
+* (In progress) Redesigned bookmarking
+* (TODO) Bookmark sharing
+* (TODO) Combined websearch
 
 Issues From Other Platforms
 ---------------------------
