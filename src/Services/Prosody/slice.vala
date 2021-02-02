@@ -26,7 +26,7 @@ public class Slice : Gee.Hashable<Slice>, Object {
 
     public int length {get {return _.length;}}
     public new uint8 get(int i) {
-        if (i > length) return 0;
+        if (i >= length) return 0;
         return _[i < 0 ? length + i : i];
     }
     public Slice slice(int start_, int end_) {
