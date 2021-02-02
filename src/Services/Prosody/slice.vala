@@ -25,11 +25,15 @@ public class Slice : Gee.Hashable<Slice>, Object {
     public Slice.b(Bytes? b) {_ = b == null ? empty : b;}
 
     public int length {get {return _.length;}}
-    public new uint8 get(int i) {return _[i < 0 ? length + i : i];}
+    public new uint8 get(int i) {
+        if (i > length) return 0;
+        return _[i < 0 ? length + i : i];
+    }
     public Slice slice(int start_, int end_) {
         // Add some Python-style convenience
         var start = start_; if (start < 0) start += _.length;
         var end = end_; if (end < 0) end += _.length;
+        if (end > _.length) end = _.length;
         if (start >= end) return new Slice(); // Gracefully handle minor errors.
 
         // NOTE: Using the slice method of Bytes (which is provided by the
