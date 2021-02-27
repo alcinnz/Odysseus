@@ -51,6 +51,7 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
 
     private void init_layout() {
         tabs = new WebNotebook();
+        var vtabs = new VerticalTabs(tabs);
         var header = new Header.HeaderBarWithMenus();
         build_toolbar(header);
         set_titlebar(header);
@@ -65,10 +66,12 @@ public class Odysseus.BrowserWindow : Gtk.ApplicationWindow {
             if (Gdk.WindowState.FULLSCREEN in evt.new_window_state) {
                 tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.NEVER;
                 downloads.expand = false;
-            } else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
+            } else if (vtabs.position != 0)
+                tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.NEVER;
+            else tabs.tab_bar_behavior = DynamicNotebook.TabBarBehavior.ALWAYS;
             return false;
         });
-        prompt.add(tabs);
+        prompt.add(vtabs);
 
         downloads = new DownloadsBar();
         downloads.expand = false;

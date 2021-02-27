@@ -7,7 +7,7 @@ liberate = ['Liberate', 'Reader']
 tokenized = ['AutomaticScrollBox', 'Completer', 'tokenized']
 
 sources = ['Odysseus', 'BrowserWindow', 'Persistance']
-widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar', 'Chromeless']
+widgets = ['WebTab','ProgressBin','WebNotebook','DownloadButton','DownloadBar', 'Chromeless', 'VerticalTabs']
 header_widgets = ['AddressBar2', 'ButtonWithMenu', 'HeaderBarWithMenus']
 overlay_widgets = ['FindToolbar', 'InfoContainer', 'Bookmarker']
 traits = ['init', 'download-progress', 'download-window']
