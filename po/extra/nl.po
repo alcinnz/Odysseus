@@ -55,7 +55,7 @@ msgid ""
 "A simple and performant yet powerful window onto the open decentralized web"
 msgstr ""
 "Een eenvoudige en snelle, maar tegelijkertijd krachtige browser die je "
-"meeneemt naar het open, gedecentraliseerde internet."
+"meeneemt naar het open, gedecentraliseerde internet"
 
 #: data/com.github.alcinnz.odysseus.appdata.xml.in:10
 msgid ""
