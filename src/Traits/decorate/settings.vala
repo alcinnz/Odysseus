@@ -19,6 +19,7 @@ namespace Odysseus.Traits {
         web_ctxt.get_cookie_manager().set_persistent_storage(build_config_path("cookies.sqlite"),
                 WebKit.CookiePersistentStorage.SQLITE);
         web_ctxt.set_favicon_database_directory(build_config_path("favicons"));
+        web_ctxt.set_web_extensions_directory(build_config_path("extensions"));
         web_ctxt.set_process_model(WebKit.ProcessModel.MULTIPLE_SECONDARY_PROCESSES);
     }
 
