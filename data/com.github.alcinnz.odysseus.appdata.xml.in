@@ -54,6 +54,18 @@
   </provides>
 
   <releases>
+    <release version="1.7.3" date="2021-02-28">
+      <description>
+        <p>Add vertical tabs</p>
+        <p>Enable WebKitGTK web extensions</p>
+        <p>Replace link promoting webfeeds</p>
+      </description>
+    </release>
+    <release version="1.7.2" date="2021-02-02">
+      <description>
+        <p>Fix crash on Manjaro</p>
+      </description>
+    </release>
     <release version="1.7.1" date="2020-09-24">
       <description>
         <p>Tag-based bookmarking</p>

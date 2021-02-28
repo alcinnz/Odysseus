@@ -11,7 +11,7 @@
 <body>
   <main>
     <h1>{% trans %}
-      No <a href="https://en.wikipedia.org/wiki/News_aggregator">feed readers</a> are installed
+      No <a href="https://www.youneedfeeds.com/">feed readers</a> are installed
     {% endtrans %}</h1>
     <p>{% trans %}
       In order to subscribe to a <a href="https://en.wikipedia.org/wiki/Web_feed">webfeed</a>,
