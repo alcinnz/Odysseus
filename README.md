@@ -1,4 +1,4 @@
-Odysseus has been discontinued. After a neglecting Odysseus for too long I (Adrian Cochrane) have decided to discontinue its development in favor of contributing what I consider some of its most important features to [elementary's default browser](https://appcenter.elementary.io/org.gnome.Epiphany/), & developing [my own browser engines](https://rhapsode.adrian.geek.nz/). If you wish to continue its development, please offer to take over maintenance & port it to newer elementary releases.
+Odysseus has been discontinued. After a neglecting Odysseus for too long I (Adrian Cochrane) have decided to discontinue its development in favor of contributing what I consider some of its most important features to [elementary's default browser](https://appcenter.elementary.io/org.gnome.Epiphany/), & developing [my own browser engines](https://rhapsode.adrian.geek.nz/). If you wish to continue its development, please [offer](mailto:opensource@openwork.nz) to take over maintenance & port it to newer elementary releases.
 
 Odysseus web browser
 ====================
